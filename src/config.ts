@@ -1,13 +1,12 @@
-// Centralized app configuration
-// Prefer EXPO_PUBLIC_ env vars so they are available in the client bundle
+const API_BASE_URL_DEV = "http://localhost:8000";
 
 export const AppConfig = {
   apiBaseUrl:
     (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
-    "http://localhost:8000",
-};
+    API_BASE_URL_DEV,
+  getUrl(path: string): string {
+    const trimmed = path.startsWith("/") ? path.slice(1) : path;
 
-export function getApiUrl(path: string): string {
-  const trimmed = path.startsWith("/") ? path.slice(1) : path;
-  return `${AppConfig.apiBaseUrl}/${trimmed}`;
-}
+    return `${this.apiBaseUrl}/${trimmed}`;
+  },
+};

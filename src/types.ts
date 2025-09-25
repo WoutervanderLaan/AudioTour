@@ -1,5 +1,3 @@
-// Shared app types aligned with handbook data model & API
-
 export type ObjectItem = {
   id: string;
   name: string;

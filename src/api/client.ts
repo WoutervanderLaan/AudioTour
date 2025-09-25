@@ -1,4 +1,4 @@
-import { getApiUrl } from "../config";
+import { AppConfig } from "../config";
 
 export type ApiError = {
   status: number;
@@ -6,85 +6,104 @@ export type ApiError = {
   details?: unknown;
 };
 
+async function handleResponseError(res: Response, isJson: boolean) {
+  let message = res.statusText || "Request failed";
+  let details: unknown = undefined;
+
+  if (isJson) {
+    try {
+      const body = await res.json();
+      message = (body && (body.message || body.detail)) || message;
+      details = body;
+    } catch (err) {
+      console.warn("Error converting response to json in !res.ok block: ", err);
+    }
+  } else {
+    try {
+      const text = await res.text();
+      if (text) message = text;
+    } catch (err) {
+      console.warn("Error converting response to text in !res.ok block: ", err);
+    }
+  }
+
+  throw { status: res.status, message, details } as ApiError;
+}
+
 async function handleResponse<T>(res: Response): Promise<T> {
   const contentType = res.headers.get("content-type") || "";
   const isJson = contentType.includes("application/json");
+
   if (!res.ok) {
-    let message = res.statusText || "Request failed";
-    let details: unknown = undefined;
-    if (isJson) {
-      try {
-        const body = await res.json();
-        message = (body && (body.message || body.detail)) || message;
-        details = body;
-      } catch {}
-    } else {
-      try {
-        const text = await res.text();
-        if (text) message = text;
-      } catch {}
-    }
-    const err: ApiError = { status: res.status, message, details };
-    throw err;
+    await handleResponseError(res, isJson);
   }
+
   if (isJson) {
     return (await res.json()) as T;
   }
   return (await res.blob()) as T;
 }
 
-export const ApiClient = {
+export class ApiClient {
+  // TODO: add session based info and user data to instance of ApiClient
+  // TODO: add interceptors
+
+  private _url(path: string) {
+    return AppConfig.getUrl(path);
+  }
+
   async uploadPhoto(params: {
     uri: string;
     metadata?: Record<string, unknown>;
   }) {
     const form = new FormData();
-    form.append("photo", {
-      uri: params.uri,
-      name: "photo.jpg",
-      type: "image/jpeg",
-    });
+    const photo = await fetch(params.uri);
+    const photoBlob = await photo.blob();
+
+    form.append("photo", photoBlob, "photo.jpg");
     if (params.metadata) {
       form.append("metadata", JSON.stringify(params.metadata));
     }
-    const res = await fetch(getApiUrl("/upload-photo"), {
+
+    const res = await fetch(this._url("/upload-photo"), {
       method: "POST",
-      headers: {
-        // RN sets correct multipart boundary automatically
-      },
       body: form,
     });
+
     return handleResponse<{
       object_id: string;
       recognition_confidence: number;
     }>(res);
-  },
+  }
 
   async generateNarrative(params: {
     object_id: string;
     user_session_id: string;
   }) {
-    const res = await fetch(getApiUrl("/generate-narrative"), {
+    const res = await fetch(this._url("/generate-narrative"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     });
+
     return handleResponse<{ narrative_text: string }>(res);
-  },
+  }
 
   async generateAudio(params: { narrative_text: string }) {
-    const res = await fetch(getApiUrl("/generate-audio"), {
+    const res = await fetch(this._url("/generate-audio"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     });
+
     return handleResponse<{ audio_url: string }>(res);
-  },
+  }
 
   async listMuseumObjects(museum_id: string) {
     const res = await fetch(
-      getApiUrl(`/museum-objects/${encodeURIComponent(museum_id)}`)
+      this._url(`/museum-objects/${encodeURIComponent(museum_id)}`)
     );
+
     return handleResponse<
       Array<{
         id: string;
@@ -97,17 +116,24 @@ export const ApiClient = {
         metadata?: Record<string, unknown>;
       }>
     >(res);
-  },
+  }
 
   async recommendations(params: {
     user_session_id: string;
     current_museum_id?: string;
   }) {
-    const url = new URL(getApiUrl("/recommendations"));
-    url.searchParams.set("user_session_id", params.user_session_id);
-    if (params.current_museum_id)
-      url.searchParams.set("current_museum_id", params.current_museum_id);
-    const res = await fetch(url.toString());
+    const searchParams = new URLSearchParams();
+
+    searchParams.append("user_session_id", params.user_session_id);
+
+    if (params.current_museum_id) {
+      searchParams.append("current_museum_id", params.current_museum_id);
+    }
+
+    const res = await fetch(
+      this._url(`/recommendations?${searchParams.toString()}`)
+    );
+
     return handleResponse<Array<{ object_id: string; score?: number }>>(res);
-  },
-};
+  }
+}
