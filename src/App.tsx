@@ -4,7 +4,7 @@ import { Asset } from "expo-asset";
 import { createURL } from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
 import * as React from "react";
-import { useColorScheme } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import { Navigation } from "./navigation";
 import { AppProvider } from "./state/AppContext";
 
@@ -21,6 +21,10 @@ export function App() {
 
   return (
     <AppProvider>
+      <StatusBar
+        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+        animated
+      />
       <Navigation
         theme={theme}
         linking={{
