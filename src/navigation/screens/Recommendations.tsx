@@ -1,8 +1,8 @@
 import { Text } from "@react-navigation/elements";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
-import { ApiClient } from "../../api/client";
 import { useApp } from "../../state/AppContext";
+import { useApiClient } from "../../state/ApiContext";
 
 export function Recommendations() {
   const { userSessionId, currentMuseumId } = useApp();
@@ -11,13 +11,14 @@ export function Recommendations() {
   >([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  const { api } = useApiClient();
 
   useEffect(() => {
     const run = async () => {
       setLoading(true);
       setError(undefined);
       try {
-        const data = await ApiClient.recommendations({
+        const data = await api.recommendations({
           user_session_id: userSessionId,
           current_museum_id: currentMuseumId,
         });

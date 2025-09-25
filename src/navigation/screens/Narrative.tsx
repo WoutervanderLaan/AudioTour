@@ -2,8 +2,8 @@ import { Button, Text } from "@react-navigation/elements";
 import { StaticScreenProps } from "@react-navigation/native";
 import React, { useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { ApiClient } from "../../api/client";
 import { AudioPlayer } from "../../components/AudioPlayer";
+import { useApiClient } from "../../state/ApiContext";
 
 type Props = StaticScreenProps<{ narrativeText: string }>;
 
@@ -13,11 +13,13 @@ export function Narrative({ route }: Props) {
   const [audioUrl, setAudioUrl] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string | undefined>(undefined);
 
+  const { api } = useApiClient();
+
   const synthesize = async () => {
     setLoading(true);
     setError(undefined);
     try {
-      const res = await ApiClient.generateAudio({
+      const res = await api.generateAudio({
         narrative_text: narrativeText,
       });
       setAudioUrl(res.audio_url);

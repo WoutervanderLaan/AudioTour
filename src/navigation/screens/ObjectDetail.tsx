@@ -1,15 +1,9 @@
 import { Button, Text } from "@react-navigation/elements";
 import { StaticScreenProps, useFocusEffect } from "@react-navigation/native";
 import React, { useCallback, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
-import { ApiClient } from "../../api/client";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 import { useApp } from "../../state/AppContext";
+import { useApiClient } from "../../state/ApiContext";
 
 type Props = StaticScreenProps<{ objectId: string }>;
 
@@ -19,12 +13,13 @@ export function ObjectDetail({ route }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
   const [narrative, setNarrative] = useState<string | undefined>(undefined);
+  const { api } = useApiClient();
 
   const generate = useCallback(async () => {
     setLoading(true);
     setError(undefined);
     try {
-      const res = await ApiClient.generateNarrative({
+      const res = await api.generateNarrative({
         object_id: objectId,
         user_session_id: userSessionId,
       });

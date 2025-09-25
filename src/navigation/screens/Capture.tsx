@@ -3,8 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
-import { ApiClient } from "../../api/client";
 import { useApp } from "../../state/AppContext";
+import { useApiClient } from "../../state/ApiContext";
 
 export function Capture() {
   const nav = useNavigation();
@@ -12,6 +12,7 @@ export function Capture() {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  const { api } = useApiClient();
 
   const pickImage = async () => {
     setError(undefined);
@@ -31,7 +32,7 @@ export function Capture() {
     setLoading(true);
     setError(undefined);
     try {
-      const result = await ApiClient.uploadPhoto({ uri: imageUri });
+      const result = await api.uploadPhoto({ uri: imageUri });
       pushRecentObjectId(result.object_id);
       nav.navigate("ObjectDetail", { objectId: result.object_id });
     } catch (e: any) {

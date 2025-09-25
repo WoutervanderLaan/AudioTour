@@ -7,6 +7,7 @@ import * as React from "react";
 import { StatusBar, useColorScheme } from "react-native";
 import { Navigation } from "./navigation";
 import { AppProvider } from "./state/AppContext";
+import { ApiProvider } from "./state/ApiContext";
 
 Asset.loadAsync([...NavigationAssets]);
 
@@ -21,20 +22,22 @@ export function App() {
 
   return (
     <AppProvider>
-      <StatusBar
-        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-        animated
-      />
-      <Navigation
-        theme={theme}
-        linking={{
-          enabled: "auto",
-          prefixes: [prefix],
-        }}
-        onReady={() => {
-          SplashScreen.hideAsync();
-        }}
-      />
+      <ApiProvider>
+        <StatusBar
+          barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+          animated
+        />
+        <Navigation
+          theme={theme}
+          linking={{
+            enabled: "auto",
+            prefixes: [prefix],
+          }}
+          onReady={() => {
+            SplashScreen.hideAsync();
+          }}
+        />
+      </ApiProvider>
     </AppProvider>
   );
 }

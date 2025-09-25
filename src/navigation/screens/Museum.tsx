@@ -8,14 +8,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { ApiClient } from "../../api/client";
 import { useApp } from "../../state/AppContext";
+import { useApiClient } from "../../state/ApiContext";
 
 export function Museum() {
   const { currentMuseumId, setCurrentMuseumId } = useApp();
   const [objects, setObjects] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
+  const { api } = useApiClient();
 
   useEffect(() => {
     const run = async () => {
@@ -23,7 +24,7 @@ export function Museum() {
       setLoading(true);
       setError(undefined);
       try {
-        const data = await ApiClient.listMuseumObjects(currentMuseumId);
+        const data = await api.listMuseumObjects(currentMuseumId);
         setObjects(data);
       } catch (e: any) {
         setError(e?.message || "Failed to load objects");
