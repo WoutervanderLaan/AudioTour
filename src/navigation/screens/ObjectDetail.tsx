@@ -13,18 +13,17 @@ export function ObjectDetail({ route }: Props) {
 
   const sessionId = useUserSessionStore(useShallow((state) => state.sessionId));
 
-  const { loading, error, narrativeText, generateNarrative } = useTourStore(
+  const { narrativeText, setNarrativeText } = useTourStore(
     useShallow((state) => ({
-      loading: state.loading,
-      error: state.error,
       narrativeText: state.narrativeText,
-      generateNarrative: state.generateNarrative,
+      setNarrativeText: state.setNarrativeText,
     }))
   );
 
   const generate = useCallback(async () => {
-    await generateNarrative(objectId, sessionId);
-  }, [objectId, sessionId, generateNarrative]);
+    // TODO: fetch data from api
+    setNarrativeText("");
+  }, [objectId, sessionId, setNarrativeText]);
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -39,13 +38,13 @@ export function ObjectDetail({ route }: Props) {
 
       <Text>ID: {objectId}</Text>
 
-      <Button onPress={generate} disabled={loading}>
+      <Button onPress={generate} disabled={false}>
         Generate Narrative
       </Button>
 
-      {loading && <ActivityIndicator />}
+      {/* {loading && <ActivityIndicator />}
 
-      {error && <Text>{error}</Text>}
+      {error && <Text>{error}</Text>} */}
 
       {narrativeText && (
         <View style={styles.card}>

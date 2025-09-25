@@ -11,17 +11,16 @@ type Props = StaticScreenProps<{ narrativeText: string }>;
 export function Narrative({ route }: Props) {
   const { narrativeText } = route.params;
 
-  const { loading, error, audioUrl, generateAudio } = useTourStore(
+  const { audioUrl, setAudioUrl } = useTourStore(
     useShallow((state) => ({
-      loading: state.loading,
-      error: state.error,
       audioUrl: state.audioUrl,
-      generateAudio: state.generateAudio,
+      setAudioUrl: state.setAudioUrl,
     }))
   );
 
   const synthesize = async () => {
-    await generateAudio(narrativeText);
+    // TODO: fetch data from api
+    await setAudioUrl(narrativeText);
   };
 
   return (
@@ -30,13 +29,13 @@ export function Narrative({ route }: Props) {
 
       <Text numberOfLines={8}>{narrativeText}</Text>
 
-      <Button onPress={synthesize} disabled={loading}>
+      <Button onPress={synthesize} disabled={false}>
         Generate Audio
       </Button>
-
+      {/* 
       {loading && <ActivityIndicator />}
 
-      {error && <Text>{error}</Text>}
+      {error && <Text>{error}</Text>} */}
 
       {audioUrl && <AudioPlayer src={audioUrl} />}
     </View>

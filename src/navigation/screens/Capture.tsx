@@ -14,11 +14,9 @@ export function Capture() {
   const navigate = useNavigation();
   const sessionId = useUserSessionStore((s) => s.sessionId);
 
-  const { uploadAndRecognize, loading, error } = useTourStore(
+  const { setLastPhotoData } = useTourStore(
     useShallow((state) => ({
-      uploadAndRecognize: state.uploadAndRecognize,
-      loading: state.loading,
-      error: state.error,
+      setLastPhotoData: state.setLastPhotoData,
     }))
   );
 
@@ -41,8 +39,8 @@ export function Capture() {
 
   const upload = async () => {
     if (!imageUri) return;
-
-    await uploadAndRecognize(imageUri);
+    // TODO: fetch data from api
+    // await setLastPhotoData(imageUri);
 
     const objectId = useTourStore.getState().currentObjectId;
 
@@ -60,14 +58,14 @@ export function Capture() {
 
       <Button
         onPress={upload}
-        disabled={!imageUri || loading}
-        style={{ opacity: !imageUri || loading ? 0.5 : 1 }}
+        // disabled={!imageUri || loading}
+        // style={{ opacity: !imageUri || loading ? 0.5 : 1 }}
       >
         Upload & Identify
       </Button>
 
-      {loading && <ActivityIndicator />}
-      {(error || localError) && <Text>{error || localError}</Text>}
+      {/* {loading && <ActivityIndicator />} */}
+      {/* {(error || localError) && <Text>{error || localError}</Text>} */}
     </View>
   );
 }

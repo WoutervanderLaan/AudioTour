@@ -1,5 +1,5 @@
 import { Button, Text } from "@react-navigation/elements";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -12,20 +12,17 @@ import { useMuseumStore } from "../../state/stores/museumStore";
 import { useShallow } from "zustand/react/shallow";
 
 export function Museum() {
-  const { currentMuseumId, setMuseum, fetchObjects, objects, loading, error } =
-    useMuseumStore(
-      useShallow((state) => ({
-        currentMuseumId: state.currentMuseumId,
-        setMuseum: state.setMuseum,
-        fetchObjects: state.fetchObjects,
-        objects: state.objects,
-        loading: state.loading,
-        error: state.error,
-      }))
-    );
+  const { currentMuseumId, setMuseum, setObjects, objects } = useMuseumStore(
+    useShallow((state) => ({
+      currentMuseumId: state.currentMuseumId,
+      setMuseum: state.setMuseum,
+      setObjects: state.setObjects,
+      objects: state.objects,
+    }))
+  );
 
   useEffect(() => {
-    fetchObjects();
+    // setObjects();
   }, [currentMuseumId]);
 
   return (
@@ -39,9 +36,9 @@ export function Museum() {
         <Button onPress={() => setMuseum(undefined)}>Clear</Button>
       </View>
 
-      {loading && <ActivityIndicator />}
+      {/* {loading && <ActivityIndicator />}
 
-      {error && <Text>{error}</Text>}
+      {error && <Text>{error}</Text>} */}
 
       <FlatList
         data={objects}
