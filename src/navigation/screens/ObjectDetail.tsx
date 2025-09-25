@@ -1,57 +1,56 @@
 import { Button, Text } from "@react-navigation/elements";
 import { StaticScreenProps, useFocusEffect } from "@react-navigation/native";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
-import { useApp } from "../../state/AppContext";
-import { useApiClient } from "../../state/ApiContext";
+import { useUserSessionStore } from "../../state/stores/userSessionStore";
+import { useTourStore } from "../../state/stores/tourStore";
+import { useShallow } from "zustand/react/shallow";
 
 type Props = StaticScreenProps<{ objectId: string }>;
 
 export function ObjectDetail({ route }: Props) {
   const { objectId } = route.params;
-  const { userSessionId } = useApp();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
-  const [narrative, setNarrative] = useState<string | undefined>(undefined);
-  const { api } = useApiClient();
+
+  const sessionId = useUserSessionStore(useShallow((state) => state.sessionId));
+
+  const { loading, error, narrativeText, generateNarrative } = useTourStore(
+    useShallow((state) => ({
+      loading: state.loading,
+      error: state.error,
+      narrativeText: state.narrativeText,
+      generateNarrative: state.generateNarrative,
+    }))
+  );
 
   const generate = useCallback(async () => {
-    setLoading(true);
-    setError(undefined);
-    try {
-      const res = await api.generateNarrative({
-        object_id: objectId,
-        user_session_id: userSessionId,
-      });
-      setNarrative(res.narrative_text);
-    } catch (e: any) {
-      setError(e?.message || "Failed to generate narrative");
-    } finally {
-      setLoading(false);
-    }
-  }, [objectId, userSessionId]);
+    await generateNarrative(objectId, sessionId);
+  }, [objectId, sessionId, generateNarrative]);
 
-  useFocusEffect(
-    useCallback(() => {
-      setNarrative(undefined);
-      setError(undefined);
-      return () => {};
-    }, [objectId])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // handled in store if needed
+  //     return () => {};
+  //   }, [objectId])
+  // );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text>Object Detail</Text>
+
       <Text>ID: {objectId}</Text>
+
       <Button onPress={generate} disabled={loading}>
         Generate Narrative
       </Button>
+
       {loading && <ActivityIndicator />}
+
       {error && <Text>{error}</Text>}
-      {narrative && (
+
+      {narrativeText && (
         <View style={styles.card}>
-          <Text>{narrative}</Text>
-          <Button screen="Narrative" params={{ narrativeText: narrative }}>
+          <Text>{narrativeText}</Text>
+          <Button screen="Narrative" params={{ narrativeText: narrativeText }}>
             Listen as Audio
           </Button>
         </View>

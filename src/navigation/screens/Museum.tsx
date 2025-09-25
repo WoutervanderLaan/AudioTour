@@ -8,44 +8,41 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useApp } from "../../state/AppContext";
-import { useApiClient } from "../../state/ApiContext";
+import { useMuseumStore } from "../../state/stores/museumStore";
+import { useShallow } from "zustand/react/shallow";
 
 export function Museum() {
-  const { currentMuseumId, setCurrentMuseumId } = useApp();
-  const [objects, setObjects] = useState<Array<any>>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
-  const { api } = useApiClient();
+  const { currentMuseumId, setMuseum, fetchObjects, objects, loading, error } =
+    useMuseumStore(
+      useShallow((state) => ({
+        currentMuseumId: state.currentMuseumId,
+        setMuseum: state.setMuseum,
+        fetchObjects: state.fetchObjects,
+        objects: state.objects,
+        loading: state.loading,
+        error: state.error,
+      }))
+    );
 
   useEffect(() => {
-    const run = async () => {
-      if (!currentMuseumId) return;
-      setLoading(true);
-      setError(undefined);
-      try {
-        const data = await api.listMuseumObjects(currentMuseumId);
-        setObjects(data);
-      } catch (e: any) {
-        setError(e?.message || "Failed to load objects");
-      } finally {
-        setLoading(false);
-      }
-    };
-    run();
+    fetchObjects();
   }, [currentMuseumId]);
 
   return (
     <View style={styles.container}>
       <Text>Museum</Text>
+
       <View style={styles.row}>
-        <Button onPress={() => setCurrentMuseumId("demo-museum")}>
+        <Button onPress={() => setMuseum("demo-museum")}>
           Select Demo Museum
         </Button>
-        <Button onPress={() => setCurrentMuseumId(undefined)}>Clear</Button>
+        <Button onPress={() => setMuseum(undefined)}>Clear</Button>
       </View>
+
       {loading && <ActivityIndicator />}
+
       {error && <Text>{error}</Text>}
+
       <FlatList
         data={objects}
         keyExtractor={(item) => item.id}

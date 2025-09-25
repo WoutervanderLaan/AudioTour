@@ -1,27 +1,36 @@
 import { Text } from "@react-navigation/elements";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
-import { useApp } from "../../state/AppContext";
-import { useApiClient } from "../../state/ApiContext";
+import { useUserSessionStore } from "../../state/stores/userSessionStore";
+import { useMuseumStore } from "../../state/stores/museumStore";
+import { useApi } from "../../state/ApiContext";
+
+type Item = {
+  object_id: string;
+  score?: number;
+};
 
 export function Recommendations() {
-  const { userSessionId, currentMuseumId } = useApp();
-  const [items, setItems] = useState<
-    Array<{ object_id: string; score?: number }>
-  >([]);
+  const [items, setItems] = useState<Array<Item>>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
-  const { api } = useApiClient();
+
+  const sessionId = useUserSessionStore((s) => s.sessionId);
+  const api = useApi();
+
+  const currentMuseumId = useMuseumStore((s) => s.currentMuseumId);
 
   useEffect(() => {
     const run = async () => {
       setLoading(true);
       setError(undefined);
+
       try {
         const data = await api.recommendations({
-          user_session_id: userSessionId,
+          user_session_id: sessionId,
           current_museum_id: currentMuseumId,
         });
+
         setItems(data);
       } catch (e: any) {
         setError(e?.message || "Failed to load recommendations");
@@ -30,19 +39,23 @@ export function Recommendations() {
       }
     };
     run();
-  }, [userSessionId, currentMuseumId]);
+  }, [sessionId, currentMuseumId]);
 
   return (
     <View style={styles.container}>
       <Text>Recommendations</Text>
+
       {loading && <ActivityIndicator />}
+
       {error && <Text>{error}</Text>}
+
       <FlatList
         data={items}
         keyExtractor={(item) => item.object_id}
         renderItem={({ item }) => (
           <View style={styles.item}>
             <Text>Object {item.object_id}</Text>
+
             {item.score != null && <Text>Score: {item.score.toFixed(2)}</Text>}
           </View>
         )}

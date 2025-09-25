@@ -3,25 +3,37 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
-import { useApp } from "../../state/AppContext";
-import { useApiClient } from "../../state/ApiContext";
+import { useUserSessionStore } from "../../state/stores/userSessionStore";
+import { useTourStore } from "../../state/stores/tourStore";
+import { useShallow } from "zustand/react/shallow";
 
 export function Capture() {
-  const nav = useNavigation();
-  const { userSessionId, pushRecentObjectId } = useApp();
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
-  const { api } = useApiClient();
+  const [localError, setLocalError] = useState<string | undefined>(undefined);
+
+  const navigate = useNavigation();
+  const sessionId = useUserSessionStore((s) => s.sessionId);
+
+  const { uploadAndRecognize, loading, error } = useTourStore(
+    useShallow((state) => ({
+      uploadAndRecognize: state.uploadAndRecognize,
+      loading: state.loading,
+      error: state.error,
+    }))
+  );
 
   const pickImage = async () => {
-    setError(undefined);
+    setLocalError(undefined);
+
     const permission = await ImagePicker.requestCameraPermissionsAsync();
+
     if (permission.status !== "granted") {
-      setError("Camera permission is required");
+      setLocalError("Camera permission is required");
       return;
     }
+
     const res = await ImagePicker.launchCameraAsync({ quality: 0.7 });
+
     if (!res.canceled && res.assets && res.assets[0]?.uri) {
       setImageUri(res.assets[0].uri);
     }
@@ -29,22 +41,19 @@ export function Capture() {
 
   const upload = async () => {
     if (!imageUri) return;
-    setLoading(true);
-    setError(undefined);
-    try {
-      const result = await api.uploadPhoto({ uri: imageUri });
-      pushRecentObjectId(result.object_id);
-      nav.navigate("ObjectDetail", { objectId: result.object_id });
-    } catch (e: any) {
-      setError(e?.message || "Upload failed");
-    } finally {
-      setLoading(false);
+
+    await uploadAndRecognize(imageUri);
+
+    const objectId = useTourStore.getState().currentObjectId;
+
+    if (objectId) {
+      navigate.navigate("ObjectDetail", { objectId });
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text>{userSessionId}</Text>
+      <Text>{sessionId}</Text>
 
       <Button onPress={pickImage}>Take Photo</Button>
       {imageUri && <Image source={{ uri: imageUri }} style={styles.preview} />}
@@ -58,7 +67,7 @@ export function Capture() {
       </Button>
 
       {loading && <ActivityIndicator />}
-      {error && <Text>{error}</Text>}
+      {(error || localError) && <Text>{error || localError}</Text>}
     </View>
   );
 }
