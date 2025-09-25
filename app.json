@@ -36,6 +36,14 @@
         }
       ],
       [
+        "expo-location",
+        {
+          "isIosBackgroundLocationEnabled": false,
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location to detect nearby museums.",
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location to detect nearby museums."
+        }
+      ]
+      [
         "expo-image-picker",
         {
           "photosPermission": "Allow $(PRODUCT_NAME) to access your photos for uploads.",

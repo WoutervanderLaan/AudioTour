@@ -10,6 +10,11 @@ import {
 } from "react-native";
 import { useMuseumStore } from "../../state/stores/museumStore";
 import { useShallow } from "zustand/react/shallow";
+import {
+  useUserLocation,
+  haversineDistanceMeters,
+} from "../../hooks/useUserLocation";
+import { KNOWN_MUSEUMS } from "../../constants/museums";
 
 export function Museum() {
   const { currentMuseumId, setMuseum, setObjects, objects } = useMuseumStore(
@@ -24,6 +29,35 @@ export function Museum() {
   useEffect(() => {
     // setObjects();
   }, [currentMuseumId]);
+
+  const {
+    coords,
+    permissionStatus,
+    error: locError,
+  } = useUserLocation({ shouldWatch: true, distanceInterval: 25 });
+  useEffect(() => {
+    if (!coords) return;
+    // Auto-select nearest museum within 150m
+    const NEAR_THRESHOLD_M = 150;
+
+    let nearestId: string | undefined;
+    let nearestDist = Number.POSITIVE_INFINITY;
+
+    for (const m of KNOWN_MUSEUMS) {
+      const d = haversineDistanceMeters(coords, m.coords);
+      if (d < nearestDist) {
+        nearestDist = d;
+        nearestId = m.id;
+      }
+    }
+    if (
+      nearestId &&
+      nearestDist <= NEAR_THRESHOLD_M &&
+      nearestId !== currentMuseumId
+    ) {
+      setMuseum(nearestId);
+    }
+  }, [coords, setMuseum, currentMuseumId]);
 
   return (
     <View style={styles.container}>
