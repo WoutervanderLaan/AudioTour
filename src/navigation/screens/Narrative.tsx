@@ -5,23 +5,41 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { AudioPlayer } from "../../components/AudioPlayer";
 import { useTourStore } from "../../state/stores/tourStore";
 import { useShallow } from "zustand/react/shallow";
+import { useApi } from "../../state/ApiContext";
+import { useMutation } from "@tanstack/react-query";
 
-type Props = StaticScreenProps<{ narrativeText: string }>;
+export function Narrative() {
+  const [localError, setLocalError] = useState<string | undefined>(undefined);
 
-export function Narrative({ route }: Props) {
-  const { narrativeText } = route.params;
+  const api = useApi();
 
-  const { audioUrl, setAudioUrl } = useTourStore(
+  const { audioUrl, setAudioUrl, narrativeText } = useTourStore(
     useShallow((state) => ({
       audioUrl: state.audioUrl,
       setAudioUrl: state.setAudioUrl,
+      narrativeText: state.narrativeText,
     }))
   );
 
-  const synthesize = async () => {
-    // TODO: fetch data from api
-    await setAudioUrl(narrativeText);
-  };
+  if (!narrativeText) {
+    return (
+      <View style={styles.container}>
+        <Text>No narrative available</Text>
+      </View>
+    );
+  }
+
+  const synthesize = useMutation({
+    mutationFn: async () =>
+      api.generateAudio({ narrative_text: narrativeText }),
+    onSuccess(data) {
+      setAudioUrl(data.audio_url);
+    },
+    onError(err) {
+      console.error("Error generating audio: ", err);
+      setLocalError("Error generating audio");
+    },
+  });
 
   return (
     <View style={styles.container}>
@@ -29,13 +47,19 @@ export function Narrative({ route }: Props) {
 
       <Text numberOfLines={8}>{narrativeText}</Text>
 
-      <Button onPress={synthesize} disabled={false}>
+      <Button
+        onPress={() => {
+          setLocalError(undefined);
+          synthesize.mutate();
+        }}
+        disabled={synthesize.isPending}
+      >
         Generate Audio
       </Button>
-      {/* 
-      {loading && <ActivityIndicator />}
 
-      {error && <Text>{error}</Text>} */}
+      {synthesize.isPending && <ActivityIndicator />}
+
+      {localError && <Text>{localError}</Text>}
 
       {audioUrl && <AudioPlayer src={audioUrl} />}
     </View>

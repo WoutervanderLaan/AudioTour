@@ -5,11 +5,17 @@ import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 import { useUserSessionStore } from "../../state/stores/userSessionStore";
 import { useTourStore } from "../../state/stores/tourStore";
 import { useShallow } from "zustand/react/shallow";
+import { useMutation } from "@tanstack/react-query";
+import { useApi } from "../../state/ApiContext";
 
 type Props = StaticScreenProps<{ objectId: string }>;
 
 export function ObjectDetail({ route }: Props) {
   const { objectId } = route.params;
+  const api = useApi();
+  const [localError, setLocalError] = React.useState<string | undefined>(
+    undefined
+  );
 
   const sessionId = useUserSessionStore(useShallow((state) => state.sessionId));
 
@@ -20,10 +26,20 @@ export function ObjectDetail({ route }: Props) {
     }))
   );
 
-  const generate = useCallback(async () => {
-    // TODO: fetch data from api
-    setNarrativeText("");
-  }, [objectId, sessionId, setNarrativeText]);
+  const generate = useMutation({
+    mutationFn: async () =>
+      api.generateNarrative({
+        object_id: objectId,
+        user_session_id: sessionId,
+      }),
+    onSuccess: (data) => {
+      setNarrativeText(data.narrative_text);
+    },
+    onError: (err) => {
+      console.error("Error generating narrative: ", err);
+      setLocalError("Error generating narrative");
+    },
+  });
 
   // useFocusEffect(
   //   useCallback(() => {
@@ -38,20 +54,24 @@ export function ObjectDetail({ route }: Props) {
 
       <Text>ID: {objectId}</Text>
 
-      <Button onPress={generate} disabled={false}>
+      <Button
+        onPress={() => {
+          setLocalError(undefined);
+          generate.mutate();
+        }}
+        disabled={generate.isPending}
+      >
         Generate Narrative
       </Button>
 
-      {/* {loading && <ActivityIndicator />}
+      {generate.isPending && <ActivityIndicator />}
 
-      {error && <Text>{error}</Text>} */}
+      {localError && <Text>{localError}</Text>}
 
       {narrativeText && (
         <View style={styles.card}>
           <Text>{narrativeText}</Text>
-          <Button screen="Narrative" params={{ narrativeText: narrativeText }}>
-            Listen as Audio
-          </Button>
+          <Button screen="Narrative">Listen as Audio</Button>
         </View>
       )}
     </ScrollView>

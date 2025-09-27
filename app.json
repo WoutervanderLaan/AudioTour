@@ -10,7 +10,7 @@
     "scheme": "audiotour",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.audiotour",
+      "bundleIdentifier": "com.woutervanderlaan.audiotour",
       "appleTeamId": "WNTLECWTLQ"
     },
     "android": {
@@ -18,10 +18,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.audiotour",
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+      "package": "com.woutervanderlaan.audiotour",
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -42,7 +40,7 @@
           "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location to detect nearby museums.",
           "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location to detect nearby museums."
         }
-      ]
+      ],
       [
         "expo-image-picker",
         {

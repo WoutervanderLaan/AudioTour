@@ -6,12 +6,24 @@ import { ActivityIndicator, Image, StyleSheet, View } from "react-native";
 import { useUserSessionStore } from "../../state/stores/userSessionStore";
 import { useTourStore } from "../../state/stores/tourStore";
 import { useShallow } from "zustand/react/shallow";
+import { useApi } from "../../state/ApiContext";
+import { useMutation } from "@tanstack/react-query";
+import { useForm } from "react-hook-form";
+import { ObjectForm, objectSchema } from "../../schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  RHFCheckbox,
+  RHFTextArea,
+  RHFTextInput,
+} from "../../components/form/FormInputs";
 
 export function Capture() {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [localError, setLocalError] = useState<string | undefined>(undefined);
 
   const navigate = useNavigation();
+  const api = useApi();
+
   const sessionId = useUserSessionStore((s) => s.sessionId);
 
   const { setLastPhotoData } = useTourStore(
@@ -19,6 +31,21 @@ export function Capture() {
       setLastPhotoData: state.setLastPhotoData,
     }))
   );
+
+  const { control, handleSubmit } = useForm<ObjectForm>({
+    resolver: zodResolver(objectSchema),
+    defaultValues: {
+      name: "",
+      artist: "",
+      year: undefined,
+      description: "",
+      category: undefined,
+    },
+  });
+
+  const onSubmit = (data: ObjectForm) => {
+    console.log("Form submitted:", data);
+  };
 
   const pickImage = async () => {
     setLocalError(undefined);
@@ -37,12 +64,25 @@ export function Capture() {
     }
   };
 
+  const uploadPhoto = useMutation({
+    mutationFn: (params: { uri: string }) =>
+      api.uploadPhoto({ uri: params.uri }),
+    onError: (err) => {
+      console.error("Error uploading photo: ", err);
+      setLocalError("Error uploading photo");
+    },
+  });
+
   const upload = async () => {
     if (!imageUri) return;
-    // TODO: fetch data from api
-    // await setLastPhotoData(imageUri);
+    setLocalError(undefined);
 
-    const objectId = useTourStore.getState().currentObjectId;
+    const {
+      object_id: objectId,
+      recognition_confidence: recognitionConfidence,
+    } = await uploadPhoto.mutateAsync({ uri: imageUri });
+
+    setLastPhotoData(imageUri, objectId, recognitionConfidence);
 
     if (objectId) {
       navigate.navigate("ObjectDetail", { objectId });
@@ -58,14 +98,54 @@ export function Capture() {
 
       <Button
         onPress={upload}
-        // disabled={!imageUri || loading}
-        // style={{ opacity: !imageUri || loading ? 0.5 : 1 }}
+        disabled={!imageUri || uploadPhoto.isPending}
+        style={{ opacity: !imageUri || uploadPhoto.isPending ? 0.5 : 1 }}
       >
         Upload & Identify
       </Button>
 
-      {/* {loading && <ActivityIndicator />} */}
-      {/* {(error || localError) && <Text>{error || localError}</Text>} */}
+      {uploadPhoto.isPending && <ActivityIndicator />}
+      {localError && <Text>{localError}</Text>}
+
+      <View>
+        <RHFTextInput
+          control={control}
+          name="name"
+          label="Name"
+          placeholder="Enter name of the object"
+        />
+        <RHFTextInput
+          control={control}
+          name="artist"
+          label="Artist"
+          placeholder="Enter artist name"
+        />
+        <RHFTextArea
+          control={control}
+          name="description"
+          label="Description"
+          placeholder="Enter description"
+        />
+        <RHFTextInput
+          control={control}
+          name="year"
+          keyboardType="numeric"
+          label="Year"
+          placeholder="Enter year"
+        />
+
+        {/* <RHFSelect
+        control={control}
+        name="category"
+        label="Category"
+        options={[
+          { value: "painting", label: "Painting" },
+          { value: "sculpture", label: "Sculpture" },
+          { value: "photography", label: "Photography" },
+        ]}
+      /> */}
+        <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
+      </View>
     </View>
   );
 }

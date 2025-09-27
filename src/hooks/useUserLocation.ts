@@ -28,18 +28,21 @@ export type UseUserLocationOptions = {
 };
 
 export function useUserLocation(options: UseUserLocationOptions = {}) {
+  const [coords, setCoords] = useState<Coordinates | undefined>(undefined);
+
+  const [permissionStatus, setPermissionStatus] = useState<
+    Location.PermissionStatus | "undetermined"
+  >("undetermined");
+
+  const [error, setError] = useState<string | undefined>(undefined);
+
+  const watchSub = useRef<Location.LocationSubscription | null>(null);
+
   const {
     shouldWatch = false,
     accuracy = Location.Accuracy.Balanced,
     distanceInterval = 20,
   } = options;
-  const [coords, setCoords] = useState<Coordinates | undefined>(undefined);
-  const [permissionStatus, setPermissionStatus] = useState<
-    Location.PermissionStatus | "undetermined"
-  >("undetermined");
-  const [error, setError] = useState<string | undefined>(undefined);
-
-  const watchSub = useRef<Location.LocationSubscription | null>(null);
 
   useEffect(() => {
     let isMounted = true;

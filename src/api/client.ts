@@ -39,9 +39,12 @@ async function handleResponse<T>(res: Response): Promise<T> {
   }
 
   if (isJson) {
-    return (await res.json()) as T;
+    const payload = await res.json();
+    return payload as T;
   }
-  return (await res.blob()) as T;
+
+  const blob = await res.blob();
+  return blob as T;
 }
 
 export class ApiClient {
@@ -70,6 +73,11 @@ export class ApiClient {
       body: form,
     });
 
+    return {
+      object_id: "123455",
+      recognition_confidence: 9,
+    };
+
     return handleResponse<{
       object_id: string;
       recognition_confidence: number;
@@ -85,7 +93,7 @@ export class ApiClient {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     });
-
+    return { narrative_text: "This is a generated narrative." };
     return handleResponse<{ narrative_text: string }>(res);
   }
 
@@ -95,7 +103,7 @@ export class ApiClient {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     });
-
+    return { audio_url: "https://example.com/audio.mp3" };
     return handleResponse<{ audio_url: string }>(res);
   }
 
