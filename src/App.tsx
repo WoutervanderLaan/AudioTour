@@ -8,6 +8,8 @@ import { StatusBar, useColorScheme } from "react-native";
 import { Navigation } from "./navigation";
 import { ApiProvider } from "./state/ApiContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastProvider } from "./state/ToastContext";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 Asset.loadAsync([...NavigationAssets]);
 
@@ -24,21 +26,25 @@ export function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <StatusBar
+        barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+        animated
+      />
       <ApiProvider>
-        <StatusBar
-          barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
-          animated
-        />
-        <Navigation
-          theme={theme}
-          linking={{
-            enabled: "auto",
-            prefixes: [prefix],
-          }}
-          onReady={() => {
-            SplashScreen.hideAsync();
-          }}
-        />
+        <SafeAreaProvider>
+          <ToastProvider theme={theme}>
+            <Navigation
+              theme={theme}
+              linking={{
+                enabled: "auto",
+                prefixes: [prefix],
+              }}
+              onReady={() => {
+                SplashScreen.hideAsync();
+              }}
+            />
+          </ToastProvider>
+        </SafeAreaProvider>
       </ApiProvider>
     </QueryClientProvider>
   );

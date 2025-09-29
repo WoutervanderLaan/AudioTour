@@ -40,6 +40,7 @@ async function handleResponse<T>(res: Response): Promise<T> {
 
   if (isJson) {
     const payload = await res.json();
+    console.log(payload);
     return payload as T;
   }
 
@@ -63,20 +64,20 @@ export class ApiClient {
     const photo = await fetch(params.uri);
     const photoBlob = await photo.blob();
 
-    form.append("photo", photoBlob, "photo.jpg");
+    form.append("photos", photoBlob, "photo.jpg");
+    form.append("photos", photoBlob, "photo.jpg");
+
+    const url = new URL(this._url("/process-artwork"));
+    url.searchParams.append;
+
     if (params.metadata) {
-      form.append("metadata", JSON.stringify(params.metadata));
+      url.searchParams.append("metadata", JSON.stringify(params.metadata));
     }
 
-    const res = await fetch(this._url("/upload-photo"), {
+    const res = await fetch(url.toString(), {
       method: "POST",
       body: form,
     });
-
-    return {
-      object_id: "123455",
-      recognition_confidence: 9,
-    };
 
     return handleResponse<{
       object_id: string;
@@ -93,17 +94,17 @@ export class ApiClient {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     });
-    return { narrative_text: "This is a generated narrative." };
-    return handleResponse<{ narrative_text: string }>(res);
+
+    return handleResponse<{ text: string }>(res);
   }
 
-  async generateAudio(params: { narrative_text: string }) {
+  async generateAudio(params: { text: string }) {
     const res = await fetch(this._url("/generate-audio"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(params),
     });
-    return { audio_url: "https://example.com/audio.mp3" };
+
     return handleResponse<{ audio_url: string }>(res);
   }
 

@@ -33,7 +33,8 @@ export function ObjectDetail({ route }: Props) {
         user_session_id: sessionId,
       }),
     onSuccess: (data) => {
-      setNarrativeText(data.narrative_text);
+      console.log("Generated narrative: ", data.text);
+      setNarrativeText(data.text);
     },
     onError: (err) => {
       console.error("Error generating narrative: ", err);

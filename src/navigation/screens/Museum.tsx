@@ -14,6 +14,7 @@ import {
   haversineDistanceMeters,
 } from "../../hooks/useUserLocation";
 import { KNOWN_MUSEUMS, MuseumLocation } from "../../constants/museums";
+import { useToast } from "../../state/ToastContext";
 
 export function Museum() {
   const [loading, setLoading] = React.useState(true);
@@ -26,6 +27,8 @@ export function Museum() {
       objects: state.objects,
     }))
   );
+
+  const { showToast } = useToast();
 
   // useEffect(() => {
   // setObjects();
@@ -58,7 +61,36 @@ export function Museum() {
       <Text>Museum</Text>
 
       <View style={styles.row}>
-        <Button onPress={() => setMuseum(undefined)}>Clear</Button>
+        <Button
+          onPress={() =>
+            showToast({
+              type: "info",
+              message: "This is an info toast!",
+            })
+          }
+        >
+          Info
+        </Button>
+        <Button
+          onPress={() =>
+            showToast({
+              type: "success",
+              message: "This is a success toast!",
+            })
+          }
+        >
+          Success
+        </Button>
+        <Button
+          onPress={() =>
+            showToast({
+              type: "error",
+              message: "This is an error toast!",
+            })
+          }
+        >
+          Error
+        </Button>
       </View>
 
       {loading && <ActivityIndicator />}

@@ -30,8 +30,7 @@ export function Narrative() {
   }
 
   const synthesize = useMutation({
-    mutationFn: async () =>
-      api.generateAudio({ narrative_text: narrativeText }),
+    mutationFn: async () => api.generateAudio({ text: narrativeText }),
     onSuccess(data) {
       setAudioUrl(data.audio_url);
     },

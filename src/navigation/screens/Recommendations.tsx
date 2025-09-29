@@ -4,6 +4,7 @@ import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 import { useUserSessionStore } from "../../state/stores/userSessionStore";
 import { useMuseumStore } from "../../state/stores/museumStore";
 import { useApi } from "../../state/ApiContext";
+import { useToast } from "../../state/ToastContext";
 
 type Item = {
   object_id: string;
@@ -17,6 +18,7 @@ export function Recommendations() {
 
   const sessionId = useUserSessionStore((s) => s.sessionId);
   const api = useApi();
+  const toast = useToast();
 
   const currentMuseumId = useMuseumStore((s) => s.currentMuseumId);
 
@@ -34,6 +36,10 @@ export function Recommendations() {
         setItems(data);
       } catch (e: any) {
         setError(e?.message || "Failed to load recommendations");
+        toast.showToast({
+          message: "Error loading recommendations",
+          type: "error",
+        });
       } finally {
         setLoading(false);
       }

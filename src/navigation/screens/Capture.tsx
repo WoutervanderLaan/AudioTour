@@ -50,14 +50,16 @@ export function Capture() {
   const pickImage = async () => {
     setLocalError(undefined);
 
-    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    // const permission = await ImagePicker.requestCameraPermissionsAsync();
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permission.status !== "granted") {
       setLocalError("Camera permission is required");
       return;
     }
 
-    const res = await ImagePicker.launchCameraAsync({ quality: 0.7 });
+    // const res = await ImagePicker.launchCameraAsync({ quality: 0.7 });
+    const res = await ImagePicker.launchImageLibraryAsync({ quality: 0.7 });
 
     if (!res.canceled && res.assets && res.assets[0]?.uri) {
       setImageUri(res.assets[0].uri);
@@ -107,7 +109,7 @@ export function Capture() {
       {uploadPhoto.isPending && <ActivityIndicator />}
       {localError && <Text>{localError}</Text>}
 
-      <View>
+      <View style={{ width: "100%" }}>
         <RHFTextInput
           control={control}
           name="name"
