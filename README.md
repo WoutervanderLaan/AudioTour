@@ -1,5 +1,7 @@
 # Starter Template with React Navigation
 
+Test diff
+
 This is a minimal starter template for React Native apps using Expo and React Navigation.
 
 It includes the following:
