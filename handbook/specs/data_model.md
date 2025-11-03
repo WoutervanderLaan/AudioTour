@@ -1,6 +1,7 @@
 # Data Model
 
 ## Object Table
+
 - id
 - name
 - artist
@@ -12,12 +13,14 @@
 - metadata
 
 ## User Sequence Table
+
 - id
 - user_session_id
 - object_ids
 - created_at
 
 ## Museum Table
+
 - id
 - name
 - location
@@ -25,6 +28,7 @@
 - license_tier
 
 ## Request Log
+
 - id
 - user_session_id
 - object_id

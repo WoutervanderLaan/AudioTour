@@ -1,12 +1,27 @@
 {
   "name": "audiotour",
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "main": "index.tsx",
   "scripts": {
     "start": "expo start --dev-client",
     "web": "expo start --web",
     "android": "expo run:android",
-    "ios": "expo run:ios --device"
+    "ios": "expo run:ios --device",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
+    "prepare": "husky",
+    "clean": "react-native-clean-project",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
+    "test": "echo \"Error: no test specified\""
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
@@ -39,9 +54,28 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@eslint/js": "^9.38.0",
     "@tanstack/eslint-plugin-query": "^5.90.1",
     "@types/react": "~19.1.10",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-boundaries": "^5.1.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-native": "^5.0.0",
+    "eslint-plugin-security": "^3.0.1",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-sonarjs": "^3.0.5",
+    "eslint-plugin-unicorn": "^61.0.2",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
     "typescript": "~5.9.2"
-  },
-  "private": true
+  }
 }

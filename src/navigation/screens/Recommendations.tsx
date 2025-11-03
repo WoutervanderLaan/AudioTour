@@ -1,64 +1,65 @@
-import { Text } from "@react-navigation/elements";
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
-import { useUserSessionStore } from "../../state/stores/userSessionStore";
-import { useMuseumStore } from "../../state/stores/museumStore";
-import { useApi } from "../../state/ApiContext";
-import { useToast } from "../../state/ToastContext";
+import {Text} from '@react-navigation/elements'
+import React, {useEffect, useState} from 'react'
+import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native'
+
+import {useApi} from '@/state/ApiContext'
+import {useMuseumStore} from '@/state/stores/museumStore'
+import {useUserSessionStore} from '@/state/stores/userSessionStore'
+import {useToast} from '@/state/ToastContext'
 
 type Item = {
-  object_id: string;
-  score?: number;
-};
+  object_id: string
+  score?: number
+}
 
 export function Recommendations() {
-  const [items, setItems] = useState<Array<Item>>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>(undefined);
+  const [items, setItems] = useState<Array<Item>>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | undefined>(undefined)
 
-  const sessionId = useUserSessionStore((s) => s.sessionId);
-  const api = useApi();
-  const toast = useToast();
+  const sessionId = useUserSessionStore(s => s.sessionId)
+  const api = useApi()
+  const toast = useToast()
 
-  const currentMuseumId = useMuseumStore((s) => s.currentMuseumId);
+  const currentMuseumId = useMuseumStore(s => s.currentMuseumId)
 
   useEffect(() => {
     const run = async () => {
-      setLoading(true);
-      setError(undefined);
+      setLoading(true)
+      setError(undefined)
 
       try {
         const data = await api.recommendations({
           user_session_id: sessionId,
           current_museum_id: currentMuseumId,
-        });
+        })
 
-        setItems(data);
+        setItems(data)
       } catch (e: any) {
-        setError(e?.message || "Failed to load recommendations");
+        setError(e?.message || 'Failed to load recommendations')
         toast.showToast({
-          message: "Error loading recommendations",
-          type: "error",
-        });
+          message: 'Error loading recommendations',
+          type: 'error',
+        })
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
-    run();
-  }, [sessionId, currentMuseumId]);
+    }
+    run()
+  }, [sessionId, currentMuseumId])
 
   return (
     <View style={styles.container}>
       <Text>Recommendations</Text>
 
-      {loading && <ActivityIndicator />}
+      {!!loading && <ActivityIndicator />}
 
-      {error && <Text>{error}</Text>}
+      {!!error && <Text>{error}</Text>}
 
       <FlatList
         data={items}
-        keyExtractor={(item) => item.object_id}
-        renderItem={({ item }) => (
+        keyExtractor={item => item.object_id}
+        renderItem={({item}) => (
           <View style={styles.item}>
             <Text>Object {item.object_id}</Text>
 
@@ -67,10 +68,10 @@ export function Recommendations() {
         )}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, gap: 12 },
-  item: { paddingVertical: 8 },
-});
+  container: {flex: 1, padding: 16, gap: 12},
+  item: {paddingVertical: 8},
+})

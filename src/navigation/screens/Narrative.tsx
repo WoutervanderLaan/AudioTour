@@ -1,44 +1,44 @@
-import { Button, Text } from "@react-navigation/elements";
-import { StaticScreenProps } from "@react-navigation/native";
-import React, { useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
-import { AudioPlayer } from "../../components/AudioPlayer";
-import { useTourStore } from "../../state/stores/tourStore";
-import { useShallow } from "zustand/react/shallow";
-import { useApi } from "../../state/ApiContext";
-import { useMutation } from "@tanstack/react-query";
+import {Button, Text} from '@react-navigation/elements'
+import {useMutation} from '@tanstack/react-query'
+import React, {useState} from 'react'
+import {ActivityIndicator, StyleSheet, View} from 'react-native'
+import {useShallow} from 'zustand/react/shallow'
+
+import {AudioPlayer} from '@/components/AudioPlayer'
+import {useApi} from '@/state/ApiContext'
+import {useTourStore} from '@/state/stores/tourStore'
 
 export function Narrative() {
-  const [localError, setLocalError] = useState<string | undefined>(undefined);
+  const [localError, setLocalError] = useState<string | undefined>(undefined)
 
-  const api = useApi();
+  const api = useApi()
 
-  const { audioUrl, setAudioUrl, narrativeText } = useTourStore(
-    useShallow((state) => ({
+  const {audioUrl, setAudioUrl, narrativeText} = useTourStore(
+    useShallow(state => ({
       audioUrl: state.audioUrl,
       setAudioUrl: state.setAudioUrl,
       narrativeText: state.narrativeText,
-    }))
-  );
+    })),
+  )
+
+  const synthesize = useMutation({
+    mutationFn: async () => api.generateAudio({text: narrativeText ?? ''}),
+    onSuccess(data) {
+      setAudioUrl(data.audio_url)
+    },
+    onError(err) {
+      console.error('Error generating audio: ', err)
+      setLocalError('Error generating audio')
+    },
+  })
 
   if (!narrativeText) {
     return (
       <View style={styles.container}>
         <Text>No narrative available</Text>
       </View>
-    );
+    )
   }
-
-  const synthesize = useMutation({
-    mutationFn: async () => api.generateAudio({ text: narrativeText }),
-    onSuccess(data) {
-      setAudioUrl(data.audio_url);
-    },
-    onError(err) {
-      console.error("Error generating audio: ", err);
-      setLocalError("Error generating audio");
-    },
-  });
 
   return (
     <View style={styles.container}>
@@ -48,21 +48,20 @@ export function Narrative() {
 
       <Button
         onPress={() => {
-          setLocalError(undefined);
-          synthesize.mutate();
+          setLocalError(undefined)
+          synthesize.mutate()
         }}
-        disabled={synthesize.isPending}
-      >
+        disabled={synthesize.isPending}>
         Generate Audio
       </Button>
 
-      {synthesize.isPending && <ActivityIndicator />}
+      {!!synthesize.isPending && <ActivityIndicator />}
 
-      {localError && <Text>{localError}</Text>}
+      {!!localError && <Text>{localError}</Text>}
 
-      {audioUrl && <AudioPlayer src={audioUrl} />}
+      {!!audioUrl && <AudioPlayer src={audioUrl} />}
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -71,4 +70,4 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 12,
   },
-});
+})

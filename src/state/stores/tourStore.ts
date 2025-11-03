@@ -1,25 +1,25 @@
-import { create } from "zustand";
-import { immer } from "zustand/middleware/immer";
+import {create} from 'zustand'
+import {immer} from 'zustand/middleware/immer'
 
 type TourState = {
-  lastPhotoUri?: string;
-  currentObjectId?: string;
-  recognitionConfidence?: number;
-  narrativeText?: string;
-  audioUrl?: string;
-  setLastPhoto: (uri?: string) => void;
+  lastPhotoUri?: string
+  currentObjectId?: string
+  recognitionConfidence?: number
+  narrativeText?: string
+  audioUrl?: string
+  setLastPhoto: (uri?: string) => void
   setLastPhotoData: (
     uri: string,
     objectId: string,
-    recognitionConfidence: number
-  ) => void;
-  setNarrativeText: (narrativeText: string) => void;
-  setAudioUrl: (audioUrl: string) => void;
-  reset: () => void;
-};
+    recognitionConfidence: number,
+  ) => void
+  setNarrativeText: (narrativeText: string) => void
+  setAudioUrl: (audioUrl: string) => void
+  reset: () => void
+}
 
 export const useTourStore = create<TourState>()(
-  immer((set) => ({
+  immer(set => ({
     lastPhotoUri: undefined,
     currentObjectId: undefined,
     recognitionConfidence: undefined,
@@ -27,38 +27,38 @@ export const useTourStore = create<TourState>()(
     audioUrl: undefined,
     loading: false,
     error: undefined,
-    setLastPhoto: (uri) =>
-      set((state) => {
-        state.lastPhotoUri = uri;
+    setLastPhoto: uri =>
+      set(state => {
+        state.lastPhotoUri = uri
       }),
     reset: () =>
-      set((state) => {
-        state.lastPhotoUri = undefined;
-        state.currentObjectId = undefined;
-        state.recognitionConfidence = undefined;
-        state.narrativeText = undefined;
-        state.audioUrl = undefined;
+      set(state => {
+        state.lastPhotoUri = undefined
+        state.currentObjectId = undefined
+        state.recognitionConfidence = undefined
+        state.narrativeText = undefined
+        state.audioUrl = undefined
       }),
     setLastPhotoData: (
       uri: string,
       objectId: string,
-      recognitionConfidence: number
+      recognitionConfidence: number,
     ) => {
-      set((state) => {
-        state.lastPhotoUri = uri;
-        state.currentObjectId = objectId;
-        state.recognitionConfidence = recognitionConfidence;
-      });
+      set(state => {
+        state.lastPhotoUri = uri
+        state.currentObjectId = objectId
+        state.recognitionConfidence = recognitionConfidence
+      })
     },
     setNarrativeText: async (narrativeText: string) => {
-      set((state) => {
-        state.narrativeText = narrativeText;
-      });
+      set(state => {
+        state.narrativeText = narrativeText
+      })
     },
     setAudioUrl: async (audioUrl: string) => {
-      set((state) => {
-        state.audioUrl = audioUrl;
-      });
+      set(state => {
+        state.audioUrl = audioUrl
+      })
     },
-  }))
-);
+  })),
+)

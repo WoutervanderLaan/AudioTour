@@ -1,12 +1,12 @@
-import { Text } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import {Text} from '@react-navigation/elements'
+import {StyleSheet, View} from 'react-native'
 
 export function Settings() {
   return (
     <View style={styles.container}>
       <Text>Settings Screen</Text>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 10,
   },
-});
+})

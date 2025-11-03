@@ -1,5 +1,5 @@
-import { Text, Button } from '@react-navigation/elements';
-import { StyleSheet, View } from 'react-native';
+import {Button, Text} from '@react-navigation/elements'
+import {StyleSheet, View} from 'react-native'
 
 export function NotFound() {
   return (
@@ -7,7 +7,7 @@ export function NotFound() {
       <Text>404</Text>
       <Button screen="HomeTabs">Go to Home</Button>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
   },
-});
+})

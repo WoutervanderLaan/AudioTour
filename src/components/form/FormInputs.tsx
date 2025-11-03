@@ -1,5 +1,6 @@
-import { Controller, Control, FieldValues, Path } from "react-hook-form";
-import { View, Text, TextInput, Switch } from "react-native";
+import type {ComponentProps} from 'react'
+import {Control, Controller, FieldValues, Path} from 'react-hook-form'
+import {Switch, Text, TextInput, View} from 'react-native'
 
 // ✅ Text Input
 export function RHFTextInput<T extends FieldValues>({
@@ -9,34 +10,31 @@ export function RHFTextInput<T extends FieldValues>({
   placeholder,
   ...props
 }: {
-  control: Control<T>;
-  name: Path<T>;
-  label: string;
-  placeholder?: string;
-} & React.ComponentProps<typeof TextInput>) {
+  control: Control<T>
+  name: Path<T>
+  label: string
+  placeholder?: string
+} & ComponentProps<typeof TextInput>) {
   return (
     <Controller
       control={control}
       name={name}
-      render={({
-        field: { onChange, onBlur, value },
-        fieldState: { error },
-      }) => (
-        <View style={{ marginBottom: 12 }}>
+      render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+        <View style={{marginBottom: 12}}>
           <Text>{label}</Text>
           <TextInput
-            style={{ borderWidth: 1, padding: 8 }}
+            style={{borderWidth: 1, padding: 8}}
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value as any}
             {...props}
           />
-          {error && <Text style={{ color: "red" }}>{error.message}</Text>}
+          {!!error && <Text style={{color: 'red'}}>{error.message}</Text>}
         </View>
       )}
     />
-  );
+  )
 }
 
 // ✅ Text Area
@@ -46,34 +44,31 @@ export function RHFTextArea<T extends FieldValues>({
   label,
   placeholder,
 }: {
-  control: Control<T>;
-  name: Path<T>;
-  label: string;
-  placeholder?: string;
+  control: Control<T>
+  name: Path<T>
+  label: string
+  placeholder?: string
 }) {
   return (
     <Controller
       control={control}
       name={name}
-      render={({
-        field: { onChange, onBlur, value },
-        fieldState: { error },
-      }) => (
-        <View style={{ marginBottom: 12 }}>
+      render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+        <View style={{marginBottom: 12}}>
           <Text>{label}</Text>
           <TextInput
-            style={{ borderWidth: 1, padding: 8, height: 100 }}
+            style={{borderWidth: 1, padding: 8, height: 100}}
             placeholder={placeholder}
             multiline
             onBlur={onBlur}
             onChangeText={onChange}
             value={value as any}
           />
-          {error && <Text style={{ color: "red" }}>{error.message}</Text>}
+          {!!error && <Text style={{color: 'red'}}>{error.message}</Text>}
         </View>
       )}
     />
-  );
+  )
 }
 
 // ✅ Checkbox (using Switch in React Native)
@@ -82,29 +77,31 @@ export function RHFCheckbox<T extends FieldValues>({
   name,
   label,
 }: {
-  control: Control<T>;
-  name: Path<T>;
-  label: string;
+  control: Control<T>
+  name: Path<T>
+  label: string
 }) {
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value }, fieldState: { error } }) => (
+      render={({field: {onChange, value}, fieldState: {error}}) => (
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
+            flexDirection: 'row',
+            alignItems: 'center',
             marginBottom: 12,
-          }}
-        >
-          <Switch value={value as any} onValueChange={onChange} />
-          <Text style={{ marginLeft: 8 }}>{label}</Text>
-          {error && <Text style={{ color: "red" }}>{error.message}</Text>}
+          }}>
+          <Switch
+            value={value as any}
+            onValueChange={onChange}
+          />
+          <Text style={{marginLeft: 8}}>{label}</Text>
+          {!!error && <Text style={{color: 'red'}}>{error.message}</Text>}
         </View>
       )}
     />
-  );
+  )
 }
 
 // // ✅ Select (using Picker in React Native)
