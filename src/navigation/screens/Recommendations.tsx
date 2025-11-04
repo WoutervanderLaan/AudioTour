@@ -12,7 +12,19 @@ type Item = {
   score?: number
 }
 
-export function Recommendations() {
+/**
+ * function Recommendations
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+export /**
+ * Function or component Recommendations
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function Recommendations() {
   const [items, setItems] = useState<Array<Item>>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -24,27 +36,40 @@ export function Recommendations() {
   const currentMuseumId = useMuseumStore(s => s.currentMuseumId)
 
   useEffect(() => {
-    const run = async () => {
-      setLoading(true)
-      setError(undefined)
+    const /**
+       * Function or component run
+       * TODO: describe what it does.
+       *
+       * @returns {*} describe return value
+       */
+      run =
+        /**
+         * function or component run
+         * TODO: describe what it does.
+         *
+         * @returns {*} describe return value
+         */
+        async () => {
+          setLoading(true)
+          setError(undefined)
 
-      try {
-        const data = await api.recommendations({
-          user_session_id: sessionId,
-          current_museum_id: currentMuseumId,
-        })
+          try {
+            const data = await api.recommendations({
+              user_session_id: sessionId,
+              current_museum_id: currentMuseumId,
+            })
 
-        setItems(data)
-      } catch (e: any) {
-        setError(e?.message || 'Failed to load recommendations')
-        toast.showToast({
-          message: 'Error loading recommendations',
-          type: 'error',
-        })
-      } finally {
-        setLoading(false)
-      }
-    }
+            setItems(data)
+          } catch (e: any) {
+            setError(e?.message || 'Failed to load recommendations')
+            toast.showToast({
+              message: 'Error loading recommendations',
+              type: 'error',
+            })
+          } finally {
+            setLoading(false)
+          }
+        }
     run()
   }, [sessionId, currentMuseumId])
 

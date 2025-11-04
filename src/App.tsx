@@ -20,7 +20,17 @@ const prefix = createURL('/')
 
 const queryClient = new QueryClient()
 
-export function App() {
+/**
+ * Main App component
+ * @returns
+ */
+export /**
+ * Function or component App
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function App() {
   const colorScheme = useColorScheme()
 
   const theme = colorScheme === 'dark' ? DarkTheme : DefaultTheme

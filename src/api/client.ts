@@ -6,6 +6,14 @@ export type ApiError = {
   details?: unknown
 }
 
+/**
+ * function handleResponseError
+ * TODO: describe what it does.
+ *
+ * @param {*} res
+ * @param {*} isJson
+ * @returns {*} describe return value
+ */
 async function handleResponseError(res: Response, isJson: boolean) {
   let message = res.statusText ?? 'Request failed'
   let details: unknown = undefined
@@ -31,6 +39,13 @@ async function handleResponseError(res: Response, isJson: boolean) {
   throw {status: res.status, message, details} as ApiError
 }
 
+/**
+ * function handleResponse
+ * TODO: describe what it does.
+ *
+ * @param {*} res
+ * @returns {*} describe return value
+ */
 async function handleResponse<T>(res: Response): Promise<T> {
   const contentType = res.headers.get('content-type') ?? ''
   const isJson = contentType.includes('application/json')
@@ -49,6 +64,12 @@ async function handleResponse<T>(res: Response): Promise<T> {
   return blob as T
 }
 
+/**
+ * class ApiClient
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
 export class ApiClient {
   // TODO: add session based info and user data to instance of ApiClient
   // TODO: add interceptors

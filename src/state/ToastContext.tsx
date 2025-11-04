@@ -20,7 +20,20 @@ type ToastContextType = {
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined)
 
-export function ToastProvider({
+/**
+ * function ToastProvider
+ * TODO: describe what it does.
+ *
+ * @param {*} param
+ * @returns {*} describe return value
+ */
+export /**
+ * Function or component ToastProvider
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function ToastProvider({
   children,
   theme,
 }: {
@@ -59,7 +72,19 @@ export function ToastProvider({
   )
 }
 
-export function useToast() {
+/**
+ * function useToast
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+export /**
+ * Function or component useToast
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function useToast() {
   const ctx = useContext(ToastContext)
   if (!ctx) throw new Error('useToast must be used within ToastProvider')
   return ctx

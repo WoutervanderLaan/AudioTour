@@ -8,7 +8,19 @@ import {AudioPlayer} from '@/components/AudioPlayer'
 import {useApi} from '@/state/ApiContext'
 import {useTourStore} from '@/state/stores/tourStore'
 
-export function Narrative() {
+/**
+ * function Narrative
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+export /**
+ * Function or component Narrative
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function Narrative() {
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
   const api = useApi()

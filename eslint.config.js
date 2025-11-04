@@ -13,9 +13,12 @@ import sonarjs from 'eslint-plugin-sonarjs'
 import unicorn from 'eslint-plugin-unicorn'
 import security from 'eslint-plugin-security'
 import boundaries from 'eslint-plugin-boundaries'
+import requireDocComment from './eslint-rules/require-doc-comment.js'
+import queryPlugin from '@tanstack/eslint-plugin-query'
 
 export default [
   js.configs.recommended,
+  // queryPlugin.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     ignores: [
@@ -24,6 +27,7 @@ export default [
       'ios/**',
       'build/**',
       'dist/**',
+      'eslint-rules/**',
       '**/*.d.ts',
       'eslint.config.js',
       '.prettierrc.js',
@@ -35,7 +39,9 @@ export default [
         ecmaVersion: 'latest',
         sourceType: 'module',
         ecmaFeatures: {jsx: true},
-        projectService: true,
+        // projectService: true,
+        project: './tsconfig.json',
+        tsconfigRootDir: import.meta.dirname,
       },
       globals: {
         ...globals.browser,
@@ -46,6 +52,7 @@ export default [
 
     plugins: {
       '@typescript-eslint': tseslint,
+      '@tanstack/query': queryPlugin,
       react,
       'react-hooks': reactHooks,
       'react-native': reactNative,
@@ -57,6 +64,11 @@ export default [
       unicorn,
       security,
       boundaries,
+      local: {
+        rules: {
+          'require-doc-comment': requireDocComment,
+        },
+      },
     },
 
     settings: {
@@ -91,6 +103,7 @@ export default [
       /** --- General JS / TS --- **/
       'no-debugger': 'error',
       'no-console': 'warn',
+      'local/require-doc-comment': 'error',
       'no-var': 'error',
       'prefer-const': 'error',
       'max-lines': ['warn', {max: 300, skipBlankLines: true}],
@@ -116,6 +129,15 @@ export default [
       'security/detect-object-injection': 'off',
       'sonarjs/no-duplicate-string': 'warn',
       'unicorn/prefer-optional-catch-binding': 'warn',
+      'unicorn/filename-case': [
+        'error',
+        {
+          cases: {
+            camelCase: true,
+            pascalCase: true,
+          },
+        },
+      ],
       '@typescript-eslint/strict-boolean-expressions': [
         'warn',
         {

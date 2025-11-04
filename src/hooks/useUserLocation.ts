@@ -3,12 +3,37 @@ import {useEffect, useRef, useState} from 'react'
 
 export type Coordinates = {latitude: number; longitude: number}
 
-export function haversineDistanceMeters(
-  a: Coordinates,
-  b: Coordinates,
-): number {
+/**
+ * function haversineDistanceMeters
+ * TODO: describe what it does.
+ *
+ * @param {*} a
+ * @param {*} b
+ * @returns {*} describe return value
+ */
+export /**
+ * Function or component haversineDistanceMeters
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function haversineDistanceMeters(a: Coordinates, b: Coordinates): number {
   const R = 6371e3 // meters
-  const toRad = (deg: number) => (deg * Math.PI) / 180
+  const /**
+     * Function or component toRad
+     * TODO: describe what it does.
+     *
+     * @returns {*} describe return value
+     */
+    toRad =
+      /**
+       * function or component toRad
+       * TODO: describe what it does.
+       *
+       * @param {*} deg
+       * @returns {*} describe return value
+       */
+      (deg: number) => (deg * Math.PI) / 180
   const dLat = toRad(b.latitude - a.latitude)
   const dLon = toRad(b.longitude - a.longitude)
   const lat1 = toRad(a.latitude)
@@ -27,7 +52,20 @@ export type UseUserLocationOptions = {
   distanceInterval?: number // meters
 }
 
-export function useUserLocation(options: UseUserLocationOptions = {}) {
+/**
+ * function useUserLocation
+ * TODO: describe what it does.
+ *
+ * @param {*} param
+ * @returns {*} describe return value
+ */
+export /**
+ * Function or component useUserLocation
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function useUserLocation(options: UseUserLocationOptions = {}) {
   const [coords, setCoords] = useState<Coordinates | undefined>(undefined)
 
   const [permissionStatus, setPermissionStatus] = useState<
@@ -47,56 +85,69 @@ export function useUserLocation(options: UseUserLocationOptions = {}) {
   useEffect(() => {
     let isMounted = true
 
-    const run = async () => {
-      try {
-        const {status} = await Location.requestForegroundPermissionsAsync()
+    const /**
+       * Function or component run
+       * TODO: describe what it does.
+       *
+       * @returns {*} describe return value
+       */
+      run =
+        /**
+         * function or component run
+         * TODO: describe what it does.
+         *
+         * @returns {*} describe return value
+         */
+        async () => {
+          try {
+            const {status} = await Location.requestForegroundPermissionsAsync()
 
-        if (!isMounted) return
+            if (!isMounted) return
 
-        setPermissionStatus(status)
+            setPermissionStatus(status)
 
-        if (status !== 'granted') {
-          setError('Location permission not granted')
-          return
-        }
+            if (status !== 'granted') {
+              setError('Location permission not granted')
+              return
+            }
 
-        const last = await Location.getLastKnownPositionAsync()
+            const last = await Location.getLastKnownPositionAsync()
 
-        if (last && isMounted) {
-          setCoords({
-            latitude: last.coords.latitude,
-            longitude: last.coords.longitude,
-          })
-        } else {
-          const current = await Location.getCurrentPositionAsync({accuracy})
+            if (last && isMounted) {
+              setCoords({
+                latitude: last.coords.latitude,
+                longitude: last.coords.longitude,
+              })
+            } else {
+              const current = await Location.getCurrentPositionAsync({accuracy})
 
-          if (!isMounted) return
-
-          setCoords({
-            latitude: current.coords.latitude,
-            longitude: current.coords.longitude,
-          })
-        }
-
-        if (shouldWatch) {
-          watchSub.current = await Location.watchPositionAsync(
-            {accuracy, distanceInterval},
-            loc => {
               if (!isMounted) return
 
               setCoords({
-                latitude: loc.coords.latitude,
-                longitude: loc.coords.longitude,
+                latitude: current.coords.latitude,
+                longitude: current.coords.longitude,
               })
-            },
-          )
-        }
-      } catch (e: any) {
-        if (!isMounted) return
+            }
 
-        setError(e?.message || 'Failed to get location')
-      }
-    }
+            if (shouldWatch) {
+              watchSub.current = await Location.watchPositionAsync(
+                {accuracy, distanceInterval},
+                loc => {
+                  if (!isMounted) return
+
+                  setCoords({
+                    latitude: loc.coords.latitude,
+                    longitude: loc.coords.longitude,
+                  })
+                },
+              )
+            }
+          } catch (e: any) {
+            if (!isMounted) return
+
+            setError(e?.message || 'Failed to get location')
+          }
+        }
     run()
 
     return () => {

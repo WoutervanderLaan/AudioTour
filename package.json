@@ -15,6 +15,8 @@
     "clean": "react-native-clean-project",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "validate": "npm run lint && npm run typecheck && npm run format",
     "test": "echo \"Error: no test specified\""
   },
   "lint-staged": {

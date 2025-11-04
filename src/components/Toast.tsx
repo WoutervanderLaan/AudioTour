@@ -8,7 +8,20 @@ type Props = {
   theme: ReactNavigation.Theme
 }
 
-export function Toast({message, type = 'info', theme}: Props) {
+/**
+ * function Toast
+ * TODO: describe what it does.
+ *
+ * @param {*} param
+ * @returns {*} describe return value
+ */
+export /**
+ * Function or component Toast
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function Toast({message, type = 'info', theme}: Props) {
   const {top} = useSafeAreaInsets()
 
   return (

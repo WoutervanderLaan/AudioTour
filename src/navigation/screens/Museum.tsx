@@ -14,7 +14,19 @@ import {haversineDistanceMeters, useUserLocation} from '@/hooks/useUserLocation'
 import {useMuseumStore} from '@/state/stores/museumStore'
 import {useToast} from '@/state/ToastContext'
 
-export function Museum() {
+/**
+ * function Museum
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+export /**
+ * Function or component Museum
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function Museum() {
   const [loading, setLoading] = React.useState(true)
 
   const {currentMuseumId, setMuseum} = useMuseumStore(
