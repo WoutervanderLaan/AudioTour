@@ -11,7 +11,13 @@ import {useUserSessionStore} from '@/state/stores/userSessionStore'
 
 type Props = StaticScreenProps<{objectId: string}>
 
-export function ObjectDetail({route}: Props) {
+export /**
+ * Function or component ObjectDetail
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+function ObjectDetail({route}: Props) {
   const {objectId} = route.params
   const api = useApi()
   const [localError, setLocalError] = React.useState<string | undefined>(

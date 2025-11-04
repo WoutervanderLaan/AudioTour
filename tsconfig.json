@@ -11,5 +11,5 @@
     "incremental": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", ".husky", "dist" ]
+  "exclude": ["node_modules", ".husky", "dist"]
 }

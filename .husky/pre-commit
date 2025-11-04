@@ -1,8 +1,8 @@
 echo "🔍 Running tests..."
 npm test || exit 1
 
-# echo "🧹 Validating code (lint + typecheck + format)..."
-# npm run validate || exit 1
+echo "🧹 Validating code (lint + typecheck + format)..."
+npm run validate || exit 1
 
 echo "🎯 Running lint-staged on changed files..."
 npx lint-staged || exit 1
