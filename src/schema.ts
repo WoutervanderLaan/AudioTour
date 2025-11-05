@@ -10,4 +10,8 @@ export const objectSchema = z.object({
   }),
 })
 
+/**
+ * ObjectForm
+ * TODO: describe what this type represents.
+ */
 export type ObjectForm = z.infer<typeof objectSchema>

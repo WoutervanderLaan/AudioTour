@@ -3,19 +3,13 @@ import {Control, Controller, FieldValues, Path} from 'react-hook-form'
 import {Switch, Text, TextInput, View} from 'react-native'
 
 /**
- * function RHFTextInput
+ * RHFTextInput
  * TODO: describe what it does.
  *
- * @param {*} param
+ * @param {*} options
  * @returns {*} describe return value
  */
-export /**
- * Function or component RHFTextInput
- * TODO: describe what it does.
- *
- * @returns {*} describe return value
- */
-function RHFTextInput<T extends FieldValues>({
+export function RHFTextInput<T extends FieldValues>({
   control,
   name,
   label,
@@ -50,19 +44,13 @@ function RHFTextInput<T extends FieldValues>({
 }
 
 /**
- * function RHFTextArea
+ * RHFTextArea
  * TODO: describe what it does.
  *
- * @param {*} param
+ * @param {*} options
  * @returns {*} describe return value
  */
-export /**
- * Function or component RHFTextArea
- * TODO: describe what it does.
- *
- * @returns {*} describe return value
- */
-function RHFTextArea<T extends FieldValues>({
+export function RHFTextArea<T extends FieldValues>({
   control,
   name,
   label,
@@ -96,19 +84,13 @@ function RHFTextArea<T extends FieldValues>({
 }
 
 /**
- * function RHFCheckbox
+ * RHFCheckbox
  * TODO: describe what it does.
  *
- * @param {*} param
+ * @param {*} options
  * @returns {*} describe return value
  */
-export /**
- * Function or component RHFCheckbox
- * TODO: describe what it does.
- *
- * @returns {*} describe return value
- */
-function RHFCheckbox<T extends FieldValues>({
+export function RHFCheckbox<T extends FieldValues>({
   control,
   name,
   label,

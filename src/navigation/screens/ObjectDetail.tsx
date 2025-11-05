@@ -9,15 +9,20 @@ import {useApi} from '@/state/ApiContext'
 import {useTourStore} from '@/state/stores/tourStore'
 import {useUserSessionStore} from '@/state/stores/userSessionStore'
 
+/**
+ * Props
+ * TODO: describe what this type represents.
+ */
 type Props = StaticScreenProps<{objectId: string}>
 
-export /**
- * Function or component ObjectDetail
+/**
+ * ObjectDetail
  * TODO: describe what it does.
  *
+ * @param {*} options
  * @returns {*} describe return value
  */
-function ObjectDetail({route}: Props) {
+export function ObjectDetail({route}: Props) {
   const {objectId} = route.params
   const api = useApi()
   const [localError, setLocalError] = React.useState<string | undefined>(

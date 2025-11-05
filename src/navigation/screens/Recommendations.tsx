@@ -7,24 +7,28 @@ import {useMuseumStore} from '@/state/stores/museumStore'
 import {useUserSessionStore} from '@/state/stores/userSessionStore'
 import {useToast} from '@/state/ToastContext'
 
+/**
+ * Item
+ * TODO: describe what this type represents.
+ */
 type Item = {
+  /**
+   * object_id
+   */
   object_id: string
+  /**
+   * score
+   */
   score?: number
 }
 
 /**
- * function Recommendations
+ * Recommendations
  * TODO: describe what it does.
  *
  * @returns {*} describe return value
  */
-export /**
- * Function or component Recommendations
- * TODO: describe what it does.
- *
- * @returns {*} describe return value
- */
-function Recommendations() {
+export function Recommendations() {
   const [items, setItems] = useState<Array<Item>>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -36,40 +40,33 @@ function Recommendations() {
   const currentMuseumId = useMuseumStore(s => s.currentMuseumId)
 
   useEffect(() => {
-    const /**
-       * Function or component run
-       * TODO: describe what it does.
-       *
-       * @returns {*} describe return value
-       */
-      run =
-        /**
-         * function or component run
-         * TODO: describe what it does.
-         *
-         * @returns {*} describe return value
-         */
-        async () => {
-          setLoading(true)
-          setError(undefined)
+    /**
+     * run
+     * TODO: describe what it does.
+     *
+     * @returns {*} describe return value
+     */
+    const run = async () => {
+      setLoading(true)
+      setError(undefined)
 
-          try {
-            const data = await api.recommendations({
-              user_session_id: sessionId,
-              current_museum_id: currentMuseumId,
-            })
+      try {
+        const data = await api.recommendations({
+          user_session_id: sessionId,
+          current_museum_id: currentMuseumId,
+        })
 
-            setItems(data)
-          } catch (e: any) {
-            setError(e?.message || 'Failed to load recommendations')
-            toast.showToast({
-              message: 'Error loading recommendations',
-              type: 'error',
-            })
-          } finally {
-            setLoading(false)
-          }
-        }
+        setItems(data)
+      } catch (e: any) {
+        setError(e?.message || 'Failed to load recommendations')
+        toast.showToast({
+          message: 'Error loading recommendations',
+          type: 'error',
+        })
+      } finally {
+        setLoading(false)
+      }
+    }
     run()
   }, [sessionId, currentMuseumId])
 

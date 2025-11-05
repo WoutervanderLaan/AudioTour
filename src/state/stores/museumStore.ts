@@ -3,11 +3,30 @@ import {immer} from 'zustand/middleware/immer'
 
 import type {ObjectItem} from '@/types'
 
+/**
+ * MuseumState
+ * TODO: describe what this type represents.
+ */
 type MuseumState = {
+  /**
+   * currentMuseumId
+   */
   currentMuseumId?: string
+  /**
+   * objects
+   */
   objects: ObjectItem[]
+  /**
+   * setMuseum
+   */
   setMuseum: (id?: string) => void
+  /**
+   * setObjects
+   */
   setObjects: (objects: ObjectItem[]) => void
+  /**
+   * reset
+   */
   reset: () => void
 }
 

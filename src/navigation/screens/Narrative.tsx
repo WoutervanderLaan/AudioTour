@@ -9,18 +9,12 @@ import {useApi} from '@/state/ApiContext'
 import {useTourStore} from '@/state/stores/tourStore'
 
 /**
- * function Narrative
+ * Narrative
  * TODO: describe what it does.
  *
  * @returns {*} describe return value
  */
-export /**
- * Function or component Narrative
- * TODO: describe what it does.
- *
- * @returns {*} describe return value
- */
-function Narrative() {
+export function Narrative() {
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
   const api = useApi()

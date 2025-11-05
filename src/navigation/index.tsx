@@ -74,10 +74,18 @@ const RootStack = createNativeStackNavigator({
 
 export const Navigation = createStaticNavigation(RootStack)
 
+/**
+ * RootStackParamList
+ * TODO: describe what this type represents.
+ */
 type RootStackParamList = StaticParamList<typeof RootStack>
 
 declare global {
   namespace ReactNavigation {
+    /**
+     * RootParamList
+     * TODO: describe what this type represents.
+     */
     interface RootParamList extends RootStackParamList {}
   }
 }

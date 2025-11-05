@@ -2,26 +2,33 @@ import * as ReactNavigation from '@react-navigation/native'
 import {StyleSheet, Text, View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 
+/**
+ * Props
+ * TODO: describe what this type represents.
+ */
 type Props = {
+  /**
+   * message
+   */
   message: string
+  /**
+   * type
+   */
   type?: 'success' | 'error' | 'info'
+  /**
+   * theme
+   */
   theme: ReactNavigation.Theme
 }
 
 /**
- * function Toast
+ * Toast
  * TODO: describe what it does.
  *
- * @param {*} param
+ * @param {*} options
  * @returns {*} describe return value
  */
-export /**
- * Function or component Toast
- * TODO: describe what it does.
- *
- * @returns {*} describe return value
- */
-function Toast({message, type = 'info', theme}: Props) {
+export function Toast({message, type = 'info', theme}: Props) {
   const {top} = useSafeAreaInsets()
 
   return (

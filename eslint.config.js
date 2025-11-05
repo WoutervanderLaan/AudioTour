@@ -14,6 +14,7 @@ import unicorn from 'eslint-plugin-unicorn'
 import security from 'eslint-plugin-security'
 import boundaries from 'eslint-plugin-boundaries'
 import requireDocComment from './eslint-rules/require-doc-comment.js'
+import requireTypeDocComment from './eslint-rules/require-type-doc-comment.js'
 import queryPlugin from '@tanstack/eslint-plugin-query'
 
 export default [
@@ -67,6 +68,7 @@ export default [
       local: {
         rules: {
           'require-doc-comment': requireDocComment,
+          'require-type-doc-comment': requireTypeDocComment,
         },
       },
     },
@@ -104,6 +106,7 @@ export default [
       'no-debugger': 'error',
       'no-console': 'warn',
       'local/require-doc-comment': 'error',
+      'local/require-type-doc-comment': 'error',
       'no-var': 'error',
       'prefer-const': 'error',
       'max-lines': ['warn', {max: 300, skipBlankLines: true}],

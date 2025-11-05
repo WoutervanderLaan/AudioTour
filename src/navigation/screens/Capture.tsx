@@ -15,18 +15,12 @@ import {useTourStore} from '@/state/stores/tourStore'
 import {useUserSessionStore} from '@/state/stores/userSessionStore'
 
 /**
- * function Capture
+ * Capture
  * TODO: describe what it does.
  *
  * @returns {*} describe return value
  */
-export /**
- * Function or component Capture
- * TODO: describe what it does.
- *
- * @returns {*} describe return value
- */
-function Capture() {
+export function Capture() {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
@@ -52,56 +46,41 @@ function Capture() {
     },
   })
 
-  const /**
-     * Function or component onSubmit
-     * TODO: describe what it does.
-     *
-     * @returns {*} describe return value
-     */
-    onSubmit =
-      /**
-       * function or component onSubmit
-       * TODO: describe what it does.
-       *
-       * @param {*} data
-       * @returns {*} describe return value
-       */
-      (data: ObjectForm) => {
-        console.log('Form submitted:', data)
-      }
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
+  const onSubmit = (data: ObjectForm) => {
+    console.log('Form submitted:', data)
+  }
 
-  const /**
-     * Function or component pickImage
-     * TODO: describe what it does.
-     *
-     * @returns {*} describe return value
-     */
-    pickImage =
-      /**
-       * function or component pickImage
-       * TODO: describe what it does.
-       *
-       * @returns {*} describe return value
-       */
-      async () => {
-        setLocalError(undefined)
+  /**
+   * pickImage
+   * TODO: describe what it does.
+   *
+   * @returns {*} describe return value
+   */
+  const pickImage = async () => {
+    setLocalError(undefined)
 
-        // const permission = await ImagePicker.requestCameraPermissionsAsync();
-        const permission =
-          await ImagePicker.requestMediaLibraryPermissionsAsync()
+    // const permission = await ImagePicker.requestCameraPermissionsAsync();
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync()
 
-        if (permission.status !== 'granted') {
-          setLocalError('Camera permission is required')
-          return
-        }
+    if (permission.status !== 'granted') {
+      setLocalError('Camera permission is required')
+      return
+    }
 
-        // const res = await ImagePicker.launchCameraAsync({ quality: 0.7 });
-        const res = await ImagePicker.launchImageLibraryAsync({quality: 0.7})
+    // const res = await ImagePicker.launchCameraAsync({ quality: 0.7 });
+    const res = await ImagePicker.launchImageLibraryAsync({quality: 0.7})
 
-        if (!res.canceled && res.assets && res.assets[0]?.uri) {
-          setImageUri(res.assets[0].uri)
-        }
-      }
+    if (!res.canceled && res.assets && res.assets[0]?.uri) {
+      setImageUri(res.assets[0].uri)
+    }
+  }
 
   const uploadPhoto = useMutation({
     mutationFn: (params: {uri: string}) => api.uploadPhoto({uri: params.uri}),
@@ -111,34 +90,25 @@ function Capture() {
     },
   })
 
-  const /**
-     * Function or component upload
-     * TODO: describe what it does.
-     *
-     * @returns {*} describe return value
-     */
-    upload =
-      /**
-       * function or component upload
-       * TODO: describe what it does.
-       *
-       * @returns {*} describe return value
-       */
-      async () => {
-        if (!imageUri) return
-        setLocalError(undefined)
+  /**
+   * upload
+   * TODO: describe what it does.
+   *
+   * @returns {*} describe return value
+   */
+  const upload = async () => {
+    if (!imageUri) return
+    setLocalError(undefined)
 
-        const {
-          object_id: objectId,
-          recognition_confidence: recognitionConfidence,
-        } = await uploadPhoto.mutateAsync({uri: imageUri})
+    const {object_id: objectId, recognition_confidence: recognitionConfidence} =
+      await uploadPhoto.mutateAsync({uri: imageUri})
 
-        setLastPhotoData(imageUri, objectId, recognitionConfidence)
+    setLastPhotoData(imageUri, objectId, recognitionConfidence)
 
-        if (objectId) {
-          navigate.navigate('ObjectDetail', {objectId})
-        }
-      }
+    if (objectId) {
+      navigate.navigate('ObjectDetail', {objectId})
+    }
+  }
 
   return (
     <View style={styles.container}>

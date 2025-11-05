@@ -4,17 +4,43 @@ import React, {createContext, useCallback, useContext, useState} from 'react'
 
 import {Toast} from '@/components/Toast'
 
+/**
+ * ToastProps
+ * TODO: describe what this type represents.
+ */
 type ToastProps = {
+  /**
+   * id
+   */
   id?: string
+  /**
+   * message
+   */
   message: string
+  /**
+   * type
+   */
   type?: 'success' | 'error' | 'info'
+  /**
+   * duration
+   */
   duration?: number
 }
 
 const DEFAULT_DURATION = 3000
 
+/**
+ * ToastContextType
+ * TODO: describe what this type represents.
+ */
 type ToastContextType = {
+  /**
+   * showToast
+   */
   showToast: (toast: ToastProps) => void
+  /**
+   * closeToast
+   */
   closeToast: () => void
 }
 

@@ -2,18 +2,12 @@ import {Button, Text} from '@react-navigation/elements'
 import {StyleSheet, View} from 'react-native'
 
 /**
- * function NotFound
+ * NotFound
  * TODO: describe what it does.
  *
  * @returns {*} describe return value
  */
-export /**
- * Function or component NotFound
- * TODO: describe what it does.
- *
- * @returns {*} describe return value
- */
-function NotFound() {
+export function NotFound() {
   return (
     <View style={styles.container}>
       <Text>404</Text>

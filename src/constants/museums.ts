@@ -1,13 +1,38 @@
 /* eslint-disable max-lines */
 import type {Coordinates} from '@/hooks/useUserLocation'
 
+/**
+ * MuseumLocation
+ * TODO: describe what this type represents.
+ */
 export type MuseumLocation = {
+  /**
+   * id
+   */
   id: string
+  /**
+   * name
+   */
   name: string
+  /**
+   * province
+   */
   province: string
+  /**
+   * address
+   */
   address: string
+  /**
+   * website
+   */
   website: string
+  /**
+   * coords
+   */
   coords: Coordinates
+  /**
+   * distance
+   */
   distance?: number
 }
 

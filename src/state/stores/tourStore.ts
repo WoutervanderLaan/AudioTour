@@ -1,20 +1,54 @@
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
+/**
+ * TourState
+ * TODO: describe what this type represents.
+ */
 type TourState = {
+  /**
+   * lastPhotoUri
+   */
   lastPhotoUri?: string
+  /**
+   * currentObjectId
+   */
   currentObjectId?: string
+  /**
+   * recognitionConfidence
+   */
   recognitionConfidence?: number
+  /**
+   * narrativeText
+   */
   narrativeText?: string
+  /**
+   * audioUrl
+   */
   audioUrl?: string
+  /**
+   * setLastPhoto
+   */
   setLastPhoto: (uri?: string) => void
+  /**
+   * setLastPhotoData
+   */
   setLastPhotoData: (
     uri: string,
     objectId: string,
     recognitionConfidence: number,
   ) => void
+  /**
+   * setNarrativeText
+   */
   setNarrativeText: (narrativeText: string) => void
+  /**
+   * setAudioUrl
+   */
   setAudioUrl: (audioUrl: string) => void
+  /**
+   * reset
+   */
   reset: () => void
 }
 

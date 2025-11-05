@@ -1,13 +1,26 @@
 import {AppConfig} from '@/config'
 
+/**
+ * ApiError
+ * TODO: describe what this type represents.
+ */
 export type ApiError = {
+  /**
+   * status
+   */
   status: number
+  /**
+   * message
+   */
   message: string
+  /**
+   * details
+   */
   details?: unknown
 }
 
 /**
- * function handleResponseError
+ * handleResponseError
  * TODO: describe what it does.
  *
  * @param {*} res
@@ -40,7 +53,7 @@ async function handleResponseError(res: Response, isJson: boolean) {
 }
 
 /**
- * function handleResponse
+ * handleResponse
  * TODO: describe what it does.
  *
  * @param {*} res
