@@ -5,9 +5,9 @@ import React from 'react'
 import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native'
 import {useShallow} from 'zustand/react/shallow'
 
-import {useApi} from '@/state/ApiContext'
-import {useTourStore} from '@/state/stores/tourStore'
-import {useUserSessionStore} from '@/state/stores/userSessionStore'
+import {useApi} from '@/lib/api/hooks/useApi'
+import {useTourStore} from '@/store/slices/tourStore'
+import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
 /**
  * Props

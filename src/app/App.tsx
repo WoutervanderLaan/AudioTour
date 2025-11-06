@@ -5,12 +5,15 @@ import {Asset} from 'expo-asset'
 import {createURL} from 'expo-linking'
 import * as SplashScreen from 'expo-splash-screen'
 import * as React from 'react'
-import {StatusBar, useColorScheme} from 'react-native'
-import {SafeAreaProvider} from 'react-native-safe-area-context'
+import {StatusBar, StyleSheet, useColorScheme} from 'react-native'
+import {
+  initialWindowMetrics,
+  SafeAreaProvider,
+} from 'react-native-safe-area-context'
 
-import {Navigation} from './navigation'
-import {ApiProvider} from './state/ApiContext'
-import {ToastProvider} from './state/ToastContext'
+import {Navigation} from '@/app/navigation'
+import {ApiProvider} from '@/lib/api/Provider'
+import {ToastProvider} from '@/store/context/ToastContext'
 
 Asset.loadAsync([...NavigationElements.Assets])
 
@@ -33,12 +36,14 @@ export function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <StatusBar
-        barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
-        animated
-      />
       <ApiProvider>
-        <SafeAreaProvider>
+        <StatusBar
+          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+          animated
+        />
+        <SafeAreaProvider
+          style={styles.appContainer}
+          initialMetrics={initialWindowMetrics}>
           <ToastProvider theme={theme}>
             <Navigation
               theme={theme}
@@ -56,3 +61,9 @@ export function App() {
     </QueryClientProvider>
   )
 }
+
+const styles = StyleSheet.create({
+  appContainer: {
+    backgroundColor: '#ffffff', // TODO: implement theming
+  },
+})

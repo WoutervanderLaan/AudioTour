@@ -4,9 +4,9 @@ import React, {useState} from 'react'
 import {ActivityIndicator, StyleSheet, View} from 'react-native'
 import {useShallow} from 'zustand/react/shallow'
 
-import {AudioPlayer} from '@/components/AudioPlayer'
-import {useApi} from '@/state/ApiContext'
-import {useTourStore} from '@/state/stores/tourStore'
+import {useApi} from '@/lib/api/hooks/useApi'
+import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
+import {useTourStore} from '@/store/slices/tourStore'
 
 /**
  * Narrative

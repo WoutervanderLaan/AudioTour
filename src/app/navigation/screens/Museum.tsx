@@ -9,10 +9,13 @@ import {
 } from 'react-native'
 import {useShallow} from 'zustand/react/shallow'
 
-import {KNOWN_MUSEUMS, MuseumLocation} from '@/constants/museums'
-import {haversineDistanceMeters, useUserLocation} from '@/hooks/useUserLocation'
-import {useMuseumStore} from '@/state/stores/museumStore'
-import {useToast} from '@/state/ToastContext'
+import {KNOWN_MUSEUMS, MuseumLocation} from '@/lib/constants/museums'
+import {
+  haversineDistanceMeters,
+  useUserLocation,
+} from '@/shared/hooks/useUserLocation'
+import {useToast} from '@/store/context/ToastContext'
+import {useMuseumStore} from '@/store/slices/museumStore'
 
 /**
  * Museum

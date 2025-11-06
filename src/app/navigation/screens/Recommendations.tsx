@@ -2,10 +2,10 @@ import {Text} from '@react-navigation/elements'
 import React, {useEffect, useState} from 'react'
 import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native'
 
-import {useApi} from '@/state/ApiContext'
-import {useMuseumStore} from '@/state/stores/museumStore'
-import {useUserSessionStore} from '@/state/stores/userSessionStore'
-import {useToast} from '@/state/ToastContext'
+import {useApi} from '@/lib/api/hooks/useApi'
+import {useToast} from '@/store/context/ToastContext'
+import {useMuseumStore} from '@/store/slices/museumStore'
+import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
 /**
  * Item

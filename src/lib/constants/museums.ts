@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
-import type {Coordinates} from '@/hooks/useUserLocation'
+// eslint-disable-next-line boundaries/element-types
+import type {Coordinates} from '@/shared/hooks/useUserLocation' // TODO: move file to feature folder
 
 /**
  * MuseumLocation

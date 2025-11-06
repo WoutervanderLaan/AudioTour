@@ -1,4 +1,4 @@
-import {AppConfig} from '@/config'
+import {AppConfig} from '@/app/config'
 
 /**
  * ApiError
@@ -27,7 +27,10 @@ export type ApiError = {
  * @param {*} isJson
  * @returns {*} describe return value
  */
-async function handleResponseError(res: Response, isJson: boolean) {
+async function handleResponseError(
+  res: Response,
+  isJson: boolean,
+): Promise<void> {
   let message = res.statusText ?? 'Request failed'
   let details: unknown = undefined
 

@@ -16,10 +16,10 @@ import boundaries from 'eslint-plugin-boundaries'
 import requireDocComment from './eslint-rules/require-doc-comment.js'
 import requireTypeDocComment from './eslint-rules/require-type-doc-comment.js'
 import queryPlugin from '@tanstack/eslint-plugin-query'
+import enforceFeatureStructure from './eslint-rules/enforce-feature-structure.js'
 
 export default [
   js.configs.recommended,
-  // queryPlugin.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     ignores: [
@@ -40,17 +40,16 @@ export default [
         ecmaVersion: 'latest',
         sourceType: 'module',
         ecmaFeatures: {jsx: true},
-        // projectService: true,
         project: './tsconfig.json',
         tsconfigRootDir: import.meta.dirname,
       },
       globals: {
         ...globals.browser,
         ...globals.node,
+        process: true,
         __DEV__: true,
       },
     },
-
     plugins: {
       '@typescript-eslint': tseslint,
       '@tanstack/query': queryPlugin,
@@ -69,10 +68,10 @@ export default [
         rules: {
           'require-doc-comment': requireDocComment,
           'require-type-doc-comment': requireTypeDocComment,
+          'enforce-feature-structure': enforceFeatureStructure,
         },
       },
     },
-
     settings: {
       react: {version: 'detect'},
       'import/resolver': {
@@ -81,6 +80,13 @@ export default [
           alwaysTryTypes: true,
         },
       },
+      'boundaries/elements': [
+        {type: 'app', pattern: 'src/app/**'},
+        {type: 'shared', pattern: 'src/shared/**'},
+        {type: 'features', pattern: 'src/features/**'},
+        {type: 'lib', pattern: 'src/lib/**'},
+        {type: 'store', pattern: 'src/store/**'},
+      ],
     },
 
     rules: {
@@ -105,13 +111,48 @@ export default [
       /** --- General JS / TS --- **/
       'no-debugger': 'error',
       'no-console': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
       'local/require-doc-comment': 'error',
       'local/require-type-doc-comment': 'error',
       'no-var': 'error',
       'prefer-const': 'error',
       'max-lines': ['warn', {max: 300, skipBlankLines: true}],
 
-      // Unused imports & vars
+      /** --- Folder structure --- **/
+      'local/enforce-feature-structure': [
+        'error',
+        {
+          allowedFolders: ['features', 'lib', 'shared', 'app', 'store'],
+        },
+      ],
+      'boundaries/no-unknown': 'error',
+      'boundaries/element-types': [
+        'error',
+        {
+          default: 'disallow',
+          rules: [
+            // app can depend on anything
+            {
+              from: ['app'],
+              allow: ['shared', 'features', 'lib', 'store'],
+            },
+
+            // lib can import only from app
+            {from: ['lib'], allow: ['app']},
+
+            // features can use shared and entities, but not other features
+            {from: ['features'], allow: ['shared', 'lib', 'store']},
+
+            // shared cannot import from anything above it
+            {from: ['shared'], allow: []},
+
+            // store cannot import from anything above it
+            {from: ['store'], allow: ['shared']},
+          ],
+        },
+      ],
+
+      /** --- Unused imports & vars --- **/
       'unused-imports/no-unused-imports': 'error',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [

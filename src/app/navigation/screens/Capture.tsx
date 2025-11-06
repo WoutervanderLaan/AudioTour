@@ -8,11 +8,11 @@ import {useForm} from 'react-hook-form'
 import {ActivityIndicator, Image, StyleSheet, View} from 'react-native'
 import {useShallow} from 'zustand/react/shallow'
 
-import {RHFTextArea, RHFTextInput} from '@/components/form/FormInputs'
-import {ObjectForm, objectSchema} from '@/schema'
-import {useApi} from '@/state/ApiContext'
-import {useTourStore} from '@/state/stores/tourStore'
-import {useUserSessionStore} from '@/state/stores/userSessionStore'
+import {ObjectForm, objectSchema} from '@/features/capture/schemas/schema'
+import {useApi} from '@/lib/api/hooks/useApi'
+import {RHFTextArea, RHFTextInput} from '@/shared/components/ui/form/FormInputs'
+import {useTourStore} from '@/store/slices/tourStore'
+import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
 /**
  * Capture

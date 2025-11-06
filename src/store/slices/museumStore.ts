@@ -1,7 +1,7 @@
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
-import type {ObjectItem} from '@/types'
+import type {ObjectItem} from '@/shared/types/types'
 
 /**
  * MuseumState
@@ -31,7 +31,7 @@ type MuseumState = {
 }
 
 export const useMuseumStore = create<MuseumState>()(
-  immer((set, get) => ({
+  immer((set, _get) => ({
     currentMuseumId: undefined,
     objects: [],
     setMuseum: id =>

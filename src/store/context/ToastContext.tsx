@@ -2,7 +2,7 @@ import * as ReactNavigation from '@react-navigation/native'
 import * as Crypto from 'expo-crypto'
 import React, {createContext, useCallback, useContext, useState} from 'react'
 
-import {Toast} from '@/components/Toast'
+import {Toast} from '@/shared/components/features/toast/Toast'
 
 /**
  * ToastProps

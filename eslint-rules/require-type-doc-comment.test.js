@@ -1,12 +1,14 @@
 import {RuleTester} from 'eslint'
 import rule from './require-type-doc-comment.js'
-import tsParser from '@typescript-eslint/parser'
+import * as tsParser from '@typescript-eslint/parser'
 
 const ruleTester = new RuleTester({
   languageOptions: {
-    ecmaVersion: 2022,
-    sourceType: 'module',
     parser: tsParser,
+    parserOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+    },
   },
 })
 
