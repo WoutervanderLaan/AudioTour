@@ -1,10 +1,10 @@
-# echo "🔍 Running tests..."
-# npm test || exit 1
+echo "🔍 Running tests..."
+npx jest || exit 1
 
-# echo "🧹 Validating code (lint + typecheck + format)..."
-# npm run validate || exit 1
+echo "🧹 Validating code (lint + typecheck + format)..."
+npm run validate || exit 1
 
 echo "🎯 Running lint-staged on changed files..."
-npx lint-staged || exit 1
+npx lint-staged --no-stash || exit 1
 
 echo "✅ Pre-commit checks passed!"
