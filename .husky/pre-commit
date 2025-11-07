@@ -1,8 +1,11 @@
 echo "🔍 Running tests..."
 npx jest || exit 1
 
-echo "🧹 Validating code (lint + typecheck + format)..."
-npm run validate || exit 1
+echo "🔍 Running typecheck...."
+npm run typecheck || exit 1
+
+echo "🔍 Running prettier check...."
+npm run format || exit 1
 
 echo "🎯 Running lint-staged on changed files..."
 npx lint-staged --no-stash || exit 1
