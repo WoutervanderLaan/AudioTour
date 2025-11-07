@@ -7,7 +7,7 @@ npm run typecheck || exit 1
 echo "🔍 Running prettier check...."
 npm run format || exit 1
 
-echo "🎯 Running lint-staged on changed files..."
-npx lint-staged --no-stash || exit 1
+echo "🔍 Running lint-staged on changed files..."
+npx lint-staged || exit 1
 
 echo "✅ Pre-commit checks passed!"
