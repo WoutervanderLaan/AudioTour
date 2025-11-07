@@ -46,9 +46,25 @@ ruleTester.run('require-doc-comment', rule, {
     {
       code: `
         /**
+         * bar
+         */
+        export const bar = () => {}
+      `,
+    },
+    {
+      code: `
+        /**
          * MyClass
          */
         class MyClass {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * MyClass
+         */
+        export class MyClass {}
       `,
     },
   ],

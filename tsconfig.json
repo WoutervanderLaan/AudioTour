@@ -10,6 +10,6 @@
     "jsx": "react-native",
     "incremental": true
   },
-  "include": ["src"],
+  "include": ["src", "index.tsx"],
   "exclude": ["node_modules", ".husky", "dist"]
 }

@@ -16,22 +16,6 @@ export default {
   create(context) {
     const source = context.getSourceCode()
 
-    function findTopLevelNode(current) {
-      if (
-        current.parent &&
-        (current.parent.type === 'ExportNamedDeclaration' ||
-          current.parent.type === 'ExportDefaultDeclaration')
-      ) {
-        return current.parent
-      }
-
-      if (current.type === 'VariableDeclarator' && current.parent) {
-        return current.parent
-      }
-
-      return current
-    }
-
     function findNodeForInsertion(node) {
       // For VariableDeclarator, we want to insert before the VariableDeclaration
       if (node.type === 'VariableDeclarator' && node.parent) {
@@ -83,6 +67,7 @@ export default {
       ) {
         return funcNode.params || []
       }
+
       return []
     }
 
@@ -133,8 +118,8 @@ export default {
     }
 
     function checkNode(node, name) {
-      const topNode = findTopLevelNode(node)
-      if (!hasJSDoc(topNode)) {
+      const insertionNode = findNodeForInsertion(node)
+      if (!hasJSDoc(insertionNode)) {
         context.report({
           node,
           messageId: 'missing',

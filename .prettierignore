@@ -1,0 +1,10 @@
+node_modules
+**/node_modules
+**/.git
+ios/build
+ios/Pods
+.jest
+android/.gradle
+android/.idea
+android/build
+android/app/build

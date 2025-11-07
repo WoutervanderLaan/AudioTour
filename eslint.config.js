@@ -17,6 +17,7 @@ import requireDocComment from './eslint-rules/require-doc-comment.js'
 import requireTypeDocComment from './eslint-rules/require-type-doc-comment.js'
 import queryPlugin from '@tanstack/eslint-plugin-query'
 import enforceFeatureStructure from './eslint-rules/enforce-feature-structure.js'
+import jestPlugin from 'eslint-plugin-jest'
 
 export default [
   js.configs.recommended,
@@ -46,6 +47,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.node,
+        ...jestPlugin.environments.globals.globals,
         process: true,
         __DEV__: true,
       },
@@ -54,6 +56,7 @@ export default [
       '@typescript-eslint': tseslint,
       '@tanstack/query': queryPlugin,
       react,
+      jest: jestPlugin,
       'react-hooks': reactHooks,
       'react-native': reactNative,
       import: importPlugin,
@@ -237,6 +240,13 @@ export default [
       ],
 
       'react/jsx-filename-extension': ['error', {extensions: ['.jsx', '.tsx']}],
+
+      // Jest
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/prefer-to-have-length': 'warn',
+      'jest/valid-expect': 'error',
     },
   },
 ]
