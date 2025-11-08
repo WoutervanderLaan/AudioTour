@@ -2,12 +2,13 @@ import {Button, Text} from '@react-navigation/elements'
 import {StaticScreenProps} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import React from 'react'
-import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native'
+import {ActivityIndicator, ScrollView, View} from 'react-native'
 import {useShallow} from 'zustand/react/shallow'
 
 import {useApi} from '@/lib/api/hooks/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
+import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 /**
  * Props
@@ -90,7 +91,7 @@ export function ObjectDetail({route}: Props) {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyleSheet.create(() => ({
   container: {
     padding: 16,
     gap: 12,
@@ -100,4 +101,4 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: 'rgba(0,0,0,0.05)',
   },
-})
+}))

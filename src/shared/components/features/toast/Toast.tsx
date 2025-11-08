@@ -1,12 +1,13 @@
-import * as ReactNavigation from '@react-navigation/native'
-import {StyleSheet, Text, View} from 'react-native'
+import {Text, View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
+
+import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 /**
  * Props
  * TODO: describe what this type represents.
  */
-type Props = {
+type Props = Readonly<{
   /**
    * message
    */
@@ -15,11 +16,7 @@ type Props = {
    * type
    */
   type?: 'success' | 'error' | 'info'
-  /**
-   * theme
-   */
-  theme: ReactNavigation.Theme
-}
+}>
 
 /**
  * Toast
@@ -28,22 +25,17 @@ type Props = {
  * @param {*} options
  * @returns {*} describe return value
  */
-export function Toast({message, type = 'info', theme}: Props) {
+export function Toast({message, type = 'info'}: Props) {
   const {top} = useSafeAreaInsets()
 
   return (
-    <View
-      style={[
-        styles.toast,
-        styles[type],
-        {backgroundColor: theme.colors.card, top: top + 20},
-      ]}>
-      <Text style={[styles.text, {color: theme.colors.text}]}>{message}</Text>
+    <View style={[styles.toast, styles[type], {top: top + 20}]}>
+      <Text style={styles.text}>{message}</Text>
     </View>
   )
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyleSheet.create(({color}) => ({
   toast: {
     position: 'absolute',
     left: 20,
@@ -53,11 +45,13 @@ const styles = StyleSheet.create({
     elevation: 2,
     zIndex: 9999,
     alignItems: 'center',
+    backgroundColor: color.screen.background.default,
   },
   text: {
     fontWeight: 'bold',
+    color: color.text.default,
   },
   success: {borderColor: '#4BB543', borderWidth: 1},
   error: {borderColor: '#FF3333', borderWidth: 1},
   info: {borderColor: '#5f5f5f', borderWidth: 1},
-})
+}))

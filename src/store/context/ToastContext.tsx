@@ -1,4 +1,3 @@
-import * as ReactNavigation from '@react-navigation/native'
 import * as Crypto from 'expo-crypto'
 import React, {createContext, useCallback, useContext, useState} from 'react'
 
@@ -53,13 +52,7 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined)
  * @param {*} options
  * @returns {*} describe return value
  */
-export function ToastProvider({
-  children,
-  theme,
-}: {
-  children: React.ReactNode
-  theme: ReactNavigation.Theme
-}) {
+export function ToastProvider({children}: {children: React.ReactNode}) {
   const [toast, setToast] = useState<ToastProps | null>(null)
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -85,7 +78,6 @@ export function ToastProvider({
         <Toast
           key={toast.id}
           {...toast}
-          theme={theme}
         />
       )}
     </ToastContext.Provider>

@@ -1,12 +1,6 @@
 import {Button, Text} from '@react-navigation/elements'
 import React from 'react'
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native'
+import {ActivityIndicator, FlatList, TouchableOpacity, View} from 'react-native'
 import {useShallow} from 'zustand/react/shallow'
 
 import {KNOWN_MUSEUMS, MuseumLocation} from '@/lib/constants/museums'
@@ -16,6 +10,7 @@ import {
 } from '@/shared/hooks/useUserLocation'
 import {useToast} from '@/store/context/ToastContext'
 import {useMuseumStore} from '@/store/slices/museumStore'
+import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 /**
  * Museum
@@ -119,7 +114,7 @@ export function Museum() {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyleSheet.create(() => ({
   container: {flex: 1, padding: 16, gap: 12},
   row: {flexDirection: 'row', gap: 8, alignItems: 'center'},
-})
+}))

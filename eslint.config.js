@@ -89,6 +89,7 @@ export default [
         {type: 'features', pattern: 'src/features/**'},
         {type: 'lib', pattern: 'src/lib/**'},
         {type: 'store', pattern: 'src/store/**'},
+        {type: 'themes', pattern: 'src/themes/**'},
       ],
     },
 
@@ -125,7 +126,14 @@ export default [
       'local/enforce-feature-structure': [
         'error',
         {
-          allowedFolders: ['features', 'lib', 'shared', 'app', 'store'],
+          allowedFolders: [
+            'features',
+            'lib',
+            'shared',
+            'app',
+            'store',
+            'themes',
+          ],
         },
       ],
       'boundaries/no-unknown': 'error',
@@ -137,7 +145,7 @@ export default [
             // app can depend on anything
             {
               from: ['app'],
-              allow: ['shared', 'features', 'lib', 'store'],
+              allow: ['shared', 'features', 'lib', 'store', 'themes'],
             },
 
             // lib can import only from app
@@ -147,7 +155,7 @@ export default [
             {from: ['features'], allow: ['shared', 'lib', 'store']},
 
             // shared cannot import from anything above it
-            {from: ['shared'], allow: []},
+            {from: ['shared'], allow: ['themes']},
 
             // store cannot import from anything above it
             {from: ['store'], allow: ['shared']},
@@ -204,6 +212,14 @@ export default [
               group: ['../*'],
               message:
                 'Avoid deep relative imports — use absolute imports from `src`.',
+            },
+          ],
+          paths: [
+            {
+              name: 'react-native',
+              importNames: ['StyleSheet'],
+              message:
+                'Do not use StyleSheet. Use ThemedStyleSheet from @/themes/ThemedStyleSheet instead.',
             },
           ],
         },

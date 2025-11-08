@@ -5,7 +5,7 @@ import {Asset} from 'expo-asset'
 import {createURL} from 'expo-linking'
 import * as SplashScreen from 'expo-splash-screen'
 import * as React from 'react'
-import {StatusBar, StyleSheet, useColorScheme} from 'react-native'
+import {StatusBar, useColorScheme} from 'react-native'
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -14,6 +14,7 @@ import {
 import {Navigation} from '@/app/navigation'
 import {ApiProvider} from '@/lib/api/Provider'
 import {ToastProvider} from '@/store/context/ToastContext'
+import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 Asset.loadAsync([...NavigationElements.Assets])
 
@@ -44,7 +45,7 @@ export function App() {
         <SafeAreaProvider
           style={styles.appContainer}
           initialMetrics={initialWindowMetrics}>
-          <ToastProvider theme={theme}>
+          <ToastProvider>
             <Navigation
               theme={theme}
               linking={{
@@ -62,8 +63,8 @@ export function App() {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyleSheet.create(({color}) => ({
   appContainer: {
-    backgroundColor: '#ffffff', // TODO: implement theming
+    backgroundColor: color.screen.background.default,
   },
-})
+}))

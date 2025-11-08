@@ -1,11 +1,12 @@
 import {Text} from '@react-navigation/elements'
 import React, {useEffect, useState} from 'react'
-import {ActivityIndicator, FlatList, StyleSheet, View} from 'react-native'
+import {ActivityIndicator, FlatList, View} from 'react-native'
 
 import {useApi} from '@/lib/api/hooks/useApi'
 import {useToast} from '@/store/context/ToastContext'
 import {useMuseumStore} from '@/store/slices/museumStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
+import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 /**
  * Item
@@ -93,7 +94,7 @@ export function Recommendations() {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyleSheet.create(() => ({
   container: {flex: 1, padding: 16, gap: 12},
   item: {paddingVertical: 8},
-})
+}))

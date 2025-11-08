@@ -1,12 +1,13 @@
 import {Button, Text} from '@react-navigation/elements'
 import {useMutation} from '@tanstack/react-query'
 import React, {useState} from 'react'
-import {ActivityIndicator, StyleSheet, View} from 'react-native'
+import {ActivityIndicator, View} from 'react-native'
 import {useShallow} from 'zustand/react/shallow'
 
 import {useApi} from '@/lib/api/hooks/useApi'
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
 import {useTourStore} from '@/store/slices/tourStore'
+import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 /**
  * Narrative
@@ -70,10 +71,10 @@ export function Narrative() {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyleSheet.create(() => ({
   container: {
     flex: 1,
     padding: 16,
     gap: 12,
   },
-})
+}))

@@ -1,6 +1,8 @@
 import {Button, Text} from '@react-navigation/elements'
 import React, {useState} from 'react'
-import {ActivityIndicator, StyleSheet, View} from 'react-native'
+import {ActivityIndicator, View} from 'react-native'
+
+import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 /**
  * AudioPlayer
@@ -41,6 +43,6 @@ export function AudioPlayer({src}: {src: string}) {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyleSheet.create(() => ({
   container: {gap: 8},
-})
+}))

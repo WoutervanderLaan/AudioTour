@@ -1,5 +1,7 @@
 import {Button, Text} from '@react-navigation/elements'
-import {StyleSheet, View} from 'react-native'
+import {View} from 'react-native'
+
+import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 /**
  * NotFound
@@ -16,11 +18,11 @@ export function NotFound() {
   )
 }
 
-const styles = StyleSheet.create({
+const styles = ThemedStyleSheet.create(() => ({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
   },
-})
+}))
