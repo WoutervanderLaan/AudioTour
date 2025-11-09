@@ -31,6 +31,7 @@ export default [
       'dist/**',
       'eslint-rules/**',
       '**/*.d.ts',
+      'babel.config.js',
       'eslint.config.js',
       '.prettierrc.js',
     ],
