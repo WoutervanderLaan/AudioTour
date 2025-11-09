@@ -1,45 +1,28 @@
-import {SizeTokens, sizeTokens} from '@/themes/tokens/size'
-import {TextTokens, textTokens} from '@/themes/tokens/text'
-import {ColorTokens, lightColorTokens} from '@/themes/tokens/themeLight'
+import {sizeTokens} from '@/themes/tokens/size'
+import {textTokens} from '@/themes/tokens/text'
+import {darkColorTokens} from '@/themes/tokens/themeDark'
+import {lightColorTokens} from '@/themes/tokens/themeLight'
 
-/**
- * Theme
- * TODO: describe what this type represents.
- */
-export type Theme = {
-  /**
-   * color
-   */
-  color: ColorTokens
-  /**
-   * duration
-   */
-  id: string
-  /**
-   * size
-   */
-  size: SizeTokens
-  /**
-   * text
-   */
-  text: TextTokens
-}
+import {type Theme, ThemeVariant} from './types'
 
-export const themeId = 'light'
-
-export const lightTheme: Theme = {
-  id: themeId,
+const baseTheme = {
   size: sizeTokens,
   text: textTokens,
+}
+
+export const lightTheme: Theme = {
+  id: ThemeVariant.light,
+  ...baseTheme,
   color: lightColorTokens,
 }
 
-export const themes = {
-  light: lightTheme,
-} satisfies Record<string, Theme>
+export const darkTheme: Theme = {
+  id: ThemeVariant.dark,
+  ...baseTheme,
+  color: darkColorTokens,
+}
 
-/**
- * Themes
- * TODO: describe what this type represents.
- */
-export type Themes = keyof typeof themes
+export const themes = {
+  [ThemeVariant.light]: lightTheme,
+  [ThemeVariant.dark]: darkTheme,
+} satisfies Record<ThemeVariant, Theme>

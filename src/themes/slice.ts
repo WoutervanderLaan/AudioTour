@@ -1,7 +1,8 @@
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
-import {type Theme, type Themes, themes} from './themes'
+import {themes} from './themes'
+import {type Theme, type Themes, ThemeVariant} from './types'
 
 /**
  * ThemeState
@@ -16,7 +17,7 @@ export type ThemeState = {
 
 export const useThemeStore = create<ThemeState>()(
   immer(_set => ({
-    theme: 'light',
+    theme: ThemeVariant.light,
   })),
 )
 

@@ -3,7 +3,8 @@ import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native'
 
 import {useThemeStore} from '@/themes/slice'
 
-import {type Theme, themes} from './themes'
+import {themes} from './themes'
+import type {Theme} from './types'
 
 /**
  * NamedStyles

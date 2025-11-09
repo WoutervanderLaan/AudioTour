@@ -1,9 +1,9 @@
 import {color} from '@/themes/tokens/color'
 
 /**
- * The light color theme, the keys of the object should not contain any color name at all
+ * The dark color theme, the keys of the object should not contain any color name at all
  */
-export const lightColorTokens = {
+export const darkColorTokens = {
   pressable: {
     primary: {
       default: {

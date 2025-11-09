@@ -1,14 +1,3 @@
-/**
- * SizeTokens
- * TODO: describe what this type represents.
- */
-export type SizeTokens = typeof sizeTokens
-/**
- * SpacingTokens
- * TODO: describe what this type represents.
- */
-export type SpacingTokens = typeof sizeTokens.spacing
-
 export const sizeTokens = {
   spacing: {
     no: 0,
