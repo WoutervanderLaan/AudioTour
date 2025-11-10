@@ -49,7 +49,7 @@ export enum ThemeVariant {
 }
 
 /**
- * Themes
+ * AppThemes
  * TODO: describe what this type represents.
  */
-export type Themes = keyof typeof themes
+export type AppThemes = typeof themes

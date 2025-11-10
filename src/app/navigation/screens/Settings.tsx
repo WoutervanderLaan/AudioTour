@@ -1,7 +1,6 @@
 import {Text} from '@react-navigation/elements'
 import {View} from 'react-native'
-
-import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
+import {StyleSheet} from 'react-native-unistyles'
 
 /**
  * Settings
@@ -17,7 +16,7 @@ export function Settings(): any {
   )
 }
 
-const styles = ThemedStyleSheet.create(() => ({
+const styles = StyleSheet.create(() => ({
   container: {
     flex: 1,
     justifyContent: 'center',

@@ -10,11 +10,11 @@ import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from 'react-native-safe-area-context'
+import {StyleSheet} from 'react-native-unistyles'
 
 import {Navigation} from '@/app/navigation'
 import {ApiProvider} from '@/lib/api/Provider'
 import {ToastProvider} from '@/store/context/ToastContext'
-import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 Asset.loadAsync([...NavigationElements.Assets])
 
@@ -63,7 +63,7 @@ export function App() {
   )
 }
 
-const styles = ThemedStyleSheet.create(({color}) => ({
+const styles = StyleSheet.create(({color}) => ({
   appContainer: {
     backgroundColor: color.screen.background.default,
   },

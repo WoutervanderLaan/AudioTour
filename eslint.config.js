@@ -220,7 +220,7 @@ export default [
               name: 'react-native',
               importNames: ['StyleSheet'],
               message:
-                'Do not use StyleSheet. Use ThemedStyleSheet from @/themes/ThemedStyleSheet instead.',
+                'Do not use StyleSheet from react-native. Use StyleSheet from react-native-unistyles instead.',
             },
           ],
         },

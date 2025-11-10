@@ -1,5 +1,6 @@
 /* eslint-disable local/enforce-feature-structure */
 import '@expo/metro-runtime' // Necessary for Fast Refresh on Web
+import '@/themes/unistyles' // Must be imported before any react-native-unistyles usage
 
 import {registerRootComponent} from 'expo'
 

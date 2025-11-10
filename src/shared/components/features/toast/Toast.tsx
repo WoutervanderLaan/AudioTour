@@ -1,7 +1,6 @@
 import {Text, View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
-
-import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
+import {StyleSheet} from 'react-native-unistyles'
 
 /**
  * Props
@@ -35,7 +34,7 @@ export function Toast({message, type = 'info'}: Props) {
   )
 }
 
-const styles = ThemedStyleSheet.create(({color}) => ({
+const styles = StyleSheet.create(({color}) => ({
   toast: {
     position: 'absolute',
     left: 20,

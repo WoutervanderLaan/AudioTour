@@ -2,7 +2,7 @@ import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
 import {themes} from './themes'
-import {type Theme, type Themes, ThemeVariant} from './types'
+import {type Theme, ThemeVariant} from './types'
 
 /**
  * ThemeState
@@ -12,7 +12,7 @@ export type ThemeState = {
   /**
    * theme
    */
-  theme: Themes
+  theme: ThemeVariant
 }
 
 export const useThemeStore = create<ThemeState>()(

@@ -6,6 +6,7 @@ import * as ImagePicker from 'expo-image-picker'
 import React, {useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {ActivityIndicator, Image, View} from 'react-native'
+import {StyleSheet} from 'react-native-unistyles'
 import {useShallow} from 'zustand/react/shallow'
 
 import {ObjectForm, objectSchema} from '@/features/capture/schemas/schema'
@@ -13,7 +14,6 @@ import {useApi} from '@/lib/api/hooks/useApi'
 import {RHFTextArea, RHFTextInput} from '@/shared/components/ui/form/FormInputs'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
-import {ThemedStyleSheet} from '@/themes/ThemedStyleSheet'
 
 /**
  * Capture
@@ -176,7 +176,7 @@ export function Capture() {
   )
 }
 
-const styles = ThemedStyleSheet.create(() => ({
+const styles = StyleSheet.create(() => ({
   container: {
     flex: 1,
     justifyContent: 'center',
