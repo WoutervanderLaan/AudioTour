@@ -6,5 +6,5 @@ StyleSheet.configure({
   settings: {
     adaptiveThemes: true,
   },
-  themes: themes,
+  themes,
 })
