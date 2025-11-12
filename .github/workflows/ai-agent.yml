@@ -1,0 +1,58 @@
+name: AI Agent Task Runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      trelloCardId:
+        required: true
+      title:
+        required: true
+      description:
+        required: true
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate branch name
+        id: branch
+        run: |
+          BRANCH="ai/${{ github.event.inputs.trelloCardId }}-${{ github.run_id }}"
+          echo "name=$BRANCH" >> $GITHUB_OUTPUT
+
+      - name: Create branch
+        run: |
+          git checkout -b "${{ steps.branch.outputs.name }}"
+
+      - name: Configure Claude Task Prompt
+        id: prompt
+        run: |
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          echo "Trello Card: ${{ github.event.inputs.title }}" >> $GITHUB_OUTPUT
+          echo "Description: ${{ github.event.inputs.description }}" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "Instructions:" >> $GITHUB_OUTPUT
+          echo "- Work on branch: ${{ steps.branch.outputs.name }}" >> $GITHUB_OUTPUT
+          echo "- Implement the task completely." >> $GITHUB_OUTPUT
+          echo "- Run and fix tests until they pass." >> $GITHUB_OUTPUT
+          echo "- Write meaningful commits." >> $GITHUB_OUTPUT
+          echo "- Open a Pull Request for review." >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      #- name: Run Claude Code
+        #uses: anthropic/claude-code-action@v1
+        #with:
+          #prompt: ${{ steps.prompt.outputs.prompt }}
+          #branch: ${{ steps.branch.outputs.name }}
+          #github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Optional:
+          # model: "claude-3.7-sonnet"
+
+      #- name: Move Trello card to 'In Review'
+        #run: |
+          #curl -X PUT \
+          #  "https://api.trello.com/1/cards/${{ github.event.inputs.trelloCardId }}?idList=${{ secrets.TRELLO_REVIEW_LIST_ID }}&key=${{ secrets.TRELLO_KEY }}&token=${{ secrets.TRELLO_TOKEN }}"
