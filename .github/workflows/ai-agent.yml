@@ -10,6 +10,9 @@ on:
       description:
         required: true
 
+permissions:
+  contents: write
+
 jobs:
   run-task:
     runs-on: ubuntu-latest
@@ -28,6 +31,12 @@ jobs:
         run: |
           git checkout -b "${{ steps.branch.outputs.name }}"
 
+      - name: Push branch to origin
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git push origin "${{ steps.branch.outputs.name }}"
+
       - name: Configure Claude Task Prompt
         id: prompt
         run: |
@@ -42,17 +51,3 @@ jobs:
           echo "- Write meaningful commits." >> $GITHUB_OUTPUT
           echo "- Open a Pull Request for review." >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
-
-      #- name: Run Claude Code
-        #uses: anthropic/claude-code-action@v1
-        #with:
-          #prompt: ${{ steps.prompt.outputs.prompt }}
-          #branch: ${{ steps.branch.outputs.name }}
-          #github-token: ${{ secrets.GITHUB_TOKEN }}
-          # Optional:
-          # model: "claude-3.7-sonnet"
-
-      #- name: Move Trello card to 'In Review'
-        #run: |
-          #curl -X PUT \
-          #  "https://api.trello.com/1/cards/${{ github.event.inputs.trelloCardId }}?idList=${{ secrets.TRELLO_REVIEW_LIST_ID }}&key=${{ secrets.TRELLO_KEY }}&token=${{ secrets.TRELLO_TOKEN }}"
