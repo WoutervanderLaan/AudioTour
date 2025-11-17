@@ -10,7 +10,7 @@ import {Switch, Text, TextInput, View} from 'react-native'
  * @param {*} options
  * @returns {*} describe return value
  */
-export function RHFTextInput<T extends FieldValues>({
+export const RHFTextInput = <T extends FieldValues>({
   control,
   name,
   label,
@@ -21,7 +21,7 @@ export function RHFTextInput<T extends FieldValues>({
   name: Path<T>
   label: string
   placeholder?: string
-} & ComponentProps<typeof TextInput>): React.JSX.Element {
+} & ComponentProps<typeof TextInput>): React.JSX.Element => {
   return (
     <Controller
       control={control}
@@ -51,7 +51,7 @@ export function RHFTextInput<T extends FieldValues>({
  * @param {*} options
  * @returns {*} describe return value
  */
-export function RHFTextArea<T extends FieldValues>({
+export const RHFTextArea = <T extends FieldValues>({
   control,
   name,
   label,
@@ -61,7 +61,7 @@ export function RHFTextArea<T extends FieldValues>({
   name: Path<T>
   label: string
   placeholder?: string
-}): React.JSX.Element {
+}): React.JSX.Element => {
   return (
     <Controller
       control={control}
@@ -91,7 +91,7 @@ export function RHFTextArea<T extends FieldValues>({
  * @param {*} options
  * @returns {*} describe return value
  */
-export function RHFCheckbox<T extends FieldValues>({
+export const RHFCheckbox = <T extends FieldValues>({
   control,
   name,
   label,
@@ -99,7 +99,7 @@ export function RHFCheckbox<T extends FieldValues>({
   control: Control<T>
   name: Path<T>
   label: string
-}): React.JSX.Element {
+}): React.JSX.Element => {
   return (
     <Controller
       control={control}

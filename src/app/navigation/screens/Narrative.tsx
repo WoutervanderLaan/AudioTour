@@ -1,8 +1,9 @@
-import {Button, Text} from '@react-navigation/elements'
-import {useMutation} from '@tanstack/react-query'
 import React, {useState} from 'react'
 import {ActivityIndicator, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
+import {Button, Text} from '@react-navigation/elements'
+import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
@@ -15,7 +16,7 @@ import {useTourStore} from '@/store/slices/tourStore'
  *
  * @returns {*} describe return value
  */
-export function Narrative(): React.JSX.Element {
+export const Narrative = (): React.JSX.Element => {
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
   const api = useApi()

@@ -1,9 +1,10 @@
-import {Button, Text} from '@react-navigation/elements'
-import {StaticScreenProps} from '@react-navigation/native'
-import {useMutation} from '@tanstack/react-query'
 import React from 'react'
 import {ActivityIndicator, ScrollView, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
+import {Button, Text} from '@react-navigation/elements'
+import {StaticScreenProps} from '@react-navigation/native'
+import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
 import {useApi} from '@/shared/lib/api/useApi'
@@ -23,7 +24,7 @@ type Props = StaticScreenProps<{objectId: string}>
  * @param {*} options
  * @returns {*} describe return value
  */
-export function ObjectDetail({route}: Readonly<Props>): React.JSX.Element {
+export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
   const {objectId} = route.params
   const api = useApi()
   const [localError, setLocalError] = React.useState<string | undefined>(

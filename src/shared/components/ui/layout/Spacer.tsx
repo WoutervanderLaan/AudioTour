@@ -1,8 +1,8 @@
 import React from 'react'
 
-import type {Theme} from '@/themes/types'
-
 import {Box} from './Box'
+
+import type {Theme} from '@/themes/types'
 
 /**
  * Spacer

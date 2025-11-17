@@ -1,6 +1,7 @@
-import {Text} from '@react-navigation/elements'
 import {View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
+import {Text} from '@react-navigation/elements'
 
 /**
  * Settings
@@ -8,7 +9,7 @@ import {StyleSheet} from 'react-native-unistyles'
  *
  * @returns {*} describe return value
  */
-export function Settings(): any {
+export const Settings = (): any => {
   return (
     <View style={styles.container}>
       <Text>Settings Screen</Text>

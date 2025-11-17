@@ -1,5 +1,3 @@
-import {QueryClientProvider} from '@tanstack/react-query'
-import * as SplashScreen from 'expo-splash-screen'
 import * as React from 'react'
 import {
   initialWindowMetrics,
@@ -7,13 +5,16 @@ import {
 } from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Navigation} from '@/app/navigation'
-import {ApiProvider} from '@/shared/lib/api/Provider'
-import {ToastProvider} from '@/store/context/ToastContext'
+import {QueryClientProvider} from '@tanstack/react-query'
+import * as SplashScreen from 'expo-splash-screen'
 
 import {Init} from './init/Init'
 import {queryClient} from './init/queryclient'
 import {linking} from './navigation/linking'
+
+import {Navigation} from '@/app/navigation'
+import {ApiProvider} from '@/shared/lib/api/Provider'
+import {ToastProvider} from '@/store/context/ToastContext'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -23,7 +24,7 @@ SplashScreen.preventAutoHideAsync()
  *
  * @returns {*} describe return value
  */
-export function App(): React.JSX.Element {
+export const App = (): React.JSX.Element => {
   return (
     <QueryClientProvider client={queryClient}>
       <ApiProvider>

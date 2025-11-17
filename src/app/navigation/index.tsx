@@ -1,8 +1,9 @@
+import type React from 'react'
+
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {HeaderButton, Text} from '@react-navigation/elements'
 import {createStaticNavigation, StaticParamList} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
-import type React from 'react'
 
 import {Capture} from './screens/Capture'
 import {Museum} from './screens/Museum'
@@ -87,6 +88,7 @@ declare global {
      * RootParamList
      * TODO: describe what this type represents.
      */
+    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
     interface RootParamList extends RootStackParamList {}
   }
 }

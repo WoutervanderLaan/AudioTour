@@ -1,5 +1,6 @@
-import * as Location from 'expo-location'
 import {useEffect, useRef, useState} from 'react'
+
+import * as Location from 'expo-location'
 
 /**
  * Coordinates

@@ -1,7 +1,8 @@
-import {Button, Text} from '@react-navigation/elements'
 import React, {useState} from 'react'
 import {ActivityIndicator, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
+import {Button, Text} from '@react-navigation/elements'
 
 /**
  * AudioPlayer
@@ -10,7 +11,7 @@ import {StyleSheet} from 'react-native-unistyles'
  * @param {*} options
  * @returns {*} describe return value
  */
-export function AudioPlayer({src}: {src: string}): React.JSX.Element {
+export const AudioPlayer = ({src}: {src: string}): React.JSX.Element => {
   const [playing, setPlaying] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -20,7 +21,7 @@ export function AudioPlayer({src}: {src: string}): React.JSX.Element {
    *
    * @returns {*} describe return value
    */
-  const toggle = async (): Promise<void> => {
+  const toggle = (): void => {
     setLoading(true)
     // Stub: in future integrate expo-av
     setTimeout(() => {

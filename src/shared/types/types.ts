@@ -20,21 +20,21 @@ export type ObjectItem = {
    */
   date?: string
   /**
-   * museum_id
+   * museumIdd
    */
-  museum_id?: string
+  museumIdd?: string
   /**
    * image_url
    */
-  image_url?: string
+  imageUrl?: string
   /**
    * generated_text
    */
-  generated_text?: string
+  generatedText?: string
   /**
    * generated_audio
    */
-  generated_audio?: string
+  generatedAudio?: string
   /**
    * metadata
    */
@@ -53,15 +53,15 @@ export type UserSequence = {
   /**
    * user_session_id
    */
-  user_session_id: string
+  userSessionId: string
   /**
    * object_ids
    */
-  object_ids: string[]
+  objectIds: string[]
   /**
    * created_at
    */
-  created_at?: string
+  createdAt?: string
 }
 
 /**
@@ -84,11 +84,11 @@ export type Museum = {
   /**
    * is_licensed
    */
-  is_licensed?: boolean
+  isLicensed?: boolean
   /**
    * license_tier
    */
-  license_tier?: string
+  licenseTier?: string
 }
 
 /**
@@ -99,11 +99,11 @@ export type UploadPhotoResponse = {
   /**
    * object_id
    */
-  object_id: string
+  objectId: string
   /**
    * recognition_confidence
    */
-  recognition_confidence: number
+  recognitionConfidence: number
 }
 
 /**
@@ -114,7 +114,7 @@ export type GenerateNarrativeResponse = {
   /**
    * narrative_text
    */
-  narrative_text: string
+  narrativeText: string
 }
 
 /**
@@ -125,5 +125,5 @@ export type GenerateAudioResponse = {
   /**
    * audio_url
    */
-  audio_url: string
+  audioUrl: string
 }

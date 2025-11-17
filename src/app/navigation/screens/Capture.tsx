@@ -1,12 +1,13 @@
+import React, {useState} from 'react'
+import {useForm} from 'react-hook-form'
+import {ActivityIndicator, Image, View} from 'react-native'
+import {StyleSheet} from 'react-native-unistyles'
+
 import {zodResolver} from '@hookform/resolvers/zod'
 import {Button, Text} from '@react-navigation/elements'
 import {useNavigation} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import * as ImagePicker from 'expo-image-picker'
-import React, {useState} from 'react'
-import {useForm} from 'react-hook-form'
-import {ActivityIndicator, Image, View} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
 import {useShallow} from 'zustand/react/shallow'
 
 import {ObjectForm, objectSchema} from '@/features/capture/schemas/schema'
@@ -21,7 +22,7 @@ import {useUserSessionStore} from '@/store/slices/userSessionStore'
  *
  * @returns {*} describe return value
  */
-export function Capture(): React.JSX.Element {
+export const Capture = (): React.JSX.Element => {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 

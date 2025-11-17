@@ -1,5 +1,6 @@
-import * as Crypto from 'expo-crypto'
 import React, {createContext, useCallback, useContext, useState} from 'react'
+
+import * as Crypto from 'expo-crypto'
 
 import {Toast} from '@/shared/components/features/toast/Toast'
 
@@ -52,11 +53,11 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined)
  * @param {*} options
  * @returns {*} describe return value
  */
-export function ToastProvider({
+export const ToastProvider = ({
   children,
 }: {
   children: React.ReactNode
-}): React.JSX.Element {
+}): React.JSX.Element => {
   const [toast, setToast] = useState<ToastProps | null>(null)
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
 

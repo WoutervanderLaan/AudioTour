@@ -1,9 +1,9 @@
+import {type Theme, ThemeVariant} from './types'
+
 import {sizeTokens} from '@/themes/tokens/size'
 import {textTokens} from '@/themes/tokens/text'
 import {darkColorTokens} from '@/themes/tokens/themeDark'
 import {lightColorTokens} from '@/themes/tokens/themeLight'
-
-import {type Theme, ThemeVariant} from './types'
 
 const baseTheme = {
   size: sizeTokens,

@@ -1,8 +1,9 @@
-import * as NavigationElements from '@react-navigation/elements'
-import {Asset} from 'expo-asset'
 import type React from 'react'
 import {StatusBar} from 'react-native'
 import {UnistylesRuntime} from 'react-native-unistyles'
+
+import * as NavigationElements from '@react-navigation/elements'
+import {Asset} from 'expo-asset'
 
 Asset.loadAsync([...NavigationElements.Assets])
 

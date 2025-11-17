@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, {type FC} from 'react'
 import {StyleProp, View, type ViewProps, ViewStyle} from 'react-native'
 import {useUnistyles} from 'react-native-unistyles'

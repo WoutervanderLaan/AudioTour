@@ -101,10 +101,19 @@ export default [
       'react/display-name': 'off',
       'react/jsx-no-leaked-render': ['warn', {validStrategies: ['coerce']}],
       'react/jsx-no-constructed-context-values': 'warn',
+      'react/jsx-pascal-case': 'error',
+      'react/function-component-definition': [
+        'error',
+        {
+          namedComponents: 'arrow-function',
+          unnamedComponents: 'arrow-function',
+        },
+      ],
 
       /** --- React Hooks --- **/
       'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
+      'react-hooks/exhaustive-deps': 'error',
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
 
       /** --- React Native --- **/
       'react-native/no-unused-styles': 'warn',
@@ -115,12 +124,14 @@ export default [
 
       /** --- General JS / TS --- **/
       'no-debugger': 'error',
+      'no-empty-function': 'error',
       'no-console': 'warn',
       'no-warning-comments': [
         'warn',
         {terms: ['todo', 'fixme', 'xxx'], location: 'anywhere'},
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/require-await': 'error',
       '@typescript-eslint/explicit-function-return-type': [
         'error',
         {
@@ -138,9 +149,52 @@ export default [
       ],
       'no-var': 'error',
       'prefer-const': 'error',
+
+      /** --- Code style / Quality --- **/
       'max-lines': ['warn', {max: 300, skipBlankLines: true}],
+      complexity: ['error', {max: 12}],
+      'max-nested-callbacks': ['error', 3],
+      'max-depth': ['error', 4],
+      'max-lines-per-function': [
+        'error',
+        {
+          max: 120,
+          skipComments: true,
+          skipBlankLines: true,
+        },
+      ],
+      'max-params': ['error', 4],
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: 'variableLike',
+          format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+        },
+        {
+          selector: 'typeLike',
+          format: ['PascalCase'],
+        },
+      ],
+      '@typescript-eslint/strict-boolean-expressions': [
+        'warn',
+        {
+          allowNullableString: true,
+          // allowNullableObject: true,
+          // allowNumber: true,
+          allowNullableBoolean: true,
+        },
+      ],
 
       /** --- Folder structure --- **/
+      'unicorn/filename-case': [
+        'error',
+        {
+          cases: {
+            camelCase: true,
+            pascalCase: true,
+          },
+        },
+      ],
       'local/enforce-feature-structure': [
         'error',
         {
@@ -168,15 +222,29 @@ export default [
       'unused-imports/no-unused-imports': 'error',
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
-        'warn',
+        'error',
         {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
         },
       ],
       /** --- Imports --- **/
-      'simple-import-sort/imports': 'warn',
+      // 'import/no-relative-parent-imports': 'error',
+      'import/no-cycle': ['error', {maxDepth: 1}],
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            ['^react', '^react-native'],
+            ['^@?\\w'],
+            ['^src/'],
+            ['^\\.'],
+          ],
+        },
+      ],
+
       'simple-import-sort/exports': 'warn',
+      'import/no-default-export': 'error',
 
       /** --- Promise / Security / Quality --- **/
       'promise/always-return': 'off',
@@ -185,24 +253,6 @@ export default [
       'security/detect-object-injection': 'off',
       'sonarjs/no-duplicate-string': 'warn',
       'unicorn/prefer-optional-catch-binding': 'warn',
-      'unicorn/filename-case': [
-        'error',
-        {
-          cases: {
-            camelCase: true,
-            pascalCase: true,
-          },
-        },
-      ],
-      '@typescript-eslint/strict-boolean-expressions': [
-        'warn',
-        {
-          allowNullableString: true,
-          // allowNullableObject: true,
-          // allowNumber: true,
-          allowNullableBoolean: true,
-        },
-      ],
 
       /** --- Architectural Conventions --- **/
       'no-restricted-imports': [

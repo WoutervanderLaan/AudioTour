@@ -25,7 +25,7 @@ type Props = Readonly<{
  * @param {*} options
  * @returns {*} describe return value
  */
-export function Toast({message, type = 'info'}: Props): React.JSX.Element {
+export const Toast = ({message, type = 'info'}: Props): React.JSX.Element => {
   const {top} = useSafeAreaInsets()
 
   return (

@@ -1,7 +1,8 @@
-import {Text} from '@react-navigation/elements'
 import React, {useEffect, useState} from 'react'
 import {ActivityIndicator, FlatList, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
+import {Text} from '@react-navigation/elements'
 
 import {useApi} from '@/shared/lib/api/useApi'
 import {useToast} from '@/store/context/ToastContext'
@@ -29,7 +30,7 @@ type Item = {
  *
  * @returns {*} describe return value
  */
-export function Recommendations(): React.JSX.Element {
+export const Recommendations = (): React.JSX.Element => {
   const [items, setItems] = useState<Array<Item>>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -69,7 +70,7 @@ export function Recommendations(): React.JSX.Element {
       }
     }
     run()
-  }, [sessionId, currentMuseumId])
+  }, [sessionId, currentMuseumId, api, toast])
 
   return (
     <View style={styles.container}>

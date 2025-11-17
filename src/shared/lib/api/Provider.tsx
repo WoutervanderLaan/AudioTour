@@ -11,9 +11,9 @@ export const ApiContext = createContext<ApiClient | undefined>(undefined)
  * @param {*} param
  * @returns {*} describe return value
  */
-export function ApiProvider({
+export const ApiProvider = ({
   children,
-}: Readonly<{children: React.ReactNode}>): React.JSX.Element {
+}: Readonly<{children: React.ReactNode}>): React.JSX.Element => {
   const api = useMemo(() => new ApiClient(), [])
 
   return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>

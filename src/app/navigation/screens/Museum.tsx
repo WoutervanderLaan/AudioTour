@@ -1,7 +1,8 @@
-import {Button, Text} from '@react-navigation/elements'
 import React from 'react'
 import {ActivityIndicator, FlatList, TouchableOpacity, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
+import {Button, Text} from '@react-navigation/elements'
 import {useShallow} from 'zustand/react/shallow'
 
 import {
@@ -18,7 +19,7 @@ import {useMuseumStore} from '@/store/slices/museumStore'
  *
  * @returns {*} describe return value
  */
-export function Museum(): React.JSX.Element {
+export const Museum = (): React.JSX.Element => {
   const [loading, setLoading] = React.useState(true)
 
   const {currentMuseumId, setMuseum} = useMuseumStore(

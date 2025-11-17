@@ -153,7 +153,7 @@ export class ApiClient {
     return handleResponse<{audio_url: string}>(res)
   }
 
-  async listMuseumObjects(museum_id: string): Promise<
+  async listMuseumObjects(museumId: string): Promise<
     {
       id: string
       name: string
@@ -166,7 +166,7 @@ export class ApiClient {
     }[]
   > {
     const res = await fetch(
-      this._url(`/museum-objects/${encodeURIComponent(museum_id)}`),
+      this._url(`/museum-objects/${encodeURIComponent(museumId)}`),
     )
 
     return handleResponse<
