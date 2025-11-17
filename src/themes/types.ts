@@ -16,12 +16,6 @@ export type ColorTokens = typeof lightColorTokens
 export type SizeTokens = typeof sizeTokens
 
 /**
- * SpacingTokens
- * TODO: describe what this type represents.
- */
-export type SpacingTokens = typeof sizeTokens.spacing
-
-/**
  * Theme
  * TODO: describe what this type represents.
  */

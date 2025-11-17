@@ -4,11 +4,11 @@ import {ActivityIndicator, FlatList, TouchableOpacity, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 import {useShallow} from 'zustand/react/shallow'
 
-import {KNOWN_MUSEUMS, MuseumLocation} from '@/lib/constants/museums'
 import {
   haversineDistanceMeters,
   useUserLocation,
 } from '@/shared/hooks/useUserLocation'
+import {KNOWN_MUSEUMS, MuseumLocation} from '@/shared/lib/constants/museums'
 import {useToast} from '@/store/context/ToastContext'
 import {useMuseumStore} from '@/store/slices/museumStore'
 
@@ -47,7 +47,7 @@ export function Museum() {
       distance: haversineDistanceMeters(coords, m.coords),
     }))
 
-    const sortedMuseumsWithDistance = museumsWithDistance.sort((a, b) => {
+    const sortedMuseumsWithDistance = museumsWithDistance.toSorted((a, b) => {
       return a.distance - b.distance
     })
 

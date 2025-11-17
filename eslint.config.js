@@ -17,6 +17,7 @@ import requireDocComment from './eslint-rules/require-doc-comment.js'
 import requireTypeDocComment from './eslint-rules/require-type-doc-comment.js'
 import queryPlugin from '@tanstack/eslint-plugin-query'
 import enforceFeatureStructure from './eslint-rules/enforce-feature-structure.js'
+import folderDocsRule from './eslint-rules/require-folder-docs.js'
 import jestPlugin from 'eslint-plugin-jest'
 
 export default [
@@ -49,7 +50,6 @@ export default [
         ...globals.browser,
         ...globals.node,
         ...jestPlugin.environments.globals.globals,
-        process: true,
         __DEV__: true,
       },
     },
@@ -73,6 +73,7 @@ export default [
           'require-doc-comment': requireDocComment,
           'require-type-doc-comment': requireTypeDocComment,
           'enforce-feature-structure': enforceFeatureStructure,
+          'require-folder-docs': folderDocsRule,
         },
       },
     },
@@ -88,7 +89,6 @@ export default [
         {type: 'app', pattern: 'src/app/**'},
         {type: 'shared', pattern: 'src/shared/**'},
         {type: 'features', pattern: 'src/features/**'},
-        {type: 'lib', pattern: 'src/lib/**'},
         {type: 'store', pattern: 'src/store/**'},
         {type: 'themes', pattern: 'src/themes/**'},
       ],
@@ -116,9 +116,19 @@ export default [
       /** --- General JS / TS --- **/
       'no-debugger': 'error',
       'no-console': 'warn',
+      'no-warning-comments': [
+        'warn',
+        {terms: ['todo', 'fixme', 'xxx'], location: 'anywhere'},
+      ],
       '@typescript-eslint/no-explicit-any': 'warn',
       'local/require-doc-comment': 'error',
       'local/require-type-doc-comment': 'error',
+      'local/require-folder-docs': [
+        'error',
+        {
+          include: ['src', 'features', 'components'],
+        },
+      ],
       'no-var': 'error',
       'prefer-const': 'error',
       'max-lines': ['warn', {max: 300, skipBlankLines: true}],
@@ -127,14 +137,7 @@ export default [
       'local/enforce-feature-structure': [
         'error',
         {
-          allowedFolders: [
-            'features',
-            'lib',
-            'shared',
-            'app',
-            'store',
-            'themes',
-          ],
+          allowedFolders: ['features', 'shared', 'app', 'store', 'themes'],
         },
       ],
       'boundaries/no-unknown': 'error',
@@ -143,22 +146,12 @@ export default [
         {
           default: 'disallow',
           rules: [
-            // app can depend on anything
             {
               from: ['app'],
-              allow: ['shared', 'features', 'lib', 'store', 'themes'],
+              allow: ['shared', 'features', 'store', 'themes'],
             },
-
-            // lib can import only from app
-            {from: ['lib'], allow: ['app']},
-
-            // features can use shared and entities, but not other features
-            {from: ['features'], allow: ['shared', 'lib', 'store']},
-
-            // shared cannot import from anything above it
+            {from: ['features'], allow: ['shared', 'store']},
             {from: ['shared'], allow: ['themes']},
-
-            // store cannot import from anything above it
             {from: ['store'], allow: ['shared']},
           ],
         },
@@ -200,7 +193,7 @@ export default [
           allowNullableString: true,
           // allowNullableObject: true,
           // allowNumber: true,
-          // allowNullableBoolean: true,
+          allowNullableBoolean: true,
         },
       ],
 
@@ -264,6 +257,18 @@ export default [
       'jest/no-identical-title': 'error',
       'jest/prefer-to-have-length': 'warn',
       'jest/valid-expect': 'error',
+    },
+  },
+  // Turn off no-undef for eslint-rules folder
+  {
+    files: ['eslint-rules/**/*.{js,ts}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      'no-undef': 'off',
     },
   },
 ]

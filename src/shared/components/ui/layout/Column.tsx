@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {type ReactNode} from 'react'
 
 import {Box, BoxProps} from './Box'
 
@@ -9,11 +9,8 @@ import {Box, BoxProps} from './Box'
  * @param {*} props
  * @returns {*} describe return value
  */
-export const Column: React.FC<Omit<BoxProps, 'row' | 'column'>> = props => {
-  return (
-    <Box
-      {...props}
-      column
-    />
-  )
+export const Column = (props: Omit<BoxProps, 'row' | 'column'>): ReactNode => {
+  const boxProps = {...props, column: true} as BoxProps
+
+  return <Box {...boxProps} />
 }

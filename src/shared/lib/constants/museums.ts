@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-// eslint-disable-next-line boundaries/element-types
+
 import type {Coordinates} from '@/shared/hooks/useUserLocation' // TODO: move file to feature folder
 
 /**

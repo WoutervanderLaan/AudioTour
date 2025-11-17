@@ -1,11 +1,6 @@
-import * as NavigationElements from '@react-navigation/elements'
-import {DarkTheme, DefaultTheme} from '@react-navigation/native'
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import {Asset} from 'expo-asset'
-import {createURL} from 'expo-linking'
+import {QueryClientProvider} from '@tanstack/react-query'
 import * as SplashScreen from 'expo-splash-screen'
 import * as React from 'react'
-import {StatusBar, useColorScheme} from 'react-native'
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -13,16 +8,14 @@ import {
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Navigation} from '@/app/navigation'
-import {ApiProvider} from '@/lib/api/Provider'
+import {ApiProvider} from '@/shared/lib/api/Provider'
 import {ToastProvider} from '@/store/context/ToastContext'
 
-Asset.loadAsync([...NavigationElements.Assets])
+import {Init} from './init/Init'
+import {queryClient} from './init/queryclient'
+import {linking} from './navigation/linking'
 
 SplashScreen.preventAutoHideAsync()
-
-const prefix = createURL('/')
-
-const queryClient = new QueryClient()
 
 /**
  * App
@@ -31,27 +24,16 @@ const queryClient = new QueryClient()
  * @returns {*} describe return value
  */
 export function App() {
-  const colorScheme = useColorScheme()
-
-  const theme = colorScheme === 'dark' ? DarkTheme : DefaultTheme
-
   return (
     <QueryClientProvider client={queryClient}>
       <ApiProvider>
-        <StatusBar
-          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
-          animated
-        />
         <SafeAreaProvider
           style={styles.appContainer}
           initialMetrics={initialWindowMetrics}>
           <ToastProvider>
+            <Init />
             <Navigation
-              theme={theme}
-              linking={{
-                enabled: 'auto',
-                prefixes: [prefix],
-              }}
+              linking={linking}
               onReady={() => {
                 SplashScreen.hideAsync()
               }}

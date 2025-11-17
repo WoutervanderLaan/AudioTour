@@ -1,6 +1,6 @@
 import React, {createContext, useMemo} from 'react'
 
-import {ApiClient} from '@/lib/api/client'
+import {ApiClient} from '@/shared/lib/api/client'
 
 export const ApiContext = createContext<ApiClient | undefined>(undefined)
 
@@ -11,7 +11,7 @@ export const ApiContext = createContext<ApiClient | undefined>(undefined)
  * @param {*} param
  * @returns {*} describe return value
  */
-export function ApiProvider({children}: {children: React.ReactNode}) {
+export function ApiProvider({children}: Readonly<{children: React.ReactNode}>) {
   const api = useMemo(() => new ApiClient(), [])
 
   return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>

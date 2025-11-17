@@ -1,7 +1,7 @@
 import {useContext} from 'react'
 
-import type {ApiClient} from '@/lib/api/client'
-import {ApiContext} from '@/lib/api/Provider'
+import type {ApiClient} from '@/shared/lib/api/client'
+import {ApiContext} from '@/shared/lib/api/Provider'
 
 /**
  * useApi

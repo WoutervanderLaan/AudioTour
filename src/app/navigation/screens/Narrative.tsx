@@ -5,8 +5,8 @@ import {ActivityIndicator, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 import {useShallow} from 'zustand/react/shallow'
 
-import {useApi} from '@/lib/api/hooks/useApi'
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
+import {useApi} from '@/shared/lib/api/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 
 /**

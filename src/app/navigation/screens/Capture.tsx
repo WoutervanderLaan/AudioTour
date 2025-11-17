@@ -10,8 +10,8 @@ import {StyleSheet} from 'react-native-unistyles'
 import {useShallow} from 'zustand/react/shallow'
 
 import {ObjectForm, objectSchema} from '@/features/capture/schemas/schema'
-import {useApi} from '@/lib/api/hooks/useApi'
 import {RHFTextArea, RHFTextInput} from '@/shared/components/ui/form/FormInputs'
+import {useApi} from '@/shared/lib/api/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
@@ -78,7 +78,7 @@ export function Capture() {
     // const res = await ImagePicker.launchCameraAsync({ quality: 0.7 });
     const res = await ImagePicker.launchImageLibraryAsync({quality: 0.7})
 
-    if (!res.canceled && res.assets && res.assets[0]?.uri) {
+    if (!res.canceled && res.assets?.[0]?.uri) {
       setImageUri(res.assets[0].uri)
     }
   }

@@ -1,6 +1,6 @@
 const API_BASE_URL_DEV = 'http://localhost:8000'
 
-export const AppConfig = {
+export const ApiConfig = {
   apiBaseUrl:
     (process.env.EXPO_PUBLIC_API_BASE_URL as string | undefined) ||
     API_BASE_URL_DEV,

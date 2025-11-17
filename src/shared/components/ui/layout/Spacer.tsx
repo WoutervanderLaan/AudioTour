@@ -1,5 +1,7 @@
 import React from 'react'
 
+import type {Theme} from '@/themes/types'
+
 import {Box} from './Box'
 
 /**
@@ -9,6 +11,11 @@ import {Box} from './Box'
  * @param {*} options
  * @returns {*} describe return value
  */
-export const Spacer = ({size = 8}) => (
-  <Box style={{width: size, height: size}} />
-)
+export const Spacer = ({size}: {size?: keyof Theme['size']}) => {
+  return (
+    <Box
+      flex={1}
+      padding={size}
+    />
+  )
+}

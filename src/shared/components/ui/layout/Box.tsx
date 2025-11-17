@@ -1,11 +1,15 @@
-import React from 'react'
-import {StyleProp, View, ViewStyle} from 'react-native'
+import React, {type FC} from 'react'
+import {StyleProp, View, type ViewProps, ViewStyle} from 'react-native'
+import {useUnistyles} from 'react-native-unistyles'
+
+import type {ApplyExclusivityPair} from '@/shared/types/ApplyExclusivityPair'
+import type {Theme} from '@/themes/types'
 
 /**
- * BoxProps
+ * BoxPropsBase
  * TODO: describe what this type represents.
  */
-export interface BoxProps {
+export type BoxPropsBase = {
   /**
    * children
    */
@@ -14,8 +18,6 @@ export interface BoxProps {
    * style
    */
   style?: StyleProp<ViewStyle>
-
-  // Layout props
   /**
    * flex
    */
@@ -44,36 +46,55 @@ export interface BoxProps {
   /**
    * gap
    */
-  gap?: number
+  gap?: keyof Theme['size']
   /**
    * padding
    */
-  padding?: number
+  padding?: keyof Theme['size']
   /**
    * paddingH
    */
-  paddingH?: number
+  paddingH?: keyof Theme['size']
   /**
    * paddingV
    */
-  paddingV?: number
+  paddingV?: keyof Theme['size']
   /**
    * paddingTop
    */
-  paddingTop?: number
+  paddingTop?: keyof Theme['size']
   /**
    * paddingRight
    */
-  paddingRight?: number
+  paddingRight?: keyof Theme['size']
   /**
    * paddingBottom
    */
-  paddingBottom?: number
+  paddingBottom?: keyof Theme['size']
   /**
    * paddingLeft
    */
-  paddingLeft?: number
-}
+  paddingLeft?: keyof Theme['size']
+} & ViewProps
+
+/**
+ * LayeredBoxProps
+ * TODO: describe what this type represents.
+ */
+export type BoxProps = ApplyExclusivityPair<
+  BoxPropsBase,
+  ['padding', ['paddingH', 'paddingV']]
+> &
+  ApplyExclusivityPair<
+    BoxPropsBase,
+    ['paddingH', ['paddingLeft', 'paddingRight']]
+  > &
+  ApplyExclusivityPair<
+    BoxPropsBase,
+    ['paddingV', ['paddingTop', 'paddingBottom']]
+  > &
+  ApplyExclusivityPair<BoxPropsBase, ['center', ['centerX', 'centerY']]> &
+  ApplyExclusivityPair<BoxPropsBase, ['row', 'column']>
 
 /**
  * Box
@@ -82,16 +103,16 @@ export interface BoxProps {
  * @param {*} options
  * @returns {*} describe return value
  */
-export const Box: React.FC<BoxProps> = ({
+export const Box: FC<BoxProps> = ({
   children,
   style,
+  flex,
   row,
   column,
   center,
   centerX,
   centerY,
   gap,
-  flex,
   padding,
   paddingH,
   paddingV,
@@ -100,20 +121,23 @@ export const Box: React.FC<BoxProps> = ({
   paddingBottom,
   paddingLeft,
 }) => {
-  const layout: ViewStyle = {
+  const {theme} = useUnistyles()
+
+  const dynamic: ViewStyle = {
     flex,
+    flexShrink: flex === undefined ? 0 : undefined,
     flexDirection: row ? 'row' : column ? 'column' : undefined,
     justifyContent: center || centerY ? 'center' : undefined,
     alignItems: center || centerX ? 'center' : undefined,
-    gap,
-    padding,
-    paddingHorizontal: paddingH,
-    paddingVertical: paddingV,
-    paddingTop,
-    paddingRight,
-    paddingBottom,
-    paddingLeft,
+    gap: gap ? theme.size[gap] : undefined,
+    padding: padding ? theme.size[padding] : undefined,
+    paddingHorizontal: paddingH ? theme.size[paddingH] : undefined,
+    paddingVertical: paddingV ? theme.size[paddingV] : undefined,
+    paddingTop: paddingTop ? theme.size[paddingTop] : undefined,
+    paddingRight: paddingRight ? theme.size[paddingRight] : undefined,
+    paddingBottom: paddingBottom ? theme.size[paddingBottom] : undefined,
+    paddingLeft: paddingLeft ? theme.size[paddingLeft] : undefined,
   }
 
-  return <View style={[layout, style]}>{children}</View>
+  return <View style={[dynamic, style]}>{children}</View>
 }

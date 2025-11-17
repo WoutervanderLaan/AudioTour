@@ -1,4 +1,4 @@
-import {AppConfig} from '@/app/config'
+import {ApiConfig} from '@/shared/lib/api/config'
 
 /**
  * ApiError
@@ -91,7 +91,7 @@ export class ApiClient {
   // TODO: add interceptors
 
   private _url(path: string) {
-    return AppConfig.getUrl(path)
+    return ApiConfig.getUrl(path)
   }
 
   async uploadPhoto(params: {uri: string; metadata?: Record<string, unknown>}) {

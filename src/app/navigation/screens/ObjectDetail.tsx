@@ -6,7 +6,7 @@ import {ActivityIndicator, ScrollView, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 import {useShallow} from 'zustand/react/shallow'
 
-import {useApi} from '@/lib/api/hooks/useApi'
+import {useApi} from '@/shared/lib/api/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
@@ -23,7 +23,7 @@ type Props = StaticScreenProps<{objectId: string}>
  * @param {*} options
  * @returns {*} describe return value
  */
-export function ObjectDetail({route}: Props) {
+export function ObjectDetail({route}: Readonly<Props>) {
   const {objectId} = route.params
   const api = useApi()
   const [localError, setLocalError] = React.useState<string | undefined>(

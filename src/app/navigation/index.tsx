@@ -78,7 +78,7 @@ export const Navigation = createStaticNavigation(RootStack)
  * RootStackParamList
  * TODO: describe what this type represents.
  */
-type RootStackParamList = StaticParamList<typeof RootStack>
+export type RootStackParamList = StaticParamList<typeof RootStack>
 
 declare global {
   namespace ReactNavigation {
