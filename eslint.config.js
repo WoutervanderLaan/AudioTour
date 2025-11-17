@@ -121,6 +121,13 @@ export default [
         {terms: ['todo', 'fixme', 'xxx'], location: 'anywhere'},
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/explicit-function-return-type': [
+        'error',
+        {
+          allowExpressions: false,
+          allowTypedFunctionExpressions: true,
+        },
+      ],
       'local/require-doc-comment': 'error',
       'local/require-type-doc-comment': 'error',
       'local/require-folder-docs': [

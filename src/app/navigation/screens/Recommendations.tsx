@@ -29,7 +29,7 @@ type Item = {
  *
  * @returns {*} describe return value
  */
-export function Recommendations() {
+export function Recommendations(): React.JSX.Element {
   const [items, setItems] = useState<Array<Item>>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -47,7 +47,7 @@ export function Recommendations() {
      *
      * @returns {*} describe return value
      */
-    const run = async () => {
+    const run = async (): Promise<void> => {
       setLoading(true)
       setError(undefined)
 

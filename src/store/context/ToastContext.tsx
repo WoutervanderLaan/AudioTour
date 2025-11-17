@@ -52,7 +52,11 @@ const ToastContext = createContext<ToastContextType | undefined>(undefined)
  * @param {*} options
  * @returns {*} describe return value
  */
-export function ToastProvider({children}: {children: React.ReactNode}) {
+export function ToastProvider({
+  children,
+}: {
+  children: React.ReactNode
+}): React.JSX.Element {
   const [toast, setToast] = useState<ToastProps | null>(null)
   const timeoutRef = React.useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -90,7 +94,7 @@ export function ToastProvider({children}: {children: React.ReactNode}) {
  *
  * @returns {*} describe return value
  */
-export function useToast() {
+export function useToast(): ToastContextType {
   const ctx = useContext(ToastContext)
   if (!ctx) throw new Error('useToast must be used within ToastProvider')
   return ctx

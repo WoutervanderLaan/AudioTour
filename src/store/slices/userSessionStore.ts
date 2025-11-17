@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as Crypto from 'expo-crypto'
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'

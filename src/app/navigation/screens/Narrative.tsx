@@ -15,7 +15,7 @@ import {useTourStore} from '@/store/slices/tourStore'
  *
  * @returns {*} describe return value
  */
-export function Narrative() {
+export function Narrative(): React.JSX.Element {
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
   const api = useApi()

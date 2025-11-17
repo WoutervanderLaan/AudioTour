@@ -10,7 +10,7 @@ import {StyleSheet} from 'react-native-unistyles'
  * @param {*} options
  * @returns {*} describe return value
  */
-export function AudioPlayer({src}: {src: string}) {
+export function AudioPlayer({src}: {src: string}): React.JSX.Element {
   const [playing, setPlaying] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -20,7 +20,7 @@ export function AudioPlayer({src}: {src: string}) {
    *
    * @returns {*} describe return value
    */
-  const toggle = async () => {
+  const toggle = async (): Promise<void> => {
     setLoading(true)
     // Stub: in future integrate expo-av
     setTimeout(() => {

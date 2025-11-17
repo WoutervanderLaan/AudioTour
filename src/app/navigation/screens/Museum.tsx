@@ -18,7 +18,7 @@ import {useMuseumStore} from '@/store/slices/museumStore'
  *
  * @returns {*} describe return value
  */
-export function Museum() {
+export function Museum(): React.JSX.Element {
   const [loading, setLoading] = React.useState(true)
 
   const {currentMuseumId, setMuseum} = useMuseumStore(

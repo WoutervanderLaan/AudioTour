@@ -11,7 +11,11 @@ import {Box} from './Box'
  * @param {*} options
  * @returns {*} describe return value
  */
-export const Spacer = ({size}: {size?: keyof Theme['size']}) => {
+export const Spacer = ({
+  size,
+}: {
+  size?: keyof Theme['size']
+}): React.JSX.Element => {
   return (
     <Box
       flex={1}

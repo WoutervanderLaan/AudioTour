@@ -1,5 +1,6 @@
 import * as NavigationElements from '@react-navigation/elements'
 import {Asset} from 'expo-asset'
+import type React from 'react'
 import {StatusBar} from 'react-native'
 import {UnistylesRuntime} from 'react-native-unistyles'
 
@@ -11,7 +12,7 @@ Asset.loadAsync([...NavigationElements.Assets])
  *
  * @returns {*} describe return value
  */
-export const Init = () => {
+export const Init = (): React.JSX.Element => {
   return (
     <StatusBar
       barStyle={

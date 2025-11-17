@@ -1,4 +1,5 @@
 import {Button, Text} from '@react-navigation/elements'
+import type React from 'react'
 import {View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
@@ -8,7 +9,7 @@ import {StyleSheet} from 'react-native-unistyles'
  *
  * @returns {*} describe return value
  */
-export function NotFound() {
+export function NotFound(): React.JSX.Element {
   return (
     <View style={styles.container}>
       <Text>404</Text>

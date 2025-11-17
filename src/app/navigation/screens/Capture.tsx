@@ -21,7 +21,7 @@ import {useUserSessionStore} from '@/store/slices/userSessionStore'
  *
  * @returns {*} describe return value
  */
-export function Capture() {
+export function Capture(): React.JSX.Element {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
@@ -54,7 +54,7 @@ export function Capture() {
    * @param {*} data
    * @returns {*} describe return value
    */
-  const onSubmit = (data: ObjectForm) => {
+  const onSubmit = (data: ObjectForm): void => {
     console.log('Form submitted:', data)
   }
 
@@ -64,7 +64,7 @@ export function Capture() {
    *
    * @returns {*} describe return value
    */
-  const pickImage = async () => {
+  const pickImage = async (): Promise<void> => {
     setLocalError(undefined)
 
     // const permission = await ImagePicker.requestCameraPermissionsAsync();
@@ -97,7 +97,7 @@ export function Capture() {
    *
    * @returns {*} describe return value
    */
-  const upload = async () => {
+  const upload = async (): Promise<void> => {
     if (!imageUri) return
     setLocalError(undefined)
 

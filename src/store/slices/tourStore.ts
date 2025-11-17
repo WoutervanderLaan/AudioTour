@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
@@ -84,12 +85,12 @@ export const useTourStore = create<TourState>()(
         state.recognitionConfidence = recognitionConfidence
       })
     },
-    setNarrativeText: async (narrativeText: string) => {
+    setNarrativeText: (narrativeText: string) => {
       set(state => {
         state.narrativeText = narrativeText
       })
     },
-    setAudioUrl: async (audioUrl: string) => {
+    setAudioUrl: (audioUrl: string) => {
       set(state => {
         state.audioUrl = audioUrl
       })

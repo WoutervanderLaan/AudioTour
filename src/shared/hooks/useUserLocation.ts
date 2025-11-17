@@ -36,7 +36,7 @@ export function haversineDistanceMeters(
    * @param {*} deg
    * @returns {*} describe return value
    */
-  const toRad = (deg: number) => (deg * Math.PI) / 180
+  const toRad = (deg: number): number => (deg * Math.PI) / 180
   const dLat = toRad(b.latitude - a.latitude)
   const dLon = toRad(b.longitude - a.longitude)
   const lat1 = toRad(a.latitude)
@@ -75,7 +75,11 @@ export type UseUserLocationOptions = {
  * @param {*} options
  * @returns {*} describe return value
  */
-export function useUserLocation(options: UseUserLocationOptions = {}) {
+export function useUserLocation(options: UseUserLocationOptions = {}): {
+  readonly coords: Coordinates | undefined
+  readonly permissionStatus: Location.PermissionStatus | 'undetermined'
+  readonly error: string | undefined
+} {
   const [coords, setCoords] = useState<Coordinates | undefined>(undefined)
 
   const [permissionStatus, setPermissionStatus] = useState<
@@ -101,7 +105,7 @@ export function useUserLocation(options: UseUserLocationOptions = {}) {
      *
      * @returns {*} describe return value
      */
-    const run = async () => {
+    const run = async (): Promise<void> => {
       try {
         const {status} = await Location.requestForegroundPermissionsAsync()
 
@@ -153,7 +157,7 @@ export function useUserLocation(options: UseUserLocationOptions = {}) {
     }
     run()
 
-    return () => {
+    return (): void => {
       isMounted = false
       watchSub.current?.remove()
       watchSub.current = null

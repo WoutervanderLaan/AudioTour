@@ -90,11 +90,17 @@ export class ApiClient {
   // TODO: add session based info and user data to instance of ApiClient
   // TODO: add interceptors
 
-  private _url(path: string) {
+  private _url(path: string): string {
     return ApiConfig.getUrl(path)
   }
 
-  async uploadPhoto(params: {uri: string; metadata?: Record<string, unknown>}) {
+  async uploadPhoto(params: {
+    uri: string
+    metadata?: Record<string, unknown>
+  }): Promise<{
+    object_id: string
+    recognition_confidence: number
+  }> {
     const form = new FormData()
     const photo = await fetch(params.uri)
     const photoBlob = await photo.blob()
@@ -123,7 +129,9 @@ export class ApiClient {
   async generateNarrative(params: {
     object_id: string
     user_session_id: string
-  }) {
+  }): Promise<{
+    text: string
+  }> {
     const res = await fetch(this._url('/generate-narrative'), {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -133,7 +141,9 @@ export class ApiClient {
     return handleResponse<{text: string}>(res)
   }
 
-  async generateAudio(params: {text: string}) {
+  async generateAudio(params: {text: string}): Promise<{
+    audio_url: string
+  }> {
     const res = await fetch(this._url('/generate-audio'), {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -143,7 +153,18 @@ export class ApiClient {
     return handleResponse<{audio_url: string}>(res)
   }
 
-  async listMuseumObjects(museum_id: string) {
+  async listMuseumObjects(museum_id: string): Promise<
+    {
+      id: string
+      name: string
+      artist?: string
+      date?: string
+      image_url?: string
+      generated_text?: string
+      generated_audio?: string
+      metadata?: Record<string, unknown>
+    }[]
+  > {
     const res = await fetch(
       this._url(`/museum-objects/${encodeURIComponent(museum_id)}`),
     )
@@ -165,7 +186,12 @@ export class ApiClient {
   async recommendations(params: {
     user_session_id: string
     current_museum_id?: string
-  }) {
+  }): Promise<
+    {
+      object_id: string
+      score?: number
+    }[]
+  > {
     const searchParams = new URLSearchParams()
 
     searchParams.append('user_session_id', params.user_session_id)

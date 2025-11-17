@@ -23,7 +23,7 @@ SplashScreen.preventAutoHideAsync()
  *
  * @returns {*} describe return value
  */
-export function App() {
+export function App(): React.JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
       <ApiProvider>

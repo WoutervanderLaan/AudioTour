@@ -23,7 +23,7 @@ type Props = StaticScreenProps<{objectId: string}>
  * @param {*} options
  * @returns {*} describe return value
  */
-export function ObjectDetail({route}: Readonly<Props>) {
+export function ObjectDetail({route}: Readonly<Props>): React.JSX.Element {
   const {objectId} = route.params
   const api = useApi()
   const [localError, setLocalError] = React.useState<string | undefined>(

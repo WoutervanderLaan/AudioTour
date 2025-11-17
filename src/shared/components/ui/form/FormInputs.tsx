@@ -1,3 +1,4 @@
+import type React from 'react'
 import type {ComponentProps} from 'react'
 import {Control, Controller, FieldValues, Path} from 'react-hook-form'
 import {Switch, Text, TextInput, View} from 'react-native'
@@ -20,7 +21,7 @@ export function RHFTextInput<T extends FieldValues>({
   name: Path<T>
   label: string
   placeholder?: string
-} & ComponentProps<typeof TextInput>) {
+} & ComponentProps<typeof TextInput>): React.JSX.Element {
   return (
     <Controller
       control={control}
@@ -60,7 +61,7 @@ export function RHFTextArea<T extends FieldValues>({
   name: Path<T>
   label: string
   placeholder?: string
-}) {
+}): React.JSX.Element {
   return (
     <Controller
       control={control}
@@ -98,7 +99,7 @@ export function RHFCheckbox<T extends FieldValues>({
   control: Control<T>
   name: Path<T>
   label: string
-}) {
+}): React.JSX.Element {
   return (
     <Controller
       control={control}

@@ -1,3 +1,4 @@
+import type React from 'react'
 import {Text, View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
@@ -24,7 +25,7 @@ type Props = Readonly<{
  * @param {*} options
  * @returns {*} describe return value
  */
-export function Toast({message, type = 'info'}: Props) {
+export function Toast({message, type = 'info'}: Props): React.JSX.Element {
   const {top} = useSafeAreaInsets()
 
   return (
