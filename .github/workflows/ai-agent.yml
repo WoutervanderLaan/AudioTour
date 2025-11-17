@@ -1,0 +1,53 @@
+name: AI Agent Task Runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      trelloCardId:
+        required: true
+      title:
+        required: true
+      description:
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  run-task:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate branch name
+        id: branch
+        run: |
+          BRANCH="ai/${{ github.event.inputs.trelloCardId }}-${{ github.run_id }}"
+          echo "name=$BRANCH" >> $GITHUB_OUTPUT
+
+      - name: Create branch
+        run: |
+          git checkout -b "${{ steps.branch.outputs.name }}"
+
+      - name: Push branch to origin
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git push origin "${{ steps.branch.outputs.name }}"
+
+      - name: Configure Claude Task Prompt
+        id: prompt
+        run: |
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          echo "Trello Card: ${{ github.event.inputs.title }}" >> $GITHUB_OUTPUT
+          echo "Description: ${{ github.event.inputs.description }}" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "Instructions:" >> $GITHUB_OUTPUT
+          echo "- Work on branch: ${{ steps.branch.outputs.name }}" >> $GITHUB_OUTPUT
+          echo "- Implement the task completely." >> $GITHUB_OUTPUT
+          echo "- Run and fix tests until they pass." >> $GITHUB_OUTPUT
+          echo "- Write meaningful commits." >> $GITHUB_OUTPUT
+          echo "- Open a Pull Request for review." >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
