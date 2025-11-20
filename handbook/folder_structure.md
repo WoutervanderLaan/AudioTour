@@ -22,5 +22,9 @@
       - services/
       - types/
       - index.ts
-  - **store/** – app wide store and context, and state persistence configuration
+  - **store/** – app wide store and context, and middleware configuration
+      - context/
+      - slices/
+      - middleware/
   - **themes/** – app wide themes and styling configuration
+      - **tokens/** - individual theme and styling tokens
