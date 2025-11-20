@@ -1,65 +1,44 @@
-# Starter Template with React Navigation
+# Dynamic Audio Tour App
 
-This is a minimal starter template for React Native apps using Expo and React Navigation.
+## Overview
 
-It includes the following:
+This repository hosts an AI-powered app that generates **dynamic audio tours** based on museum objects photographed by users. The app combines object recognition, contextual narrative generation, and personalized story sequences to offer engaging and interactive tours.
 
-- Example [Native Stack](https://reactnavigation.org/docs/native-stack-navigator) with a nested [Bottom Tab](https://reactnavigation.org/docs/bottom-tab-navigator)
-- Web support with [React Native for Web](https://necolas.github.io/react-native-web/)
-- TypeScript support and configured for React Navigation
-- Automatic [deep link](https://reactnavigation.org/docs/deep-linking) and [URL handling configuration](https://reactnavigation.org/docs/configuring-links)
-- Theme support [based on system appearance](https://reactnavigation.org/docs/themes/#using-the-operating-system-preferences)
-- Expo [Development Build](https://docs.expo.dev/develop/development-builds/introduction/) with [Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)
+## Features
+
+- **AI-Powered Object Recognition**
+- **Personalized Narratives** for each object
+- **Customizable Story Sequences**
+- Integration with museum licensing for enhanced or limited user experiences
+
+## Documentation
+
+Comprehensive documentation for the project can be found in the repository. Refer to these key sections:
+
+- [Project Overview](./handbook/specs/project_overview.md)
+- [Product Specification](./handbook/specs/product_spec.md)
+- [Business Plan](./handbook/specs/business_plan.md)
+- [Data Model](./handbook/specs/data_model.md)
+- [API Specification](./handbook/specs/api_spec.md)
+- [Roadmap](./handbook/specs/roadmap.md)
+- [Research Notes](./handbook/specs/research_notes.md)
 
 ## Getting Started
 
-1. Create a new project using this template:
+Instructions for setting up local development environments and project details are available in their respective directories:
 
-   ```sh
-   npx create-expo-app@latest --template react-navigation/template
-   ```
+- **Backend (FastAPI)**: [See `backend/README.md`](./backend/README.md)
+- **Frontend (Expo)**: [See `frontend/README.md`](./frontend/README.md)
 
-2. Edit the `app.json` file to configure the `name`, `slug`, `scheme` and bundle identifiers (`ios.bundleIdentifier` and `android.bundleIdentifier`) for your app.
+## Planned Tech Stack
 
-3. Edit the `src/App.tsx` file to start working on your app.
-
-## Running the app
-
-- Install the dependencies:
-
-  ```sh
-  npm install
-  ```
-
-- Start the development server:
-
-  ```sh
-  npm start
-  ```
-
-- Build and run iOS and Android development builds:
-
-  ```sh
-  npm run ios
-  # or
-  npm run android
-  ```
-
-- In the terminal running the development server, press `i` to open the iOS simulator, `a` to open the Android device or emulator, or `w` to open the web browser.
-
-## Notes
-
-This project uses a [development build](https://docs.expo.dev/develop/development-builds/introduction/) and cannot be run with [Expo Go](https://expo.dev/go). To run the app with Expo Go, edit the `package.json` file, remove the `expo-dev-client` package and `--dev-client` flag from the `start` script.
-
-We highly recommend using the development builds for normal development and testing.
-
-The `ios` and `android` folder are gitignored in the project by default as they are automatically generated during the build process ([Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)). This means that you should not edit these folders directly and use [config plugins](https://docs.expo.dev/config-plugins/) instead. However, if you need to edit these folders, you can remove them from the `.gitignore` file so that they are tracked by git.
-
-## Resources
-
-- [React Navigation documentation](https://reactnavigation.org/)
-- [Expo documentation](https://docs.expo.dev/)
+- **Frontend**: React Native / Expo
+- **Backend**: FastAPI (Python) or Node.js
+- **Database**: PostgreSQL + Vector Store (Chroma/Weaviate)
+- **AI**: Vision (CLIP/BLIP/YOLO), LLM, TTS
+- **Infrastructure**: Cloud-hosted on AWS/GCP/Azure
+- **Location Services**: Geofencing via Expo Location
 
 ---
 
-Demo assets are from [lucide.dev](https://lucide.dev/)
+For additional resources and support, consult the documentation and handbook provided in this repository.
