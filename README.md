@@ -25,19 +25,9 @@ Comprehensive documentation for the project can be found in the repository. Refe
 
 ## Getting Started
 
-Instructions for setting up local development environments and project details are available in their respective directories:
+Instructions for setting up local development environments:
 
-- **Backend (FastAPI)**: [See `backend/README.md`](./backend/README.md)
-- **Frontend (Expo)**: [See `frontend/README.md`](./frontend/README.md)
-
-## Planned Tech Stack
-
-- **Frontend**: React Native / Expo
-- **Backend**: FastAPI (Python) or Node.js
-- **Database**: PostgreSQL + Vector Store (Chroma/Weaviate)
-- **AI**: Vision (CLIP/BLIP/YOLO), LLM, TTS
-- **Infrastructure**: Cloud-hosted on AWS/GCP/Azure
-- **Location Services**: Geofencing via Expo Location
+- TODO: add getting started doc
 
 ---
 
