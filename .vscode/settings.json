@@ -33,10 +33,6 @@
   },
   "editor.formatOnSave": true,
   "cSpell.words": [
-    "Linkings",
-    "recyclepunten",
-    "sonarjs",
-    "Sourceid",
     "unistyles"
   ],
   "typescript.preferences.preferTypeOnlyAutoImports": true
