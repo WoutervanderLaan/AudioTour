@@ -6,7 +6,7 @@ This document defines how AI agents should work inside this repository.
 
 ## 1. Repository Purpose
 
-This codebase powers a React Native (Expo) App which
+This codebase powers a React Native (Expo) App. For all project specific documentation, consult the [readme](./README.md) and the [project handbook](./handbook)
 
 The codebase should remain clean, modular, explainable, and well-tested.
 
@@ -14,18 +14,15 @@ The codebase should remain clean, modular, explainable, and well-tested.
 
 ## 2. Architecture Overview
 
-- `/app` – Next.js app router endpoints & components
-- `/lib` – utilities
-- `/services` – backend integrations (Trello, GitHub, pipelines)
-- `/types` – TypeScript types
-- `/scripts` – automation
-- `/docs` – extra documentation
+- `/src` – entry for all source files
+  - `/app` – global app entry and configuration
+  - `/shared` – globally shared elements like components, types, utilities
+  - `/features` – separate features and scoped elements
+  - `/store` – shared context, store and middleware configuration
+  - `/themes` – theme and app styling
+- `/handbook` – project documentation
 
-Every folder must include a markdown file documenting:
-
-- its purpose
-- the responsibilities of its modules
-- important patterns
+For a detailed overview of the folder structure, consult the handbook: [Folder Structure](./handbook/folder_structure.md)
 
 ---
 

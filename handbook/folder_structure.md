@@ -22,5 +22,9 @@
       - services/
       - types/
       - index.ts
-  - **entities/** – domain models reused across features (optional)
-  - **pages/** – top-level route components
+  - **store/** – app wide store and context, and middleware configuration
+    - context/
+    - slices/
+    - middleware/
+  - **themes/** – app wide themes and styling configuration
+    - **tokens/** - individual theme and styling tokens

@@ -32,12 +32,6 @@
     "source.fixAll.eslint": "always"
   },
   "editor.formatOnSave": true,
-  "cSpell.words": [
-    "Linkings",
-    "recyclepunten",
-    "sonarjs",
-    "Sourceid",
-    "unistyles"
-  ],
+  "cSpell.words": ["unistyles"],
   "typescript.preferences.preferTypeOnlyAutoImports": true
 }
