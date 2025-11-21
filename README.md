@@ -17,11 +17,9 @@ Comprehensive documentation for the project can be found in the repository. Refe
 
 - [Project Overview](./handbook/specs/project_overview.md)
 - [Product Specification](./handbook/specs/product_spec.md)
-- [Business Plan](./handbook/specs/business_plan.md)
-- [Data Model](./handbook/specs/data_model.md)
-- [API Specification](./handbook/specs/api_spec.md)
 - [Roadmap](./handbook/specs/roadmap.md)
 - [Research Notes](./handbook/specs/research_notes.md)
+- [Folder  Structure](./handbook/folder_structure.md)
 
 ## Getting Started
 
