@@ -15,10 +15,9 @@ This repository hosts an AI-powered app that generates **dynamic audio tours** b
 
 Comprehensive documentation for the project can be found in the repository. Refer to these key sections:
 
-- [Project Overview](./handbook/specs/project_overview.md)
-- [Product Specification](./handbook/specs/product_spec.md)
-- [Roadmap](./handbook/specs/roadmap.md)
-- [Research Notes](./handbook/specs/research_notes.md)
+- [Project Overview](./handbook/project_overview.md)
+- [Product Specification](./handbook/product_spec.md)
+- [Research Notes](./handbook/research_notes.md)
 - [Folder Structure](./handbook/folder_structure.md)
 
 ## Getting Started
