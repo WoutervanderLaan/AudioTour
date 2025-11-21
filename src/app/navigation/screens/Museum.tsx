@@ -2,7 +2,7 @@ import React from 'react'
 import {ActivityIndicator, FlatList, TouchableOpacity, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Button, Text} from '@react-navigation/elements'
+import {Text} from '@react-navigation/elements'
 import {useShallow} from 'zustand/react/shallow'
 
 import {
@@ -10,7 +10,6 @@ import {
   useUserLocation,
 } from '@/shared/hooks/useUserLocation'
 import {KNOWN_MUSEUMS, MuseumLocation} from '@/shared/lib/constants/museums'
-import {useToast} from '@/store/context/ToastContext'
 import {useMuseumStore} from '@/store/slices/museumStore'
 
 /**
@@ -28,8 +27,6 @@ export const Museum = (): React.JSX.Element => {
       setMuseum: state.setMuseum,
     })),
   )
-
-  const {showToast} = useToast()
 
   // useEffect(() => {
   // setObjects();
@@ -60,36 +57,6 @@ export const Museum = (): React.JSX.Element => {
   return (
     <View style={styles.container}>
       <Text>Museum</Text>
-
-      <View style={styles.row}>
-        <Button
-          onPress={() =>
-            showToast({
-              type: 'info',
-              message: 'This is an info toast!',
-            })
-          }>
-          Info
-        </Button>
-        <Button
-          onPress={() =>
-            showToast({
-              type: 'success',
-              message: 'This is a success toast!',
-            })
-          }>
-          Success
-        </Button>
-        <Button
-          onPress={() =>
-            showToast({
-              type: 'error',
-              message: 'This is an error toast!',
-            })
-          }>
-          Error
-        </Button>
-      </View>
 
       {!!loading && <ActivityIndicator />}
 

@@ -6,8 +6,11 @@ import {
 import {StyleSheet} from 'react-native-unistyles'
 
 import {QueryClientProvider} from '@tanstack/react-query'
+import {registerDevMenuItems} from 'expo-dev-menu'
 import * as SplashScreen from 'expo-splash-screen'
 
+// eslint-disable-next-line no-restricted-imports, boundaries/no-unknown
+import StorybookUI from '../../.rnstorybook/'
 import {Init} from './init/Init'
 import {queryClient} from './init/queryclient'
 import {linking} from './navigation/linking'
@@ -51,3 +54,32 @@ const styles = StyleSheet.create(({color}) => ({
     backgroundColor: color.screen.background.default,
   },
 }))
+
+/**
+ * StoryBookWrapper
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+export const StoryBookSwitch = (): React.JSX.Element => {
+  const [isStorybook, setIsStorybook] = React.useState(false)
+
+  React.useEffect(() => {
+    registerDevMenuItems([
+      {
+        name: 'Toggle Storybook',
+        callback: (): void => {
+          setIsStorybook(prev => !prev)
+        },
+        shouldCollapse: true,
+      },
+    ])
+  }, [])
+
+  return (
+    <React.Fragment>
+      {!!isStorybook && <StorybookUI />}
+      {!isStorybook && <App />}
+    </React.Fragment>
+  )
+}

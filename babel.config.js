@@ -1,4 +1,4 @@
-export default function babel(api) {
+module.exports = function babel(api) {
   api.cache(true)
 
   return {

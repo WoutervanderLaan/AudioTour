@@ -2,7 +2,7 @@ import React, {createContext, useCallback, useContext, useState} from 'react'
 
 import * as Crypto from 'expo-crypto'
 
-import {Toast} from '@/shared/components/features/toast/Toast'
+import {Toast, type ToastType} from '@/shared/components/features/toast/Toast'
 
 /**
  * ToastProps
@@ -20,7 +20,7 @@ type ToastProps = {
   /**
    * type
    */
-  type?: 'success' | 'error' | 'info'
+  type?: ToastType
   /**
    * duration
    */

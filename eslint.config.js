@@ -1,24 +1,27 @@
-import globals from 'globals'
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 import js from '@eslint/js'
+import queryPlugin from '@tanstack/eslint-plugin-query'
 import tseslint from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
+import boundaries from 'eslint-plugin-boundaries'
 import importPlugin from 'eslint-plugin-import'
+import jestPlugin from 'eslint-plugin-jest'
+import promise from 'eslint-plugin-promise'
 import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactNative from 'eslint-plugin-react-native'
-import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import unusedImports from 'eslint-plugin-unused-imports'
-import promise from 'eslint-plugin-promise'
-import sonarjs from 'eslint-plugin-sonarjs'
-import unicorn from 'eslint-plugin-unicorn'
 import security from 'eslint-plugin-security'
-import boundaries from 'eslint-plugin-boundaries'
-import requireDocComment from './eslint-rules/require-doc-comment.js'
-import requireTypeDocComment from './eslint-rules/require-type-doc-comment.js'
-import queryPlugin from '@tanstack/eslint-plugin-query'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import sonarjs from 'eslint-plugin-sonarjs'
+import storybook from 'eslint-plugin-storybook'
+import unicorn from 'eslint-plugin-unicorn'
+import unusedImports from 'eslint-plugin-unused-imports'
+import globals from 'globals'
+
 import enforceFeatureStructure from './eslint-rules/enforce-feature-structure.js'
+import requireDocComment from './eslint-rules/require-doc-comment.js'
 import folderDocsRule from './eslint-rules/require-folder-docs.js'
-import jestPlugin from 'eslint-plugin-jest'
+import requireTypeDocComment from './eslint-rules/require-type-doc-comment.js'
 
 export default [
   js.configs.recommended,
@@ -32,9 +35,11 @@ export default [
       'dist/**',
       'eslint-rules/**',
       '**/*.d.ts',
-      'babel.config.js',
-      'eslint.config.js',
       '.prettierrc.js',
+      '.storybook/**',
+      '.rnstorybook/**',
+      '**/*.stories.{ts,tsx,js,jsx}',
+      '*.config.js',
     ],
 
     languageOptions: {
@@ -65,6 +70,7 @@ export default [
       'unused-imports': unusedImports,
       promise,
       sonarjs,
+      storybook,
       unicorn,
       security,
       boundaries,
@@ -198,7 +204,14 @@ export default [
       'local/enforce-feature-structure': [
         'error',
         {
-          allowedFolders: ['features', 'shared', 'app', 'store', 'themes'],
+          allowedFolders: [
+            'features',
+            'shared',
+            'app',
+            'store',
+            'themes',
+            'stories',
+          ],
         },
       ],
       'boundaries/no-unknown': 'error',
@@ -315,10 +328,9 @@ export default [
       'jest/prefer-to-have-length': 'warn',
       'jest/valid-expect': 'error',
     },
-  },
-  // Turn off no-undef for eslint-rules folder
+  }, // Turn off no-undef for eslint-rules folder
   {
-    files: ['eslint-rules/**/*.{js,ts}'],
+    files: ['eslint-rules/**/*.{js,ts}', '*.config.js', '.rnstorybook/**'],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -328,4 +340,5 @@ export default [
       'no-undef': 'off',
     },
   },
+  // ...storybook.configs['flat/recommended'],
 ]

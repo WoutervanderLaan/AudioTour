@@ -3,6 +3,11 @@ import {Text, View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
 
+export enum ToastType {
+  SUCCESS = 'success',
+  ERROR = 'error',
+  INFO = 'info',
+}
 /**
  * Props
  * TODO: describe what this type represents.
@@ -15,7 +20,7 @@ type Props = Readonly<{
   /**
    * type
    */
-  type?: 'success' | 'error' | 'info'
+  type?: ToastType
 }>
 
 /**
@@ -25,7 +30,10 @@ type Props = Readonly<{
  * @param {*} options
  * @returns {*} describe return value
  */
-export const Toast = ({message, type = 'info'}: Props): React.JSX.Element => {
+export const Toast = ({
+  message,
+  type = ToastType.INFO,
+}: Props): React.JSX.Element => {
   const {top} = useSafeAreaInsets()
 
   return (

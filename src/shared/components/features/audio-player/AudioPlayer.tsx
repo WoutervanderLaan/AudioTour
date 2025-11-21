@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
-import {ActivityIndicator, View} from 'react-native'
+import {ActivityIndicator, Text, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Button, Text} from '@react-navigation/elements'
+import {Button} from '@/shared/components/ui/Button/Button'
 
 /**
  * AudioPlayer
@@ -32,12 +32,12 @@ export const AudioPlayer = ({src}: {src: string}): React.JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Text selectable>{src}</Text>
+      <Text>{src}</Text>
       <Button
         onPress={toggle}
-        disabled={loading}>
-        {playing ? 'Pause' : 'Play'}
-      </Button>
+        label={playing ? 'Pause' : 'Play'}
+      />
+
       {!!loading && <ActivityIndicator />}
     </View>
   )
