@@ -6,7 +6,7 @@ This document defines how AI agents should work inside this repository.
 
 ## 1. Repository Purpose
 
-This codebase powers a React Native (Expo) App which
+This codebase powers a React Native (Expo) App. For all project specific documentation, consult the [readme](./README.md) and the [project handbook](./handbook)
 
 The codebase should remain clean, modular, explainable, and well-tested.
 
