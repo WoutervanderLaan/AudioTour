@@ -130,9 +130,9 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - expo-dev-menu (7.0.16):
-    - expo-dev-menu/Main (= 7.0.16)
-    - expo-dev-menu/ReactNativeCompatibles (= 7.0.16)
+  - expo-dev-menu (7.0.17):
+    - expo-dev-menu/Main (= 7.0.17)
+    - expo-dev-menu/ReactNativeCompatibles (= 7.0.17)
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -155,7 +155,7 @@ PODS:
     - ReactNativeDependencies
     - Yoga
   - expo-dev-menu-interface (2.0.0)
-  - expo-dev-menu/Main (7.0.16):
+  - expo-dev-menu/Main (7.0.17):
     - EXManifests
     - expo-dev-menu-interface
     - ExpoModulesCore
@@ -181,7 +181,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - expo-dev-menu/ReactNativeCompatibles (7.0.16):
+  - expo-dev-menu/ReactNativeCompatibles (7.0.17):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2657,7 +2657,7 @@ SPEC CHECKSUMS:
   Expo: 6a34bc084aa55beac2628ed1332def9505a791a1
   expo-dev-client: 28ade03ca6998c063472d87013fc556aadd71897
   expo-dev-launcher: bbc50496c7e69efbfe2d1d11103449baf335493c
-  expo-dev-menu: d5cf92111a1ec5541f68e68295a08d1505bd53af
+  expo-dev-menu: ba531f712b01ebf26d4227648a0bd56ebbafca01
   expo-dev-menu-interface: 600df12ea01efecdd822daaf13cc0ac091775533
   ExpoAsset: 3c3b7dd9b1318846a02ef05ce420e63d542aeb9f
   ExpoCrypto: 4c50a152f5939e16a2ca10be77b002a3a391c4d3

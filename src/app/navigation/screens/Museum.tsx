@@ -45,9 +45,11 @@ export const Museum = (): React.JSX.Element => {
       distance: haversineDistanceMeters(coords, m.coords),
     }))
 
-    const sortedMuseumsWithDistance = museumsWithDistance.toSorted((a, b) => {
-      return a.distance - b.distance
-    })
+    const sortedMuseumsWithDistance = museumsWithDistance
+      .slice()
+      .sort((a, b) => {
+        return a.distance - b.distance
+      })
 
     setLoading(false)
 

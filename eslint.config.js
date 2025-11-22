@@ -38,6 +38,7 @@ export default [
       '.prettierrc.js',
       '.storybook/**',
       '.rnstorybook/**',
+      '.jest/**',
       '**/*.stories.{ts,tsx,js,jsx}',
       '*.config.js',
     ],
@@ -328,9 +329,14 @@ export default [
       'jest/prefer-to-have-length': 'warn',
       'jest/valid-expect': 'error',
     },
-  }, // Turn off no-undef for eslint-rules folder
+  },
   {
-    files: ['eslint-rules/**/*.{js,ts}', '*.config.js', '.rnstorybook/**'],
+    files: [
+      'eslint-rules/**/*.{js,ts}',
+      '*.config.js',
+      '.rnstorybook/**',
+      '.jest/**',
+    ],
     languageOptions: {
       globals: {
         ...globals.node,
