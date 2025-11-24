@@ -4,11 +4,11 @@
   "private": true,
   "main": "index.tsx",
   "scripts": {
-    "start": "expo start --dev-client",
-    "start:reset:cache": "expo start --reset-cache",
-    "web": "expo start --web",
-    "android": "expo run:android",
-    "ios": "expo run:ios --device",
+    "start": "APP_VARIANT=development expo start --dev-client",
+    "start:reset:cache": "APP_VARIANT=development expo start --reset-cache",
+    "web": "APP_VARIANT=development expo start --web",
+    "android": "APP_VARIANT=development expo run:android",
+    "ios": "APP_VARIANT=development expo run:ios --device",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
     "prepare": "husky",
@@ -19,11 +19,8 @@
     "validate": "npm run lint && npm run typecheck && npm run format",
     "test": "jest --watchAll",
     "storybook-generate": "sb-rn-get-stories",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
-    "storybook:expo": "STORYBOOK_ENABLED='true' expo start",
-    "storybook:ios": "STORYBOOK_ENABLED='true' expo start --ios",
-    "storybook:android": "STORYBOOK_ENABLED='true' expo start --android"
+    "storybook": "APP_VARIANT=development storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx}": [
