@@ -4,14 +4,21 @@ on:
   workflow_dispatch:
     inputs:
       trelloCardId:
+        description: 'Trello card ID to associate with the task'
         required: true
       title:
+        description: 'Short title for the task or PR'
         required: true
       description:
+        description: 'Detailed description of the task'
         required: true
 
 permissions:
   contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+  actions: read
 
 jobs:
   run-task:
@@ -20,34 +27,65 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch full history for better git context
 
       - name: Generate branch name
         id: branch
         run: |
-          BRANCH="ai/${{ github.event.inputs.trelloCardId }}-${{ github.run_id }}"
+          # Sanitize title for branch name (replace spaces/special chars with hyphens)
+          SANITIZED_TITLE=$(echo "${{ github.event.inputs.title }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g' | sed 's/--*/-/g' | cut -c1-50)
+          BRANCH="trello/${{ github.event.inputs.trelloCardId }}/${SANITIZED_TITLE}"
           echo "name=$BRANCH" >> $GITHUB_OUTPUT
+          echo "Branch name: $BRANCH"
 
-      - name: Create branch
-        run: |
-          git checkout -b "${{ steps.branch.outputs.name }}"
+      - name: Run Claude Code
+        id: claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            # Trello Task: ${{ github.event.inputs.title }}
 
-      - name: Push branch to origin
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git push origin "${{ steps.branch.outputs.name }}"
+            **Trello Card ID:** ${{ github.event.inputs.trelloCardId }}
 
-      - name: Configure Claude Task Prompt
-        id: prompt
+            ## Task Description
+            ${{ github.event.inputs.description }}
+
+            ## Instructions
+
+            1. **Create a new branch** named `${{ steps.branch.outputs.name }}` from the current main branch
+            2. **Implement the task completely** following the project guidelines in CLAUDE.md
+            3. **Follow the project's architecture and conventions:**
+               - Use feature-based architecture under src/features/ for new features
+               - Follow import rules (use @/* absolute imports)
+               - Respect ESLint boundaries between app/features/shared/store
+               - Use react-native-unistyles for styling (never inline styles)
+               - Add JSDoc comments to all functions
+               - Keep functions under 120 lines and files under 300 lines
+            4. **Test your changes:**
+               - Run `npm run validate` (lint, typecheck, format checks)
+               - Run `npm test` if applicable
+               - Fix any issues until all checks pass
+            5. **Commit your changes** with meaningful commit messages
+            6. **Create a Pull Request** with:
+               - Title: `[Trello-${{ github.event.inputs.trelloCardId }}] ${{ github.event.inputs.title }}`
+               - Body that includes:
+                 - Summary of changes
+                 - Link to Trello card: `https://trello.com/c/${{ github.event.inputs.trelloCardId }}`
+                 - Test plan/checklist
+                 - Any relevant notes or considerations
+
+            **Important:** Make sure to push your branch and create the PR when you're done!
+
+          # Allow Claude to use git, npm, and gh commands
+          claude_args: '--allowed-tools "Bash(git:*),Bash(npm:*),Bash(gh:*)"'
+
+      - name: Add workflow run link to summary
+        if: always()
         run: |
-          echo "prompt<<EOF" >> $GITHUB_OUTPUT
-          echo "Trello Card: ${{ github.event.inputs.title }}" >> $GITHUB_OUTPUT
-          echo "Description: ${{ github.event.inputs.description }}" >> $GITHUB_OUTPUT
-          echo "" >> $GITHUB_OUTPUT
-          echo "Instructions:" >> $GITHUB_OUTPUT
-          echo "- Work on branch: ${{ steps.branch.outputs.name }}" >> $GITHUB_OUTPUT
-          echo "- Implement the task completely." >> $GITHUB_OUTPUT
-          echo "- Run and fix tests until they pass." >> $GITHUB_OUTPUT
-          echo "- Write meaningful commits." >> $GITHUB_OUTPUT
-          echo "- Open a Pull Request for review." >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          echo "## Workflow Completed" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trello Card:** ${{ github.event.inputs.trelloCardId }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Title:** ${{ github.event.inputs.title }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** \`${{ steps.branch.outputs.name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
