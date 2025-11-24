@@ -25,10 +25,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug - Show workflow inputs
+        run: |
+          echo "=== Workflow Inputs ==="
+          echo "Trello Card ID: ${{ github.event.inputs.trelloCardId }}"
+          echo "Title: ${{ github.event.inputs.title }}"
+          echo "Description: ${{ github.event.inputs.description }}"
+          echo "======================="
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch full history for better git context
+
+      - name: Debug - Show git state before
+        run: |
+          echo "=== Git State Before ==="
+          git branch -a
+          git status
+          echo "Current branch: $(git branch --show-current)"
+          echo "======================="
 
       - name: Generate branch name
         id: branch
@@ -37,7 +53,7 @@ jobs:
           SANITIZED_TITLE=$(echo "${{ github.event.inputs.title }}" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g' | sed 's/--*/-/g' | cut -c1-50)
           BRANCH="trello/${{ github.event.inputs.trelloCardId }}/${SANITIZED_TITLE}"
           echo "name=$BRANCH" >> $GITHUB_OUTPUT
-          echo "Branch name: $BRANCH"
+          echo "Generated branch name: $BRANCH"
 
       - name: Run Claude Code
         id: claude
@@ -68,7 +84,8 @@ jobs:
                - Run `npm test` if applicable
                - Fix any issues until all checks pass
             5. **Commit your changes** with meaningful commit messages
-            6. **Create a Pull Request** with:
+            6. **Push your branch** to origin with `git push -u origin ${{ steps.branch.outputs.name }}`
+            7. **Create a Pull Request** using gh CLI with:
                - Title: `[Trello-${{ github.event.inputs.trelloCardId }}] ${{ github.event.inputs.title }}`
                - Body that includes:
                  - Summary of changes
@@ -76,16 +93,77 @@ jobs:
                  - Test plan/checklist
                  - Any relevant notes or considerations
 
-            **Important:** Make sure to push your branch and create the PR when you're done!
+            **Important:**
+            - Make sure to push your branch before creating the PR
+            - Use `gh pr create` to create the pull request
+            - Verify the PR was created successfully
 
-          # Allow Claude to use git, npm, and gh commands
-          claude_args: '--allowed-tools "Bash(git:*),Bash(npm:*),Bash(gh:*)"'
+          # Allow Claude to use specific git, npm, and gh commands
+          # Following the pattern from claude-code-review.yml
+          claude_args: '--allowed-tools "Bash(git status:*),Bash(git branch:*),Bash(git checkout:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(git log:*),Bash(git diff:*),Bash(npm run:*),Bash(npm test:*),Bash(npm install:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr list:*)"'
 
-      - name: Add workflow run link to summary
+      - name: Debug - Show git state after
         if: always()
         run: |
-          echo "## Workflow Completed" >> $GITHUB_STEP_SUMMARY
-          echo "- **Trello Card:** ${{ github.event.inputs.trelloCardId }}" >> $GITHUB_STEP_SUMMARY
+          echo "=== Git State After ==="
+          git branch -a
+          git status
+          echo "Current branch: $(git branch --show-current)"
+          echo "Recent commits:"
+          git log --oneline -5
+          echo "======================="
+
+      - name: Debug - Check if branch exists remotely
+        if: always()
+        continue-on-error: true
+        run: |
+          echo "=== Checking Remote Branch ==="
+          git fetch origin
+          if git ls-remote --heads origin ${{ steps.branch.outputs.name }} | grep -q ${{ steps.branch.outputs.name }}; then
+            echo "✅ Branch '${{ steps.branch.outputs.name }}' exists on remote"
+          else
+            echo "❌ Branch '${{ steps.branch.outputs.name }}' NOT found on remote"
+          fi
+          echo "======================="
+
+      - name: Debug - Check for PR
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "=== Checking for Pull Request ==="
+          if gh pr list --head ${{ steps.branch.outputs.name }} --json number,title,url | grep -q "number"; then
+            echo "✅ Pull request found:"
+            gh pr list --head ${{ steps.branch.outputs.name }} --json number,title,url
+          else
+            echo "❌ No pull request found for branch '${{ steps.branch.outputs.name }}'"
+          fi
+          echo "======================="
+
+      - name: Add workflow run summary
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "## AI Agent Workflow Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Task Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **Trello Card:** [${{ github.event.inputs.trelloCardId }}](https://trello.com/c/${{ github.event.inputs.trelloCardId }})" >> $GITHUB_STEP_SUMMARY
           echo "- **Title:** ${{ github.event.inputs.title }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Branch:** \`${{ steps.branch.outputs.name }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- **Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Workflow Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Claude Step Status:** ${{ steps.claude.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Check if PR was created
+          if gh pr list --head ${{ steps.branch.outputs.name }} --json number,title,url --jq '.[0]' > /tmp/pr_info.json 2>/dev/null && [ -s /tmp/pr_info.json ]; then
+            PR_URL=$(cat /tmp/pr_info.json | jq -r '.url')
+            PR_NUMBER=$(cat /tmp/pr_info.json | jq -r '.number')
+            PR_TITLE=$(cat /tmp/pr_info.json | jq -r '.title')
+            echo "### ✅ Pull Request Created" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR #${PR_NUMBER}:** [${PR_TITLE}](${PR_URL})" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ No Pull Request Found" >> $GITHUB_STEP_SUMMARY
+            echo "The workflow completed but no PR was detected. Check the logs above for details." >> $GITHUB_STEP_SUMMARY
+          fi
