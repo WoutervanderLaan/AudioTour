@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       trelloCardId:
-        description: 'Trello card ID to associate with the task'
+        description: "Trello card ID to associate with the task"
         required: true
       title:
-        description: 'Short title for the task or PR'
+        description: "Short title for the task or PR"
         required: true
       description:
-        description: 'Detailed description of the task'
+        description: "Detailed description of the task"
         required: true
 
 permissions:
@@ -23,7 +23,12 @@ permissions:
 jobs:
   run-task:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read # Required for Claude to read CI results on PRs
     steps:
       - name: Debug - Show workflow inputs
         run: |
@@ -67,12 +72,11 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           show_full_output: true
-          auto_approve: true
-          approved_tools: |
-            Read:*
-            Write:*
-            Edit:*
-            Bash:*
+          claude_args: |
+            # --model claude-opus-4-1-20250805
+            # --max-turns 10
+            # --allowedTools "Bash(npm install),Bash(npm run build),Bash(npm run test:*),Bash(npm run lint:*),Bash(git *)"
+            --allowedTools "Edit,MultiEdit,Write,Read,Glob,Grep,LS,Bash(git:*),Bash(bun:*),Bash(npm:*),Bash(npx:*),Bash(gh:*)"
           prompt: |
             # Trello Task: ${{ github.event.inputs.title }}
 
