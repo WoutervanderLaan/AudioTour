@@ -37,6 +37,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch full history for better git context
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Debug - Show git state before
         run: |
@@ -71,37 +77,87 @@ jobs:
 
             ## Instructions
 
-            1. **Create a new branch** named `${{ steps.branch.outputs.name }}` from the current main branch
-            2. **Implement the task completely** following the project guidelines in CLAUDE.md
-            3. **Follow the project's architecture and conventions:**
-               - Use feature-based architecture under src/features/ for new features
-               - Follow import rules (use @/* absolute imports)
-               - Respect ESLint boundaries between app/features/shared/store
-               - Use react-native-unistyles for styling (never inline styles)
-               - Add JSDoc comments to all functions
-               - Keep functions under 120 lines and files under 300 lines
-            4. **Test your changes:**
-               - Run `npm run validate` (lint, typecheck, format checks)
-               - Run `npm test` if applicable
-               - Fix any issues until all checks pass
-            5. **Commit your changes** with meaningful commit messages
-            6. **Push your branch** to origin with `git push -u origin ${{ steps.branch.outputs.name }}`
-            7. **Create a Pull Request** using gh CLI with:
-               - Title: `[Trello-${{ github.event.inputs.trelloCardId }}] ${{ github.event.inputs.title }}`
-               - Body that includes:
-                 - Summary of changes
-                 - Link to Trello card: `https://trello.com/c/${{ github.event.inputs.trelloCardId }}`
-                 - Test plan/checklist
-                 - Any relevant notes or considerations
+            **CRITICAL: You MUST complete ALL steps below to finish this task. Do not skip any steps.**
 
-            **Important:**
-            - Make sure to push your branch before creating the PR
-            - Use `gh pr create` to create the pull request
-            - Verify the PR was created successfully
+            ### Step 1: Create Branch
+            Create a new branch named `${{ steps.branch.outputs.name }}` from the current main branch:
+            ```bash
+            git checkout -b ${{ steps.branch.outputs.name }}
+            ```
 
-          # Allow Claude to use specific git, npm, and gh commands
-          # Following the pattern from claude-code-review.yml
-          claude_args: '--allowed-tools "Bash(git status:*),Bash(git branch:*),Bash(git checkout:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(git log:*),Bash(git diff:*),Bash(npm run:*),Bash(npm test:*),Bash(npm install:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr list:*)"'
+            ### Step 2: Implement the Task
+            Implement the task completely following the project guidelines in CLAUDE.md:
+            - Use feature-based architecture under src/features/ for new features
+            - Follow import rules (use @/* absolute imports)
+            - Respect ESLint boundaries between app/features/shared/store
+            - Use react-native-unistyles for styling (never inline styles)
+            - Add JSDoc comments to all functions
+            - Keep functions under 120 lines and files under 300 lines
+
+            ### Step 3: Validate Your Changes
+            Run the validation commands and fix any issues:
+            ```bash
+            npm run validate   # Must pass: lint, typecheck, format checks
+            npm test          # Must pass: if tests exist
+            ```
+            If any validation fails, fix the issues before proceeding.
+
+            ### Step 4: Commit Your Changes
+            **REQUIRED:** You must commit all changes before pushing:
+            ```bash
+            git add .
+            git commit -m "[Trello-${{ github.event.inputs.trelloCardId }}] ${{ github.event.inputs.title }}
+
+            ${{ github.event.inputs.description }}
+
+            🤖 Generated with Claude Code"
+            ```
+
+            ### Step 5: Push Your Branch
+            **REQUIRED:** Push your branch to the remote repository:
+            ```bash
+            git push -u origin ${{ steps.branch.outputs.name }}
+            ```
+            Verify the push succeeded before continuing.
+
+            ### Step 6: Create Pull Request
+            **REQUIRED:** Create a PR using the gh CLI:
+            ```bash
+            gh pr create \
+              --title "[Trello-${{ github.event.inputs.trelloCardId }}] ${{ github.event.inputs.title }}" \
+              --body "## Summary
+            [Summarize the changes made]
+
+            ## Trello Card
+            https://trello.com/c/${{ github.event.inputs.trelloCardId }}
+
+            ## Test Plan
+            - [ ] Validation passes (lint, typecheck, format)
+            - [ ] Tests pass
+            - [ ] Manual testing completed
+
+            ## Notes
+            [Any relevant notes or considerations]
+
+            🤖 Generated with Claude Code" \
+              --base main
+            ```
+
+            ### Final Verification
+            After completing all steps:
+            1. Verify the branch exists remotely: `git ls-remote --heads origin ${{ steps.branch.outputs.name }}`
+            2. Verify the PR was created: `gh pr view`
+            3. Report the PR URL to confirm success
+
+            **IMPORTANT:**
+            - Do NOT skip the commit step - changes must be committed
+            - Do NOT skip the push step - the branch must be on the remote
+            - Do NOT skip the PR creation step - this is the final deliverable
+            - If any step fails, fix the issue before proceeding to the next step
+
+          # Allow Claude to use necessary tools for development
+          # Note: We don't restrict tools here to allow Claude Code full access to
+          # Read, Edit, Write, and Bash commands needed for the task
 
       - name: Debug - Show git state after
         if: always()
