@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       trelloCardId:
-        description: "Trello card ID to associate with the task"
+        description: 'Trello card ID to associate with the task'
         required: true
       title:
-        description: "Short title for the task or PR"
+        description: 'Short title for the task or PR'
         required: true
       description:
-        description: "Detailed description of the task"
+        description: 'Detailed description of the task'
         required: true
 
 permissions:
