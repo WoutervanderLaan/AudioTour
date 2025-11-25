@@ -1,8 +1,11 @@
 import {ApiConfig} from '@/shared/lib/api/config'
 
 /**
- * ApiError
- * TODO: describe what this type represents.
+ * Represents an error response from the API with status code and error details.
+ *
+ * This type is used throughout the application to handle API errors consistently.
+ * It includes the HTTP status code, a human-readable error message, and optional
+ * additional details from the API response body.
  */
 export type ApiError = {
   /**
@@ -20,12 +23,17 @@ export type ApiError = {
 }
 
 /**
- * handleResponseError
- * TODO: describe what it does.
+ * Processes a failed API response and throws a formatted ApiError.
  *
- * @param {*} res
- * @param {*} isJson
- * @returns {*} describe return value
+ * Attempts to extract a meaningful error message from the response body.
+ * For JSON responses, it looks for common error properties (message, detail).
+ * For non-JSON responses, it attempts to read the response as text.
+ * Falls back to the HTTP statusText if no message can be extracted.
+ *
+ * @param {Response} res - The failed fetch Response object
+ * @param {boolean} isJson - Whether the response Content-Type indicates JSON
+ * @returns {Promise<void>} This function always throws and never returns normally
+ * @throws {ApiError} Always throws an ApiError with status, message, and optional details
  */
 async function handleResponseError(
   res: Response,
@@ -56,11 +64,17 @@ async function handleResponseError(
 }
 
 /**
- * handleResponse
- * TODO: describe what it does.
+ * Processes a fetch Response and returns the parsed response body.
  *
- * @param {*} res
- * @returns {*} describe return value
+ * Checks the response status and Content-Type header to determine how to parse
+ * the response body. For successful JSON responses, returns the parsed JSON.
+ * For successful non-JSON responses, returns the response as a Blob.
+ * For failed responses, delegates to handleResponseError to throw an ApiError.
+ *
+ * @template T - The expected type of the parsed response body
+ * @param {Response} res - The fetch Response object to process
+ * @returns {Promise<T>} A promise resolving to the parsed response body
+ * @throws {ApiError} When the response status indicates failure (!res.ok)
  */
 async function handleResponse<T>(res: Response): Promise<T> {
   const contentType = res.headers.get('content-type') ?? ''
@@ -81,10 +95,25 @@ async function handleResponse<T>(res: Response): Promise<T> {
 }
 
 /**
- * class ApiClient
- * TODO: describe what it does.
+ * HTTP client for interacting with the AudioTour backend API.
  *
- * @returns {*} describe return value
+ * This class provides methods for all API endpoints including:
+ * - Photo upload and object recognition
+ * - AI narrative generation
+ * - Text-to-speech audio generation
+ * - Museum object listing
+ * - Personalized recommendations
+ *
+ * The client handles request formatting, response parsing, and error handling
+ * consistently across all endpoints. It uses the configured API base URL from
+ * ApiConfig and automatically parses JSON responses or returns Blobs for binary data.
+ *
+ * @example
+ * ```typescript
+ * const api = new ApiClient()
+ * const result = await api.uploadPhoto({ uri: 'file://photo.jpg' })
+ * console.log(result.object_id)
+ * ```
  */
 export class ApiClient {
   // TODO: add session based info and user data to instance of ApiClient
