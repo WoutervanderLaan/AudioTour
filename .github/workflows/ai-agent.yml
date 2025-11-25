@@ -99,9 +99,8 @@ jobs:
             - Use `gh pr create` to create the pull request
             - Verify the PR was created successfully
 
-          # Allow Claude to use specific git, npm, and gh commands
-          # Following the pattern from claude-code-review.yml
-          claude_args: '--allowed-tools "Bash(git status:*),Bash(git branch:*),Bash(git checkout:*),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(git log:*),Bash(git diff:*),Bash(npm run:*),Bash(npm test:*),Bash(npm install:*),Bash(gh pr create:*),Bash(gh pr view:*),Bash(gh pr list:*)"'
+          # Allow Claude to use git, npm, and gh commands with broad wildcards
+          claude_args: '--allowed-tools "Edit,MultiEdit,Write,Read,Glob,Grep,Bash(git:*),Bash(npm:*),Bash(npx:*),Bash(gh:*)"'
 
       - name: Debug - Show git state after
         if: always()
