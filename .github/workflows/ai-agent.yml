@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       trelloCardId:
-        description: 'Trello card ID to associate with the task'
+        description: "Trello card ID to associate with the task"
         required: true
       title:
-        description: 'Short title for the task or PR'
+        description: "Short title for the task or PR"
         required: true
       description:
-        description: 'Detailed description of the task'
+        description: "Detailed description of the task"
         required: true
 
 permissions:
@@ -72,11 +72,7 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           show_full_output: true
-          claude_args: |
-            # --model claude-opus-4-1-20250805
-            # --max-turns 10
-            # --allowedTools "Bash(npm install),Bash(npm run build),Bash(npm run test:*),Bash(npm run lint:*),Bash(git *)"
-            --allowedTools "Edit,MultiEdit,Write,Read,Glob,Grep,LS,Bash(git:*),Bash(bun:*),Bash(npm:*),Bash(npx:*),Bash(gh:*)"
+          claude_args: "--allowedTools 'Edit,MultiEdit,Write,Read,Glob,Grep,LS,Bash(git:*),Bash(bun:*),Bash(npm:*),Bash(npx:*),Bash(gh:*)'"
           prompt: |
             # Trello Task: ${{ github.event.inputs.title }}
 
@@ -164,10 +160,6 @@ jobs:
             - Do NOT skip the push step - the branch must be on the remote
             - Do NOT skip the PR creation step - this is the final deliverable
             - If any step fails, fix the issue before proceeding to the next step
-
-          # Allow Claude to use necessary tools for development
-          # Note: We don't restrict tools here to allow Claude Code full access to
-          # Read, Edit, Write, and Bash commands needed for the task
 
       - name: Debug - Show git state after
         if: always()
