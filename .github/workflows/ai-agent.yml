@@ -21,14 +21,8 @@ permissions:
   actions: read
 
 jobs:
-  run-task:
+  run-claude:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      issues: write
-      id-token: write
-      actions: read # Required for Claude to read CI results on PRs
     steps:
       - name: Debug - Show workflow inputs
         run: |
