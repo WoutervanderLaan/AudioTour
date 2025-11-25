@@ -4,10 +4,14 @@ import type {ApiClient} from '@/shared/lib/api/client'
 import {ApiContext} from '@/shared/lib/api/Provider'
 
 /**
- * useApi
- * TODO: describe what it does.
+ * Custom React hook to access the ApiClient instance from context.
  *
- * @returns {*} describe return value
+ * This hook provides access to the shared ApiClient instance that is initialized
+ * in the ApiProvider. It must be used within a component tree that is wrapped
+ * by the ApiProvider, otherwise it will throw an error.
+ *
+ * @returns {ApiClient} The singleton ApiClient instance for making API requests
+ * @throws {Error} When used outside of ApiProvider context
  */
 export function useApi(): ApiClient {
   const ctx = useContext(ApiContext)
