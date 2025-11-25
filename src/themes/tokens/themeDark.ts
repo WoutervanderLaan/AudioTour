@@ -19,13 +19,13 @@ export const darkColorTokens = {
     },
     secondary: {
       default: {
-        background: color.primary.white,
+        background: color.neutral.grey4,
         border: color.primary.blue,
         icon: color.primary.blue,
         label: color.primary.blue,
       },
       pressed: {
-        background: color.primary.white,
+        background: color.neutral.grey4,
         border: color.secondary.darkblue,
         label: color.secondary.darkblue,
       },
@@ -33,23 +33,23 @@ export const darkColorTokens = {
   },
   screen: {
     background: {
-      default: color.primary.white,
-      settings: color.custom.grey0,
+      default: color.primary.black,
+      settings: color.neutral.grey4,
     },
   },
 
   text: {
-    confirm: color.secondary.darkgreen,
-    default: color.primary.black,
-    inverse: color.primary.white,
-    link: color.primary.blue,
-    secondary: color.neutral.grey3,
-    tertiary: color.neutral.grey2,
+    confirm: color.secondary.lightgreen,
+    default: color.primary.white,
+    inverse: color.primary.black,
+    link: color.secondary.lightgreen,
+    secondary: color.neutral.grey2,
+    tertiary: color.neutral.grey3,
     warning: color.primary.red,
   },
   textInput: {
     container: {
-      background: color.primary.white,
+      background: color.neutral.grey4,
     },
   },
 }
