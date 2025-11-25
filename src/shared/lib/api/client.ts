@@ -109,7 +109,6 @@ export class ApiClient {
     form.append('photos', photoBlob, 'photo.jpg')
 
     const url = new URL(this._url('/process-artwork'))
-    url.searchParams.append
 
     if (params.metadata) {
       url.searchParams.append('metadata', JSON.stringify(params.metadata))

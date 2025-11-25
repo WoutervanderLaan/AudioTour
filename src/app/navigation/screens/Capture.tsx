@@ -161,29 +161,20 @@ export const Capture = (): React.JSX.Element => {
           placeholder="Enter year"
         />
 
-        {/* <RHFSelect
-        control={control}
-        name="category"
-        label="Category"
-        options={[
-          { value: "painting", label: "Painting" },
-          { value: "sculpture", label: "Sculpture" },
-          { value: "photography", label: "Photography" },
-        ]}
-      /> */}
         <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
       </View>
     </View>
   )
 }
 
-const styles = StyleSheet.create(() => ({
+const styles = StyleSheet.create(({color}) => ({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
     padding: 16,
+    backgroundColor: color.screen.background.default,
   },
   preview: {
     width: 200,

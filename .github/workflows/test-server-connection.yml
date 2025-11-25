@@ -1,0 +1,94 @@
+name: Test Server Connection
+
+on:
+  workflow_dispatch:
+    inputs:
+      testMessage:
+        description: 'Optional custom test message'
+        required: false
+        default: 'Testing server connection from GitHub Actions'
+
+permissions:
+  contents: read
+
+jobs:
+  test-connection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test server connectivity
+        id: test
+        continue-on-error: true
+        run: |
+          echo "=== Testing Server Connection ==="
+          echo "Server URL: ${{ secrets.SERVER_TRELLO_URL }}"
+          echo "Endpoint: /api/trello/update-task"
+          echo "Test Message: ${{ github.event.inputs.testMessage }}"
+          echo "=================================="
+
+          # Perform the API call
+          RESPONSE=$(curl -X POST "${{ secrets.SERVER_TRELLO_URL }}/api/trello/update-task" \
+            -H "Content-Type: application/json" \
+            -w "\nHTTP_STATUS:%{http_code}" \
+            -d '{
+              "trelloCardId": "692602b255c0f50a28430484",
+              "modelId": "68de18c443c3aff4c932f7df",
+              "status": "done",
+              "comment": "✅ Connection test successful: ${{ github.event.inputs.testMessage }}"
+            }')
+
+          echo "$RESPONSE"
+
+          # Extract HTTP status code
+          HTTP_STATUS=$(echo "$RESPONSE" | grep "HTTP_STATUS:" | cut -d: -f2)
+
+          echo "HTTP Status Code: $HTTP_STATUS"
+
+          # Check if the request was successful (2xx status codes)
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+            echo "✅ Server connection successful!"
+            exit 0
+          else
+            echo "❌ Server connection failed with status $HTTP_STATUS"
+            exit 1
+          fi
+
+      - name: Generate summary
+        if: always()
+        run: |
+          echo "## Server Connection Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Details" >> $GITHUB_STEP_SUMMARY
+          echo "- **Server URL:** \`${{ secrets.SERVER_TRELLO_URL }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Test Message:** ${{ github.event.inputs.testMessage }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Workflow Run:** [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Connection test result
+          if [ "${{ steps.test.outcome }}" == "success" ]; then
+            echo "### ✅ Connection Test: PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "The server is reachable and accepting requests." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ❌ Connection Test: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "The server is not reachable or returned an error. Check the logs above for details." >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Health check result
+          if [ "${{ steps.health.outcome }}" == "success" ]; then
+            echo "### ✅ Health Check: PASSED" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ⚠️ Health Check: No standard health endpoint found" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.test.outcome }}" == "success" ]; then
+            echo "- Server connection is working correctly" >> $GITHUB_STEP_SUMMARY
+            echo "- The AI Agent workflow should be able to send notifications" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- Verify the SERVER_TRELLO_URL secret is configured correctly" >> $GITHUB_STEP_SUMMARY
+            echo "- Check that the server is running and accessible" >> $GITHUB_STEP_SUMMARY
+            echo "- Verify the /api/trello/update-task endpoint exists" >> $GITHUB_STEP_SUMMARY
+            echo "- Check server logs for any errors" >> $GITHUB_STEP_SUMMARY
+          fi

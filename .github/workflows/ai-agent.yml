@@ -3,14 +3,17 @@ name: AI Agent Task Runner
 on:
   workflow_dispatch:
     inputs:
+      trelloModelId:
+        description: 'Trello Model ID to associate with the task'
+        required: true
       trelloCardId:
-        description: "Trello card ID to associate with the task"
+        description: 'Trello card ID to associate with the task'
         required: true
       title:
-        description: "Short title for the task or PR"
+        description: 'Short title for the task or PR'
         required: true
       description:
-        description: "Detailed description of the task"
+        description: 'Detailed description of the task'
         required: true
 
 permissions:
@@ -191,8 +194,35 @@ jobs:
             gh pr list --head ${{ steps.branch.outputs.name }} --json number,title,url
           else
             echo "❌ No pull request found for branch '${{ steps.branch.outputs.name }}'"
+            exit 1
           fi
           echo "======================="
+
+      - name: Update Trello card status to review
+        if: success()
+        continue-on-error: true
+        run: |
+          curl -X POST "${{ secrets.SERVER_TRELLO_URL }}/api/trello/update-task" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "trelloCardId": "${{ github.event.inputs.trelloCardId }}",
+              "modelId": "${{ github.event.inputs.trelloModelId }}",
+              "status": "review",
+              "comment": "👀 PR is ready for review: ${{ github.server_url }}/${{ github.repository }}/pulls"
+            }'
+
+      - name: Notify server on failure
+        if: failure()
+        continue-on-error: true
+        run: |
+          curl -X POST "${{ secrets.SERVER_TRELLO_URL }}/api/trello/update-task" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "trelloCardId": "${{ github.event.inputs.trelloCardId }}",
+              "modelId": "${{ github.event.inputs.trelloModelId }}",
+              "status": "error",
+              "comment": "❌ Workflow failed - see logs for details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }'
 
       - name: Add workflow run summary
         if: always()
