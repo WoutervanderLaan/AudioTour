@@ -30,7 +30,7 @@ jobs:
             -H "Content-Type: application/json" \
             -w "\nHTTP_STATUS:%{http_code}" \
             -d '{
-              "trelloCardId": "692602b255c0f50a28430484",
+              "cardId": "692602b255c0f50a28430484",
               "modelId": "68de18c443c3aff4c932f7df",
               "status": "done",
               "comment": "✅ Connection test successful: ${{ github.event.inputs.testMessage }}"
