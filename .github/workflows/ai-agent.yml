@@ -205,7 +205,7 @@ jobs:
           curl -X POST "${{ secrets.SERVER_TRELLO_URL }}/api/trello/update-task" \
             -H "Content-Type: application/json" \
             -d '{
-              "trelloCardId": "${{ github.event.inputs.trelloCardId }}",
+              "cardId": "${{ github.event.inputs.trelloCardId }}",
               "modelId": "${{ github.event.inputs.trelloModelId }}",
               "status": "review",
               "comment": "👀 PR is ready for review: ${{ github.server_url }}/${{ github.repository }}/pulls"
@@ -218,7 +218,7 @@ jobs:
           curl -X POST "${{ secrets.SERVER_TRELLO_URL }}/api/trello/update-task" \
             -H "Content-Type: application/json" \
             -d '{
-              "trelloCardId": "${{ github.event.inputs.trelloCardId }}",
+              "cardId": "${{ github.event.inputs.trelloCardId }}",
               "modelId": "${{ github.event.inputs.trelloModelId }}",
               "status": "error",
               "comment": "❌ Workflow failed - see logs for details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
