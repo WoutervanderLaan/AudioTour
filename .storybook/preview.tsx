@@ -1,10 +1,12 @@
 import type {Preview} from '@storybook/react-native-web-vite'
-import {StyleSheet} from 'react-native-unistyles'
+import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 import {themes} from '../src/themes/themes'
 import type {FC} from 'react'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {INITIAL_VIEWPORTS} from 'storybook/viewport'
 import {color} from '../src/themes/tokens/color'
+import {View} from 'react-native'
+import {background} from 'storybook/theming'
 
 StyleSheet.configure({
   settings: {
@@ -13,11 +15,24 @@ StyleSheet.configure({
   themes,
 })
 
-const MainDecorator = (Story: FC) => (
-  <SafeAreaProvider>
-    <Story />
-  </SafeAreaProvider>
-)
+const MainDecorator = (Story: FC) => {
+  const {theme} = useUnistyles()
+
+  return (
+    <SafeAreaProvider>
+      <View
+        style={{
+          backgroundColor: theme.color.screen.background.default,
+          flex: 1,
+          padding: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Story />
+      </View>
+    </SafeAreaProvider>
+  )
+}
 
 const preview: Preview = {
   decorators: [MainDecorator],

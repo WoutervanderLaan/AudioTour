@@ -1,7 +1,9 @@
 import type React from 'react'
 import type {ComponentProps} from 'react'
 import {Control, Controller, FieldValues, Path} from 'react-hook-form'
-import {Switch, Text, TextInput, View} from 'react-native'
+import {Switch, TextInput, View} from 'react-native'
+
+import {Label} from '@/shared/components/ui/typography'
 
 /**
  * RHFTextInput
@@ -28,7 +30,7 @@ export const RHFTextInput = <T extends FieldValues>({
       name={name}
       render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
         <View style={{marginBottom: 12}}>
-          <Text>{label}</Text>
+          <Label>{label}</Label>
           <TextInput
             style={{borderWidth: 1, padding: 8}}
             placeholder={placeholder}
@@ -37,7 +39,7 @@ export const RHFTextInput = <T extends FieldValues>({
             value={value as any}
             {...props}
           />
-          {!!error && <Text style={{color: 'red'}}>{error.message}</Text>}
+          {!!error && <Label style={{color: 'red'}}>{error.message}</Label>}
         </View>
       )}
     />
@@ -68,7 +70,7 @@ export const RHFTextArea = <T extends FieldValues>({
       name={name}
       render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
         <View style={{marginBottom: 12}}>
-          <Text>{label}</Text>
+          <Label>{label}</Label>
           <TextInput
             style={{borderWidth: 1, padding: 8, height: 100}}
             placeholder={placeholder}
@@ -77,7 +79,7 @@ export const RHFTextArea = <T extends FieldValues>({
             onChangeText={onChange}
             value={value as any}
           />
-          {!!error && <Text style={{color: 'red'}}>{error.message}</Text>}
+          {!!error && <Label style={{color: 'red'}}>{error.message}</Label>}
         </View>
       )}
     />
@@ -115,42 +117,10 @@ export const RHFCheckbox = <T extends FieldValues>({
             value={value as any}
             onValueChange={onChange}
           />
-          <Text style={{marginLeft: 8}}>{label}</Text>
-          {!!error && <Text style={{color: 'red'}}>{error.message}</Text>}
+          <Label style={{marginLeft: 8}}>{label}</Label>
+          {!!error && <Label style={{color: 'red'}}>{error.message}</Label>}
         </View>
       )}
     />
   )
 }
-
-// // ✅ Select (using Picker in React Native)
-// export function RHFSelect<T extends FieldValues>({
-//   control,
-//   name,
-//   label,
-//   options,
-// }: {
-//   control: Control<T>;
-//   name: Path<T>;
-//   label: string;
-//   options: { value: string; label: string }[];
-// }) {
-//   return (
-//     <Controller
-//       control={control}
-//       name={name}
-//       render={({ field: { onChange, value }, fieldState: { error } }) => (
-//         <View style={{ marginBottom: 12 }}>
-//           <Text>{label}</Text>
-//           <Picker selectedValue={value as any} onValueChange={onChange}>
-//             <Picker.Item label="Select..." value="" />
-//             {options.map(opt => (
-//               <Picker.Item key={opt.value} label={opt.label} value={opt.value} />
-//             ))}
-//           </Picker>
-//           {error && <Text style={{ color: "red" }}>{error.message}</Text>}
-//         </View>
-//       )}
-//     />
-//   );
-// }

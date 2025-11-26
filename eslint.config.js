@@ -286,6 +286,18 @@ export default [
               message:
                 'Do not use StyleSheet from react-native. Use StyleSheet from react-native-unistyles instead.',
             },
+            {
+              name: 'react-native',
+              importNames: ['Text', 'TextBase'],
+              message:
+                'Do not use Text from react-native. Use a Typography component from @/shared/components/ui/typography instead.',
+            },
+            {
+              name: '@/shared/components/ui/typography/TextBase',
+              importNames: ['TextBase'],
+              message:
+                'Do not use TextBase directly. Use a defined Typography component instead.',
+            },
           ],
         },
       ],
