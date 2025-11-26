@@ -298,6 +298,18 @@ export default [
               message:
                 'Do not use TextBase directly. Use a defined Typography component instead.',
             },
+            {
+              name: 'react-native',
+              importNames: ['Pressable', 'Button'],
+              message:
+                'Do not use Pressable or Button from react-native. Use a Pressable component from @/shared/components/ui/pressable instead.',
+            },
+            {
+              name: '@/shared/components/ui/pressable/PressableBase',
+              importNames: ['PressableBase'],
+              message:
+                'Do not use PressableBase directly. Use Button, Toggle, or another defined Pressable component instead.',
+            },
           ],
         },
       ],
