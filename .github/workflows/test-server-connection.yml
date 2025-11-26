@@ -21,6 +21,7 @@ jobs:
         run: |
           echo "=== Testing Server Connection ==="
           echo "Server URL: ${{ secrets.SERVER_TRELLO_URL }}"
+          echo "Server Webhook Secret: ${{ secrets.GITHUB_WEBHOOK_SECRET }}"
           echo "Endpoint: /api/trello/update-task"
           echo "Test Message: ${{ github.event.inputs.testMessage }}"
           echo "=================================="
