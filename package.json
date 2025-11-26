@@ -1,6 +1,7 @@
 {
-  "name": "audiotour",
-  "version": "1.0.0",
+  "name": "expo-rn-template",
+  "version": "0.1.0",
+  "description": "Production-ready React Native template with Expo, comprehensive tooling, and strict code quality enforcement",
   "private": true,
   "main": "index.tsx",
   "scripts": {

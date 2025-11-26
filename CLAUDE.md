@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-An AI-powered React Native app that generates dynamic audio tours based on museum objects photographed by users. The app combines object recognition, contextual narrative generation, and personalized story sequences to offer engaging and interactive museum experiences.
+A React Native application built with Expo. This template provides a production-ready foundation with comprehensive tooling, strict code quality enforcement, and a feature-based architecture for scalable app development.
 
 ## Development Commands
 

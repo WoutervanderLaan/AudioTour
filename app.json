@@ -1,24 +1,23 @@
 {
   "expo": {
-    "name": "AudioTour",
-    "slug": "AudioTour",
+    "name": "MyApp",
+    "slug": "myapp",
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "scheme": "audiotour",
+    "scheme": "myapp",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.woutervanderlaan.audiotour",
-      "appleTeamId": "WNTLECWTLQ"
+      "bundleIdentifier": "com.yourcompany.myapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.woutervanderlaan.audiotour",
+      "package": "com.yourcompany.myapp",
       "permissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.ACCESS_COARSE_LOCATION",
@@ -41,24 +40,18 @@
         "expo-location",
         {
           "isIosBackgroundLocationEnabled": false,
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location to detect nearby museums.",
-          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location to detect nearby museums."
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location.",
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location."
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos for uploads.",
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera to take photos.",
-          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone for video audio."
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera.",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
         }
       ]
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "805b6cbc-bd2c-4ce7-88a9-390ed3c063c1"
-      }
-    },
-    "owner": "woutervanderlaan"
+    ]
   }
 }

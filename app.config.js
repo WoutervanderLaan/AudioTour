@@ -3,26 +3,26 @@ const IS_PREVIEW = process.env.APP_VARIANT === 'preview'
 
 const getUniqueIdentifier = () => {
   if (IS_DEV) {
-    return 'com.woutervanderlaan.audiotour.dev'
+    return 'com.yourcompany.myapp.dev'
   }
 
   if (IS_PREVIEW) {
-    return 'com.woutervanderlaan.audiotour.preview'
+    return 'com.yourcompany.myapp.preview'
   }
 
-  return 'com.woutervanderlaan.audiotour'
+  return 'com.yourcompany.myapp'
 }
 
 const getAppName = () => {
   if (IS_DEV) {
-    return 'AudioTour (Dev)'
+    return 'MyApp (Dev)'
   }
 
   if (IS_PREVIEW) {
-    return 'AudioTour (Preview)'
+    return 'MyApp (Preview)'
   }
 
-  return 'AudioTour'
+  return 'MyApp'
 }
 
 export default ({config}) => ({
