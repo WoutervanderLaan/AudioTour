@@ -1,7 +1,9 @@
 import type React from 'react'
 import type {ComponentProps} from 'react'
 import {Control, Controller, FieldValues, Path} from 'react-hook-form'
-import {Switch, Text, TextInput, View} from 'react-native'
+import {Switch, TextInput, View} from 'react-native'
+
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * RHFTextInput

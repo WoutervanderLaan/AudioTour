@@ -1,7 +1,9 @@
 import type React from 'react'
-import {Text, View} from 'react-native'
+import {View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
+
+import {Text} from '@/shared/components/ui/typography'
 
 export enum ToastType {
   SUCCESS = 'success',

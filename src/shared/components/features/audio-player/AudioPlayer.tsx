@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
-import {ActivityIndicator, Text, View} from 'react-native'
+import {ActivityIndicator, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Button} from '@/shared/components/ui/Button/Button'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * AudioPlayer

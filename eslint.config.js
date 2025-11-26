@@ -286,6 +286,12 @@ export default [
               message:
                 'Do not use StyleSheet from react-native. Use StyleSheet from react-native-unistyles instead.',
             },
+            {
+              name: 'react-native',
+              importNames: ['Text'],
+              message:
+                'Do not use Text from react-native. Use Text from @/shared/components/ui/typography instead.',
+            },
           ],
         },
       ],
@@ -344,6 +350,12 @@ export default [
     },
     rules: {
       'no-undef': 'off',
+    },
+  },
+  {
+    files: ['src/shared/components/ui/typography/**/*.tsx'],
+    rules: {
+      'no-restricted-imports': 'off',
     },
   },
   // ...storybook.configs['flat/recommended'],

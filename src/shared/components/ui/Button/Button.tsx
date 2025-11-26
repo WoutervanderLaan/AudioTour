@@ -1,7 +1,9 @@
 import type React from 'react'
 import type {StyleProp, ViewStyle} from 'react-native'
-import {Text, TouchableOpacity, View} from 'react-native'
+import {TouchableOpacity, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * ButtonProps
