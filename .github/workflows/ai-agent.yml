@@ -204,7 +204,7 @@ jobs:
         run: |
           curl -X POST "${{ secrets.SERVER_TRELLO_URL }}/api/trello/update-task" \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_WEBHOOK_SECRET }}" \
+            -H "Authorization: Bearer ${{ secrets.SERVER_WEBHOOK_SECRET }}" \
             -d '{
               "cardId": "${{ github.event.inputs.trelloCardId }}",
               "modelId": "${{ github.event.inputs.trelloModelId }}",
@@ -218,7 +218,7 @@ jobs:
         run: |
           curl -X POST "${{ secrets.SERVER_TRELLO_URL }}/api/trello/update-task" \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_WEBHOOK_SECRET }}" \
+            -H "Authorization: Bearer ${{ secrets.SERVER_WEBHOOK_SECRET }}" \
             -d '{
               "cardId": "${{ github.event.inputs.trelloCardId }}",
               "modelId": "${{ github.event.inputs.trelloModelId }}",
