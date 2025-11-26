@@ -21,7 +21,7 @@ jobs:
         run: |
           echo "=== Testing Server Connection ==="
           echo "Server URL: ${{ secrets.SERVER_TRELLO_URL }}"
-          echo "Server Webhook Secret: ${{ secrets.GITHUB_WEBHOOK_SECRET }}"
+          echo "Server Webhook Secret: ${{ secrets.SERVER_WEBHOOK_SECRET }}"
           echo "Endpoint: /api/trello/update-task"
           echo "Test Message: ${{ github.event.inputs.testMessage }}"
           echo "=================================="
@@ -29,7 +29,7 @@ jobs:
           # Perform the API call
           RESPONSE=$(curl -X POST "${{ secrets.SERVER_TRELLO_URL }}/api/trello/update-task" \
             -H "Content-Type: application/json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_WEBHOOK_SECRET }}" \
+            -H "Authorization: Bearer ${{ secrets.SERVER_WEBHOOK_SECRET }}" \
             -w "\nHTTP_STATUS:%{http_code}" \
             -d '{
               "cardId": "692602b255c0f50a28430484",
