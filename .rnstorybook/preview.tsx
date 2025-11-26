@@ -13,7 +13,7 @@ StyleSheet.configure({
 })
 
 const MainDecorator = (Story: FC) => (
-  <SafeAreaProvider style={{flex: 1, backgroundColor: color.primary.white}}>
+  <SafeAreaProvider style={{flex: 1}}>
     <Story />
   </SafeAreaProvider>
 )

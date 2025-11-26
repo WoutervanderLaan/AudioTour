@@ -1,6 +1,6 @@
 import type React from 'react'
 
-import {Text, type TextProps} from './Text'
+import {TextBase, type TextProps} from './TextBase'
 
 /**
  * LabelProps
@@ -11,18 +11,18 @@ export type LabelProps = Omit<TextProps, 'fontSize' | 'lineHeight'>
 /**
  * Label
  * Semantic label component for form labels and UI labels.
- * Uses the base Text component with small text size.
+ * Uses the base TextBase component with small text size.
  *
  * @param {LabelProps} props - Component props
  * @returns {React.JSX.Element} Rendered label element
  */
 export const Label = ({children, ...rest}: LabelProps): React.JSX.Element => {
   return (
-    <Text
+    <TextBase
       fontSize="small"
       lineHeight="small"
       {...rest}>
       {children}
-    </Text>
+    </TextBase>
   )
 }

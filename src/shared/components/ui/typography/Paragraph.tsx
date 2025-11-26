@@ -1,9 +1,8 @@
 import type React from 'react'
 
-import {Text, type TextProps} from './Text'
+import {TextBase, type TextProps} from './TextBase'
 
 import type {ParagraphVariants} from '@/themes/tokens/text'
-import type {Theme} from '@/themes/types'
 
 /**
  * ParagraphProps
@@ -19,7 +18,7 @@ export type ParagraphProps = Omit<TextProps, 'fontSize' | 'lineHeight'> & {
 /**
  * Paragraph
  * Semantic paragraph component for body text.
- * Uses the base Text component with predefined typography settings.
+ * Uses the base TextBase component with predefined typography settings.
  *
  * @param {ParagraphProps} props - Component props
  * @returns {React.JSX.Element} Rendered paragraph element
@@ -30,11 +29,11 @@ export const Paragraph = ({
   ...rest
 }: ParagraphProps): React.JSX.Element => {
   return (
-    <Text
-      fontSize={variant as keyof Theme['text']['fontSize']}
-      lineHeight={variant as keyof Theme['text']['lineHeight']}
+    <TextBase
+      fontSize={variant}
+      lineHeight={variant}
       {...rest}>
       {children}
-    </Text>
+    </TextBase>
   )
 }

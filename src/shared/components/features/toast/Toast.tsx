@@ -3,7 +3,7 @@ import {View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Text} from '@/shared/components/ui/typography'
+import {Label} from '@/shared/components/ui/typography'
 
 export enum ToastType {
   SUCCESS = 'success',
@@ -40,7 +40,7 @@ export const Toast = ({
 
   return (
     <View style={[styles.toast, styles[type], {top: top + 20}]}>
-      <Text style={styles.text}>{message}</Text>
+      <Label>{message}</Label>
     </View>
   )
 }
@@ -57,10 +57,7 @@ const styles = StyleSheet.create(({color}) => ({
     alignItems: 'center',
     backgroundColor: color.screen.background.default,
   },
-  text: {
-    fontWeight: 'bold',
-    color: color.text.default,
-  },
+
   success: {borderColor: '#4BB543', borderWidth: 1},
   error: {borderColor: '#FF3333', borderWidth: 1},
   info: {borderColor: '#5f5f5f', borderWidth: 1},

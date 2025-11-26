@@ -288,9 +288,15 @@ export default [
             },
             {
               name: 'react-native',
-              importNames: ['Text'],
+              importNames: ['Text', 'TextBase'],
               message:
-                'Do not use Text from react-native. Use Text from @/shared/components/ui/typography instead.',
+                'Do not use Text from react-native. Use a Typography component from @/shared/components/ui/typography instead.',
+            },
+            {
+              name: '@/shared/components/ui/typography/TextBase',
+              importNames: ['TextBase'],
+              message:
+                'Do not use TextBase directly. Use a defined Typography component instead.',
             },
           ],
         },
@@ -350,12 +356,6 @@ export default [
     },
     rules: {
       'no-undef': 'off',
-    },
-  },
-  {
-    files: ['src/shared/components/ui/typography/**/*.tsx'],
-    rules: {
-      'no-restricted-imports': 'off',
     },
   },
   // ...storybook.configs['flat/recommended'],

@@ -1,6 +1,6 @@
 import type React from 'react'
 
-import {Text, type TextProps} from './Text'
+import {TextBase, type TextProps} from './TextBase'
 
 import type {Theme} from '@/themes/types'
 
@@ -31,7 +31,7 @@ export type TitleProps = Omit<
 /**
  * Title
  * Semantic heading component for titles.
- * Uses the base Text component with predefined typography settings.
+ * Uses the base TextBase component with predefined typography settings.
  *
  * @param {TitleProps} props - Component props
  * @returns {React.JSX.Element} Rendered title element
@@ -43,13 +43,13 @@ export const Title = ({
   ...rest
 }: TitleProps): React.JSX.Element => {
   return (
-    <Text
+    <TextBase
       fontSize={level as keyof Theme['text']['fontSize']}
       lineHeight={level as keyof Theme['text']['lineHeight']}
       fontFamily={bold ? 'bold' : 'regular'}
       accessibilityRole="header"
       {...rest}>
       {children}
-    </Text>
+    </TextBase>
   )
 }

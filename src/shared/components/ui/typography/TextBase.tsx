@@ -1,4 +1,5 @@
 import type React from 'react'
+// eslint-disable-next-line no-restricted-imports
 import {Text as RNText, type TextProps as RNTextProps} from 'react-native'
 import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
@@ -12,7 +13,7 @@ export type TextPropsBase = {
   /**
    * children - Text content to display
    */
-  children?: React.ReactNode
+  children?: string
   /**
    * color - Text color from theme
    */
@@ -49,7 +50,7 @@ export type TextProps = TextPropsBase
  * @param {TextProps} props - Component props
  * @returns {React.JSX.Element} Rendered text element
  */
-export const Text = ({
+export const TextBase = ({
   children,
   style,
   color = 'default',

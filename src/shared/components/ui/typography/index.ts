@@ -4,5 +4,4 @@
  */
 export {Label, type LabelProps} from './Label'
 export {Paragraph, type ParagraphProps} from './Paragraph'
-export {Text, type TextProps} from './Text'
 export {Title, type TitleLevel, type TitleProps} from './Title'

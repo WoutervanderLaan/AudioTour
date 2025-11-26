@@ -4,7 +4,7 @@ import {ActivityIndicator, Image, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {zodResolver} from '@hookform/resolvers/zod'
-import {Button, Text} from '@react-navigation/elements'
+import {Button} from '@react-navigation/elements'
 import {useNavigation} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import * as ImagePicker from 'expo-image-picker'
@@ -12,6 +12,7 @@ import {useShallow} from 'zustand/react/shallow'
 
 import {ObjectForm, objectSchema} from '@/features/capture/schemas/schema'
 import {RHFTextArea, RHFTextInput} from '@/shared/components/ui/form/FormInputs'
+import {Label} from '@/shared/components/ui/typography'
 import {useApi} from '@/shared/lib/api/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
@@ -114,7 +115,7 @@ export const Capture = (): React.JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Text>{sessionId}</Text>
+      <Label>{sessionId}</Label>
 
       <Button onPress={pickImage}>Take Photo</Button>
       {!!imageUri && (
@@ -132,7 +133,7 @@ export const Capture = (): React.JSX.Element => {
       </Button>
 
       {!!uploadPhoto.isPending && <ActivityIndicator />}
-      {!!localError && <Text>{localError}</Text>}
+      {!!localError && <Label>{localError}</Label>}
 
       <View style={{width: '100%'}}>
         <RHFTextInput

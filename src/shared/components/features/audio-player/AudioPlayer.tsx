@@ -2,8 +2,9 @@ import React, {useState} from 'react'
 import {ActivityIndicator, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Button} from '@/shared/components/ui/Button/Button'
-import {Text} from '@/shared/components/ui/typography'
+import {Button} from '@react-navigation/elements'
+
+import {Label} from '@/shared/components/ui/typography'
 
 /**
  * AudioPlayer
@@ -33,11 +34,9 @@ export const AudioPlayer = ({src}: {src: string}): React.JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Text>{src}</Text>
-      <Button
-        onPress={toggle}
-        label={playing ? 'Pause' : 'Play'}
-      />
+      <Label>{src}</Label>
+
+      <Button onPress={toggle}>{playing ? 'Pause' : 'Play'}</Button>
 
       {!!loading && <ActivityIndicator />}
     </View>
