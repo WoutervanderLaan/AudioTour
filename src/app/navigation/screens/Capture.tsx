@@ -4,7 +4,6 @@ import {ActivityIndicator, Image, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {zodResolver} from '@hookform/resolvers/zod'
-import {Button} from '@react-navigation/elements'
 import {useNavigation} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import * as ImagePicker from 'expo-image-picker'
@@ -12,6 +11,7 @@ import {useShallow} from 'zustand/react/shallow'
 
 import {ObjectForm, objectSchema} from '@/features/capture/schemas/schema'
 import {RHFTextArea, RHFTextInput} from '@/shared/components/ui/form/FormInputs'
+import {Button} from '@/shared/components/ui/pressable'
 import {Label} from '@/shared/components/ui/typography'
 import {useApi} from '@/shared/lib/api/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
@@ -117,7 +117,10 @@ export const Capture = (): React.JSX.Element => {
     <View style={styles.container}>
       <Label>{sessionId}</Label>
 
-      <Button onPress={pickImage}>Take Photo</Button>
+      <Button
+        onPress={pickImage}
+        label="Take Photo"
+      />
       {!!imageUri && (
         <Image
           source={{uri: imageUri}}
@@ -128,9 +131,8 @@ export const Capture = (): React.JSX.Element => {
       <Button
         onPress={upload}
         disabled={!imageUri || uploadPhoto.isPending}
-        style={{opacity: !imageUri || uploadPhoto.isPending ? 0.5 : 1}}>
-        Upload & Identify
-      </Button>
+        label="Upload & Identify"
+      />
 
       {!!uploadPhoto.isPending && <ActivityIndicator />}
       {!!localError && <Label>{localError}</Label>}
@@ -162,7 +164,10 @@ export const Capture = (): React.JSX.Element => {
           placeholder="Enter year"
         />
 
-        <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
+        <Button
+          onPress={handleSubmit(onSubmit)}
+          label="Submit"
+        />
       </View>
     </View>
   )

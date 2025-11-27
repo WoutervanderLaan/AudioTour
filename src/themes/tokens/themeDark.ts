@@ -20,12 +20,12 @@ export const darkColorTokens = {
     secondary: {
       default: {
         background: color.neutral.grey4,
-        border: color.primary.blue,
+        border: color.primary.white,
         icon: color.primary.blue,
         label: color.primary.blue,
       },
       pressed: {
-        background: color.neutral.grey4,
+        background: color.neutral.grey3,
         border: color.secondary.darkblue,
         label: color.secondary.darkblue,
       },

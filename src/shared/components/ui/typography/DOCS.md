@@ -4,9 +4,10 @@ This folder contains the base text components for the application. All text in t
 
 ## Components
 
-### Text
+### TextBase
 
 The base text component with accessibility features and theme integration. All other text components are built on top of this.
+This component should not be used directly, except by typography components build on top of it.
 
 **Features:**
 
@@ -21,10 +22,10 @@ The base text component with accessibility features and theme integration. All o
 **Usage:**
 
 ```tsx
-import {Text} from '@/shared/components/ui/typography'
+import {TextBase} from '@/shared/components/ui/typography/TextBase'
 
-<Text color="default" fontSize="body">Hello World</Text>
-<Text color="secondary" fontFamily="bold">Bold text</Text>
+<TextBase color="default" fontSize="body">Hello World</TextBase>
+<TextBase color="secondary" fontFamily="bold">Bold text</TextBase>
 ```
 
 ### Title
