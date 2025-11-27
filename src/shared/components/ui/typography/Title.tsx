@@ -2,8 +2,6 @@ import type React from 'react'
 
 import {TextBase, type TextProps} from './TextBase'
 
-import type {Theme} from '@/themes/types'
-
 /**
  * TitleLevel
  * Heading levels for the Title component
@@ -44,8 +42,8 @@ export const Title = ({
 }: TitleProps): React.JSX.Element => {
   return (
     <TextBase
-      fontSize={level as keyof Theme['text']['fontSize']}
-      lineHeight={level as keyof Theme['text']['lineHeight']}
+      fontSize={level}
+      lineHeight={level}
       fontFamily={bold ? 'bold' : 'regular'}
       accessibilityRole="header"
       {...rest}>

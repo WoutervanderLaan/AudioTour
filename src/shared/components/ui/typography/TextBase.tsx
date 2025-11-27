@@ -7,13 +7,13 @@ import type {Theme} from '@/themes/types'
 
 /**
  * TextPropsBase
- * Base props for the Text component with theme integration
+ * Base props for the TextBase component with theme integration
  */
 export type TextPropsBase = {
   /**
    * children - Text content to display
    */
-  children?: string
+  children?: React.ReactNode
   /**
    * color - Text color from theme
    */

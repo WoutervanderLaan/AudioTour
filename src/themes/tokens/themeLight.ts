@@ -25,7 +25,7 @@ export const lightColorTokens = {
         label: color.primary.blue,
       },
       pressed: {
-        background: color.primary.white,
+        background: color.neutral.grey1,
         border: color.secondary.darkblue,
         label: color.secondary.darkblue,
       },
