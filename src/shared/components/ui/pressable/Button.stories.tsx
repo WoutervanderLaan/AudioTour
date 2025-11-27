@@ -29,21 +29,21 @@ type Story = StoryObj<typeof meta>
 export const Primary: Story = {
   args: {
     variant: 'primary',
-    children: <Label>Primary Button</Label>,
+    label: 'Primary Button',
   },
 }
 
 export const Secondary: Story = {
   args: {
     variant: 'secondary',
-    children: <Label>Secondary Button</Label>,
+    label: 'Secondary Button',
   },
 }
 
 export const Disabled: Story = {
   args: {
     variant: 'primary',
-    children: <Label>Disabled Button</Label>,
+    label: 'Disabled Button',
     disabled: true,
   },
 }
@@ -51,7 +51,7 @@ export const Disabled: Story = {
 export const WithOnPress: Story = {
   args: {
     variant: 'primary',
-    children: <Label>Tap to log</Label>,
+    label: 'Tap to log',
     onPress: (): void => {
       // eslint-disable-next-line no-console
       console.log('Button pressed!')

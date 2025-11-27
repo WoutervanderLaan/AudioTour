@@ -50,36 +50,12 @@ import {Button} from '@/shared/components/ui/pressable'
 </Button>
 ```
 
-### Toggle
-
-Interactive toggle component that can represent an on/off or selected state.
-
-**Features:**
-
-- Active/inactive state support
-- Accessibility role="togglebutton"
-- Accessibility state (checked, disabled)
-- Theme-aware styling based on active state
-- Uses primary colors when active, secondary when inactive
-- Inherits all PressableBase component features
-
-**Usage:**
-
-```tsx
-import {Toggle} from '@/shared/components/ui/pressable'
-;<Toggle
-  active={isActive}
-  onPress={() => setIsActive(!isActive)}>
-  <Label>Toggle Option</Label>
-</Toggle>
-```
-
 ## Design Pattern
 
 These components follow the same pattern as the Box/Row/Column layout components and Text/Title/Paragraph typography components:
 
 - **PressableBase** is the base component (like Box or TextBase)
-- **Button**, **Toggle** are specific variants (like Row/Column or Title/Paragraph)
+- **Button** is a specific variant (like Row/Column or Title/Paragraph)
 - All components use react-native-unistyles for theming
 - All components support full accessibility features
 - All components use theme color tokens for consistent styling
@@ -98,4 +74,4 @@ Each color variant has `default` and `pressed` states for interactive feedback.
 
 The ESLint configuration enforces that all React Native Pressable and Button components must be imported from this module, not from 'react-native' directly (except within PressableBase.tsx where the rule is disabled).
 
-Direct usage of PressableBase is also restricted - use Button, Toggle, or create a new specific component instead.
+Direct usage of PressableBase is also restricted - use Button, or create a new specific component instead.

@@ -308,8 +308,9 @@ export default [
               name: '@/shared/components/ui/pressable/PressableBase',
               importNames: ['PressableBase'],
               message:
-                'Do not use PressableBase directly. Use Button, Toggle, or another defined Pressable component instead.',
+                'Do not use PressableBase directly. Use Button, or another defined Pressable component instead.',
             },
+            //TODO: Prohibit react-navigation elements
           ],
         },
       ],

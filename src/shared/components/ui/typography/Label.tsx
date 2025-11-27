@@ -19,8 +19,8 @@ export type LabelProps = Omit<TextProps, 'fontSize' | 'lineHeight'>
 export const Label = ({children, ...rest}: LabelProps): React.JSX.Element => {
   return (
     <TextBase
-      fontSize="small"
-      lineHeight="small"
+      fontSize="extraSmall"
+      lineHeight="extraSmall"
       {...rest}>
       {children}
     </TextBase>

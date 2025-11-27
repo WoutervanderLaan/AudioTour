@@ -1,8 +1,11 @@
 import type React from 'react'
-// eslint-disable-next-line no-restricted-imports
 import {
+  // eslint-disable-next-line no-restricted-imports
   Pressable as RNPressable,
   type PressableProps as RNPressableProps,
+  type PressableStateCallbackType,
+  type StyleProp,
+  type ViewStyle,
 } from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
@@ -10,11 +13,12 @@ import {StyleSheet} from 'react-native-unistyles'
  * PressableBaseProps
  * Base props for the Pressable component with accessibility features
  */
-export type PressableBaseProps = RNPressableProps & {
+export type PressableBaseProps = Omit<RNPressableProps, 'style'> & {
   /**
    * children - Content to display inside the pressable
    */
   children?: React.ReactNode
+  style?: (state: PressableStateCallbackType) => StyleProp<ViewStyle>
 }
 
 /**
@@ -36,7 +40,7 @@ export const PressableBase = ({
     <RNPressable
       accessible={accessible}
       accessibilityRole={accessibilityRole}
-      style={[styles.pressable, style]}
+      style={state => [styles.pressable, style?.(state)]}
       {...rest}>
       {children}
     </RNPressable>
