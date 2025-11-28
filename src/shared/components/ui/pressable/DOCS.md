@@ -42,12 +42,17 @@ Interactive button component with predefined styling variants.
 ```tsx
 import {Button} from '@/shared/components/ui/pressable'
 
-<Button variant="primary" onPress={() => console.log('Clicked')}>
-  <Label>Primary Button</Label>
-</Button>
-<Button variant="secondary" disabled>
-  <Label>Disabled Button</Label>
-</Button>
+<Button
+  variant="primary"
+  onPress={() => console.log('Clicked')}
+  label="Primary Button"
+  />
+
+<Button
+  variant="secondary"
+  disabled
+  label="Disabled Button"
+  />
 ```
 
 ## Design Pattern
