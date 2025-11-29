@@ -226,7 +226,7 @@ export default [
               allow: ['shared', 'features', 'store', 'themes'],
             },
             {from: ['features'], allow: ['shared', 'store']},
-            {from: ['shared'], allow: ['themes']},
+            {from: ['shared'], allow: ['themes', 'store']},
             {from: ['store'], allow: ['shared']},
           ],
         },

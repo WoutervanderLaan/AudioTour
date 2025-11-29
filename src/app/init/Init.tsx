@@ -35,6 +35,8 @@ export const Init = (): React.JSX.Element => {
     if (__DEV__) {
       enableMocking()
     }
+
+    UnistylesRuntime.setRootViewBackgroundColor('blue')
   }, [])
 
   return (

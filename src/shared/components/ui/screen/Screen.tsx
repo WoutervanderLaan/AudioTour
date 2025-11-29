@@ -1,241 +1,277 @@
-import type React from 'react'
-import {useMemo} from 'react'
+import React, {ReactNode} from 'react'
 import {
-  KeyboardAvoidingView,
-  Platform,
+  Animated,
   ScrollView,
+  ScrollViewProps,
   View,
-  type ViewProps,
-  type ViewStyle,
+  ViewStyle,
 } from 'react-native'
-import {useSafeAreaInsets} from 'react-native-safe-area-context'
-import {StyleSheet, useUnistyles} from 'react-native-unistyles'
+import {StyleSheet} from 'react-native-unistyles'
+
+import {useKeyboard} from '@/store/context/KeyboardContext'
 
 /**
- * ScreenProps
- * Props for the Screen component
+ * Base props shared by all Screen variants.
  */
-export type ScreenProps = {
+type BaseScreenProps = {
   /**
-   * children - Content to be rendered inside the screen
+   * Child elements to render within the screen.
    */
-  children: React.ReactNode
+  children: ReactNode
   /**
-   * scroll - Whether the screen content should be scrollable
+   * Optional style to apply to the screen container.
    */
-  scroll?: boolean
-  /**
-   * testID - Test identifier for testing
-   */
-  testID?: string
-  /**
-   * gutterBottom - Whether to add bottom gutter padding
-   */
-  gutterBottom?: boolean
-  /**
-   * gutterTop - Whether to add top gutter padding
-   */
-  gutterTop?: boolean
-  /**
-   * gutterHorizontal - Whether to add horizontal gutter padding
-   */
-  gutterHorizontal?: boolean
-  /**
-   * withBottomInset - Whether to include safe area bottom inset
-   */
-  withBottomInset?: boolean
-  /**
-   * withTopInset - Whether to include safe area top inset
-   */
-  withTopInset?: boolean
-  /**
-   * keyboardAvoidingView - Whether to use keyboard avoiding view
-   */
-  keyboardAvoidingView?: boolean
-  /**
-   * backgroundColor - Background color key from theme
-   */
-  backgroundColor?: 'default' | 'settings'
-} & ViewProps
-
-/**
- * calculatePaddingTop
- * Calculates the top padding based on gutter and inset settings
- *
- * @param {object} params - Parameters for calculation
- * @returns {number} Calculated padding value
- */
-const calculatePaddingTop = (params: {
-  withTopInset: boolean
-  gutterTop: boolean
-  insetsTop: number
-  spacing: number
-}): number => {
-  const {withTopInset, gutterTop, insetsTop, spacing} = params
-  if (withTopInset) {
-    return insetsTop + (gutterTop ? spacing : 0)
-  }
-  return gutterTop ? spacing : 0
+  style?: ViewStyle
 }
 
 /**
- * calculatePaddingBottom
- * Calculates the bottom padding based on gutter and inset settings
- *
- * @param {object} params - Parameters for calculation
- * @returns {number} Calculated padding value
+ * Configuration options for keyboard avoiding behavior.
  */
-const calculatePaddingBottom = (params: {
-  withBottomInset: boolean
-  gutterBottom: boolean
-  insetsBottom: number
-  spacing: number
-}): number => {
-  const {withBottomInset, gutterBottom, insetsBottom, spacing} = params
-  if (withBottomInset) {
-    return insetsBottom + (gutterBottom ? spacing : 0)
-  }
-  return gutterBottom ? spacing : 0
+type KeyboardAvoidingConfig = {
+  /**
+   * Whether to add padding when the keyboard is visible.
+   * @default false
+   */
+  keyboardAvoiding?: boolean
+  /**
+   * Additional padding to add beyond the keyboard height (useful for buttons or bottom-fixed elements).
+   * @default 0
+   */
+  extraPadding?: number
+  /**
+   * Whether to animate the padding changes when the keyboard appears/disappears.
+   * When true, uses smooth animations. When false, padding changes instantly.
+   * @default true
+   */
+  animated?: boolean
 }
 
 /**
- * wrapWithScroll
- * Wraps content with ScrollView if scroll is enabled
- *
- * @param {React.ReactNode} content - Content to wrap
- * @param {boolean} scroll - Whether to wrap with ScrollView
- * @returns {React.JSX.Element} Wrapped or unwrapped content
+ * Props for the Static screen variant.
  */
-const wrapWithScroll = (
-  content: React.ReactNode,
-  scroll: boolean,
-): React.JSX.Element => {
-  if (scroll) {
+type StaticScreenProps = BaseScreenProps & KeyboardAvoidingConfig
+
+/**
+ * Props for the Scrollable screen variant.
+ */
+type ScrollableScreenProps = {
+  /**
+   * Style to apply to the ScrollView's content container.
+   */
+  contentContainerStyle?: ViewStyle
+  /**
+   * Whether to show the vertical scroll indicator.
+   * @default false
+   */
+  showsVerticalScrollIndicator?: boolean
+  /**
+   * Additional ScrollView props (excludes style and contentContainerStyle which are handled separately).
+   */
+  scrollViewProps?: Omit<ScrollViewProps, 'style' | 'contentContainerStyle'>
+} & BaseScreenProps &
+  KeyboardAvoidingConfig
+
+/**
+ * Static screen variant that doesn't scroll.
+ * Useful for simple screens with fixed content or forms that need keyboard avoiding.
+ *
+ * @param props - The static screen properties
+ * @returns A non-scrollable screen component
+ */
+const Static = ({
+  children,
+  style,
+  keyboardAvoiding = false,
+  extraPadding = 0,
+  animated = true,
+}: StaticScreenProps): React.JSX.Element => {
+  const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
+
+  // No keyboard avoiding - use simple View
+  if (!keyboardAvoiding) {
+    return <View style={[styles.container, style]}>{children}</View>
+  }
+
+  // Keyboard avoiding with animation
+  if (animated) {
     return (
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}>
-        {content}
-      </ScrollView>
+      <Animated.View
+        style={[
+          styles.container,
+          style,
+          {
+            paddingBottom: Animated.add(animatedKeyboardHeight, extraPadding),
+          },
+        ]}>
+        {children}
+      </Animated.View>
     )
   }
-  return content as React.JSX.Element
-}
 
-/**
- * wrapWithKeyboardAvoidingView
- * Wraps content with KeyboardAvoidingView if enabled
- *
- * @param {React.ReactNode} content - Content to wrap
- * @param {boolean} scroll - Whether to enable scroll
- * @returns {React.JSX.Element} Wrapped content
- */
-const wrapWithKeyboardAvoidingView = (
-  content: React.ReactNode,
-  scroll: boolean,
-): React.JSX.Element => {
+  // Keyboard avoiding without animation
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.keyboardAvoidingView}>
-      {scroll ? (
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}>
-          {content}
-        </ScrollView>
-      ) : (
-        content
-      )}
-    </KeyboardAvoidingView>
-  )
-}
-
-/**
- * Screen
- * A reusable screen wrapper component that handles safe areas, scrolling,
- * keyboard avoidance, and consistent padding. Integrates with react-navigation
- * and uses unistyles for theming.
- *
- * @param {ScreenProps} props - Component props
- * @returns {React.JSX.Element} Rendered screen component
- */
-export const Screen = ({
-  children,
-  scroll = false,
-  testID,
-  gutterBottom = true,
-  gutterTop = true,
-  gutterHorizontal = true,
-  withBottomInset = true,
-  withTopInset = false,
-  keyboardAvoidingView = false,
-  backgroundColor = 'default',
-  style,
-  ...rest
-}: ScreenProps): React.JSX.Element => {
-  const {theme} = useUnistyles()
-  const insets = useSafeAreaInsets()
-
-  const containerStyle = useMemo(
-    (): ViewStyle[] => [
-      styles.container,
-      {
-        backgroundColor: theme.color.screen.background[backgroundColor],
-        paddingTop: calculatePaddingTop({
-          withTopInset,
-          gutterTop,
-          insetsTop: insets.top,
-          spacing: theme.size.spacing.md,
-        }),
-        paddingBottom: calculatePaddingBottom({
-          withBottomInset,
-          gutterBottom,
-          insetsBottom: insets.bottom,
-          spacing: theme.size.spacing.md,
-        }),
-        paddingHorizontal: gutterHorizontal ? theme.size.spacing.md : 0,
-      },
-      style,
-    ],
-    [
-      backgroundColor,
-      gutterBottom,
-      gutterHorizontal,
-      gutterTop,
-      insets.bottom,
-      insets.top,
-      style,
-      theme.color.screen.background,
-      theme.size.spacing.md,
-      withBottomInset,
-      withTopInset,
-    ],
-  )
-
-  const content = (
     <View
-      accessible={false}
-      testID={testID}
-      style={containerStyle}
-      {...rest}>
+      style={[
+        styles.container,
+        style,
+        {paddingBottom: keyboardHeight + extraPadding},
+      ]}>
       {children}
     </View>
   )
-
-  if (keyboardAvoidingView) {
-    return wrapWithKeyboardAvoidingView(content, scroll)
-  }
-
-  return wrapWithScroll(content, scroll)
 }
+
+/**
+ * Scrollable screen variant with ScrollView wrapper.
+ * Useful for screens with content that may exceed viewport height or need keyboard avoiding with scrolling.
+ *
+ * @param props - The scrollable screen properties
+ * @returns A scrollable screen component
+ */
+const Scrollable = ({
+  children,
+  style,
+  contentContainerStyle,
+  keyboardAvoiding = false,
+  extraPadding = 0,
+  animated = true,
+  showsVerticalScrollIndicator = false,
+  scrollViewProps,
+}: ScrollableScreenProps): React.JSX.Element => {
+  const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
+
+  // Calculate padding based on keyboard avoiding and animation settings
+  const paddingBottom = keyboardAvoiding
+    ? animated
+      ? Animated.add(animatedKeyboardHeight, extraPadding)
+      : keyboardHeight + extraPadding
+    : 0
+
+  // Use Animated.ScrollView when animation is enabled with keyboard avoiding
+  const Component =
+    animated && keyboardAvoiding ? Animated.ScrollView : ScrollView
+
+  return (
+    <Component
+      style={[styles.container, style]}
+      contentContainerStyle={[
+        styles.scrollContent,
+        contentContainerStyle,
+        {paddingBottom},
+      ]}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+      {...scrollViewProps}>
+      {children}
+    </Component>
+  )
+}
+
+/**
+ * Base screen component - simple wrapper with flex container.
+ * This is the default export when using `<Screen>` without a variant.
+ *
+ * @param props - The base screen properties
+ * @returns A basic screen wrapper component
+ */
+const BaseScreen = ({children, style}: BaseScreenProps): React.JSX.Element => {
+  return <View style={[styles.container, style]}>{children}</View>
+}
+
+/**
+ * A general Screen component to wrap each individual screen with three variants:
+ *
+ * - `<Screen>` - Basic wrapper with flex container
+ * - `<Screen.Static>` - Non-scrollable screen with optional keyboard avoiding
+ * - `<Screen.Scrollable>` - Scrollable screen with optional keyboard avoiding
+ *
+ * All variants support keyboard avoiding behavior that automatically adds padding
+ * when the keyboard appears, with optional animation. The keyboard height is
+ * automatically adjusted for safe area insets.
+ *
+ * @example Basic static screen
+ * ```tsx
+ * <Screen>
+ *   <Text>Simple static content</Text>
+ * </Screen>
+ * ```
+ *
+ * @example Static screen with keyboard avoiding
+ * ```tsx
+ * <Screen.Static keyboardAvoiding extraPadding={20}>
+ *   <TextInput placeholder="Email" />
+ *   <TextInput placeholder="Password" secureTextEntry />
+ *   <Button title="Login" />
+ * </Screen.Static>
+ * ```
+ *
+ * @example Scrollable screen without keyboard avoiding
+ * ```tsx
+ * <Screen.Scrollable>
+ *   <Text>Long article content...</Text>
+ *   <Text>More content...</Text>
+ * </Screen.Scrollable>
+ * ```
+ *
+ * @example Scrollable screen with keyboard avoiding
+ * ```tsx
+ * <Screen.Scrollable
+ *   keyboardAvoiding
+ *   extraPadding={20}
+ *   showsVerticalScrollIndicator
+ * >
+ *   <FlatList
+ *     data={comments}
+ *     renderItem={renderComment}
+ *     scrollEnabled={false} // Disable nested scroll
+ *   />
+ *   <TextInput
+ *     placeholder="Add a comment..."
+ *     multiline
+ *   />
+ * </Screen.Scrollable>
+ * ```
+ *
+ * @example Access keyboard state anywhere in the app
+ * ```tsx
+ * const { isKeyboardVisible, keyboardHeight } = useKeyboard();
+ *
+ * return (
+ *   <View>
+ *     <Text>Keyboard is {isKeyboardVisible ? 'visible' : 'hidden'}</Text>
+ *     <Text>Height: {keyboardHeight}px</Text>
+ *   </View>
+ * );
+ * ```
+ *
+ * @example Custom scroll view props
+ * ```tsx
+ * const scrollViewRef = React.useRef<ScrollView>(null);
+ *
+ * return (
+ *   <Screen.Scrollable
+ *     keyboardAvoiding
+ *     animated
+ *     scrollViewProps={{
+ *       ref: scrollViewRef,
+ *       onContentSizeChange: () => {
+ *         scrollViewRef.current?.scrollToEnd({ animated: true });
+ *       },
+ *     }}
+ *   >
+ *     {messages.map(renderMessage)}
+ *     <TextInput placeholder="Type a message..." />
+ *   </Screen.Scrollable>
+ * );
+ * ```
+ */
+export const Screen = Object.assign(BaseScreen, {
+  Static,
+  Scrollable,
+})
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  keyboardAvoidingView: {
     flex: 1,
   },
   scrollContent: {

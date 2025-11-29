@@ -3,7 +3,6 @@ import {
   initialWindowMetrics,
   SafeAreaProvider,
 } from 'react-native-safe-area-context'
-import {StyleSheet} from 'react-native-unistyles'
 
 import {QueryClientProvider} from '@tanstack/react-query'
 import {registerDevMenuItems} from 'expo-dev-menu'
@@ -17,49 +16,52 @@ import {linking} from './navigation/linking'
 
 import {Navigation} from '@/app/navigation'
 import {ApiProvider} from '@/shared/lib/api/Provider'
+import {KeyboardProvider} from '@/store/context/KeyboardContext'
 import {ToastProvider} from '@/store/context/ToastContext'
 
 SplashScreen.preventAutoHideAsync()
 
 /**
  * App
- * TODO: describe what it does.
+ * Root entry of the app.
  *
- * @returns {*} describe return value
+ * @returns {Element} The App root
  */
 export const App = (): React.JSX.Element => {
   return (
     <QueryClientProvider client={queryClient}>
       <ApiProvider>
         <SafeAreaProvider
-          style={styles.appContainer}
+          // style={styles.appContainer}
           initialMetrics={initialWindowMetrics}>
-          <ToastProvider>
-            <Init />
-            <Navigation
-              linking={linking}
-              onReady={() => {
-                SplashScreen.hideAsync()
-              }}
-            />
-          </ToastProvider>
+          <KeyboardProvider>
+            <ToastProvider>
+              <Init />
+              <Navigation
+                linking={linking}
+                onReady={() => {
+                  SplashScreen.hideAsync()
+                }}
+              />
+            </ToastProvider>
+          </KeyboardProvider>
         </SafeAreaProvider>
       </ApiProvider>
     </QueryClientProvider>
   )
 }
 
-const styles = StyleSheet.create(({color}) => ({
-  appContainer: {
-    backgroundColor: color.screen.background.default,
-  },
-}))
+// const styles = StyleSheet.create(({color}) => ({
+//   appContainer: {
+//     backgroundColor: color.screen.background.default,
+//   },
+// }))
 
 /**
  * StoryBookWrapper
- * TODO: describe what it does.
+ * In __DEV__ we can access Storybook on device through DevMenu. This wrapper processes the switching between App and Storybook.
  *
- * @returns {*} describe return value
+ * @returns {Element} Either the App root, or StorybookUI
  */
 export const StoryBookSwitch = (): React.JSX.Element => {
   const [isStorybook, setIsStorybook] = React.useState(false)
