@@ -1,0 +1,226 @@
+name: PR Review Rework
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  id-token: write
+  actions: read
+
+jobs:
+  process-review:
+    # Only run if the review has comments or requests changes
+    if: |
+      github.event.review.state == 'changes_requested' ||
+      github.event.review.state == 'commented' ||
+      github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug - Show review info
+        run: |
+          echo "=== Review Information ==="
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          echo "PR Branch: ${{ github.event.pull_request.head.ref }}"
+          echo "Review State: ${{ github.event.review.state }}"
+          echo "Reviewer: ${{ github.event.review.user.login }}"
+          echo "Review Body: ${{ github.event.review.body }}"
+          echo "========================="
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check for review comments
+        id: check-comments
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Fetch review comments count
+          REVIEW_COMMENTS_COUNT=$(gh api \
+            repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews/${{ github.event.review.id }}/comments \
+            --jq 'length')
+
+          echo "Review comments count: $REVIEW_COMMENTS_COUNT"
+          echo "count=$REVIEW_COMMENTS_COUNT" >> $GITHUB_OUTPUT
+
+          # Also check for general PR comments
+          PR_COMMENTS=$(gh pr view ${{ github.event.pull_request.number }} --json comments --jq '.comments | length')
+          echo "Total PR comments: $PR_COMMENTS"
+
+      - name: Run Claude to Process Review
+        if: steps.check-comments.outputs.count > 0 || github.event.review.body != ''
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
+          claude_args: "--allowedTools 'Edit,MultiEdit,Write,Read,Glob,Grep,LS,Bash(git:*),Bash(npm:*),Bash(npx:*),Bash(gh:*)'"
+          prompt: |
+            # PR Review Response Task
+
+            **PR Number:** ${{ github.event.pull_request.number }}
+            **PR Branch:** ${{ github.event.pull_request.head.ref }}
+            **Review State:** ${{ github.event.review.state }}
+            **Reviewer:** ${{ github.event.review.user.login }}
+
+            ## Your Task
+
+            A code review has been submitted for this PR. You need to:
+
+            1. **Fetch all review comments** from the latest review
+            2. **Process each comment systematically**
+            3. **Make necessary changes** based on the feedback
+            4. **Reply to EVERY comment** with your resolution
+
+            ## Step 1: Fetch Review Comments
+
+            Fetch all comments from this review:
+            ```bash
+            gh api repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews/${{ github.event.review.id }}/comments
+            ```
+
+            Also check the main review body:
+            ```bash
+            gh pr view ${{ github.event.pull_request.number }} --json reviews
+            ```
+
+            ## Step 2: Create a Todo List
+
+            Create a todo list with one item for EACH review comment that needs to be addressed.
+
+            ## Step 3: Process Each Comment
+
+            For EACH comment:
+
+            ### 3a. Analyze the Comment
+            - Read the file and line the comment refers to
+            - Understand what change is being requested
+            - Determine if it's a valid change or needs discussion
+
+            ### 3b. Make Changes (if needed)
+            - If the comment requests a code change, implement it
+            - Follow the project guidelines in CLAUDE.md
+            - Ensure changes pass validation (lint, typecheck)
+            - Commit each logical change with a descriptive message
+
+            ### 3c. Reply to the Comment
+            **CRITICAL:** You MUST reply to EVERY comment, even if no change was made.
+
+            Reply formats:
+            - **If you made a change:** "✅ Fixed in [commit hash]. [Brief explanation of what you changed]"
+            - **If no change needed:** "✅ Acknowledged. [Brief explanation why no change was needed or clarification]"
+            - **If you need clarification:** "❓ I need more information: [specific question]"
+
+            To reply to a review comment:
+            ```bash
+            gh api \
+              --method POST \
+              repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/comments/$COMMENT_ID/replies \
+              -f body="✅ Your resolution message here"
+            ```
+
+            ## Step 4: Handle General Review Body
+
+            If the review has a general comment (not tied to specific lines), reply to it:
+            ```bash
+            gh pr comment ${{ github.event.pull_request.number }} \
+              --body "## Review Response
+
+            [Your response to the general review comments]
+
+            **Summary of changes:**
+            - [List of changes made]
+            "
+            ```
+
+            ## Step 5: Commit and Push
+
+            After making all changes:
+            ```bash
+            git add .
+            git commit -m "Address review feedback from @${{ github.event.review.user.login }}
+
+            - [List key changes made]
+
+            🤖 Automated response to code review"
+            git push origin ${{ github.event.pull_request.head.ref }}
+            ```
+
+            ## Step 6: Final Summary
+
+            Post a summary comment on the PR:
+            ```bash
+            gh pr comment ${{ github.event.pull_request.number }} \
+              --body "## ✅ Review Feedback Processed
+
+            I've processed all review comments from @${{ github.event.review.user.login }}.
+
+            **Changes made:** [number] files updated
+            **Comments resolved:** [number] comments
+
+            All comments have been addressed and replied to individually.
+            "
+            ```
+
+            ## Important Notes
+
+            - **ALWAYS reply to EVERY comment** - this is critical for tracking
+            - **Be respectful and professional** in your replies
+            - **If a comment is unclear**, ask for clarification rather than guessing
+            - **Validate your changes** with `npm run validate` before committing
+            - **Keep commits focused** - one logical change per commit
+            - **If changes conflict with each other**, ask for clarification
+
+            ## Review State Context
+
+            The review state is: **${{ github.event.review.state }}**
+            ${{ github.event.review.state == 'changes_requested' && '- This means the reviewer is requesting changes before approval' || '' }}
+            ${{ github.event.review.state == 'approved' && '- This means the reviewer approved, but may have optional suggestions' || '' }}
+            ${{ github.event.review.state == 'commented' && '- This means the reviewer left comments without explicit approval/rejection' || '' }}
+
+            Review body:
+            ```
+            ${{ github.event.review.body }}
+            ```
+
+            Now proceed with processing the review systematically!
+
+      - name: Debug - Show git state after
+        if: always()
+        run: |
+          echo "=== Git State After ==="
+          git log --oneline -5
+          git status
+          echo "======================="
+
+      - name: Notify on completion
+        if: success()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Review processing completed successfully"
+          gh pr view ${{ github.event.pull_request.number }} --json number,title,url
+
+      - name: Add workflow summary
+        if: always()
+        run: |
+          echo "## PR Review Processing Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **PR #${{ github.event.pull_request.number }}**" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** \`${{ github.event.pull_request.head.ref }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Review State:** ${{ github.event.review.state }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Reviewer:** @${{ github.event.review.user.login }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Comments Count:** ${{ steps.check-comments.outputs.count }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
