@@ -15,9 +15,9 @@ import {queryClient} from './init/queryclient'
 import {linking} from './navigation/linking'
 
 import {Navigation} from '@/app/navigation'
+import {KeyboardProvider} from '@/shared/context/KeyboardContext'
+import {ToastProvider} from '@/shared/context/ToastContext'
 import {ApiProvider} from '@/shared/lib/api/Provider'
-import {KeyboardProvider} from '@/store/context/KeyboardContext'
-import {ToastProvider} from '@/store/context/ToastContext'
 
 SplashScreen.preventAutoHideAsync()
 

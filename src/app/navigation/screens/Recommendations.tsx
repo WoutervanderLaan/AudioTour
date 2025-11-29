@@ -5,8 +5,8 @@ import {StyleSheet} from 'react-native-unistyles'
 import {Text} from '@react-navigation/elements'
 
 import {ToastType} from '@/shared/components/features/toast/Toast'
+import {useToast} from '@/shared/context/ToastContext'
 import {useApi} from '@/shared/lib/api/useApi'
-import {useToast} from '@/store/context/ToastContext'
 import {useMuseumStore} from '@/store/slices/museumStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 

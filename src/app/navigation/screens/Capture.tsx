@@ -16,7 +16,6 @@ import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Label} from '@/shared/components/ui/typography'
 import {useApi} from '@/shared/lib/api/useApi'
-import {useKeyboard} from '@/store/context/KeyboardContext'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
@@ -95,13 +94,6 @@ export const Capture = (): React.JSX.Element => {
       setLocalError('Error uploading photo')
     },
   })
-
-  const {isKeyboardVisible, animatedKeyboardHeight, keyboardHeight} =
-    useKeyboard()
-
-  console.log('isKeyboardVisible', isKeyboardVisible)
-  console.log('animatedKeyboardHeight', animatedKeyboardHeight)
-  console.log('keyboardHeight', keyboardHeight)
 
   /**
    * upload
