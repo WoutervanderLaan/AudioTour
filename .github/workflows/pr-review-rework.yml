@@ -14,12 +14,34 @@ permissions:
 jobs:
   process-review:
     # Only run if the review has comments or requests changes
+    # AND prevent infinite loops by excluding bot reviews
     if: |
-      github.event.review.state == 'changes_requested' ||
-      github.event.review.state == 'commented' ||
-      github.event.review.state == 'approved'
+      (github.event.review.state == 'changes_requested' ||
+       github.event.review.state == 'commented' ||
+       github.event.review.state == 'approved') &&
+      github.event.review.user.login != 'github-actions[bot]' &&
+      github.event.review.user.type != 'Bot'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
+      - name: Check branch protection
+        run: |
+          BRANCH="${{ github.event.pull_request.head.ref }}"
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+
+          echo "=== Branch Protection Check ==="
+          echo "PR Branch: $BRANCH"
+          echo "Base Branch: $BASE_BRANCH"
+
+          # Prevent workflow from modifying protected branches
+          if [[ "$BRANCH" == "main" ]] || [[ "$BRANCH" == "master" ]] || [[ "$BRANCH" == "$BASE_BRANCH" ]]; then
+            echo "❌ ERROR: Cannot run automated rework on protected branch '$BRANCH'"
+            echo "This workflow only processes feature branches, not main/master"
+            exit 1
+          fi
+
+          echo "✅ Branch protection check passed"
+          echo "=============================="
       - name: Debug - Show review info
         run: |
           echo "=== Review Information ==="
@@ -62,10 +84,12 @@ jobs:
       - name: Run Claude to Process Review
         if: steps.check-comments.outputs.count > 0 || github.event.review.body != ''
         uses: anthropics/claude-code-action@v1
+        timeout-minutes: 25
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           show_full_output: true
-          claude_args: "--allowedTools 'Edit,MultiEdit,Write,Read,Glob,Grep,LS,Bash(git:*),Bash(npm:*),Bash(npx:*),Bash(gh:*)'"
+          # Restrict to minimum necessary commands for security
+          claude_args: "--allowedTools 'Edit,MultiEdit,Write,Read,Glob,Grep,Bash(git status),Bash(git add:*),Bash(git commit:*),Bash(git push:*),Bash(git log:*),Bash(git diff:*),Bash(npm run validate),Bash(npm test),Bash(gh api:*),Bash(gh pr view:*),Bash(gh pr comment:*)'"
           prompt: |
             # PR Review Response Task
 
@@ -144,9 +168,24 @@ jobs:
             "
             ```
 
-            ## Step 5: Commit and Push
+            ## Step 5: Validate Changes
 
-            After making all changes:
+            **CRITICAL: You MUST validate ALL changes before committing.**
+
+            Run validation to ensure code quality:
+            ```bash
+            npm run validate
+            ```
+
+            If validation fails:
+            - Fix all lint errors
+            - Fix all type errors
+            - Fix all formatting issues
+            - DO NOT commit until validation passes
+
+            ## Step 6: Commit and Push
+
+            **ONLY after validation passes**, commit and push:
             ```bash
             git add .
             git commit -m "Address review feedback from @${{ github.event.review.user.login }}
@@ -157,7 +196,9 @@ jobs:
             git push origin ${{ github.event.pull_request.head.ref }}
             ```
 
-            ## Step 6: Final Summary
+            **IMPORTANT:** Never push to main/master branches. You are on branch: ${{ github.event.pull_request.head.ref }}
+
+            ## Step 7: Final Summary
 
             Post a summary comment on the PR:
             ```bash
