@@ -43,8 +43,8 @@ export const Button = ({
   <PressableBase
     disabled={disabled}
     style={({pressed}) => [
-      styles[variant]({pressed, disabled: !!disabled}),
       styles.base,
+      styles[variant]({pressed, disabled: !!disabled}),
     ]}
     {...rest}>
     <Label color={variant === 'primary' ? 'inverse' : 'default'}>{label}</Label>

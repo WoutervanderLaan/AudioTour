@@ -41,12 +41,12 @@ An AI-powered React Native app that generates dynamic audio tours based on museu
 
 ### Core Stack
 
-- **Framework**: React Native 0.81 with Expo 54
+- **Framework**: React Native 0.81.5 with Expo 54, React 19.1.0
 - **Navigation**: React Navigation 7 with static navigation config (bottom tabs + native stack)
-- **State Management**: Zustand for global state, React Context for providers
+- **State Management**: Zustand v5 for global state, React Context for UI state providers
 - **Data Fetching**: TanStack Query (React Query) v5
 - **Styling**: react-native-unistyles v3 (custom theme system with tokens)
-- **Forms**: react-hook-form with Zod validation
+- **Forms**: react-hook-form v7 with Zod validation
 - **Testing**: Jest with jest-expo preset
 - **API Mocking**: MSW (Mock Service Worker) v2
 
@@ -57,19 +57,21 @@ The codebase follows a strict feature-based architecture enforced by ESLint boun
 ```
 src/
 ├── app/              # App-wide setup: providers, navigation, initialization
+│   └── init/        # App initialization logic
 ├── shared/           # Reusable, generic components and utilities
 │   ├── components/
-│   │   ├── ui/      # Generic UI components (Button, Input, etc.)
-│   │   └── features/ # Complex reusable features (AudioPlayer, Toast, etc.)
-│   ├── lib/         # API clients, helpers, utilities
+│   │   ├── ui/      # Generic UI components
+│   │   └── features/ # Complex reusable features
+│   ├── context/     # React Context providers
+│   ├── hooks/       # Shared custom hooks
+│   ├── lib/         # API clients, helpers, utilities, constants
 │   └── types/       # Global TypeScript types
 ├── features/        # Self-contained feature modules
 │   ├── auth/        # Authentication feature
 │   ├── user/        # User management feature
-│   └── capture/     # Photo capture feature
-├── store/           # Global state management
-│   ├── context/     # React Context providers
-│   ├── slices/      # Zustand store slices
+│   └── capture/     # Photo capture feature (includes schemas/)
+├── store/           # Global Zustand state management
+│
 │   └── middleware/  # Store middleware
 └── themes/          # Theme configuration and tokens
     └── tokens/      # Individual theme tokens
@@ -82,7 +84,7 @@ src/
 - **shared/** can import from: themes only
 - **store/** can import from: shared only
 - Use absolute imports with `@/*` alias (never use `../` parent imports)
-- Use `StyleSheet` from `react-native-unistyles`, never from `react-native`
+- Always use `StyleSheet` from `react-native-unistyles`, never from `react-native`
 
 ### API Integration
 

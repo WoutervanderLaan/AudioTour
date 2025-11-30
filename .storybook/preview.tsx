@@ -6,7 +6,6 @@ import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {INITIAL_VIEWPORTS} from 'storybook/viewport'
 import {color} from '../src/themes/tokens/color'
 import {View} from 'react-native'
-import {background} from 'storybook/theming'
 
 StyleSheet.configure({
   settings: {
@@ -22,11 +21,12 @@ const MainDecorator = (Story: FC) => {
     <SafeAreaProvider>
       <View
         style={{
-          backgroundColor: theme.color.screen.background.default,
           flex: 1,
-          padding: 20,
+          padding: theme.size.lg,
+          minHeight: theme.size.xxl,
           justifyContent: 'center',
           alignItems: 'center',
+          position: 'relative',
         }}>
         <Story />
       </View>
@@ -74,10 +74,9 @@ const preview: Preview = {
     },
     viewport: {
       options: INITIAL_VIEWPORTS,
-      // defaultViewport: 'iphone13',
     },
     initialGlobals: {
-      viewport: {value: 'iphone13', isRotated: false},
+      viewport: {value: 'iphonex', isRotated: false},
     },
   },
 }

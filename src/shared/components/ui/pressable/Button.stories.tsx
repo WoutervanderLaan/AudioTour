@@ -3,8 +3,6 @@ import {View} from 'react-native'
 
 import {Button} from './Button'
 
-import {Label} from '@/shared/components/ui/typography/Label'
-
 const meta = {
   title: 'Pressable/Button',
   component: Button,

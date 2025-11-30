@@ -1,15 +1,19 @@
 ### Folder Structure
 
 - **src/**
-  - **app/** – app-wide setup: providers, routing, config
-  - **shared/** – reusable, generic things
-    - **components/** – buttons, inputs, icons
-      - **ui/** – buttons, inputs, icons
-      - **features/** – map, audioplayer, toast
-    - **lib/** – helpers, utils, API clients
+  - **app/** – app-wide setup: providers, navigation, initialization
+    - **init/** – app initialization logic
+    - **navigation/** – navigation configuration and screens
+  - **shared/** – reusable, generic components and utilities
+    - **components/**
+      - **ui/** – generic UI components (Pressable, Typography, Form, Layout, Screen)
+      - **features/** – complex reusable features (AudioPlayer, Toast)
+    - **context/** – React Context providers (Keyboard, Toast)
+    - **hooks/** – shared custom hooks
+    - **lib/** – API clients, helpers, utilities, constants
     - **types/** – global TypeScript types
 
-  - **features/** – each feature gets its own self-contained folder
+  - **features/** – self-contained feature modules
     - **auth/**
       - components/
       - hooks/
@@ -22,9 +26,14 @@
       - services/
       - types/
       - index.ts
-  - **store/** – app wide store and context, and middleware configuration
-    - context/
+    - **capture/** – photo capture feature
+      - components/
+      - schemas/
+      - hooks/
+      - types/
+      - index.ts
+  - **store/** – global Zustand state management
     - slices/
     - middleware/
-  - **themes/** – app wide themes and styling configuration
-    - **tokens/** - individual theme and styling tokens
+  - **themes/** – theme configuration and tokens
+    - **tokens/** - individual theme tokens

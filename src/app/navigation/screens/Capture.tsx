@@ -11,7 +11,9 @@ import {useShallow} from 'zustand/react/shallow'
 
 import {ObjectForm, objectSchema} from '@/features/capture/schemas/schema'
 import {RHFTextArea, RHFTextInput} from '@/shared/components/ui/form/FormInputs'
+import {Box} from '@/shared/components/ui/layout/Box'
 import {Button} from '@/shared/components/ui/pressable'
+import {Screen} from '@/shared/components/ui/screen'
 import {Label} from '@/shared/components/ui/typography'
 import {useApi} from '@/shared/lib/api/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
@@ -114,74 +116,71 @@ export const Capture = (): React.JSX.Element => {
   }
 
   return (
-    <View style={styles.container}>
-      <Label>{sessionId}</Label>
-
-      <Button
-        onPress={pickImage}
-        label="Take Photo"
-      />
-      {!!imageUri && (
-        <Image
-          source={{uri: imageUri}}
-          style={styles.preview}
-        />
-      )}
-
-      <Button
-        onPress={upload}
-        disabled={!imageUri || uploadPhoto.isPending}
-        label="Upload & Identify"
-      />
-
-      {!!uploadPhoto.isPending && <ActivityIndicator />}
-      {!!localError && <Label>{localError}</Label>}
-
-      <View style={{width: '100%'}}>
-        <RHFTextInput
-          control={control}
-          name="name"
-          label="Name"
-          placeholder="Enter name of the object"
-        />
-        <RHFTextInput
-          control={control}
-          name="artist"
-          label="Artist"
-          placeholder="Enter artist name"
-        />
-        <RHFTextArea
-          control={control}
-          name="description"
-          label="Description"
-          placeholder="Enter description"
-        />
-        <RHFTextInput
-          control={control}
-          name="year"
-          keyboardType="numeric"
-          label="Year"
-          placeholder="Enter year"
-        />
+    <Screen.Scrollable keyboardAvoiding>
+      <Box
+        flex={1}
+        paddingH="md"
+        center>
+        <Label>{sessionId}</Label>
 
         <Button
-          onPress={handleSubmit(onSubmit)}
-          label="Submit"
+          onPress={pickImage}
+          label="Take Photo"
         />
-      </View>
-    </View>
+        {!!imageUri && (
+          <Image
+            source={{uri: imageUri}}
+            style={styles.preview}
+          />
+        )}
+
+        <Button
+          onPress={upload}
+          disabled={!imageUri || uploadPhoto.isPending}
+          label="Upload & Identify"
+        />
+
+        {!!uploadPhoto.isPending && <ActivityIndicator />}
+        {!!localError && <Label>{localError}</Label>}
+
+        <View style={{width: '100%'}}>
+          <RHFTextInput
+            control={control}
+            name="name"
+            label="Name"
+            placeholder="Enter name of the object"
+          />
+          <RHFTextInput
+            control={control}
+            name="artist"
+            label="Artist"
+            placeholder="Enter artist name"
+          />
+          <RHFTextArea
+            control={control}
+            name="description"
+            label="Description"
+            placeholder="Enter description"
+          />
+          <RHFTextInput
+            control={control}
+            name="year"
+            keyboardType="numeric"
+            label="Year"
+            placeholder="Enter year"
+          />
+
+          <Button
+            onPress={handleSubmit(onSubmit)}
+            label="Submit"
+          />
+        </View>
+      </Box>
+    </Screen.Scrollable>
   )
 }
 
-const styles = StyleSheet.create(({color}) => ({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10,
-    padding: 16,
-    backgroundColor: color.screen.background.default,
-  },
+const styles = StyleSheet.create(() => ({
   preview: {
     width: 200,
     height: 200,

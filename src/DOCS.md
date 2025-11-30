@@ -1,19 +1,24 @@
 # Source Directory (`src`)
 
-This directory contains the core source files for the project. It is structured into multiple subfolders, each responsible for a specific part of the application's functionality:
+This directory contains the core source files for the project. It follows a strict feature-based architecture enforced by ESLint boundaries plugin.
 
 ## Subdirectories
 
-- **[app](./app)**: This folder contains application-level configuration and initialization files, including navigation, entry points, and app setup.
-- **[features](./features)**: A collection of self-contained modules representing specific features or functionalities of the app.
-- **[shared](./shared)**: Shared utilities, components, and resources that are reused across the application.
-- **[store](./store)**: Contains files related to global state management, including slices, middleware, and other Redux-based logic.
-- **[themes](./themes)**: Manages styles, tokens, and theming configurations for the app.
+- **[app](./app)**: Application-level configuration, initialization, and navigation setup. Includes providers, navigation config, and app entry points.
+- **[features](./features)**: Self-contained feature modules (auth, user, capture). Each feature has its own components, hooks, services, and types.
+- **[shared](./shared)**: Reusable components, utilities, hooks, and resources shared across the application. Includes UI components, context providers, and library utilities.
+- **[store](./store)**: Global Zustand state management with slices and middleware.
+- **[themes](./themes)**: Theme configuration, styling tokens, and unistyles setup.
+
+## Import Rules
+
+- **app/** can import from: shared, features, store, themes
+- **features/** can import from: shared, store only
+- **shared/** can import from: themes only
+- **store/** can import from: shared only
+
+Use absolute imports with `@/*` alias (never use `../` parent imports).
 
 ## Additional Files
 
-- `types.d.ts`: TypeScript definitions used throughout the source files.
-
----
-
-Be sure to include documentation for new subdirectories as the project evolves.
+- `types.d.ts`: Global TypeScript definitions used throughout the source files.

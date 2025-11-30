@@ -15,11 +15,11 @@ The codebase should remain clean, modular, explainable, and well-tested.
 ## 2. Architecture Overview
 
 - `/src` – entry for all source files
-  - `/app` – global app entry and configuration
-  - `/shared` – globally shared elements like components, types, utilities
+  - `/app` – global app entry, initialization, and navigation configuration
+  - `/shared` – globally shared elements like components, types, utilities, and React Context providers
   - `/features` – separate features and scoped elements
-  - `/store` – shared context, store and middleware configuration
-  - `/themes` – theme and app styling
+  - `/store` – global Zustand state management with slices and middleware
+  - `/themes` – theme tokens and styling configuration (react-native-unistyles)
 - `/handbook` – project documentation
 
 For a detailed overview of the folder structure, consult the handbook: [Folder Structure](./handbook/folder_structure.md)
@@ -43,7 +43,7 @@ Include:
 
 ### Folder documentation
 
-Every folder **must include a `.md` file** documenting its purpose and individual module responsibilities.
+Every folder **must include a DOCS.md file** documenting its purpose and individual module responsibilities.
 
 ### ESLint
 
