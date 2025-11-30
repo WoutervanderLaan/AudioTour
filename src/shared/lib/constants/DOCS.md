@@ -1,3 +1,14 @@
 # src/shared/lib/constants
 
-TODO: Explain the purpose and structure of this folder.
+App-wide constants and configuration values.
+
+## Purpose
+
+Centralizes constant values used throughout the application, such as:
+
+- Configuration values
+- Magic numbers
+- Default values
+- App-wide settings
+
+Keeps constants in one place for easy maintenance and consistency.

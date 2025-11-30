@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react'
+import React, {ReactNode, useMemo} from 'react'
 import {
   Animated,
   ScrollView,
@@ -87,6 +87,12 @@ const Static = ({
 }: StaticScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
 
+  // Memoize the animated padding to avoid recreating on every render
+  const animatedPaddingBottom = useMemo(
+    () => Animated.add(animatedKeyboardHeight, extraPadding),
+    [animatedKeyboardHeight, extraPadding],
+  )
+
   // No keyboard avoiding - use simple View
   if (!keyboardAvoiding) {
     return <View style={[styles.container, style]}>{children}</View>
@@ -100,7 +106,7 @@ const Static = ({
           styles.container,
           style,
           {
-            paddingBottom: Animated.add(animatedKeyboardHeight, extraPadding),
+            paddingBottom: animatedPaddingBottom,
           },
         ]}>
         {children}
@@ -141,11 +147,19 @@ const Scrollable = ({
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
 
   // Calculate padding based on keyboard avoiding and animation settings
-  const paddingBottom = keyboardAvoiding
-    ? animated
-      ? Animated.add(animatedKeyboardHeight, extraPadding)
-      : keyboardHeight + extraPadding
-    : 0
+  const paddingBottom = useMemo(() => {
+    if (!keyboardAvoiding) return 0
+    if (animated) {
+      return Animated.add(animatedKeyboardHeight, extraPadding)
+    }
+    return keyboardHeight + extraPadding
+  }, [
+    keyboardAvoiding,
+    animated,
+    animatedKeyboardHeight,
+    extraPadding,
+    keyboardHeight,
+  ])
 
   // Use Animated.ScrollView when animation is enabled with keyboard avoiding
   const Component =
