@@ -36,8 +36,7 @@ export const handlers = [
       data: [],
     })
   }),
-  http.get(createHandler('/recommendations'), ({params}) => {
-    console.log('PARAMS', params)
+  http.get(createHandler('/recommendations'), () => {
     return HttpResponse.json({
       data: [],
     })

@@ -86,7 +86,10 @@ async function handleResponse<T>(res: Response): Promise<T> {
 
   if (isJson) {
     const payload = await res.json()
-    console.log(payload)
+    if (isJson) {
+      const payload = await res.json()
+      return payload as T
+    }
     return payload as T
   }
 
@@ -134,7 +137,6 @@ export class ApiClient {
     const photo = await fetch(params.uri)
     const photoBlob = await photo.blob()
 
-    form.append('photos', photoBlob, 'photo.jpg')
     form.append('photos', photoBlob, 'photo.jpg')
 
     const url = new URL(this._url('/process-artwork'))

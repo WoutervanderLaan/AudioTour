@@ -26,6 +26,8 @@ export const KeyboardProvider = ({
   const isMountedRef = useRef(true)
 
   useEffect(() => {
+    isMountedRef.current = true
+
     const showEvent =
       Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow'
     const hideEvent =

@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react'
+import React, {useCallback, useEffect, useMemo, useState} from 'react'
 
 import * as Crypto from 'expo-crypto'
 
@@ -38,9 +38,25 @@ export const ToastProvider = ({
     )
   }, [])
 
+  const closeToast = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+    setToast(null)
+  }, [])
+
+  useEffect(() => {
+    return (): void => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   const value = useMemo(
-    () => ({showToast, closeToast: (): void => setToast(null)}),
-    [showToast, setToast],
+    () => ({showToast, closeToast}),
+    [showToast, closeToast],
   )
 
   return (

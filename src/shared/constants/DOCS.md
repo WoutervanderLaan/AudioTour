@@ -1,4 +1,4 @@
-# src/shared/lib/constants
+# src/shared/constants
 
 App-wide constants and configuration values.
 

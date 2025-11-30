@@ -1,4 +1,4 @@
-# src/shared/lib/utils
+# src/shared/utils
 
 General utility functions and helpers.
 

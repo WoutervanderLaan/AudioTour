@@ -15,6 +15,6 @@ import {ApiContext} from '@/shared/context/api/ApiContext'
  */
 export function useApi(): ApiClient {
   const ctx = useContext(ApiContext)
-  if (!ctx) throw new Error('useApi must be used within AppProvider')
+  if (!ctx) throw new Error('useApi must be used within ApiProvider')
   return ctx
 }

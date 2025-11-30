@@ -327,7 +327,7 @@ export const KNOWN_MUSEUMS: MuseumLocation[] = [
   },
 
   {
-    id: 'museum-de-orde',
+    id: 'museum-de-lakenhal',
     name: 'Museum De Lakenhal (Leiden)',
     province: 'South Holland',
     coords: {latitude: 52.158333, longitude: 4.493333},
