@@ -62,14 +62,13 @@ export const KeyboardProvider = ({
   const [keyboardHeight, setKeyboardHeight] = useState(0)
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false)
   const animatedKeyboardHeight = useRef(new Animated.Value(0)).current
+  const isMountedRef = useRef(true)
 
   useEffect(() => {
     const showEvent =
       Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow'
     const hideEvent =
       Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide'
-
-    let isMounted = true
 
     /**
      * Handles keyboard show events.
@@ -78,7 +77,7 @@ export const KeyboardProvider = ({
      * @param event - The keyboard event containing height and duration info
      */
     const onKeyboardShow = (event: KeyboardEvent): void => {
-      if (!isMounted) return
+      if (isMountedRef.current === false) return
 
       const height = event.endCoordinates.height - insets.bottom
       setKeyboardHeight(height)
@@ -98,7 +97,7 @@ export const KeyboardProvider = ({
      * @param event - The keyboard event containing duration info
      */
     const onKeyboardHide = (event: KeyboardEvent): void => {
-      if (!isMounted) return
+      if (isMountedRef.current === false) return
 
       setKeyboardHeight(0)
       setIsKeyboardVisible(false)
@@ -114,7 +113,7 @@ export const KeyboardProvider = ({
     const hideSubscription = Keyboard.addListener(hideEvent, onKeyboardHide)
 
     return (): void => {
-      isMounted = false
+      isMountedRef.current = false
       showSubscription.remove()
       hideSubscription.remove()
     }

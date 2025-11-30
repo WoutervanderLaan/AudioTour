@@ -17,7 +17,7 @@ The `Screen` component is a flexible wrapper for all screen content in the appli
 
 ## Architecture
 
-The Screen component integrates with the global `KeyboardContext` ([KeyboardContext.tsx](src/store/context/KeyboardContext.tsx)) to track keyboard state. The context provides:
+The Screen component integrates with the global `KeyboardContext` ([KeyboardContext.tsx](src/shared/context/KeyboardContext.tsx)) to track keyboard state. The context provides:
 
 - `isKeyboardVisible`: Boolean indicating keyboard visibility
 - `keyboardHeight`: Numeric keyboard height (adjusted for safe area insets)
