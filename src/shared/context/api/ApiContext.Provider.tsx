@@ -1,8 +1,7 @@
-import React, {createContext, useMemo} from 'react'
+import React, {useMemo} from 'react'
 
-import {ApiClient} from '@/shared/lib/api/client'
-
-export const ApiContext = createContext<ApiClient | undefined>(undefined)
+import {ApiClient} from '@/shared/api/client'
+import {ApiContext} from '@/shared/context/api/ApiContext'
 
 /**
  * React Context Provider that initializes and provides the ApiClient instance.
@@ -13,7 +12,6 @@ export const ApiContext = createContext<ApiClient | undefined>(undefined)
  *
  * Components can access the ApiClient using the useApi() hook.
  *
- * @param {object} props - Component props
  * @param {React.ReactNode} props.children - Child components that will have access to the API client
  * @returns {React.JSX.Element} Provider component wrapping children with ApiContext
  */

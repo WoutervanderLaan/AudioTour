@@ -1,4 +1,4 @@
-import {ApiConfig} from '@/shared/lib/api/config'
+import {ApiConfig} from '@/shared/api/config'
 
 /**
  * Represents an error response from the API with status code and error details.

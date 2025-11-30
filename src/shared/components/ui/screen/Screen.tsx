@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {useKeyboard} from '@/shared/context/KeyboardContext'
+import {useKeyboard} from '@/shared/hooks/useKeyboard'
 
 /**
  * Base props shared by all Screen variants.

@@ -7,7 +7,7 @@ import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
-import {useApi} from '@/shared/lib/api/useApi'
+import {useApi} from '@/shared/hooks/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 
 /**

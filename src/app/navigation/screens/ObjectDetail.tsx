@@ -7,7 +7,7 @@ import {StaticScreenProps} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
-import {useApi} from '@/shared/lib/api/useApi'
+import {useApi} from '@/shared/hooks/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 

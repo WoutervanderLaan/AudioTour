@@ -1,7 +1,7 @@
 import {useContext} from 'react'
 
-import type {ApiClient} from '@/shared/lib/api/client'
-import {ApiContext} from '@/shared/lib/api/Provider'
+import {ApiClient} from '@/shared/api/client'
+import {ApiContext} from '@/shared/context/api/ApiContext'
 
 /**
  * Custom React hook to access the ApiClient instance from context.

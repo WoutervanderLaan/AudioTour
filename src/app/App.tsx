@@ -15,9 +15,9 @@ import {queryClient} from './init/queryclient'
 import {linking} from './navigation/linking'
 
 import {Navigation} from '@/app/navigation'
-import {KeyboardProvider} from '@/shared/context/KeyboardContext'
-import {ToastProvider} from '@/shared/context/ToastContext'
-import {ApiProvider} from '@/shared/lib/api/Provider'
+import {ApiProvider} from '@/shared/context/api/ApiContext.Provider'
+import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
+import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -31,9 +31,7 @@ export const App = (): React.JSX.Element => {
   return (
     <QueryClientProvider client={queryClient}>
       <ApiProvider>
-        <SafeAreaProvider
-          // style={styles.appContainer}
-          initialMetrics={initialWindowMetrics}>
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <KeyboardProvider>
             <ToastProvider>
               <Init />
@@ -50,12 +48,6 @@ export const App = (): React.JSX.Element => {
     </QueryClientProvider>
   )
 }
-
-// const styles = StyleSheet.create(({color}) => ({
-//   appContainer: {
-//     backgroundColor: color.screen.background.default,
-//   },
-// }))
 
 /**
  * StoryBookWrapper

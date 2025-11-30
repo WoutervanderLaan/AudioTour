@@ -15,7 +15,7 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Label} from '@/shared/components/ui/typography'
-import {useApi} from '@/shared/lib/api/useApi'
+import {useApi} from '@/shared/hooks/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 

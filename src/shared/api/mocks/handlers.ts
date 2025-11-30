@@ -1,6 +1,6 @@
 import {http, HttpResponse, passthrough} from 'msw'
 
-import {ApiConfig} from '@/shared/lib/api/config'
+import {ApiConfig} from '@/shared/api/config'
 
 /**
  * createHandler
