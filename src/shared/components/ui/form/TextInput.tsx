@@ -6,7 +6,7 @@ import {
   View,
   type TextInputProps as RNTextInputProps,
 } from 'react-native'
-import {StyleSheet, useUnistyles} from 'react-native-unistyles'
+import {StyleSheet, UnistylesRuntime} from 'react-native-unistyles'
 
 import {Label} from '@/shared/components/ui/typography'
 
@@ -71,7 +71,6 @@ export const TextInput = ({
   accessibilityHint,
   ...rest
 }: TextInputProps): React.JSX.Element => {
-  const {theme} = useUnistyles()
   const [isFocused, setIsFocused] = useState(false)
 
   const handleFocus = (e: Parameters<NonNullable<typeof onFocus>>[0]): void => {
@@ -118,13 +117,13 @@ export const TextInput = ({
         nativeID={inputId}
         editable={!disabled}
         style={[
-          styles.input(theme),
-          isFocused && styles.inputFocused(theme),
-          hasError && styles.inputError(theme),
-          disabled && styles.inputDisabled(theme),
+          styles.input,
+          isFocused && styles.inputFocused,
+          hasError && styles.inputError,
+          disabled && styles.inputDisabled,
           style,
         ]}
-        placeholderTextColor={theme.color.text.tertiary}
+        placeholderTextColor={UnistylesRuntime.theme.color.text.tertiary}
         onFocus={handleFocus}
         onBlur={handleBlur}
         accessible={true}
@@ -134,7 +133,9 @@ export const TextInput = ({
           disabled,
         }}
         accessibilityLabelledBy={label ? labelId : undefined}
-        accessibilityDescribedBy={helpText ? (hasError ? errorId : hintId) : undefined}
+        accessibilityDescribedBy={
+          helpText ? (hasError ? errorId : hintId) : undefined
+        }
         accessibilityInvalid={hasError}
         accessibilityRequired={required}
         {...rest}
@@ -161,30 +162,30 @@ const styles = StyleSheet.create(theme => ({
   labelContainer: {
     marginBottom: theme.size.xs,
   },
-  input: (currentTheme: typeof theme): object => ({
-    backgroundColor: currentTheme.color.textInput.container.background,
+  input: {
+    backgroundColor: theme.color.textInput.container.background,
     borderWidth: 1,
-    borderColor: currentTheme.color.text.tertiary,
+    borderColor: theme.color.text.tertiary,
     borderRadius: theme.size.sm,
     paddingVertical: theme.size.smd,
     paddingHorizontal: theme.size.md,
-    fontSize: currentTheme.text.fontSize.body,
-    fontFamily: currentTheme.text.fontFamily.regular,
-    color: currentTheme.color.text.default,
+    fontSize: theme.text.fontSize.body,
+    fontFamily: theme.text.fontFamily.regular,
+    color: theme.color.text.default,
     includeFontPadding: false,
     textAlignVertical: 'center',
-  }),
-  inputFocused: (currentTheme: typeof theme): object => ({
-    borderColor: currentTheme.color.pressable.primary.default.background,
+  },
+  inputFocused: {
+    borderColor: theme.color.pressable.primary.default.background,
     borderWidth: 2,
-  }),
-  inputError: (currentTheme: typeof theme): object => ({
-    borderColor: currentTheme.color.text.warning,
-  }),
-  inputDisabled: (currentTheme: typeof theme): object => ({
+  },
+  inputError: {
+    borderColor: theme.color.text.warning,
+  },
+  inputDisabled: {
     opacity: 0.5,
-    backgroundColor: currentTheme.color.text.tertiary,
-  }),
+    backgroundColor: theme.color.text.tertiary,
+  },
   helpTextContainer: {
     marginTop: theme.size.xs,
   },

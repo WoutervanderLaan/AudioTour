@@ -1,5 +1,10 @@
 import type React from 'react'
-import {Controller, type Control, type FieldValues, type Path} from 'react-hook-form'
+import {
+  Controller,
+  type Control,
+  type FieldValues,
+  type Path,
+} from 'react-hook-form'
 
 import {TextInput, type TextInputProps} from './TextInput'
 
@@ -88,7 +93,10 @@ export const TextInputControlled = <T extends FieldValues>({
       control={control}
       name={name}
       defaultValue={defaultValue as T[Path<T>]}
-      render={({field: {onChange, onBlur, value}, fieldState: {error}}): React.JSX.Element => (
+      render={({
+        field: {onChange, onBlur, value},
+        fieldState: {error},
+      }): React.JSX.Element => (
         <TextInput
           value={value as string}
           onChangeText={onChange}

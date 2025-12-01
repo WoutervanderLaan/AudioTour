@@ -90,7 +90,10 @@ const complexSchema = z
       .string()
       .min(3, 'Username must be at least 3 characters')
       .max(20, 'Username must be at most 20 characters')
-      .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
+      .regex(
+        /^[a-zA-Z0-9_]+$/,
+        'Username can only contain letters, numbers, and underscores',
+      ),
     email: z.string().email('Please enter a valid email address'),
     password: z
       .string()
@@ -197,9 +200,14 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <View style={{marginTop: 8}}>
-        <Label color="secondary">Form Valid: {formState.isValid ? 'Yes' : 'No'}</Label>
         <Label color="secondary">
-          Errors: {Object.keys(formState.errors).length > 0 ? Object.keys(formState.errors).join(', ') : 'None'}
+          Form Valid: {formState.isValid ? 'Yes' : 'No'}
+        </Label>
+        <Label color="secondary">
+          Errors:{' '}
+          {Object.keys(formState.errors).length > 0
+            ? Object.keys(formState.errors).join(', ')
+            : 'None'}
         </Label>
       </View>
     </View>
