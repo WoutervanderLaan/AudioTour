@@ -66,10 +66,10 @@ src/
 │   ├── hooks/       # Shared custom hooks
 │   ├── lib/         # API clients, helpers, utilities, constants
 │   └── types/       # Global TypeScript types
-├── features/        # Self-contained feature modules
-│   ├── auth/        # Authentication feature
-│   ├── user/        # User management feature
-│   └── capture/     # Photo capture feature (includes schemas/)
+├── modules/        # Self-contained feature modules
+│   ├── auth/        # Authentication module
+│   ├── user/        # User management module
+│   └── capture/     # Photo capture module
 ├── store/           # Global Zustand state management
 │
 │   └── middleware/  # Store middleware
@@ -79,8 +79,8 @@ src/
 
 ### Import Rules (Enforced by ESLint)
 
-- **app/** can import from: shared, features, store, themes
-- **features/** can import from: shared, store only
+- **app/** can import from: shared, module, store, themes
+- **module/** can import from: shared, store only
 - **shared/** can import from: themes only
 - **store/** can import from: shared only
 - Use absolute imports with `@/*` alias (never use `../` parent imports)
@@ -156,11 +156,11 @@ Uses react-native-unistyles with a custom theme system:
 - Module resolution: bundler
 - Includes: src, index.tsx, config files, .storybook
 
-## Feature Development
+<!-- ## Module Development
 
-When adding new features:
+When adding new Modules:
 
-1. Create a new folder under src/features/ with the structure:
+1. Create a new folder under src/modules/ with the structure:
    - components/ (feature-specific UI)
    - hooks/ (feature-specific hooks)
    - services/ (feature-specific business logic)
@@ -168,7 +168,7 @@ When adding new features:
    - index.ts (public API exports)
 2. Features must only import from src/shared/ and src/store/
 3. Add a DOCS.md file explaining the feature (enforced by ESLint)
-4. Follow the existing patterns in auth/ and user/ features
+4. Follow the existing patterns in auth/ and user/ modules --> TODO: deprecated, needs update
 
 ## Documentation
 

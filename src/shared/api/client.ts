@@ -1,239 +1,299 @@
-import {ApiConfig} from '@/shared/api/config'
+import {
+  ApiError,
+  ApiResponse,
+  IApiClient,
+  RequestConfig,
+  RequestInterceptor,
+  ResponseInterceptor,
+} from './types'
 
 /**
- * Represents an error response from the API with status code and error details.
+ * ApiClient
+ * TODO: describe what it does.
  *
- * This type is used throughout the application to handle API errors consistently.
- * It includes the HTTP status code, a human-readable error message, and optional
- * additional details from the API response body.
+ * @returns {*} describe return value
  */
-export type ApiError = {
-  /**
-   * status
-   */
-  status: number
-  /**
-   * message
-   */
-  message: string
-  /**
-   * details
-   */
-  details?: unknown
-}
+export class ApiClient implements IApiClient {
+  private baseURL: string
+  private defaultHeaders: Record<string, string>
+  private authToken: string | null = null
+  private requestInterceptors: RequestInterceptor[] = []
+  private responseInterceptors: ResponseInterceptor[] = []
 
-/**
- * Processes a failed API response and throws a formatted ApiError.
- *
- * Attempts to extract a meaningful error message from the response body.
- * For JSON responses, it looks for common error properties (message, detail).
- * For non-JSON responses, it attempts to read the response as text.
- * Falls back to the HTTP statusText if no message can be extracted.
- *
- * @param {Response} res - The failed fetch Response object
- * @param {boolean} isJson - Whether the response Content-Type indicates JSON
- * @returns {Promise<void>} This function always throws and never returns normally
- * @throws {ApiError} Always throws an ApiError with status, message, and optional details
- */
-async function handleResponseError(
-  res: Response,
-  isJson: boolean,
-): Promise<void> {
-  let message = res.statusText ?? 'Request failed'
-  let details: unknown = undefined
+  constructor(baseURL: string, defaultHeaders: Record<string, string> = {}) {
+    this.baseURL = baseURL
+    this.defaultHeaders = {
+      'Content-Type': 'application/json',
+      ...defaultHeaders,
+    }
+  }
 
-  if (isJson) {
+  /**
+   * Set authentication token
+   */
+  setAuthToken(token: string | null): void {
+    this.authToken = token
+  }
+
+  /**
+   * Get current auth token
+   */
+  getAuthToken(): string | null {
+    return this.authToken
+  }
+
+  /**
+   * Add request interceptor
+   */
+  addRequestInterceptor(interceptor: RequestInterceptor): void {
+    this.requestInterceptors.push(interceptor)
+  }
+
+  /**
+   * Add response interceptor
+   */
+  addResponseInterceptor(interceptor: ResponseInterceptor): void {
+    this.responseInterceptors.push(interceptor)
+  }
+
+  /**
+   * Build full URL with query parameters
+   */
+  private buildUrl(endpoint: string, params?: Record<string, unknown>): string {
+    const url = new URL(endpoint, this.baseURL)
+
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          url.searchParams.append(key, String(value))
+        }
+      })
+    }
+
+    return url.toString()
+  }
+
+  /**
+   * Build headers
+   */
+  private buildHeaders(customHeaders?: Record<string, string>): HeadersInit {
+    const headers: Record<string, string> = {
+      ...this.defaultHeaders,
+      ...customHeaders,
+    }
+
+    if (this.authToken) {
+      headers['Authorization'] = `Bearer ${this.authToken}`
+    }
+
+    return headers
+  }
+
+  /**
+   * Apply request interceptors
+   */
+  private async applyRequestInterceptors(
+    url: string,
+    config: RequestInit,
+  ): Promise<{url: string; config: RequestInit}> {
+    let modifiedUrl = url
+    let modifiedConfig = config
+
+    for (const interceptor of this.requestInterceptors) {
+      const result = await interceptor(modifiedUrl, modifiedConfig)
+      modifiedUrl = result.url
+      modifiedConfig = result.config
+    }
+
+    return {url: modifiedUrl, config: modifiedConfig}
+  }
+
+  /**
+   * Apply response interceptors
+   */
+  private async applyResponseInterceptors(
+    response: Response,
+  ): Promise<Response> {
+    let modifiedResponse = response
+
+    for (const interceptor of this.responseInterceptors) {
+      modifiedResponse = await interceptor(modifiedResponse)
+    }
+
+    return modifiedResponse
+  }
+
+  /**
+   * Make HTTP request
+   */
+  // eslint-disable-next-line complexity
+  private async request<T>(
+    method: string,
+    endpoint: string,
+    body?: unknown,
+    config: RequestConfig = {},
+  ): Promise<ApiResponse<T>> {
     try {
-      const body = await res.json()
+      const url = this.buildUrl(endpoint, config.params)
 
-      message = body?.message || body?.detail || message
-      details = body
-    } catch (err) {
-      console.warn('Error converting response to json in !res.ok block: ', err)
-    }
-  } else {
-    try {
-      const text = await res.text()
-      if (text) message = text
-    } catch (err) {
-      console.warn('Error converting response to text in !res.ok block: ', err)
+      const requestConfig: RequestInit = {
+        method,
+        headers: this.buildHeaders(config.headers),
+        signal: config.signal,
+      }
+
+      if (body) {
+        requestConfig.body = JSON.stringify(body)
+      }
+
+      // Apply timeout if specified
+      let timeoutId: NodeJS.Timeout | undefined
+      if (config.timeout) {
+        const controller = new AbortController()
+        timeoutId = setTimeout(() => controller.abort(), config.timeout)
+        requestConfig.signal = controller.signal
+      }
+
+      // Apply request interceptors
+      const {url: interceptedUrl, config: interceptedConfig} =
+        await this.applyRequestInterceptors(url, requestConfig)
+
+      // Make request
+      let response = await fetch(interceptedUrl, interceptedConfig)
+
+      // Clear timeout
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+
+      // Apply response interceptors
+      response = await this.applyResponseInterceptors(response)
+
+      // Handle errors
+      if (!response.ok) {
+        const error: ApiError = {
+          message: response.statusText || 'Request failed',
+          status: response.status,
+        }
+
+        try {
+          const errorData = await response.json()
+          error.message = errorData.message || error.message
+          error.details = errorData
+        } catch {
+          // Response is not JSON
+        }
+
+        throw error
+      }
+
+      // Parse response
+      let data: T
+      const contentType = response.headers.get('content-type')
+
+      if (contentType?.includes('application/json')) {
+        data = await response.json()
+      } else {
+        data = (await response.text()) as any
+      }
+
+      return {
+        data,
+        status: response.status,
+        headers: response.headers,
+      }
+    } catch (error: any) {
+      // Handle network errors
+      if (error.name === 'AbortError') {
+        throw {
+          message: 'Request timeout',
+          code: 'TIMEOUT',
+        } as ApiError
+      }
+
+      if (error instanceof TypeError) {
+        throw {
+          message: 'Network request failed',
+          code: 'NETWORK_ERROR',
+        } as ApiError
+      }
+
+      throw error
     }
   }
 
-  throw {status: res.status, message, details} as ApiError
+  /**
+   * GET request
+   */
+  async get<T = unknown>(
+    endpoint: string,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
+    return this.request<T>('GET', endpoint, undefined, config)
+  }
+
+  /**
+   * POST request
+   */
+  async post<T = unknown>(
+    endpoint: string,
+    body?: unknown,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
+    return this.request<T>('POST', endpoint, body, config)
+  }
+
+  /**
+   * PUT request
+   */
+  async put<T = unknown>(
+    endpoint: string,
+    body?: unknown,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
+    return this.request<T>('PUT', endpoint, body, config)
+  }
+
+  /**
+   * PATCH request
+   */
+  async patch<T = unknown>(
+    endpoint: string,
+    body?: unknown,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
+    return this.request<T>('PATCH', endpoint, body, config)
+  }
+
+  /**
+   * DELETE request
+   */
+  async delete<T = unknown>(
+    endpoint: string,
+    config?: RequestConfig,
+  ): Promise<ApiResponse<T>> {
+    return this.request<T>('DELETE', endpoint, undefined, config)
+  }
 }
 
-/**
- * Processes a fetch Response and returns the parsed response body.
- *
- * Checks the response status and Content-Type header to determine how to parse
- * the response body. For successful JSON responses, returns the parsed JSON.
- * For successful non-JSON responses, returns the response as a Blob.
- * For failed responses, delegates to handleResponseError to throw an ApiError.
- *
- * @template T - The expected type of the parsed response body
- * @param {Response} res - The fetch Response object to process
- * @returns {Promise<T>} A promise resolving to the parsed response body
- * @throws {ApiError} When the response status indicates failure (!res.ok)
- */
-async function handleResponse<T>(res: Response): Promise<T> {
-  const contentType = res.headers.get('content-type') ?? ''
-  const isJson = contentType.includes('application/json')
+// Create singleton instance
+export const apiClient = new ApiClient(
+  process.env.EXPO_PUBLIC_API_URL || 'https://api.example.com',
+)
 
-  if (!res.ok) {
-    await handleResponseError(res, isJson)
+// Optional: Add global interceptors
+apiClient.addRequestInterceptor((url, config) => {
+  // Log requests in dev
+  if (__DEV__) {
+    console.log(`[API] ${config.method} ${url}`)
   }
+  return {url, config}
+})
 
-  if (isJson) {
-    const payload = await res.json()
-    if (isJson) {
-      const payload = await res.json()
-      return payload as T
-    }
-    return payload as T
+apiClient.addResponseInterceptor(response => {
+  // Log responses in dev
+  if (__DEV__) {
+    console.log(`[API] Response ${response.status} ${response.url}`)
   }
-
-  const blob = await res.blob()
-  return blob as T
-}
-
-/**
- * HTTP client for interacting with the AudioTour backend API.
- *
- * This class provides methods for all API endpoints including:
- * - Photo upload and object recognition
- * - AI narrative generation
- * - Text-to-speech audio generation
- * - Museum object listing
- * - Personalized recommendations
- *
- * The client handles request formatting, response parsing, and error handling
- * consistently across all endpoints. It uses the configured API base URL from
- * ApiConfig and automatically parses JSON responses or returns Blobs for binary data.
- *
- * @example
- * ```typescript
- * const api = new ApiClient()
- * const result = await api.uploadPhoto({ uri: 'file://photo.jpg' })
- * console.log(result.object_id)
- * ```
- */
-export class ApiClient {
-  // TODO: add session based info and user data to instance of ApiClient
-  // TODO: add interceptors
-
-  private _url(path: string): string {
-    return ApiConfig.getUrl(path)
-  }
-
-  async uploadPhoto(params: {
-    uri: string
-    metadata?: Record<string, unknown>
-  }): Promise<{
-    object_id: string
-    recognition_confidence: number
-  }> {
-    const form = new FormData()
-    const photo = await fetch(params.uri)
-    const photoBlob = await photo.blob()
-
-    form.append('photos', photoBlob, 'photo.jpg')
-
-    const url = new URL(this._url('/process-artwork'))
-
-    if (params.metadata) {
-      url.searchParams.append('metadata', JSON.stringify(params.metadata))
-    }
-
-    const res = await fetch(url.toString(), {
-      method: 'POST',
-      body: form,
-    })
-
-    return handleResponse<{
-      object_id: string
-      recognition_confidence: number
-    }>(res)
-  }
-
-  async generateNarrative(params: {
-    object_id: string
-    user_session_id: string
-  }): Promise<{
-    text: string
-  }> {
-    const res = await fetch(this._url('/generate-narrative'), {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(params),
-    })
-
-    return handleResponse<{text: string}>(res)
-  }
-
-  async generateAudio(params: {text: string}): Promise<{
-    audio_url: string
-  }> {
-    const res = await fetch(this._url('/generate-audio'), {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(params),
-    })
-
-    return handleResponse<{audio_url: string}>(res)
-  }
-
-  async listMuseumObjects(museumId: string): Promise<
-    {
-      id: string
-      name: string
-      artist?: string
-      date?: string
-      image_url?: string
-      generated_text?: string
-      generated_audio?: string
-      metadata?: Record<string, unknown>
-    }[]
-  > {
-    const res = await fetch(
-      this._url(`/museum-objects/${encodeURIComponent(museumId)}`),
-    )
-
-    return handleResponse<
-      Array<{
-        id: string
-        name: string
-        artist?: string
-        date?: string
-        image_url?: string
-        generated_text?: string
-        generated_audio?: string
-        metadata?: Record<string, unknown>
-      }>
-    >(res)
-  }
-
-  async recommendations(params: {
-    user_session_id: string
-    current_museum_id?: string
-  }): Promise<
-    {
-      object_id: string
-      score?: number
-    }[]
-  > {
-    const searchParams = new URLSearchParams()
-
-    searchParams.append('user_session_id', params.user_session_id)
-
-    if (params.current_museum_id) {
-      searchParams.append('current_museum_id', params.current_museum_id)
-    }
-
-    const res = await fetch(
-      this._url(`/recommendations?${searchParams.toString()}`),
-    )
-
-    return handleResponse<Array<{object_id: string; score?: number}>>(res)
-  }
-}
+  return response
+})

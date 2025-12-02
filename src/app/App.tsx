@@ -11,15 +11,18 @@ import * as SplashScreen from 'expo-splash-screen'
 // eslint-disable-next-line no-restricted-imports, boundaries/no-unknown
 import StorybookUI from '../../.rnstorybook/'
 import {Init} from './init/Init'
-import {queryClient} from './init/queryclient'
-import {linking} from './navigation/linking'
 
-import {Navigation} from '@/app/navigation'
+import {queryClient} from '@/shared/api/queryclient'
+import {registerModules} from '@/shared/config/modules'
 import {ApiProvider} from '@/shared/context/api/ApiContext.Provider'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
+import {moduleRegistry} from '@/shared/navigation/ModuleRegistry'
+import {RootNavigator} from '@/shared/navigation/RootNavigator'
 
 SplashScreen.preventAutoHideAsync()
+
+registerModules()
 
 /**
  * App
@@ -28,6 +31,10 @@ SplashScreen.preventAutoHideAsync()
  * @returns {Element} The App root
  */
 export const App = (): React.JSX.Element => {
+  React.useEffect(() => {
+    moduleRegistry.initialize()
+  }, [])
+
   return (
     <QueryClientProvider client={queryClient}>
       <ApiProvider>
@@ -35,8 +42,7 @@ export const App = (): React.JSX.Element => {
           <KeyboardProvider>
             <ToastProvider>
               <Init />
-              <Navigation
-                linking={linking}
+              <RootNavigator
                 onReady={() => {
                   SplashScreen.hideAsync()
                 }}

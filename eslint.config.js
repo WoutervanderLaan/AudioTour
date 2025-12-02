@@ -57,6 +57,7 @@ export default [
         ...globals.node,
         ...jestPlugin.environments.globals.globals,
         __DEV__: true,
+        NodeJS: true,
       },
     },
     plugins: {
@@ -95,7 +96,7 @@ export default [
       'boundaries/elements': [
         {type: 'app', pattern: 'src/app/**'},
         {type: 'shared', pattern: 'src/shared/**'},
-        {type: 'features', pattern: 'src/features/**'},
+        {type: 'modules', pattern: 'src/modules/**'},
         {type: 'store', pattern: 'src/store/**'},
         {type: 'themes', pattern: 'src/themes/**'},
       ],
@@ -151,7 +152,7 @@ export default [
       'local/require-folder-docs': [
         'error',
         {
-          include: ['src', 'features', 'components'],
+          include: ['src', 'components', 'modules'],
         },
       ],
       'no-var': 'error',
@@ -205,14 +206,7 @@ export default [
       'local/enforce-feature-structure': [
         'error',
         {
-          allowedFolders: [
-            'features',
-            'shared',
-            'app',
-            'store',
-            'themes',
-            'stories',
-          ],
+          allowedFolders: ['modules', 'shared', 'app', 'store', 'themes'],
         },
       ],
       'boundaries/no-unknown': 'error',
@@ -223,10 +217,10 @@ export default [
           rules: [
             {
               from: ['app'],
-              allow: ['shared', 'features', 'store', 'themes'],
+              allow: ['shared', 'store', 'themes', 'modules'],
             },
-            {from: ['features'], allow: ['shared', 'store']},
             {from: ['shared'], allow: ['themes']},
+            {from: ['modules'], allow: ['shared', 'store']},
             {from: ['store'], allow: ['shared']},
           ],
         },
