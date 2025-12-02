@@ -20,6 +20,10 @@ Comprehensive documentation for the project can be found in the repository. Refe
 - [Research Notes](./handbook/research_notes.md)
 - [Folder Structure](./handbook/folder_structure.md)
 
+## Storybook
+
+- [Storybook Documentation](https://woutervanderlaan.github.io/AudioTour/)
+
 ## Getting Started
 
 ### Prerequisites
