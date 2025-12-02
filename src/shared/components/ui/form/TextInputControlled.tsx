@@ -1,7 +1,7 @@
 import type React from 'react'
 import {
-  Controller,
   type Control,
+  Controller,
   type FieldValues,
   type Path,
 } from 'react-hook-form'
