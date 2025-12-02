@@ -246,7 +246,6 @@ export const TextInput = ({
     </View>
   )
 }
-/* eslint-enable complexity */
 
 const styles = StyleSheet.create(theme => ({
   container: {
