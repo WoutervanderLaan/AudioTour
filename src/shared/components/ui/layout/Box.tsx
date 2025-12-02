@@ -3,7 +3,7 @@ import React, {type FC} from 'react'
 import {StyleProp, View, type ViewProps, ViewStyle} from 'react-native'
 import {useUnistyles} from 'react-native-unistyles'
 
-import type {ApplyExclusivityPair} from '@/shared/types/ApplyExclusivityPair'
+import type {ApplyExclusivityPair} from '@/shared/types/utils/ApplyExclusivityPair'
 import type {Theme} from '@/themes/types'
 
 /**

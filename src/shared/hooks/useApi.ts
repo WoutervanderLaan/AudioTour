@@ -1,6 +1,6 @@
 import {useContext} from 'react'
 
-import {ApiClient} from '@/shared/api/client'
+import {ApiClient} from '@/shared/api/client-old'
 import {ApiContext} from '@/shared/context/api/ApiContext'
 
 /**

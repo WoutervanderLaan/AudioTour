@@ -4,7 +4,7 @@ export default {
     type: 'problem',
     docs: {
       description:
-        'Ensure files are inside allowed src subfolders (features, shared, etc).',
+        'Ensure files are inside allowed src subfolders (modules, shared, etc).',
     },
     schema: [
       {
@@ -34,7 +34,7 @@ export default {
 
     const relative = path.relative(process.cwd(), filename)
 
-    // Create a dynamic regex like: ^src\/(features|shared|app)\/
+    // Create a dynamic regex like: ^src\/(modules|shared|app)\/
     const folderRegex = new RegExp(`^src\\/(${allowedFolders.join('|')})\\/`)
 
     if (!folderRegex.test(relative)) {

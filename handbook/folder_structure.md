@@ -13,7 +13,7 @@
     - **lib/** – API clients, helpers, utilities, constants
     - **types/** – global TypeScript types
 
-  - **features/** – self-contained feature modules
+  - **modules/** – self-contained feature modules. TODO: deprecated, needs update
     - **auth/**
       - components/
       - hooks/
