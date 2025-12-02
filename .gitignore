@@ -35,6 +35,9 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# storybook
+storybook-static
+
 app-example
 
 # custom
