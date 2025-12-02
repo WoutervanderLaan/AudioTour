@@ -8,7 +8,7 @@ import {useMutation} from '@tanstack/react-query'
 import * as ImagePicker from 'expo-image-picker'
 import {useShallow} from 'zustand/react/shallow'
 
-import {RHFTextArea, RHFTextInput} from '@/shared/components/ui/form/FormInputs'
+import {TextInputControlled} from '@/shared/components/ui/form'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
@@ -143,25 +143,27 @@ export const Capture = (): React.JSX.Element => {
         {!!localError && <Label>{localError}</Label>}
 
         <View style={{width: '100%'}}>
-          <RHFTextInput
+          <TextInputControlled
             control={control}
             name="name"
             label="Name"
             placeholder="Enter name of the object"
           />
-          <RHFTextInput
+          <TextInputControlled
             control={control}
             name="artist"
             label="Artist"
             placeholder="Enter artist name"
           />
-          <RHFTextArea
+          <TextInputControlled
             control={control}
+            multiline
+            numberOfLines={4}
             name="description"
             label="Description"
             placeholder="Enter description"
           />
-          <RHFTextInput
+          <TextInputControlled
             control={control}
             name="year"
             keyboardType="numeric"
