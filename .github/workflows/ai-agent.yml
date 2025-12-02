@@ -90,9 +90,9 @@ jobs:
 
             ### Step 2: Implement the Task
             Implement the task completely following the project guidelines in CLAUDE.md:
-            - Use feature-based architecture under src/features/ for new features
+            - Use module-based architecture under src/modules/ for new modules
             - Follow import rules (use @/* absolute imports)
-            - Respect ESLint boundaries between app/features/shared/store
+            - Respect ESLint boundaries between app/modules/shared/store
             - Use react-native-unistyles for styling (never inline styles)
             - Add JSDoc comments to all functions
             - Keep functions under 120 lines and files under 300 lines

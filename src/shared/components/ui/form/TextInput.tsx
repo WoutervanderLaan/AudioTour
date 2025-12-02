@@ -203,7 +203,6 @@ export const TextInput = ({
   const a11yHint = accessibilityHint || hint
   const editable = !disabled
 
-  // Build input styles
   const inputStyles = [
     styles.input,
     isFocused && styles.inputFocused,
@@ -234,6 +233,7 @@ export const TextInput = ({
         accessibilityLabel={a11yLabel}
         accessibilityHint={a11yHint}
         accessibilityState={{disabled}}
+        accessibilityLabelledBy={labelId}
         {...rest}
       />
       {!!helpText && (

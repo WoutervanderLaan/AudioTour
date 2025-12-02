@@ -15,4 +15,3 @@ AI-powered recognition + narration system that:
 - Identifies objects
 - Generates contextual audio
 - Creates sequences tailored to user history & preferences
-- Integrates museum licensing for premium features

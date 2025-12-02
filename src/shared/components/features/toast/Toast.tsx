@@ -53,7 +53,7 @@ const styles = StyleSheet.create(({color}) => ({
     padding: 16,
     borderRadius: 8,
     elevation: 2,
-    zIndex: 9999,
+    zIndex: 9999, //TODO: global constants
     alignItems: 'center',
     backgroundColor: color.screen.background.default,
   },
