@@ -1,12 +1,13 @@
-/* eslint-disable boundaries/element-types */ //TODO: fix dependencies and folder structure issues
 import {authModuleConfig} from '@/modules/auth/module.config'
 import {oldModuleConfig} from '@/modules/old'
 import {moduleRegistry} from '@/shared/navigation/ModuleRegistry'
 
 /**
- * Register all application modules
+ * Registers all application modules with the module registry.
+ * Modules are registered in order, with core modules first, followed by feature modules.
  *
- * Comment out or set ```enabled: false``` to disable modules
+ * To disable a module, either comment out its registration or set `enabled: false`
+ * in the module's configuration.
  */
 export const registerModules = (): void => {
   // Core modules
@@ -14,6 +15,5 @@ export const registerModules = (): void => {
   moduleRegistry.register(authModuleConfig)
 
   // Feature modules
-
-  // Add more modules here
+  // Add more feature modules here as they are developed
 }

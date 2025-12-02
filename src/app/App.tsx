@@ -12,8 +12,9 @@ import * as SplashScreen from 'expo-splash-screen'
 import StorybookUI from '../../.rnstorybook/'
 import {Init} from './init/Init'
 
+import {registerModules} from './config/modules'
+
 import {queryClient} from '@/shared/api/queryclient'
-import {registerModules} from '@/shared/config/modules'
 import {ApiProvider} from '@/shared/context/api/ApiContext.Provider'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
@@ -22,16 +23,17 @@ import {RootNavigator} from '@/shared/navigation/RootNavigator'
 
 SplashScreen.preventAutoHideAsync()
 
-registerModules()
-
 /**
  * App
- * Root entry of the app.
+ * Root entry point of the application.
+ * Initializes modules, providers, and navigation structure.
  *
- * @returns {Element} The App root
+ * @returns The App root component
  */
 export const App = (): React.JSX.Element => {
   React.useEffect(() => {
+    // Register all modules and initialize them
+    registerModules()
     moduleRegistry.initialize()
   }, [])
 

@@ -1,24 +1,32 @@
 import {Tabs} from './navigation/OldNavigator'
-import {tabs} from './navigation/routes'
+import {stackScreens, tabs} from './navigation/routes'
 
+import {logger} from '@/shared/lib/logger'
 import {ModuleConfig} from '@/shared/types/module'
 
+/**
+ * Old module configuration - contains the legacy app screens.
+ * This module includes the main tab navigation (Capture, Museum, Recommendations)
+ * and modal/detail screens (ObjectDetail, Narrative, Settings, NotFound).
+ *
+ * TODO: Migrate screens to proper feature modules and remove this legacy module.
+ */
 export const oldModuleConfig: ModuleConfig = {
   name: 'old',
   version: '1.0.0',
   enabled: true,
 
   navigator: Tabs,
-  routes: tabs,
+  routes: stackScreens, // Only stack screens are registered as routes in root navigator
 
   dependencies: [],
 
   onRegister: () => {
-    console.log('[Old Module] Registered')
+    logger.debug('Old Module registered')
   },
 
   onUnregister: () => {
-    console.log('[Old Module] Unregistered')
+    logger.debug('Old Module unregistered')
   },
 
   onAppStart: () => {

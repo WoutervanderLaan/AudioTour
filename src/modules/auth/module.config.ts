@@ -3,8 +3,13 @@ import {routes} from './navigation/routes'
 
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
 import {apiClient} from '@/shared/api/client'
+import {logger} from '@/shared/lib/logger'
 import {ModuleConfig} from '@/shared/types/module'
 
+/**
+ * Authentication module configuration.
+ * Handles user authentication flows (login, register) and manages auth tokens.
+ */
 export const authModuleConfig: ModuleConfig = {
   name: 'auth',
   version: '1.0.0',
@@ -16,11 +21,11 @@ export const authModuleConfig: ModuleConfig = {
   dependencies: [],
 
   onRegister: () => {
-    console.log('[Auth Module] Registered')
+    logger.debug('Auth Module registered')
   },
 
   onUnregister: () => {
-    console.log('[Auth Module] Unregistered')
+    logger.debug('Auth Module unregistered')
     // Clear store
     useAuthStore.getState().reset()
     apiClient.setAuthToken(null)
@@ -31,6 +36,7 @@ export const authModuleConfig: ModuleConfig = {
     const token = useAuthStore.getState().token
     if (token) {
       apiClient.setAuthToken(token)
+      logger.debug('Auth token restored from store')
     }
   },
 

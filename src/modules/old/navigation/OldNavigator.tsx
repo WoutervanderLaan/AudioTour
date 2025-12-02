@@ -7,10 +7,10 @@ import {tabs} from './routes'
 const Tab = createBottomTabNavigator()
 
 /**
- * HomeTabs
- * TODO: describe what it does.
+ * Tabs component that renders the main bottom tab navigation.
+ * Contains the primary app screens: Capture, Museum, and Recommendations.
  *
- * @returns {*} describe return value
+ * @returns The bottom tab navigator component
  */
 export const Tabs = (): React.JSX.Element => {
   return (
@@ -25,60 +25,3 @@ export const Tabs = (): React.JSX.Element => {
     </Tab.Navigator>
   )
 }
-
-// const RootStack = createNativeStackNavigator({
-//   screens: {
-//     HomeTabs: {
-//       screen: HomeTabs,
-//       options: {
-//         title: 'Home',
-//         headerShown: false,
-//       },
-//     },
-//     ObjectDetail: {
-//       screen: ObjectDetail,
-//     },
-//     Narrative: {
-//       screen: Narrative,
-//     },
-//     Settings: {
-//       screen: Settings,
-//       options: ({navigation}) => ({
-//         presentation: 'modal',
-//         headerRight: (): React.JSX.Element => (
-//           <HeaderButton onPress={navigation.goBack}>
-//             <Text>Close</Text>
-//           </HeaderButton>
-//         ),
-//       }),
-//     },
-//     NotFound: {
-//       screen: NotFound,
-//       options: {
-//         title: '404',
-//       },
-//       linking: {
-//         path: '*',
-//       },
-//     },
-//   },
-// })
-
-// export const Navigation = createStaticNavigation(RootStack)
-
-// /**
-//  * RootStackParamList
-//  * TODO: describe what this type represents.
-//  */
-// export type RootStackParamList = StaticParamList<typeof RootStack>
-
-// declare global {
-//   namespace ReactNavigation {
-//     /**
-//      * RootParamList
-//      * TODO: describe what this type represents.
-//      */
-//     // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-//     interface RootParamList extends RootStackParamList {}
-//   }
-// }
