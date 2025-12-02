@@ -1,13 +1,16 @@
-import type {LinkingOptions, ParamListBase} from '@react-navigation/native'
+import type {LinkingOptions} from '@react-navigation/native'
 import {createURL} from 'expo-linking'
+
+import type {RootStackParamList} from './types'
 
 const prefix = createURL('/')
 
 /**
  * Deep linking configuration for the application.
  * Defines URL prefixes and path mappings for navigation.
+ * Typed with RootStackParamList to ensure all routes are properly defined.
  */
-export const linking: LinkingOptions<ParamListBase> = {
+export const linking: LinkingOptions<RootStackParamList> = {
   prefixes: [prefix],
   enabled: true,
   config: {

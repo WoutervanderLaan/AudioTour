@@ -8,8 +8,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
 import {linking} from './linking'
 import {moduleRegistry} from './ModuleRegistry'
+import type {RootStackParamList} from './types'
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 /**
  * RootNavigator component that manages the application's navigation structure.
@@ -62,7 +63,7 @@ export const RootNavigator: React.FC<
         {allRoutes.map(route => (
           <Stack.Screen
             key={route.name}
-            name={route.name}
+            name={route.name as keyof RootStackParamList}
             component={route.screen}
             options={route.options}
           />
