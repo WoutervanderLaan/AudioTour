@@ -9,6 +9,9 @@ dist/
 web-build/
 expo-env.d.ts
 
+# Storybook
+storybook-static/
+
 # Native
 *.orig.*
 *.jks
@@ -34,9 +37,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-# storybook
-storybook-static
 
 app-example
 
