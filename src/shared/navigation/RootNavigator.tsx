@@ -13,9 +13,16 @@ const Stack = createNativeStackNavigator()
 
 /**
  * RootNavigator component that manages the application's navigation structure.
- * It dynamically constructs the navigation tree from registered modules, with the
- * 'old' module serving as the initial route (main tabs). Other module routes are
- * added as additional screens in the root stack.
+ *
+ * Navigation Architecture:
+ * - HomeTabs: Initial route containing the main tab navigator (Capture, Museum, Recommendations)
+ * - Module Routes: Additional screens from all modules registered as root stack screens
+ *
+ * The old module provides:
+ * - navigator: The bottom tab navigator (rendered as HomeTabs)
+ * - routes: Modal and detail screens (ObjectDetail, Narrative, Settings, NotFound)
+ *
+ * Other modules can provide additional routes that will be registered in the root stack.
  *
  * @param props - Navigation container props (excluding children)
  * @returns The root navigation container with all module routes registered
@@ -23,14 +30,19 @@ const Stack = createNativeStackNavigator()
 export const RootNavigator: React.FC<
   Omit<NavigationContainerProps, 'children'>
 > = props => {
-  const modules = moduleRegistry.getEnabledModules()
+  // Get the main tabs navigator from the 'old' module
+  // Note: This is hardcoded for now but should be made configurable in the future
+  const mainModule = React.useMemo(() => {
+    const modules = moduleRegistry.getEnabledModules()
+    return modules.find(m => m.name === 'old')
+  }, [])
 
-  // Get the old module as the main tabs navigator
-  const oldModule = modules.find(m => m.name === 'old')
-  const MainTabs = oldModule?.navigator
+  const MainTabs = mainModule?.navigator
 
-  // Get all routes from all modules
-  const allRoutes = moduleRegistry.getRoutes()
+  // Memoize routes to prevent unnecessary recalculations
+  const allRoutes = React.useMemo(() => {
+    return moduleRegistry.getRoutes()
+  }, [])
 
   return (
     <NavigationContainer {...props} linking={linking}>
@@ -46,7 +58,7 @@ export const RootNavigator: React.FC<
           />
         )}
 
-        {/* Register all module routes as screens */}
+        {/* Register all module routes as stack screens (no duplicates - HomeTabs is not in routes) */}
         {allRoutes.map(route => (
           <Stack.Screen
             key={route.name}

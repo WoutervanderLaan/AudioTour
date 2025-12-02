@@ -114,9 +114,11 @@ class ModuleRegistryManager {
 
   /**
    * Initializes all registered modules by calling their onAppStart hooks.
-   * Modules are initialized in parallel using Promise.all.
+   * Uses Promise.allSettled to ensure graceful degradation - if one module fails,
+   * others will still be initialized. Failed modules are logged but don't prevent
+   * app startup.
    *
-   * @throws Error if any module initialization fails
+   * @returns Promise that resolves when all modules have been processed
    */
   async initialize(): Promise<void> {
     if (this.initialized) {
@@ -124,26 +126,34 @@ class ModuleRegistryManager {
       return
     }
 
-    try {
-      const modules = this.getEnabledModules()
+    const modules = this.getEnabledModules()
 
-      await Promise.all(
-        modules.map(async module => {
-          try {
-            await module.onAppStart?.()
-          } catch (error) {
-            logger.error(`Failed to initialize module ${module.name}:`, error)
-            throw error
-          }
-        }),
+    // Use allSettled to allow other modules to initialize even if one fails
+    const results = await Promise.allSettled(
+      modules.map(async module => {
+        try {
+          await module.onAppStart?.()
+          return {module: module.name, success: true}
+        } catch (error) {
+          logger.error(`Failed to initialize module ${module.name}:`, error)
+          return {module: module.name, success: false, error}
+        }
+      }),
+    )
+
+    // Log summary of initialization results
+    const successful = results.filter(r => r.status === 'fulfilled').length
+    const failed = results.filter(r => r.status === 'rejected').length
+
+    if (failed > 0) {
+      logger.warn(
+        `Module initialization completed with errors: ${successful} succeeded, ${failed} failed`,
       )
-
-      this.initialized = true
-      logger.info('All modules initialized')
-    } catch (error) {
-      logger.error('Module initialization failed:', error)
-      throw error
+    } else {
+      logger.info(`All ${successful} modules initialized successfully`)
     }
+
+    this.initialized = true
   }
 }
 

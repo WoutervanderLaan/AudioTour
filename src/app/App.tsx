@@ -32,9 +32,26 @@ SplashScreen.preventAutoHideAsync()
  */
 export const App = (): React.JSX.Element => {
   React.useEffect(() => {
-    // Register all modules and initialize them
-    registerModules()
-    moduleRegistry.initialize()
+    // Register all modules and initialize them asynchronously
+    const initializeApp = async (): Promise<void> => {
+      try {
+        // Register all modules first (synchronous)
+        registerModules()
+        // Then initialize them (potentially async)
+        await moduleRegistry.initialize()
+      } catch (error) {
+        console.error('Failed to initialize app:', error)
+        // Continue running the app even if initialization fails
+        // Individual module errors are already logged by the ModuleRegistry
+      }
+    }
+
+    initializeApp()
+
+    // Cleanup function for when the component unmounts
+    return () => {
+      // Future: Add cleanup logic here if needed (e.g., unregister modules)
+    }
   }, [])
 
   return (
