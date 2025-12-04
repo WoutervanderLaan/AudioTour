@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 /**
  * Log levels for the application logger
  */
@@ -11,8 +13,14 @@ export enum LogLevel {
 /**
  * Logger configuration
  */
-interface LoggerConfig {
+type LoggerConfig = {
+  /**
+   * enabled
+   */
   enabled: boolean
+  /**
+   * minLevel
+   */
   minLevel: LogLevel
 }
 
@@ -35,7 +43,9 @@ const levelPriority = {
  * @returns True if the level should be logged
  */
 const shouldLog = (level: LogLevel): boolean => {
-  return config.enabled && levelPriority[level] >= levelPriority[config.minLevel]
+  return (
+    config.enabled && levelPriority[level] >= levelPriority[config.minLevel]
+  )
 }
 
 /**

@@ -10,9 +10,8 @@ import * as SplashScreen from 'expo-splash-screen'
 
 // eslint-disable-next-line no-restricted-imports, boundaries/no-unknown
 import StorybookUI from '../../.rnstorybook/'
-import {Init} from './init/Init'
-
 import {registerModules} from './config/modules'
+import {Init} from './init/Init'
 
 import {queryClient} from '@/shared/api/queryclient'
 import {ApiProvider} from '@/shared/context/api/ApiContext.Provider'
@@ -23,6 +22,10 @@ import {RootNavigator} from '@/shared/navigation/RootNavigator'
 
 SplashScreen.preventAutoHideAsync()
 
+// Register modules synchronously before app renders to ensure routes are available
+// This must happen before the RootNavigator is created
+registerModules()
+
 /**
  * App
  * Root entry point of the application.
@@ -31,28 +34,41 @@ SplashScreen.preventAutoHideAsync()
  * @returns The App root component
  */
 export const App = (): React.JSX.Element => {
+  const [isReady, setIsReady] = React.useState(false)
+
   React.useEffect(() => {
-    // Register all modules and initialize them asynchronously
+    // Initialize modules asynchronously (calls onAppStart hooks)
+    /**
+     * initializeApp
+     * TODO: describe what it does.
+     *
+     * @returns {*} describe return value
+     */
     const initializeApp = async (): Promise<void> => {
       try {
-        // Register all modules first (synchronous)
-        registerModules()
-        // Then initialize them (potentially async)
         await moduleRegistry.initialize()
       } catch (error) {
         console.error('Failed to initialize app:', error)
         // Continue running the app even if initialization fails
         // Individual module errors are already logged by the ModuleRegistry
+      } finally {
+        setIsReady(true)
       }
     }
 
     initializeApp()
 
     // Cleanup function for when the component unmounts
-    return () => {
+    return (): void => {
       // Future: Add cleanup logic here if needed (e.g., unregister modules)
     }
   }, [])
+
+  // Show nothing until modules are initialized
+  // This prevents navigation errors and ensures a smooth startup
+  if (!isReady) {
+    return <React.Fragment />
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

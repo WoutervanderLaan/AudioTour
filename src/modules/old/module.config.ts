@@ -1,5 +1,5 @@
 import {Tabs} from './navigation/OldNavigator'
-import {stackScreens, tabs} from './navigation/routes'
+import {stackScreens} from './navigation/routes'
 
 import {logger} from '@/shared/lib/logger'
 import {ModuleConfig} from '@/shared/types/module'
