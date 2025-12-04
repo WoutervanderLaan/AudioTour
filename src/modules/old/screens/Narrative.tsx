@@ -7,19 +7,21 @@ import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
-import {useApi} from '@/shared/hooks/useApi'
+import {apiClient} from '@/core/api/client'
+import {GenerateAudioResponse} from '@/core/api/schema'
 import {useTourStore} from '@/store/slices/tourStore'
 
 /**
- * Narrative
- * TODO: describe what it does.
+ * Narrative screen component.
  *
- * @returns {*} describe return value
+ * Displays the AI-generated narrative text for a museum object and allows
+ * users to convert it to audio using text-to-speech. The audio can be
+ * played directly in the app.
+ *
+ * @returns The Narrative screen component
  */
 export const Narrative = (): React.JSX.Element => {
   const [localError, setLocalError] = useState<string | undefined>(undefined)
-
-  const api = useApi()
 
   const {audioUrl, setAudioUrl, narrativeText} = useTourStore(
     useShallow(state => ({
@@ -30,7 +32,13 @@ export const Narrative = (): React.JSX.Element => {
   )
 
   const synthesize = useMutation({
-    mutationFn: () => api.generateAudio({text: narrativeText ?? ''}),
+    mutationFn: async () => {
+      const response = await apiClient.post<GenerateAudioResponse>(
+        '/generate-audio',
+        {text: narrativeText ?? ''},
+      )
+      return response.data
+    },
     onSuccess(data) {
       setAudioUrl(data.audio_url)
     },

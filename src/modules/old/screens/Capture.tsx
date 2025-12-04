@@ -18,23 +18,26 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Label} from '@/shared/components/ui/typography'
-import {useApi} from '@/shared/hooks/useApi'
+import {apiClient} from '@/core/api/client'
+import {ProcessArtworkResponse} from '@/core/api/schema'
 import {ObjectForm, objectSchema} from '@/shared/schema'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
 /**
- * Capture
- * TODO: describe what it does.
+ * Capture screen component.
  *
- * @returns {*} describe return value
+ * Allows users to capture or select photos of museum objects and upload them
+ * for AI-powered object recognition. The screen includes a demo form for
+ * testing various form controls.
+ *
+ * @returns The Capture screen component
  */
 export const Capture = (): React.JSX.Element => {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
   const navigate = useNavigation()
-  const api = useApi()
 
   const sessionId = useUserSessionStore(s => s.sessionId)
 
@@ -94,7 +97,20 @@ export const Capture = (): React.JSX.Element => {
   }
 
   const uploadPhoto = useMutation({
-    mutationFn: (params: {uri: string}) => api.uploadPhoto({uri: params.uri}),
+    mutationFn: async (params: {uri: string}) => {
+      const form = new FormData()
+      const photo = await fetch(params.uri)
+      const photoBlob = await photo.blob()
+
+      form.append('photos', photoBlob, 'photo.jpg')
+
+      const response = await apiClient.post<ProcessArtworkResponse>(
+        '/process-artwork',
+        form,
+      )
+
+      return response.data
+    },
     onError: err => {
       console.error('Error uploading photo: ', err)
       setLocalError('Error uploading photo')

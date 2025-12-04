@@ -16,7 +16,6 @@ import {Init} from './init/Init'
 import {queryClient} from '@/core/api/queryclient'
 import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 import {RootNavigator} from '@/core/navigation/RootNavigator'
-import {ApiProvider} from '@/shared/context/api/ApiContext.Provider'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
 
@@ -72,20 +71,18 @@ export const App = (): React.JSX.Element => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ApiProvider>
-        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-          <KeyboardProvider>
-            <ToastProvider>
-              <Init />
-              <RootNavigator
-                onReady={() => {
-                  SplashScreen.hideAsync()
-                }}
-              />
-            </ToastProvider>
-          </KeyboardProvider>
-        </SafeAreaProvider>
-      </ApiProvider>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <KeyboardProvider>
+          <ToastProvider>
+            <Init />
+            <RootNavigator
+              onReady={() => {
+                SplashScreen.hideAsync()
+              }}
+            />
+          </ToastProvider>
+        </KeyboardProvider>
+      </SafeAreaProvider>
     </QueryClientProvider>
   )
 }
