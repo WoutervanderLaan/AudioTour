@@ -7,26 +7,28 @@ import {StaticScreenProps} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
-import {useApi} from '@/shared/hooks/useApi'
+import {apiClient} from '@/core/api/client'
+import {GenerateNarrativeResponse} from '@/core/api/schema'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
 /**
- * Props
- * TODO: describe what this type represents.
+ * Props for the ObjectDetail screen component.
  */
 type Props = StaticScreenProps<{objectId: string}>
 
 /**
- * ObjectDetail
- * TODO: describe what it does.
+ * ObjectDetail screen component.
  *
- * @param {*} options
- * @returns {*} describe return value
+ * Displays details about a specific museum object and allows users to
+ * generate an AI-powered narrative description. The generated narrative
+ * is stored in the tour store for access across the app.
+ *
+ * @param {Props} props - Component props containing route with objectId
+ * @returns The ObjectDetail screen component
  */
 export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
   const {objectId} = route.params
-  const api = useApi()
   const [localError, setLocalError] = React.useState<string | undefined>(
     undefined,
   )
@@ -41,11 +43,16 @@ export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
   )
 
   const generate = useMutation({
-    mutationFn: () =>
-      api.generateNarrative({
-        object_id: objectId,
-        user_session_id: sessionId,
-      }),
+    mutationFn: async () => {
+      const response = await apiClient.post<GenerateNarrativeResponse>(
+        '/generate-narrative',
+        {
+          object_id: objectId,
+          user_session_id: sessionId,
+        },
+      )
+      return response.data
+    },
     onSuccess: data => {
       console.log('Generated narrative: ', data.text)
       setNarrativeText(data.text)

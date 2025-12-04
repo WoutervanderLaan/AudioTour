@@ -8,10 +8,35 @@ import {
 } from './types'
 
 /**
- * ApiClient
- * TODO: describe what it does.
+ * Generic HTTP client for making API requests with advanced features.
  *
- * @returns {*} describe return value
+ * Provides a robust interface for all HTTP operations with built-in support for:
+ * - Request/response interceptors for logging, auth, and transforms
+ * - Authentication token management with Bearer token support
+ * - FormData handling for file uploads (React Native compatible)
+ * - Timeout configuration per request
+ * - Automatic JSON parsing with fallback to text
+ * - Consistent error handling with detailed error information
+ *
+ * @example Basic usage
+ * ```typescript
+ * const client = new ApiClient('https://api.example.com')
+ * const response = await client.get('/users')
+ * console.log(response.data)
+ * ```
+ *
+ * @example With authentication
+ * ```typescript
+ * client.setAuthToken('your-jwt-token')
+ * const response = await client.post('/protected-route', { data: 'value' })
+ * ```
+ *
+ * @example File upload with FormData
+ * ```typescript
+ * const formData = new FormData()
+ * formData.append('file', fileBlob, 'photo.jpg')
+ * const response = await client.post('/upload', formData)
+ * ```
  */
 export class ApiClient implements IApiClient {
   private baseURL: string
@@ -76,17 +101,26 @@ export class ApiClient implements IApiClient {
   /**
    * Build headers
    */
-  private buildHeaders(customHeaders?: Record<string, string>): HeadersInit {
-    const headers: Record<string, string> = {
+  private buildHeaders(
+    customHeaders?: Record<string, string | undefined>,
+  ): HeadersInit {
+    const headers: Record<string, string | undefined> = {
       ...this.defaultHeaders,
       ...customHeaders,
     }
+
+    // Remove headers that are explicitly set to undefined (needed for FormData)
+    Object.keys(headers).forEach(key => {
+      if (headers[key] === undefined) {
+        delete headers[key]
+      }
+    })
 
     if (this.authToken) {
       headers['Authorization'] = `Bearer ${this.authToken}`
     }
 
-    return headers
+    return headers as Record<string, string>
   }
 
   /**
@@ -126,7 +160,7 @@ export class ApiClient implements IApiClient {
   /**
    * Make HTTP request
    */
-  // eslint-disable-next-line complexity
+
   private async request<T>(
     method: string,
     endpoint: string,
@@ -136,14 +170,25 @@ export class ApiClient implements IApiClient {
     try {
       const url = this.buildUrl(endpoint, config.params)
 
+      // Check if body is FormData to handle it specially
+      // In React Native, FormData needs special handling:
+      // 1. Don't JSON.stringify it
+      // 2. Don't set Content-Type header (RN's fetch will set it with boundary)
+      const isFormData = body instanceof FormData
+
       const requestConfig: RequestInit = {
         method,
-        headers: this.buildHeaders(config.headers),
+        headers: this.buildHeaders(
+          isFormData
+            ? {...config.headers, 'Content-Type': undefined}
+            : config.headers,
+        ),
         signal: config.signal,
       }
 
       if (body) {
-        requestConfig.body = JSON.stringify(body)
+        // Don't JSON.stringify FormData - pass it directly to fetch
+        requestConfig.body = isFormData ? body : JSON.stringify(body)
       }
 
       // Apply timeout if specified
