@@ -1,51 +1,41 @@
 import type React from 'react'
-import {
-  // eslint-disable-next-line no-restricted-imports -- Checkbox is a base form control component
-  Pressable,
-  type PressableProps,
-  View,
-} from 'react-native'
+import {View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
+import {CheckboxPressable} from '@/shared/components/ui/pressable'
 import {Label} from '@/shared/components/ui/typography'
+
+/**
+ * CHECKBOX_SIZE
+ * Size of the checkbox box in points
+ */
+const CHECKBOX_SIZE = 24
 
 /**
  * CheckboxProps
  * Props for the Checkbox component
  */
-export type CheckboxProps = Omit<PressableProps, 'onPress' | 'children'> & {
-  /**
-   * label - Accessible label for the checkbox
-   */
+export type CheckboxProps = {
+  /** Accessible label for the checkbox */
   label?: string
-  /**
-   * error - Error message to display below the checkbox
-   */
+  /** Error message to display below the checkbox */
   error?: string
-  /**
-   * hint - Helper text to display below the checkbox
-   */
+  /** Helper text to display below the checkbox */
   hint?: string
-  /**
-   * disabled - Whether the checkbox is disabled
-   */
+  /** Whether the checkbox is disabled */
   disabled?: boolean
-  /**
-   * required - Whether the checkbox is required (adds asterisk to label)
-   */
+  /** Whether the checkbox is required (adds asterisk to label) */
   required?: boolean
-  /**
-   * checked - Whether the checkbox is checked
-   */
+  /** Whether the checkbox is checked */
   checked?: boolean
-  /**
-   * onChange - Callback when checkbox state changes
-   */
+  /** Callback when checkbox state changes */
   onChange?: (checked: boolean) => void
-  /**
-   * testID - Test identifier for automated testing
-   */
+  /** Test identifier for automated testing */
   testID?: string
+  /** Accessible label override */
+  accessibilityLabel?: string
+  /** Accessible hint override */
+  accessibilityHint?: string
 }
 
 /**
@@ -53,21 +43,13 @@ export type CheckboxProps = Omit<PressableProps, 'onPress' | 'children'> & {
  * Props for the CheckboxLabel component
  */
 type CheckboxLabelProps = {
-  /**
-   * label - Text to display in the label
-   */
+  /** Text to display in the label */
   label: string
-  /**
-   * labelId - Native ID for the label element
-   */
+  /** Native ID for the label element */
   labelId: string
-  /**
-   * disabled - Whether the checkbox is disabled
-   */
+  /** Whether the checkbox is disabled */
   disabled: boolean
-  /**
-   * required - Whether the field is required
-   */
+  /** Whether the field is required */
   required: boolean
 }
 
@@ -90,7 +72,7 @@ const CheckboxLabel = ({
       color={disabled ? 'secondary' : 'default'}
       accessibilityRole="text">
       {label}
-      {Boolean(required) && (
+      {!!required && (
         <Label
           color="warning"
           accessibilityLabel="required">
@@ -107,17 +89,11 @@ const CheckboxLabel = ({
  * Props for the HelpText component
  */
 type HelpTextProps = {
-  /**
-   * text - The help text or error message to display
-   */
+  /** The help text or error message to display */
   text: string
-  /**
-   * helpTextId - Native ID for the help text element
-   */
+  /** Native ID for the help text element */
   helpTextId: string
-  /**
-   * hasError - Whether this is an error message
-   */
+  /** Whether this is an error message */
   hasError: boolean
 }
 
@@ -156,6 +132,40 @@ const CheckIndicator = (): React.JSX.Element => (
 )
 
 /**
+ * CheckboxBox
+ * Renders the checkbox box with appropriate styling
+ *
+ * @param {object} props - Component props
+ * @param {string} props.checkboxId - ID for the checkbox element
+ * @param {boolean} props.checked - Whether the checkbox is checked
+ * @param {boolean} props.hasError - Whether there is an error
+ * @param {boolean} props.disabled - Whether the checkbox is disabled
+ * @returns {React.JSX.Element} Rendered checkbox box
+ */
+const CheckboxBox = ({
+  checkboxId,
+  checked,
+  hasError,
+  disabled,
+}: {
+  checkboxId: string
+  checked: boolean
+  hasError: boolean
+  disabled: boolean
+}): React.JSX.Element => (
+  <View
+    nativeID={checkboxId}
+    style={[
+      styles.checkboxBox,
+      checked && styles.checkboxBoxChecked,
+      hasError && styles.checkboxBoxError,
+      disabled && styles.checkboxBoxDisabled,
+    ]}>
+    {checked ? <CheckIndicator /> : null}
+  </View>
+)
+
+/**
  * Checkbox
  * Accessible checkbox component with theme integration and form validation support.
  * Follows WCAG 2.1 AA standards for accessibility.
@@ -182,81 +192,62 @@ export const Checkbox = ({
   checked = false,
   onChange,
   testID,
-  style,
   accessibilityLabel,
   accessibilityHint,
-  ...rest
 }: CheckboxProps): React.JSX.Element => {
   /**
    * handlePress
    * Handles press events for the checkbox
-   *
-   * @returns {void}
    */
   const handlePress = (): void => {
-    if (!disabled) {
-      onChange?.(!checked)
+    if (disabled) {
+      return
     }
+    onChange?.(!checked)
   }
 
-  const hasError = Boolean(error)
+  const hasError = !!error
   const helpText = error || hint
   const checkboxId = testID || 'checkbox'
   const labelId = `${checkboxId}-label`
   const helpTextId = `${checkboxId}-${hasError ? 'error' : 'hint'}`
-  const a11yLabel = accessibilityLabel || label
-  const a11yHint = accessibilityHint || hint
-
-  const containerStyles = [styles.checkboxRow, style]
 
   return (
     <View style={styles.container}>
-      <Pressable
+      <CheckboxPressable
         testID={testID}
-        nativeID={checkboxId}
         onPress={handlePress}
         disabled={disabled}
-        style={containerStyles}
-        accessible={true}
-        accessibilityRole="checkbox"
-        accessibilityLabel={a11yLabel}
-        accessibilityHint={a11yHint}
-        accessibilityState={{
-          checked,
-          disabled,
-        }}
-        accessibilityLabelledBy={labelId}
-        {...rest}>
-        {({pressed}) => (
-          <>
-            <View
-              style={[
-                styles.checkboxBox,
-                checked && styles.checkboxBoxChecked,
-                hasError && styles.checkboxBoxError,
-                disabled && styles.checkboxBoxDisabled,
-                pressed && styles.checkboxBoxPressed,
-              ]}>
-              {checked ? <CheckIndicator /> : null}
-            </View>
-            {Boolean(label) && (
-              <CheckboxLabel
-                label={label!}
-                labelId={labelId}
-                disabled={disabled}
-                required={required}
-              />
-            )}
-          </>
-        )}
-      </Pressable>
-      {Boolean(helpText) && (
+        style={({pressed}) => [
+          styles.checkboxRow,
+          pressed && styles.checkboxRowPressed,
+        ]}
+        accessibilityLabel={accessibilityLabel || label}
+        accessibilityHint={accessibilityHint || hint}
+        accessibilityState={{checked, disabled}}
+        accessibilityLabelledBy={labelId}>
+        <CheckboxBox
+          checkboxId={checkboxId}
+          checked={checked}
+          hasError={hasError}
+          disabled={disabled}
+        />
+        {label ? (
+          <CheckboxLabel
+            label={label}
+            labelId={labelId}
+            disabled={disabled}
+            required={required}
+          />
+        ) : null}
+      </CheckboxPressable>
+      {helpText ? (
         <HelpText
-          text={helpText!}
+          text={helpText}
           helpTextId={helpTextId}
           hasError={hasError}
         />
-      )}
+      ) : null}
     </View>
   )
 }
@@ -272,9 +263,12 @@ const styles = StyleSheet.create(theme => ({
     minHeight: 44,
     paddingVertical: theme.size.xs,
   },
+  checkboxRowPressed: {
+    opacity: 0.7,
+  },
   checkboxBox: {
-    width: 24,
-    height: 24,
+    width: CHECKBOX_SIZE,
+    height: CHECKBOX_SIZE,
     borderWidth: 2,
     borderColor: theme.color.text.tertiary,
     borderRadius: theme.size.xs,
@@ -285,9 +279,6 @@ const styles = StyleSheet.create(theme => ({
   checkboxBoxChecked: {
     backgroundColor: theme.color.pressable.primary.default.background,
     borderColor: theme.color.pressable.primary.default.background,
-  },
-  checkboxBoxPressed: {
-    opacity: 0.7,
   },
   checkboxBoxError: {
     borderColor: theme.color.text.warning,
@@ -300,7 +291,7 @@ const styles = StyleSheet.create(theme => ({
   },
   helpTextContainer: {
     marginTop: theme.size.xs,
-    marginLeft: 24 + theme.size.sm,
+    marginLeft: CHECKBOX_SIZE + theme.size.sm,
   },
   checkIndicator: {
     width: 12,
