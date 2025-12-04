@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
-import {ActivityIndicator, View} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
+import {ActivityIndicator} from 'react-native'
 
 import {Button, Text} from '@react-navigation/elements'
 import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
+import {Box} from '@/shared/components/ui/layout/Box'
+import {Column} from '@/shared/components/ui/layout/Column'
 import {useApi} from '@/shared/hooks/useApi'
 import {useTourStore} from '@/store/slices/tourStore'
 
@@ -42,14 +43,20 @@ export const Narrative = (): React.JSX.Element => {
 
   if (!narrativeText) {
     return (
-      <View style={styles.container}>
+      <Box
+        flex={1}
+        padding="md"
+        gap="sm">
         <Text>No narrative available</Text>
-      </View>
+      </Box>
     )
   }
 
   return (
-    <View style={styles.container}>
+    <Column
+      flex={1}
+      padding="md"
+      gap="sm">
       <Text>Narrative</Text>
 
       <Text numberOfLines={8}>{narrativeText}</Text>
@@ -68,14 +75,6 @@ export const Narrative = (): React.JSX.Element => {
       {!!localError && <Text>{localError}</Text>}
 
       {!!audioUrl && <AudioPlayer src={audioUrl} />}
-    </View>
+    </Column>
   )
 }
-
-const styles = StyleSheet.create(() => ({
-  container: {
-    flex: 1,
-    padding: 16,
-    gap: 12,
-  },
-}))

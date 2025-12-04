@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import {ActivityIndicator, View} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
+import {ActivityIndicator} from 'react-native'
 
 import {Button} from '@react-navigation/elements'
 
+import {Column} from '@/shared/components/ui/layout/Column'
 import {Label} from '@/shared/components/ui/typography'
 
 /**
@@ -33,16 +33,12 @@ export const AudioPlayer = ({src}: {src: string}): React.JSX.Element => {
   }
 
   return (
-    <View style={styles.container}>
+    <Column gap="sm">
       <Label>{src}</Label>
 
       <Button onPress={toggle}>{playing ? 'Pause' : 'Play'}</Button>
 
       {!!loading && <ActivityIndicator />}
-    </View>
+    </Column>
   )
 }
-
-const styles = StyleSheet.create(() => ({
-  container: {gap: 8},
-}))

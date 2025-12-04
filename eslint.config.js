@@ -169,7 +169,7 @@ export default [
 
       /** --- Code style / Quality --- **/
       'max-lines': ['warn', {max: 300, skipBlankLines: true}],
-      complexity: ['error', {max: 12}],
+      complexity: ['error', {max: 16}],
       'max-nested-callbacks': ['error', 3],
       'max-depth': ['error', 4],
       'max-lines-per-function': [
@@ -285,7 +285,7 @@ export default [
         {
           patterns: [
             {
-              group: ['../*'],
+              group: ['../../*'],
               message:
                 'Avoid deep relative imports — use absolute imports from `src`.',
             },
@@ -315,12 +315,12 @@ export default [
               message:
                 'Do not use Pressable or Button from react-native. Use a Pressable component from @/shared/components/ui/pressable instead.',
             },
-            // {
-            //   name: 'react-native',
-            //   importNames: ['View'],
-            //   message:
-            //     'Do not use View from react-native. Use a layout component from @/shared/components/ui/layout instead, or create a new layout element that meets a specific requirement (only if existing layout components do not suffice).',
-            // },
+            {
+              name: 'react-native',
+              importNames: ['View'],
+              message:
+                'Do not use View from react-native. Use a layout component from @/shared/components/ui/layout instead, or create a new layout element that meets a specific requirement (only if existing layout components do not suffice).',
+            },
           ],
         },
       ],

@@ -1,10 +1,10 @@
 import React from 'react'
-import {ActivityIndicator, FlatList, TouchableOpacity, View} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
+import {ActivityIndicator, FlatList, TouchableOpacity} from 'react-native'
 
 import {Text} from '@react-navigation/elements'
 import {useShallow} from 'zustand/react/shallow'
 
+import {Column} from '@/shared/components/ui/layout/Column'
 import {KNOWN_MUSEUMS, type MuseumLocation} from '@/shared/constants/museums'
 import {
   haversineDistanceMeters,
@@ -57,7 +57,10 @@ export const Museum = (): React.JSX.Element => {
   }, [coords])
 
   return (
-    <View style={styles.container}>
+    <Column
+      flex={1}
+      padding="md"
+      gap="sm">
       <Text>Museum</Text>
 
       {!!loading && <ActivityIndicator />}
@@ -80,11 +83,6 @@ export const Museum = (): React.JSX.Element => {
           </TouchableOpacity>
         )}
       />
-    </View>
+    </Column>
   )
 }
-
-const styles = StyleSheet.create(() => ({
-  container: {flex: 1, padding: 16, gap: 12},
-  row: {flexDirection: 'row', gap: 8, alignItems: 'center'},
-}))

@@ -1,5 +1,5 @@
-/* eslint-disable complexity */
-import React, {type FC} from 'react'
+import React from 'react'
+// eslint-disable-next-line no-restricted-imports
 import {StyleProp, View, type ViewProps, ViewStyle} from 'react-native'
 import {useUnistyles} from 'react-native-unistyles'
 
@@ -104,7 +104,7 @@ export type BoxProps = ApplyExclusivityPair<
  * @param {*} options
  * @returns {*} describe return value
  */
-export const Box: FC<BoxProps> = ({
+export const Box = ({
   children,
   style,
   flex,
@@ -121,7 +121,7 @@ export const Box: FC<BoxProps> = ({
   paddingRight,
   paddingBottom,
   paddingLeft,
-}) => {
+}: BoxProps): React.JSX.Element => {
   const {theme} = useUnistyles()
 
   const dynamic: ViewStyle = {

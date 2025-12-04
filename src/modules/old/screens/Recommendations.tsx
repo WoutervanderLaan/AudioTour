@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import {ActivityIndicator, FlatList, View} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
+import {ActivityIndicator, FlatList} from 'react-native'
 
 import {Text} from '@react-navigation/elements'
 
 import {ToastType} from '@/shared/components/features/toast/Toast'
+import {Column} from '@/shared/components/ui/layout/Column'
 import {useApi} from '@/shared/hooks/useApi'
 import {useToast} from '@/shared/hooks/useToast'
 import {useMuseumStore} from '@/store/slices/museumStore'
@@ -74,7 +74,10 @@ export const Recommendations = (): React.JSX.Element => {
   }, [sessionId, currentMuseumId, api, toast])
 
   return (
-    <View style={styles.container}>
+    <Column
+      flex={1}
+      padding="md"
+      gap="sm">
       <Text>Recommendations</Text>
 
       {!!loading && <ActivityIndicator />}
@@ -85,18 +88,13 @@ export const Recommendations = (): React.JSX.Element => {
         data={items}
         keyExtractor={item => item.object_id}
         renderItem={({item}) => (
-          <View style={styles.item}>
+          <Column paddingV="xs">
             <Text>Object {item.object_id}</Text>
 
             {item.score != null && <Text>Score: {item.score.toFixed(2)}</Text>}
-          </View>
+          </Column>
         )}
       />
-    </View>
+    </Column>
   )
 }
-
-const styles = StyleSheet.create(() => ({
-  container: {flex: 1, padding: 16, gap: 12},
-  item: {paddingVertical: 8},
-}))

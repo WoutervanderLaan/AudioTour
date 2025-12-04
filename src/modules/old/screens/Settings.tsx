@@ -1,7 +1,6 @@
-import {View} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
-
 import {Text} from '@react-navigation/elements'
+
+import {Box} from '@/shared/components/ui/layout/Box'
 
 /**
  * Settings
@@ -11,17 +10,10 @@ import {Text} from '@react-navigation/elements'
  */
 export const Settings = (): any => {
   return (
-    <View style={styles.container}>
+    <Box
+      flex={1}
+      center>
       <Text>Settings Screen</Text>
-    </View>
+    </Box>
   )
 }
-
-const styles = StyleSheet.create(() => ({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10,
-  },
-}))

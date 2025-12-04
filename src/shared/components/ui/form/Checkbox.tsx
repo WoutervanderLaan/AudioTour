@@ -1,7 +1,8 @@
 import type React from 'react'
-import {View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
+import {Box} from '@/shared/components/ui/layout/Box'
+import {Column} from '@/shared/components/ui/layout/Column'
 import {CheckboxPressable} from '@/shared/components/ui/pressable'
 import {Label} from '@/shared/components/ui/typography'
 
@@ -66,7 +67,7 @@ const CheckboxLabel = ({
   disabled,
   required,
 }: CheckboxLabelProps): React.JSX.Element => (
-  <View style={styles.labelContainer}>
+  <Box flex={1}>
     <Label
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
@@ -81,7 +82,7 @@ const CheckboxLabel = ({
         </Label>
       )}
     </Label>
-  </View>
+  </Box>
 )
 
 /**
@@ -109,7 +110,7 @@ const HelpText = ({
   helpTextId,
   hasError,
 }: HelpTextProps): React.JSX.Element => (
-  <View style={styles.helpTextContainer}>
+  <Box>
     <Label
       nativeID={helpTextId}
       color={hasError ? 'warning' : 'secondary'}
@@ -117,7 +118,7 @@ const HelpText = ({
       accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
       {text}
     </Label>
-  </View>
+  </Box>
 )
 
 /**
@@ -128,7 +129,7 @@ const HelpText = ({
  * @returns {React.JSX.Element} Rendered check indicator element
  */
 const CheckIndicator = (): React.JSX.Element => (
-  <View style={styles.checkIndicator} />
+  <Box style={styles.checkIndicator} />
 )
 
 /**
@@ -153,7 +154,7 @@ const CheckboxBox = ({
   hasError: boolean
   disabled: boolean
 }): React.JSX.Element => (
-  <View
+  <Box
     nativeID={checkboxId}
     style={[
       styles.checkboxBox,
@@ -162,7 +163,7 @@ const CheckboxBox = ({
       disabled && styles.checkboxBoxDisabled,
     ]}>
     {!!checked && <CheckIndicator />}
-  </View>
+  </Box>
 )
 
 /**
@@ -213,7 +214,7 @@ export const Checkbox = ({
   const helpTextId = `${checkboxId}-${hasError ? 'error' : 'hint'}`
 
   return (
-    <View style={styles.container}>
+    <Column>
       <CheckboxPressable
         testID={testID}
         onPress={handlePress}
@@ -248,14 +249,11 @@ export const Checkbox = ({
           hasError={hasError}
         />
       )}
-    </View>
+    </Column>
   )
 }
 
 const styles = StyleSheet.create(theme => ({
-  container: {
-    width: '100%',
-  },
   checkboxRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -286,13 +284,11 @@ const styles = StyleSheet.create(theme => ({
   checkboxBoxDisabled: {
     opacity: 0.5,
   },
-  labelContainer: {
-    flex: 1,
-  },
-  helpTextContainer: {
-    marginTop: theme.size.xs,
-    marginLeft: CHECKBOX_SIZE + theme.size.sm,
-  },
+
+  // helpTextContainer: {
+  //   marginTop: theme.size.xs,
+  //   marginLeft: CHECKBOX_SIZE + theme.size.sm,
+  // },
   checkIndicator: {
     width: 12,
     height: 12,

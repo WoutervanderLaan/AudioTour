@@ -1,8 +1,8 @@
 import type React from 'react'
-import {View} from 'react-native'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
 
+import {Box} from '@/shared/components/ui/layout/Box'
 import {Label} from '@/shared/components/ui/typography'
 
 export enum ToastType {
@@ -39,9 +39,12 @@ export const Toast = ({
   const {top} = useSafeAreaInsets()
 
   return (
-    <View style={[styles.toast, styles[type], {top: top + 20}]}>
+    <Box
+      style={[styles.toast, styles[type], {top: top + 20}]}
+      center
+      padding="md">
       <Label>{message}</Label>
-    </View>
+    </Box>
   )
 }
 
@@ -50,11 +53,8 @@ const styles = StyleSheet.create(({color}) => ({
     position: 'absolute',
     left: 20,
     right: 20,
-    padding: 16,
-    borderRadius: 8,
     elevation: 2,
     zIndex: 9999, //TODO: global constants
-    alignItems: 'center',
     backgroundColor: color.screen.background.default,
   },
 

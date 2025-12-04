@@ -1,5 +1,5 @@
 import React from 'react'
-import {ActivityIndicator, ScrollView, View} from 'react-native'
+import {ActivityIndicator, ScrollView} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Button, Text} from '@react-navigation/elements'
@@ -82,12 +82,7 @@ export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
 
       {!!localError && <Text>{localError}</Text>}
 
-      {!!narrativeText && (
-        <View style={styles.card}>
-          <Text>{narrativeText}</Text>
-          {/* <Button screen="Narrative">Listen as Audio</Button> */}
-        </View>
-      )}
+      {!!narrativeText && <Text>{narrativeText}</Text>}
     </ScrollView>
   )
 }
@@ -96,10 +91,5 @@ const styles = StyleSheet.create(() => ({
   container: {
     padding: 16,
     gap: 12,
-  },
-  card: {
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: 'rgba(0,0,0,0.05)',
   },
 }))

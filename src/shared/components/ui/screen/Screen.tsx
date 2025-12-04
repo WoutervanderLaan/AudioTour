@@ -3,6 +3,7 @@ import {
   Animated,
   ScrollView,
   ScrollViewProps,
+  // eslint-disable-next-line no-restricted-imports
   View,
   ViewStyle,
 } from 'react-native'
@@ -284,11 +285,12 @@ export const Screen = Object.assign(BaseScreen, {
   Scrollable,
 })
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create(({color}) => ({
   container: {
     flex: 1,
+    backgroundColor: color.screen.background.settings,
   },
   scrollContent: {
     flexGrow: 1,
   },
-})
+}))

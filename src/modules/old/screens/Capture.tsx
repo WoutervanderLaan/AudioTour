@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useForm} from 'react-hook-form'
-import {ActivityIndicator, Image, View} from 'react-native'
+import {ActivityIndicator, Image} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {zodResolver} from '@hookform/resolvers/zod'
@@ -15,6 +15,7 @@ import {
   TextInputControlled,
 } from '@/shared/components/ui/form'
 import {Box} from '@/shared/components/ui/layout/Box'
+import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Label} from '@/shared/components/ui/typography'
@@ -32,7 +33,6 @@ import {useUserSessionStore} from '@/store/slices/userSessionStore'
 export const Capture = (): React.JSX.Element => {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
-
   const navigate = useNavigation()
   const api = useApi()
 
@@ -46,15 +46,6 @@ export const Capture = (): React.JSX.Element => {
 
   const {control, handleSubmit} = useForm<ObjectForm>({
     resolver: zodResolver(objectSchema),
-    defaultValues: {
-      name: '',
-      artist: '',
-      year: undefined,
-      description: '',
-      category: undefined,
-      notifications: false,
-      acceptTerms: false,
-    },
   })
 
   /**
@@ -150,7 +141,7 @@ export const Capture = (): React.JSX.Element => {
         {!!uploadPhoto.isPending && <ActivityIndicator />}
         {!!localError && <Label>{localError}</Label>}
 
-        <View style={{width: '100%'}}>
+        <Column gap="lg">
           <SwitchControlled
             control={control}
             name="notifications"
@@ -185,7 +176,7 @@ export const Capture = (): React.JSX.Element => {
             onPress={handleSubmit(onSubmit)}
             label="Submit"
           />
-        </View>
+        </Column>
       </Box>
     </Screen.Scrollable>
   )
