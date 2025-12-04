@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {ActivityIndicator, FlatList, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Text} from '@react-navigation/elements'
+import {useQuery} from '@tanstack/react-query'
 
 import {ToastType} from '@/shared/components/features/toast/Toast'
-import {useApi} from '@/shared/hooks/useApi'
+import {apiClient} from '@/core/api/client'
 import {useToast} from '@/shared/hooks/useToast'
 import {useMuseumStore} from '@/store/slices/museumStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
@@ -32,46 +33,32 @@ type Item = {
  * @returns {*} describe return value
  */
 export const Recommendations = (): React.JSX.Element => {
-  const [items, setItems] = useState<Array<Item>>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | undefined>(undefined)
-
   const sessionId = useUserSessionStore(s => s.sessionId)
-  const api = useApi()
   const toast = useToast()
-
   const currentMuseumId = useMuseumStore(s => s.currentMuseumId)
 
-  useEffect(() => {
-    /**
-     * run
-     * TODO: describe what it does.
-     *
-     * @returns {*} describe return value
-     */
-    const run = async (): Promise<void> => {
-      setLoading(true)
-      setError(undefined)
-
-      try {
-        const data = await api.recommendations({
+  const {
+    data: items = [],
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: ['recommendations', sessionId, currentMuseumId],
+    queryFn: async () => {
+      const response = await apiClient.get<Array<Item>>('/recommendations', {
+        params: {
           user_session_id: sessionId,
           current_museum_id: currentMuseumId,
-        })
-
-        setItems(data)
-      } catch (e: any) {
-        setError(e?.message || 'Failed to load recommendations')
-        toast.showToast({
-          message: 'Error loading recommendations',
-          type: ToastType.ERROR,
-        })
-      } finally {
-        setLoading(false)
-      }
-    }
-    run()
-  }, [sessionId, currentMuseumId, api, toast])
+        },
+      })
+      return response.data
+    },
+    onError: () => {
+      toast.showToast({
+        message: 'Error loading recommendations',
+        type: ToastType.ERROR,
+      })
+    },
+  })
 
   return (
     <View style={styles.container}>
@@ -79,7 +66,7 @@ export const Recommendations = (): React.JSX.Element => {
 
       {!!loading && <ActivityIndicator />}
 
-      {!!error && <Text>{error}</Text>}
+      {!!error && <Text>{error.message}</Text>}
 
       <FlatList
         data={items}

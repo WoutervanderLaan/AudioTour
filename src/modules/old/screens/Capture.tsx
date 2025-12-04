@@ -18,7 +18,7 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Label} from '@/shared/components/ui/typography'
-import {useApi} from '@/shared/hooks/useApi'
+import {apiClient} from '@/core/api/client'
 import {ObjectForm, objectSchema} from '@/shared/schema'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
@@ -34,7 +34,6 @@ export const Capture = (): React.JSX.Element => {
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
   const navigate = useNavigation()
-  const api = useApi()
 
   const sessionId = useUserSessionStore(s => s.sessionId)
 
@@ -94,7 +93,20 @@ export const Capture = (): React.JSX.Element => {
   }
 
   const uploadPhoto = useMutation({
-    mutationFn: (params: {uri: string}) => api.uploadPhoto({uri: params.uri}),
+    mutationFn: async (params: {uri: string}) => {
+      const form = new FormData()
+      const photo = await fetch(params.uri)
+      const photoBlob = await photo.blob()
+
+      form.append('photos', photoBlob, 'photo.jpg')
+
+      const response = await apiClient.post<{
+        object_id: string
+        recognition_confidence: number
+      }>('/process-artwork', form)
+
+      return response.data
+    },
     onError: err => {
       console.error('Error uploading photo: ', err)
       setLocalError('Error uploading photo')

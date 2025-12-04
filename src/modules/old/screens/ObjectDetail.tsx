@@ -7,7 +7,7 @@ import {StaticScreenProps} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
-import {useApi} from '@/shared/hooks/useApi'
+import {apiClient} from '@/core/api/client'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
@@ -26,7 +26,6 @@ type Props = StaticScreenProps<{objectId: string}>
  */
 export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
   const {objectId} = route.params
-  const api = useApi()
   const [localError, setLocalError] = React.useState<string | undefined>(
     undefined,
   )
@@ -41,11 +40,16 @@ export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
   )
 
   const generate = useMutation({
-    mutationFn: () =>
-      api.generateNarrative({
-        object_id: objectId,
-        user_session_id: sessionId,
-      }),
+    mutationFn: async () => {
+      const response = await apiClient.post<{text: string}>(
+        '/generate-narrative',
+        {
+          object_id: objectId,
+          user_session_id: sessionId,
+        },
+      )
+      return response.data
+    },
     onSuccess: data => {
       console.log('Generated narrative: ', data.text)
       setNarrativeText(data.text)

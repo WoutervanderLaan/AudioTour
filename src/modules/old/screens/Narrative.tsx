@@ -7,7 +7,7 @@ import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
-import {useApi} from '@/shared/hooks/useApi'
+import {apiClient} from '@/core/api/client'
 import {useTourStore} from '@/store/slices/tourStore'
 
 /**
@@ -19,8 +19,6 @@ import {useTourStore} from '@/store/slices/tourStore'
 export const Narrative = (): React.JSX.Element => {
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
-  const api = useApi()
-
   const {audioUrl, setAudioUrl, narrativeText} = useTourStore(
     useShallow(state => ({
       audioUrl: state.audioUrl,
@@ -30,7 +28,13 @@ export const Narrative = (): React.JSX.Element => {
   )
 
   const synthesize = useMutation({
-    mutationFn: () => api.generateAudio({text: narrativeText ?? ''}),
+    mutationFn: async () => {
+      const response = await apiClient.post<{audio_url: string}>(
+        '/generate-audio',
+        {text: narrativeText ?? ''},
+      )
+      return response.data
+    },
     onSuccess(data) {
       setAudioUrl(data.audio_url)
     },

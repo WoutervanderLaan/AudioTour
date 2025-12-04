@@ -76,11 +76,20 @@ export class ApiClient implements IApiClient {
   /**
    * Build headers
    */
-  private buildHeaders(customHeaders?: Record<string, string>): HeadersInit {
+  private buildHeaders(
+    customHeaders?: Record<string, string | undefined>,
+  ): HeadersInit {
     const headers: Record<string, string> = {
       ...this.defaultHeaders,
       ...customHeaders,
     }
+
+    // Remove headers that are explicitly set to undefined
+    Object.keys(headers).forEach(key => {
+      if (headers[key] === undefined) {
+        delete headers[key]
+      }
+    })
 
     if (this.authToken) {
       headers['Authorization'] = `Bearer ${this.authToken}`
@@ -136,14 +145,22 @@ export class ApiClient implements IApiClient {
     try {
       const url = this.buildUrl(endpoint, config.params)
 
+      // Check if body is FormData to handle it specially
+      const isFormData = body instanceof FormData
+
       const requestConfig: RequestInit = {
         method,
-        headers: this.buildHeaders(config.headers),
+        headers: this.buildHeaders(
+          isFormData
+            ? {...config.headers, 'Content-Type': undefined}
+            : config.headers,
+        ),
         signal: config.signal,
       }
 
       if (body) {
-        requestConfig.body = JSON.stringify(body)
+        // Don't JSON.stringify FormData
+        requestConfig.body = isFormData ? body : JSON.stringify(body)
       }
 
       // Apply timeout if specified
