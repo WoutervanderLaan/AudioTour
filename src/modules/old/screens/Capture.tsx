@@ -4,11 +4,16 @@ import {ActivityIndicator, Image, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {zodResolver} from '@hookform/resolvers/zod'
+import {useNavigation} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import * as ImagePicker from 'expo-image-picker'
 import {useShallow} from 'zustand/react/shallow'
 
-import {RHFTextArea, RHFTextInput} from '@/shared/components/ui/form/FormInputs'
+import {
+  CheckboxControlled,
+  SwitchControlled,
+  TextInputControlled,
+} from '@/shared/components/ui/form'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
@@ -28,7 +33,7 @@ export const Capture = (): React.JSX.Element => {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
 
-  // const navigate = useNavigation()
+  const navigate = useNavigation()
   const api = useApi()
 
   const sessionId = useUserSessionStore(s => s.sessionId)
@@ -47,6 +52,8 @@ export const Capture = (): React.JSX.Element => {
       year: undefined,
       description: '',
       category: undefined,
+      notifications: false,
+      acceptTerms: false,
     },
   })
 
@@ -109,9 +116,9 @@ export const Capture = (): React.JSX.Element => {
 
     setLastPhotoData(imageUri, objectId, recognitionConfidence)
 
-    // if (objectId) {
-    //   navigate.navigate('ObjectDetail', {objectId})
-    // }
+    if (objectId) {
+      navigate.navigate('ObjectDetail', {id: objectId})
+    }
   }
 
   return (
@@ -119,6 +126,7 @@ export const Capture = (): React.JSX.Element => {
       <Box
         flex={1}
         paddingH="md"
+        paddingV="lg"
         center>
         <Label>{sessionId}</Label>
 
@@ -143,25 +151,29 @@ export const Capture = (): React.JSX.Element => {
         {!!localError && <Label>{localError}</Label>}
 
         <View style={{width: '100%'}}>
-          <RHFTextInput
+          <SwitchControlled
             control={control}
-            name="name"
-            label="Name"
-            placeholder="Enter name of the object"
+            name="notifications"
+            label="Enable notifications"
+            hint="Receive updates about your account"
+            required={true}
           />
-          <RHFTextInput
+          <CheckboxControlled
             control={control}
-            name="artist"
-            label="Artist"
-            placeholder="Enter artist name"
+            name="acceptTerms"
+            label="I accept the terms and conditions"
+            required={true}
+            hint="Read the full terms here"
           />
-          <RHFTextArea
+          <TextInputControlled
             control={control}
+            multiline
+            numberOfLines={4}
             name="description"
             label="Description"
             placeholder="Enter description"
           />
-          <RHFTextInput
+          <TextInputControlled
             control={control}
             name="year"
             keyboardType="numeric"

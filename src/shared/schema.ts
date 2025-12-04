@@ -8,6 +8,8 @@ export const objectSchema = z.object({
   category: z.enum(['painting', 'sculpture', 'photography'], {
     required_error: 'Please select a category',
   }),
+  notifications: z.boolean().refine(Boolean, {message: 'Must be true mate'}),
+  acceptTerms: z.boolean().refine(Boolean, {message: 'Must be true mate'}),
 })
 
 /**

@@ -265,7 +265,7 @@ const ReactHookFormExample = (): React.JSX.Element => {
   })
 
   const [submittedData, setSubmittedData] = useState<SettingsFormData | null>(
-    null
+    null,
   )
 
   /**
@@ -320,9 +320,7 @@ const ReactHookFormExample = (): React.JSX.Element => {
           alignItems: 'center',
           marginTop: 8,
         }}>
-        <Text style={{color: 'white', fontWeight: '600'}}>
-          Save Settings
-        </Text>
+        <Text style={{color: 'white', fontWeight: '600'}}>Save Settings</Text>
       </Pressable>
       {submittedData ? (
         <View

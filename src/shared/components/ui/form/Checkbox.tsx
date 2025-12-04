@@ -161,7 +161,7 @@ const CheckboxBox = ({
       hasError && styles.checkboxBoxError,
       disabled && styles.checkboxBoxDisabled,
     ]}>
-    {checked ? <CheckIndicator /> : null}
+    {!!checked && <CheckIndicator />}
   </View>
 )
 
@@ -232,22 +232,22 @@ export const Checkbox = ({
           hasError={hasError}
           disabled={disabled}
         />
-        {label ? (
+        {!!label && (
           <CheckboxLabel
             label={label}
             labelId={labelId}
             disabled={disabled}
             required={required}
           />
-        ) : null}
+        )}
       </CheckboxPressable>
-      {helpText ? (
+      {!!helpText && (
         <HelpText
           text={helpText}
           helpTextId={helpTextId}
           hasError={hasError}
         />
-      ) : null}
+      )}
     </View>
   )
 }

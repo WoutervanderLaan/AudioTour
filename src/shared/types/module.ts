@@ -8,37 +8,37 @@ import type {
 import {StateCreator} from 'zustand'
 
 /**
- * ModuleConfig
- * TODO: describe what this type represents.
+ * Configuration object for a module in the application.
+ * Defines metadata, navigation structure, lifecycle hooks, and integration options.
  */
 export type ModuleConfig = {
   // Basic metadata
   /**
-   * name
+   * Unique identifier for the module
    */
   name: string
   /**
-   * version
+   * Semantic version of the module (e.g., "1.0.0")
    */
   version: string
   /**
-   * enabled
+   * Whether the module is enabled and should be loaded
    */
   enabled: boolean
 
   // Navigation
   /**
-   * navigator
+   * Optional React component that serves as the module's main navigator
    */
   navigator?: ComponentType<unknown>
   /**
-   * routes
+   * Array of routes that this module provides to the root navigator
    */
   routes?: ModuleRoute[]
 
   // Store integration (Zustand)
   /**
-   * store
+   * Optional Zustand store configuration for the module
    */
   store?: {
     create: StateCreator<unknown>
@@ -48,27 +48,27 @@ export type ModuleConfig = {
 
   // Dependencies
   /**
-   * dependencies
+   * Array of module names that must be registered before this module
    */
   dependencies?: string[]
 
   // Lifecycle hooks
   /**
-   * onRegister
+   * Called when the module is registered with the module registry
    */
   onRegister?: () => void | Promise<void>
   /**
-   * onUnregister
+   * Called when the module is unregistered from the module registry
    */
   onUnregister?: () => void | Promise<void>
   /**
-   * onAppStart
+   * Called during app initialization after all modules are registered
    */
   onAppStart?: () => void | Promise<void>
 
   // TanStack Query integration
   /**
-   * queries
+   * Default query options for this module's TanStack Query hooks
    */
   queries?: {
     refetchOnMount?: boolean
@@ -78,28 +78,28 @@ export type ModuleConfig = {
 }
 
 /**
- * ModuleRoute
- * TODO: describe what this type represents.
+ * Represents a navigation route provided by a module.
+ * Routes are registered with the root navigator and can have deep linking configuration.
  */
 export type ModuleRoute = {
   /**
-   * name
+   * Unique name for the route, used in navigation
    */
   name: string
   /**
-   * path
+   * Optional path for deep linking
    */
   path?: string
   /**
-   * screen
+   * React component to render for this route
    */
   screen: ComponentType<unknown>
   /**
-   * options
+   * Navigation options for this route (can be static or dynamic)
    */
   options?: ModuleRouteOptions
   /**
-   * linking
+   * Deep linking configuration
    */
   linking?: {
     path: string
@@ -108,8 +108,8 @@ export type ModuleRoute = {
 }
 
 /**
- * ModuleRouteOptions
- * TODO: describe what this type represents.
+ * Options that can be passed to a module route.
+ * Can be static navigation options or a function that returns options dynamically.
  */
 export type ModuleRouteOptions =
   | NativeStackNavigationOptions
@@ -121,8 +121,7 @@ export type ModuleRouteOptions =
   | undefined
 
 /**
- * ModuleRegistry
- * TODO: describe what this type represents.
+ * Registry of all registered modules, keyed by module name.
  */
 export type ModuleRegistry = {
   [moduleName: string]: ModuleConfig

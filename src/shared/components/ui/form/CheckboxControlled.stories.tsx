@@ -79,7 +79,7 @@ const SimpleFormExample = (): React.JSX.Element => {
   )
 }
 
-export const SimpleForm: Story = {
+export const SimpleForm = {
   render: (): React.JSX.Element => <SimpleFormExample />,
 }
 
@@ -220,7 +220,7 @@ const ComplexFormExample = (): React.JSX.Element => {
   )
 }
 
-export const ComplexForm: Story = {
+export const ComplexForm = {
   render: (): React.JSX.Element => <ComplexFormExample />,
 }
 
@@ -278,7 +278,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   )
 }
 
-export const WithDefaultValues: Story = {
+export const WithDefaultValues = {
   render: (): React.JSX.Element => <DefaultValuesFormExample />,
 }
 
@@ -364,6 +364,6 @@ const ConditionalValidationExample = (): React.JSX.Element => {
   )
 }
 
-export const ConditionalValidation: Story = {
+export const ConditionalValidation = {
   render: (): React.JSX.Element => <ConditionalValidationExample />,
 }

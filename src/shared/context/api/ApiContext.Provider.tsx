@@ -4,6 +4,7 @@ import {ApiClient} from '@/shared/api/client-old'
 import {ApiContext} from '@/shared/context/api/ApiContext'
 
 /**
+ * @deprecated
  * React Context Provider that initializes and provides the ApiClient instance.
  *
  * This component creates a singleton instance of ApiClient and makes it available

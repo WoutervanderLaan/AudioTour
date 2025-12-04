@@ -7,10 +7,10 @@ import {routes} from './routes'
 const Stack = createNativeStackNavigator()
 
 /**
- * AuthNavigator
- * TODO: describe what it does.
+ * AuthNavigator component that handles authentication-related screens.
+ * Provides navigation between Login and Register screens.
  *
- * @returns {*} describe return value
+ * @returns The authentication stack navigator component
  */
 export const AuthNavigator = (): React.JSX.Element => {
   return (

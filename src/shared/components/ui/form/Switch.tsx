@@ -12,7 +12,10 @@ import {Label} from '@/shared/components/ui/typography'
  * SwitchProps
  * Props for the Switch component
  */
-export type SwitchProps = Omit<RNSwitchProps, 'value' | 'onValueChange'> & {
+export type SwitchProps = Omit<
+  RNSwitchProps,
+  'value' | 'onValueChange' | 'onChange'
+> & {
   /** Accessible label for the switch */
   label?: string
   /** Error message to display below the switch */
@@ -147,6 +150,7 @@ export const Switch = ({
   accessibilityLabel,
   accessibilityHint,
   ...rest
+  // eslint-disable-next-line complexity
 }: SwitchProps): React.JSX.Element => {
   const {theme} = useUnistyles()
 
@@ -188,9 +192,8 @@ export const Switch = ({
             true: theme.color.pressable.primary.default.background,
           }}
           thumbColor={theme.color.pressable.primary.default.label}
-          ios_backgroundColor={
-            hasError ? theme.color.text.warning : theme.color.text.tertiary
-          }
+          // eslint-disable-next-line react/jsx-no-leaked-render
+          ios_backgroundColor={hasError ? theme.color.text.warning : undefined}
           accessible={true}
           accessibilityLabel={a11yLabel}
           accessibilityHint={a11yHint}
@@ -199,22 +202,22 @@ export const Switch = ({
           accessibilityLabelledBy={labelId}
           {...rest}
         />
-        {label ? (
+        {!!label && (
           <SwitchLabel
             label={label}
             labelId={labelId}
             disabled={disabled}
             required={required}
           />
-        ) : null}
+        )}
       </View>
-      {helpText ? (
+      {!!helpText && (
         <HelpText
           text={helpText}
           helpTextId={helpTextId}
           hasError={hasError}
         />
-      ) : null}
+      )}
     </View>
   )
 }
