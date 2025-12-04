@@ -8,13 +8,17 @@ import {useShallow} from 'zustand/react/shallow'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
 import {apiClient} from '@/core/api/client'
+import {GenerateAudioResponse} from '@/core/api/schema'
 import {useTourStore} from '@/store/slices/tourStore'
 
 /**
- * Narrative
- * TODO: describe what it does.
+ * Narrative screen component.
  *
- * @returns {*} describe return value
+ * Displays the AI-generated narrative text for a museum object and allows
+ * users to convert it to audio using text-to-speech. The audio can be
+ * played directly in the app.
+ *
+ * @returns The Narrative screen component
  */
 export const Narrative = (): React.JSX.Element => {
   const [localError, setLocalError] = useState<string | undefined>(undefined)
@@ -29,7 +33,7 @@ export const Narrative = (): React.JSX.Element => {
 
   const synthesize = useMutation({
     mutationFn: async () => {
-      const response = await apiClient.post<{audio_url: string}>(
+      const response = await apiClient.post<GenerateAudioResponse>(
         '/generate-audio',
         {text: narrativeText ?? ''},
       )

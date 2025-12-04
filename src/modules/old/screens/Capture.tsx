@@ -19,15 +19,19 @@ import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Label} from '@/shared/components/ui/typography'
 import {apiClient} from '@/core/api/client'
+import {ProcessArtworkResponse} from '@/core/api/schema'
 import {ObjectForm, objectSchema} from '@/shared/schema'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
 /**
- * Capture
- * TODO: describe what it does.
+ * Capture screen component.
  *
- * @returns {*} describe return value
+ * Allows users to capture or select photos of museum objects and upload them
+ * for AI-powered object recognition. The screen includes a demo form for
+ * testing various form controls.
+ *
+ * @returns The Capture screen component
  */
 export const Capture = (): React.JSX.Element => {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined)
@@ -100,10 +104,10 @@ export const Capture = (): React.JSX.Element => {
 
       form.append('photos', photoBlob, 'photo.jpg')
 
-      const response = await apiClient.post<{
-        object_id: string
-        recognition_confidence: number
-      }>('/process-artwork', form)
+      const response = await apiClient.post<ProcessArtworkResponse>(
+        '/process-artwork',
+        form,
+      )
 
       return response.data
     },

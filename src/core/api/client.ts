@@ -8,10 +8,35 @@ import {
 } from './types'
 
 /**
- * ApiClient
- * TODO: describe what it does.
+ * Generic HTTP client for making API requests with advanced features.
  *
- * @returns {*} describe return value
+ * Provides a robust interface for all HTTP operations with built-in support for:
+ * - Request/response interceptors for logging, auth, and transforms
+ * - Authentication token management with Bearer token support
+ * - FormData handling for file uploads (React Native compatible)
+ * - Timeout configuration per request
+ * - Automatic JSON parsing with fallback to text
+ * - Consistent error handling with detailed error information
+ *
+ * @example Basic usage
+ * ```typescript
+ * const client = new ApiClient('https://api.example.com')
+ * const response = await client.get('/users')
+ * console.log(response.data)
+ * ```
+ *
+ * @example With authentication
+ * ```typescript
+ * client.setAuthToken('your-jwt-token')
+ * const response = await client.post('/protected-route', { data: 'value' })
+ * ```
+ *
+ * @example File upload with FormData
+ * ```typescript
+ * const formData = new FormData()
+ * formData.append('file', fileBlob, 'photo.jpg')
+ * const response = await client.post('/upload', formData)
+ * ```
  */
 export class ApiClient implements IApiClient {
   private baseURL: string
