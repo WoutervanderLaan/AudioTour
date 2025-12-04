@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/filename-case */
-import {ApiConfig} from '@/shared/api/config'
+import {ApiConfig} from '@/core/api/config'
 
 /**
  * Represents an error response from the API with status code and error details.
@@ -99,7 +99,7 @@ async function handleResponse<T>(res: Response): Promise<T> {
 }
 
 /**
- * @deprecated This ApiClient is old and needs to be replaced with @/shared/api/client.ts
+ * @deprecated This ApiClient is old and needs to be replaced with @/core/api/client.ts
  *
  * HTTP client for interacting with the AudioTour backend API.
  *

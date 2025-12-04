@@ -19,8 +19,8 @@ async function enableMocking(): Promise<void> {
     return
   }
 
-  await import('@/shared/api/mocks/msw.polyfills')
-  const {server} = await import('@/shared/api/mocks/server.native')
+  await import('@/core/api/mocks/msw.polyfills')
+  const {server} = await import('@/core/api/mocks/server.native')
   server.listen()
 }
 

@@ -6,8 +6,8 @@ import {
 
 import {authKeys} from './keys'
 
+import {apiClient} from '@/core/api/client'
 import {type SessionResponse, User} from '@/modules/auth/types'
-import {apiClient} from '@/shared/api/client'
 
 /**
  * Fetch current session

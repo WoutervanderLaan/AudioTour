@@ -13,12 +13,12 @@ import StorybookUI from '../../.rnstorybook/'
 import {registerModules} from './config/modules'
 import {Init} from './init/Init'
 
-import {queryClient} from '@/shared/api/queryclient'
+import {queryClient} from '@/core/api/queryclient'
+import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
+import {RootNavigator} from '@/core/navigation/RootNavigator'
 import {ApiProvider} from '@/shared/context/api/ApiContext.Provider'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
-import {moduleRegistry} from '@/shared/navigation/ModuleRegistry'
-import {RootNavigator} from '@/shared/navigation/RootNavigator'
 
 SplashScreen.preventAutoHideAsync()
 

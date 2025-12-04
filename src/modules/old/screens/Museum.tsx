@@ -5,7 +5,7 @@ import {StyleSheet} from 'react-native-unistyles'
 import {Text} from '@react-navigation/elements'
 import {useShallow} from 'zustand/react/shallow'
 
-import {KNOWN_MUSEUMS, MuseumLocation} from '@/shared/constants/museums'
+import {KNOWN_MUSEUMS, type MuseumLocation} from '@/shared/constants/museums'
 import {
   haversineDistanceMeters,
   useUserLocation,

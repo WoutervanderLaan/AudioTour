@@ -99,6 +99,7 @@ export default [
         {type: 'modules', pattern: 'src/modules/**'},
         {type: 'store', pattern: 'src/store/**'},
         {type: 'themes', pattern: 'src/themes/**'},
+        {type: 'core', pattern: 'src/core/**'},
       ],
     },
 
@@ -152,7 +153,15 @@ export default [
       'local/require-folder-docs': [
         'error',
         {
-          include: ['src', 'components', 'modules'],
+          include: [
+            'src',
+            'app',
+            'store',
+            'themes',
+            'modules',
+            'core',
+            'shared',
+          ],
         },
       ],
       'no-var': 'error',
@@ -206,7 +215,14 @@ export default [
       'local/enforce-feature-structure': [
         'error',
         {
-          allowedFolders: ['modules', 'shared', 'app', 'store', 'themes'],
+          allowedFolders: [
+            'modules',
+            'shared',
+            'app',
+            'store',
+            'themes',
+            'core',
+          ],
         },
       ],
       'boundaries/no-unknown': 'error',
@@ -217,10 +233,11 @@ export default [
           rules: [
             {
               from: ['app'],
-              allow: ['shared', 'store', 'themes', 'modules'],
+              allow: ['shared', 'store', 'themes', 'modules', 'core'], // app can import from anywhere
             },
-            {from: ['shared'], allow: ['themes']},
-            {from: ['modules'], allow: ['shared', 'store']},
+            {from: ['core'], allow: []}, // core cannot import from anywhere
+            {from: ['shared'], allow: ['themes', 'core']},
+            {from: ['modules'], allow: ['shared', 'store', 'core']},
             {from: ['store'], allow: ['shared']},
           ],
         },
@@ -298,13 +315,12 @@ export default [
               message:
                 'Do not use Pressable or Button from react-native. Use a Pressable component from @/shared/components/ui/pressable instead.',
             },
-            {
-              name: '@/shared/components/ui/pressable/PressableBase',
-              importNames: ['PressableBase'],
-              message:
-                'Do not use PressableBase directly. Use Button, or another defined Pressable component instead.',
-            },
-            //TODO: Prohibit react-navigation elements
+            // {
+            //   name: 'react-native',
+            //   importNames: ['View'],
+            //   message:
+            //     'Do not use View from react-native. Use a layout component from @/shared/components/ui/layout instead, or create a new layout element that meets a specific requirement (only if existing layout components do not suffice).',
+            // },
           ],
         },
       ],

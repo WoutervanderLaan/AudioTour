@@ -1,9 +1,9 @@
 import {AuthNavigator} from './navigation/AuthNavigator'
 import {routes} from './navigation/routes'
 
+import {apiClient} from '@/core/api/client'
+import {logger} from '@/core/lib/logger'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
-import {apiClient} from '@/shared/api/client'
-import {logger} from '@/shared/lib/logger'
 import {ModuleConfig} from '@/shared/types/module'
 
 /**

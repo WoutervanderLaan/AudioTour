@@ -3,10 +3,11 @@ import {useState} from 'react'
 import {
   TextInput as RNTextInput,
   type TextInputProps as RNTextInputProps,
-  View,
 } from 'react-native'
 import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Label} from '@/shared/components/ui/typography'
 
 /**
@@ -76,7 +77,7 @@ const InputLabel = ({
   disabled,
   required,
 }: InputLabelProps): React.JSX.Element => (
-  <View style={styles.labelContainer}>
+  <Row>
     <Label
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
@@ -91,7 +92,7 @@ const InputLabel = ({
         </Label>
       )}
     </Label>
-  </View>
+  </Row>
 )
 
 /**
@@ -125,15 +126,13 @@ const HelpText = ({
   helpTextId,
   hasError,
 }: HelpTextProps): React.JSX.Element => (
-  <View style={styles.helpTextContainer}>
-    <Label
-      nativeID={helpTextId}
-      color={hasError ? 'warning' : 'secondary'}
-      accessibilityRole="text"
-      accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
-      {text}
-    </Label>
-  </View>
+  <Label
+    nativeID={helpTextId}
+    color={hasError ? 'warning' : 'secondary'}
+    accessibilityRole="text"
+    accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
+    {text}
+  </Label>
 )
 
 /**
@@ -212,7 +211,7 @@ export const TextInput = ({
   ]
 
   return (
-    <View style={styles.container}>
+    <Column>
       {!!label && (
         <InputLabel
           label={label}
@@ -243,17 +242,11 @@ export const TextInput = ({
           hasError={hasError}
         />
       )}
-    </View>
+    </Column>
   )
 }
 
 const styles = StyleSheet.create(theme => ({
-  container: {
-    width: '100%',
-  },
-  labelContainer: {
-    marginBottom: theme.size.xs,
-  },
   input: {
     backgroundColor: theme.color.textInput.container.background,
     borderWidth: 1,
@@ -277,8 +270,5 @@ const styles = StyleSheet.create(theme => ({
   inputDisabled: {
     opacity: 0.5,
     backgroundColor: theme.color.text.tertiary,
-  },
-  helpTextContainer: {
-    marginTop: theme.size.xs,
   },
 }))

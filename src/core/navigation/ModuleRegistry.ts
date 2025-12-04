@@ -1,10 +1,10 @@
-import {clearModuleQueries} from '@/shared/api/queryclient'
-import {logger} from '@/shared/lib/logger'
+import {clearModuleQueries} from '@/core/api/queryclient'
+import {logger} from '@/core/lib/logger'
 import type {
   ModuleConfig,
   ModuleRegistry,
   ModuleRoute,
-} from '@/shared/types/module'
+} from '@/core/navigation/types'
 
 /**
  * ModuleRegistryManager manages the lifecycle of application modules.

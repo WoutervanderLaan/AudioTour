@@ -1,6 +1,6 @@
+import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 import {authModuleConfig} from '@/modules/auth/module.config'
 import {oldModuleConfig} from '@/modules/old'
-import {moduleRegistry} from '@/shared/navigation/ModuleRegistry'
 
 /**
  * Registers all application modules with the module registry.

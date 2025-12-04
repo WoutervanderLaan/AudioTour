@@ -1,4 +1,4 @@
-# src/shared/api
+# src/core/api
 
 API client and HTTP request handling.
 

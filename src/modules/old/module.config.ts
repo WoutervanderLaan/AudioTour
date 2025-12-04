@@ -1,7 +1,7 @@
 import {Tabs} from './navigation/OldNavigator'
 import {stackScreens} from './navigation/routes'
 
-import {logger} from '@/shared/lib/logger'
+import {logger} from '@/core/lib/logger'
 import {ModuleConfig} from '@/shared/types/module'
 
 /**

@@ -4,7 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 import {tabs} from './routes'
 
-import type {HomeTabsParamList} from '@/shared/navigation/types'
+import type {HomeTabsParamList} from '@/core/navigation/types'
 
 const Tab = createBottomTabNavigator<HomeTabsParamList>()
 

@@ -2,10 +2,11 @@ import type React from 'react'
 import {
   Switch as RNSwitch,
   type SwitchProps as RNSwitchProps,
-  View,
 } from 'react-native'
-import {StyleSheet, useUnistyles} from 'react-native-unistyles'
+import {useUnistyles} from 'react-native-unistyles'
 
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Label} from '@/shared/components/ui/typography'
 
 /**
@@ -66,7 +67,7 @@ const SwitchLabel = ({
   disabled,
   required,
 }: SwitchLabelProps): React.JSX.Element => (
-  <View style={styles.labelContainer}>
+  <Row>
     <Label
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
@@ -81,7 +82,7 @@ const SwitchLabel = ({
         </Label>
       )}
     </Label>
-  </View>
+  </Row>
 )
 
 /**
@@ -109,15 +110,13 @@ const HelpText = ({
   helpTextId,
   hasError,
 }: HelpTextProps): React.JSX.Element => (
-  <View style={styles.helpTextContainer}>
-    <Label
-      nativeID={helpTextId}
-      color={hasError ? 'warning' : 'secondary'}
-      accessibilityRole="text"
-      accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
-      {text}
-    </Label>
-  </View>
+  <Label
+    nativeID={helpTextId}
+    color={hasError ? 'warning' : 'secondary'}
+    accessibilityRole="text"
+    accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
+    {text}
+  </Label>
 )
 
 /**
@@ -177,8 +176,8 @@ export const Switch = ({
   const a11yHint = accessibilityHint || hint
 
   return (
-    <View style={styles.container}>
-      <View style={styles.switchRow}>
+    <Column>
+      <Row>
         <RNSwitch
           testID={testID}
           nativeID={switchId}
@@ -210,7 +209,7 @@ export const Switch = ({
             required={required}
           />
         )}
-      </View>
+      </Row>
       {!!helpText && (
         <HelpText
           text={helpText}
@@ -218,26 +217,6 @@ export const Switch = ({
           hasError={hasError}
         />
       )}
-    </View>
+    </Column>
   )
 }
-
-const styles = StyleSheet.create(theme => ({
-  container: {
-    width: '100%',
-  },
-  switchRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: theme.size.sm,
-    minHeight: 44,
-    paddingVertical: theme.size.xs,
-  },
-  labelContainer: {
-    flex: 1,
-  },
-  helpTextContainer: {
-    marginTop: theme.size.xs,
-    marginLeft: 51 + theme.size.sm, // Switch width (~51pt) + gap
-  },
-}))
