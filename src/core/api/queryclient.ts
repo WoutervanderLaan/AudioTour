@@ -18,10 +18,10 @@ export const queryClient = new QueryClient({
 // Helper to invalidate module queries
 /**
  * invalidateModuleQueries
- * TODO: describe what it does.
+ * Invalidates all TanStack Query queries that belong to a specific module based on query key prefix.
  *
  * @param {*} moduleName
- * @returns {*} describe return value
+ * @returns {*} Promise that resolves when all matching queries have been invalidated
  */
 export const invalidateModuleQueries = (moduleName: string): Promise<void> => {
   return queryClient.invalidateQueries({
@@ -35,10 +35,10 @@ export const invalidateModuleQueries = (moduleName: string): Promise<void> => {
 // Helper to clear module queries
 /**
  * clearModuleQueries
- * TODO: describe what it does.
+ * Removes all TanStack Query queries that belong to a specific module based on query key prefix from the cache.
  *
  * @param {*} moduleName
- * @returns {*} describe return value
+ * @returns {*} void
  */
 export const clearModuleQueries = (moduleName: string): void => {
   return queryClient.removeQueries({

@@ -8,10 +8,10 @@ import {Label} from '@/shared/components/ui/typography'
 
 /**
  * AudioPlayer
- * TODO: describe what it does.
+ * Component that provides audio playback controls for narrative audio tracks with play/pause functionality.
  *
  * @param {*} options
- * @returns {*} describe return value
+ * @returns {*} Audio player component with controls
  */
 export const AudioPlayer = ({src}: {src: string}): React.JSX.Element => {
   const [playing, setPlaying] = useState(false)
@@ -19,9 +19,9 @@ export const AudioPlayer = ({src}: {src: string}): React.JSX.Element => {
 
   /**
    * toggle
-   * TODO: describe what it does.
+   * Toggles audio playback between play and pause states (stub implementation).
    *
-   * @returns {*} describe return value
+   * @returns {*} void
    */
   const toggle = (): void => {
     setLoading(true)

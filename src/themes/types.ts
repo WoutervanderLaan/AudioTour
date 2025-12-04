@@ -4,7 +4,7 @@ import type {TextTokens} from './tokens/text'
 
 /**
  * ColorTokens
- * TODO: describe what this type represents.
+ * Type defining all color tokens for the theme including colors for pressable elements, screens, text, and text inputs.
  */
 export type ColorTokens = {
   /**
@@ -70,13 +70,13 @@ export type ColorTokens = {
 
 /**
  * SizeTokens
- * TODO: describe what this type represents.
+ * Type defining all spacing, padding, and size tokens used throughout the application.
  */
 export type SizeTokens = typeof sizeTokens
 
 /**
  * Theme
- * TODO: describe what this type represents.
+ * Complete theme object containing all design tokens including colors, sizes, text styles, and theme metadata.
  */
 export type Theme = {
   /**
@@ -103,6 +103,6 @@ export enum ThemeVariant {
 
 /**
  * AppThemes
- * TODO: describe what this type represents.
+ * Type representing all available theme variants in the application (light and dark themes).
  */
 export type AppThemes = typeof themes

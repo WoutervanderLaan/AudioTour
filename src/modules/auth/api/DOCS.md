@@ -1,3 +1,13 @@
 # src/modules/auth/api
 
-TODO: Explain the purpose and structure of this folder.
+Authentication API endpoints using TanStack Query.
+
+## Files
+
+- **queries.ts** - Auth-related query hooks (e.g., fetching user profile)
+- **mutations.ts** - Auth mutation hooks (login, register, logout)
+- **keys.ts** - Query key factory for auth queries
+
+## Purpose
+
+Encapsulates all authentication-related API calls using TanStack Query. Provides typed hooks for components to perform auth operations with automatic caching, refetching, and error handling.

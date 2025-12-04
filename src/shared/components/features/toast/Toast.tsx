@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Label} from '@/shared/components/ui/typography'
+import {Z_INDEX} from '@/shared/constants/ui'
 
 export enum ToastType {
   SUCCESS = 'success',
@@ -12,7 +13,7 @@ export enum ToastType {
 }
 /**
  * Props
- * TODO: describe what this type represents.
+ * Component props for the Toast notification component including message content and visual type.
  */
 type Props = Readonly<{
   /**
@@ -27,10 +28,10 @@ type Props = Readonly<{
 
 /**
  * Toast
- * TODO: describe what it does.
+ * Displays a temporary notification message at the top of the screen with different visual styles based on type.
  *
  * @param {*} options
- * @returns {*} describe return value
+ * @returns {*} Toast notification component
  */
 export const Toast = ({
   message,
@@ -54,7 +55,7 @@ const styles = StyleSheet.create(({color}) => ({
     left: 20,
     right: 20,
     elevation: 2,
-    zIndex: 9999, //TODO: global constants
+    zIndex: Z_INDEX.TOAST,
     backgroundColor: color.screen.background.default,
   },
 

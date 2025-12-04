@@ -1,3 +1,5 @@
+import {logger} from '../lib/logger'
+import {ApiConfig} from './config'
 import {
   ApiError,
   ApiResponse,
@@ -88,11 +90,11 @@ export class ApiClient implements IApiClient {
     const url = new URL(endpoint, this.baseURL)
 
     if (params) {
-      Object.entries(params).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(params)) {
         if (value !== undefined && value !== null) {
-          url.searchParams.append(key, String(value))
+          url.searchParams.append(key, JSON.stringify(value))
         }
-      })
+      }
     }
 
     return url.toString()
@@ -110,11 +112,11 @@ export class ApiClient implements IApiClient {
     }
 
     // Remove headers that are explicitly set to undefined (needed for FormData)
-    Object.keys(headers).forEach(key => {
+    for (const key of Object.keys(headers)) {
       if (headers[key] === undefined) {
         delete headers[key]
       }
-    })
+    }
 
     if (this.authToken) {
       headers['Authorization'] = `Bearer ${this.authToken}`
@@ -186,14 +188,14 @@ export class ApiClient implements IApiClient {
         signal: config.signal,
       }
 
-      if (body) {
+      if (body != null) {
         // Don't JSON.stringify FormData - pass it directly to fetch
         requestConfig.body = isFormData ? body : JSON.stringify(body)
       }
 
       // Apply timeout if specified
       let timeoutId: NodeJS.Timeout | undefined
-      if (config.timeout) {
+      if (config.timeout != null) {
         const controller = new AbortController()
         timeoutId = setTimeout(() => controller.abort(), config.timeout)
         requestConfig.signal = controller.signal
@@ -321,24 +323,18 @@ export class ApiClient implements IApiClient {
   }
 }
 
-// Create singleton instance
-export const apiClient = new ApiClient(
-  process.env.EXPO_PUBLIC_API_URL || 'https://api.example.com',
-)
+export const apiClient = new ApiClient(ApiConfig.apiBaseUrl)
 
-// Optional: Add global interceptors
 apiClient.addRequestInterceptor((url, config) => {
-  // Log requests in dev
   if (__DEV__) {
-    console.log(`[API] ${config.method} ${url}`)
+    logger.debug(`[API] ${config.method} ${url}`)
   }
   return {url, config}
 })
 
 apiClient.addResponseInterceptor(response => {
-  // Log responses in dev
   if (__DEV__) {
-    console.log(`[API] Response ${response.status} ${response.url}`)
+    logger.debug(`[API] Response ${response.status} ${response.url}`)
   }
   return response
 })

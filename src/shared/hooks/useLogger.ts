@@ -2,9 +2,9 @@ import {logger} from '@/core/lib/logger'
 
 /**
  * useLogger
- * TODO: describe what it does.
+ * React hook that provides access to the application logger with debug, info, warn, and error methods.
  *
- * @returns {*} describe return value
+ * @returns {*} Logger instance with logging methods
  */
 export const useLogger = (): {
   debug: (message: string, ...args: unknown[]) => void

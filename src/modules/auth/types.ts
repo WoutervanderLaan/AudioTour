@@ -1,6 +1,6 @@
 /**
  * User
- * TODO: describe what this type represents.
+ * Represents an authenticated user with basic profile information.
  */
 export type User = {
   /**
@@ -19,7 +19,7 @@ export type User = {
 
 /**
  * AuthState
- * TODO: describe what this type represents.
+ * Zustand store state for managing user authentication including user data, token, and auth actions.
  */
 export type AuthState = {
   /**
@@ -56,7 +56,7 @@ export type AuthState = {
 
 /**
  * SessionResponse
- * TODO: describe what this type represents.
+ * API response containing the current user session information and expiration timestamp.
  */
 export type SessionResponse = {
   /**
@@ -71,7 +71,7 @@ export type SessionResponse = {
 
 /**
  * LoginCredentials
- * TODO: describe what this type represents.
+ * User credentials required for authentication via email and password.
  */
 export type LoginCredentials = {
   /**
@@ -86,7 +86,7 @@ export type LoginCredentials = {
 
 /**
  * LoginResponse
- * TODO: describe what this type represents.
+ * API response containing the authenticated user and their access token after successful login.
  */
 export type LoginResponse = {
   /**

@@ -1,8 +1,8 @@
 /**
  * RegisterScreen
- * TODO: describe what it does.
+ * User registration screen for creating new accounts (stub implementation).
  *
- * @returns {*} describe return value
+ * @returns {*} Register screen component
  */
 export const RegisterScreen = (): null => {
   return null

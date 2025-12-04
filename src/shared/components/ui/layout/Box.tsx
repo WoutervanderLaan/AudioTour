@@ -8,7 +8,7 @@ import type {Theme} from '@/themes/types'
 
 /**
  * BoxPropsBase
- * TODO: describe what this type represents.
+ * Base props for the Box component including layout, alignment, spacing, and padding options.
  */
 export type BoxPropsBase = {
   /**
@@ -80,7 +80,7 @@ export type BoxPropsBase = {
 
 /**
  * LayeredBoxProps
- * TODO: describe what this type represents.
+ * Final Box props type with exclusivity constraints to prevent conflicting prop combinations.
  */
 export type BoxProps = ApplyExclusivityPair<
   BoxPropsBase,
@@ -99,10 +99,10 @@ export type BoxProps = ApplyExclusivityPair<
 
 /**
  * Box
- * TODO: describe what it does.
+ * Flexible layout container component with support for flexbox, alignment, spacing, and theme-based padding.
  *
  * @param {*} options
- * @returns {*} describe return value
+ * @returns {*} Box layout component
  */
 export const Box = ({
   children,

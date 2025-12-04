@@ -1,3 +1,11 @@
-# src/shared/lib
+# src/core/lib
 
-TODO: Explain the purpose and structure of this folder.
+Shared utility functions and helper libraries.
+
+## Files
+
+- **logger.ts** - Logging utility for debugging and error tracking
+
+## Purpose
+
+Contains generic utility functions and helpers that are used across the application. These are pure functions or simple utility classes that don't have dependencies on React or app-specific logic.

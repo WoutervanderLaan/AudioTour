@@ -14,6 +14,7 @@ import {registerModules} from './config/modules'
 import {Init} from './init/Init'
 
 import {queryClient} from '@/core/api/queryclient'
+import {logger} from '@/core/lib/logger'
 import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 import {RootNavigator} from '@/core/navigation/RootNavigator'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
@@ -39,15 +40,15 @@ export const App = (): React.JSX.Element => {
     // Initialize modules asynchronously (calls onAppStart hooks)
     /**
      * initializeApp
-     * TODO: describe what it does.
+     * Initializes all registered modules by calling their onAppStart hooks and handles errors gracefully.
      *
-     * @returns {*} describe return value
+     * @returns {*} Promise that resolves when all modules are initialized
      */
     const initializeApp = async (): Promise<void> => {
       try {
         await moduleRegistry.initialize()
       } catch (error) {
-        console.error('Failed to initialize app:', error)
+        logger.error('Failed to initialize app:', error)
         // Continue running the app even if initialization fails
         // Individual module errors are already logged by the ModuleRegistry
       } finally {

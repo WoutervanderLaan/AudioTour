@@ -9,6 +9,7 @@ import {useShallow} from 'zustand/react/shallow'
 
 import {apiClient} from '@/core/api/client'
 import {GenerateNarrativeResponse} from '@/core/api/schema'
+import {logger} from '@/core/lib/logger'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
@@ -54,21 +55,14 @@ export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
       return response.data
     },
     onSuccess: data => {
-      console.log('Generated narrative: ', data.text)
+      logger.debug('Generated narrative: ', data.text)
       setNarrativeText(data.text)
     },
     onError: err => {
-      console.error('Error generating narrative: ', err)
+      logger.error('Error generating narrative: ', err)
       setLocalError('Error generating narrative')
     },
   })
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     // handled in store if needed
-  //     return () => {};
-  //   }, [objectId])
-  // );
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -149,7 +149,6 @@ export const Switch = ({
   accessibilityLabel,
   accessibilityHint,
   ...rest
-  // eslint-disable-next-line complexity
 }: SwitchProps): React.JSX.Element => {
   const {theme} = useUnistyles()
 

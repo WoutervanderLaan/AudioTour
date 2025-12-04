@@ -6,10 +6,10 @@ import type {Theme} from '@/themes/types'
 
 /**
  * Spacer
- * TODO: describe what it does.
+ * Flexible spacing component that fills available space with optional padding size.
  *
  * @param {*} options
- * @returns {*} describe return value
+ * @returns {*} Spacer component
  */
 export const Spacer = ({
   size,

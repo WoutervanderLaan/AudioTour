@@ -4,10 +4,10 @@ import {Box, BoxProps} from './Box'
 
 /**
  * Row
- * TODO: describe what it does.
+ * Layout component that renders children in a horizontal row using flexbox direction.
  *
  * @param {*} props
- * @returns {*} describe return value
+ * @returns {*} Row layout component
  */
 export const Row = (props: Omit<BoxProps, 'row' | 'column'>): ReactNode => {
   const boxProps = {...props, row: true} as BoxProps

@@ -7,7 +7,9 @@ import type {ObjectItem} from '@/shared/types/types'
 
 /**
  * MuseumState
- * TODO: describe what this type represents.
+ *
+ * Global state for museum-related data including the currently selected museum
+ * and its associated objects collection.
  */
 type MuseumState = {
   /**

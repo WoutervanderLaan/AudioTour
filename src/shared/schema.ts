@@ -14,6 +14,6 @@ export const objectSchema = z.object({
 
 /**
  * ObjectForm
- * TODO: describe what this type represents.
+ * Type inferred from the objectSchema representing form data for museum object creation with validation rules.
  */
 export type ObjectForm = z.infer<typeof objectSchema>

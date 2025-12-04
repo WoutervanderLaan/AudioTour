@@ -93,7 +93,7 @@ declare global {
   namespace ReactNavigation {
     /**
      * RootParamList
-     * TODO: describe what this type represents.
+     * Global React Navigation type augmentation to provide type-safe navigation throughout the app.
      */
     // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
     interface RootParamList extends RootStackParamList {}

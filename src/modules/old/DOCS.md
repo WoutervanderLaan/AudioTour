@@ -1,3 +1,13 @@
 # src/modules/old
 
-TODO: Explain the purpose and structure of this folder.
+Legacy module containing screens that have not yet been migrated to proper feature modules.
+
+## Structure
+
+- **navigation/** - Old navigation configuration and routes
+- **screens/** - Legacy screen components (Capture, Museum, ObjectDetail, Narrative, Recommendations, Settings, NotFound)
+- **module.config.ts** - Temporary module configuration
+
+## Purpose
+
+This is a temporary module containing screens from the original implementation. These screens should be migrated to proper feature modules (e.g., capture module, museum module) following the auth module pattern. Once migration is complete, this folder should be removed.

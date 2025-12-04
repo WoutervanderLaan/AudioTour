@@ -151,7 +151,6 @@ const HelpText = ({
  * @param {TextInputProps} props - Component props
  * @returns {React.JSX.Element} Rendered text input element
  */
-/* eslint-disable complexity */
 export const TextInput = ({
   label,
   error,

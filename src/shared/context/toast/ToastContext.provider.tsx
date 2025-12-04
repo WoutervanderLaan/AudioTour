@@ -6,15 +6,14 @@ import {ToastContext} from './ToastContext'
 import type {ToastProps} from './ToastContext.types'
 
 import {Toast} from '@/shared/components/features/toast/Toast'
-
-const DEFAULT_DURATION = 3000 //TODO: constant
+import {DURATION} from '@/shared/constants/ui'
 
 /**
  * ToastProvider
- * TODO: describe what it does.
+ * Context provider that manages toast notification state and provides methods to show and close toast messages.
  *
  * @param {*} options
- * @returns {*} describe return value
+ * @returns {*} Toast context provider component
  */
 export const ToastProvider = ({
   children,
@@ -34,7 +33,7 @@ export const ToastProvider = ({
 
     timeoutRef.current = setTimeout(
       () => setToast(null),
-      toast.duration ?? DEFAULT_DURATION,
+      toast.duration ?? DURATION.TOAST_DEFAULT,
     )
   }, [])
 

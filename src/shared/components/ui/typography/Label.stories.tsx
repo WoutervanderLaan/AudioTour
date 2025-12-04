@@ -12,7 +12,7 @@ export default meta
 
 /**
  * Story
- * TODO: describe what this type represents.
+ * Type definition for Label component Storybook stories.
  */
 type Story = StoryObj<typeof meta>
 

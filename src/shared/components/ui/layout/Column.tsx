@@ -4,10 +4,10 @@ import {Box, BoxProps} from './Box'
 
 /**
  * Column
- * TODO: describe what it does.
+ * Layout component that renders children in a vertical column using flexbox direction.
  *
  * @param {*} props
- * @returns {*} describe return value
+ * @returns {*} Column layout component
  */
 export const Column = (props: Omit<BoxProps, 'row' | 'column'>): ReactNode => {
   const boxProps = {...props, column: true} as BoxProps

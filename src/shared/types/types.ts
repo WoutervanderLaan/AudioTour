@@ -1,6 +1,6 @@
 /**
  * ObjectItem
- * TODO: describe what this type represents.
+ * Represents a museum object with metadata including name, artist, date, and generated content such as narrative text and audio.
  */
 export type ObjectItem = {
   /**
@@ -43,7 +43,7 @@ export type ObjectItem = {
 
 /**
  * UserSequence
- * TODO: describe what this type represents.
+ * Represents a user's tour sequence tracking which museum objects they have visited in order during a session.
  */
 export type UserSequence = {
   /**
@@ -66,7 +66,7 @@ export type UserSequence = {
 
 /**
  * Museum
- * TODO: describe what this type represents.
+ * Represents a museum with basic information and licensing details for the audio tour platform.
  */
 export type Museum = {
   /**
@@ -93,7 +93,7 @@ export type Museum = {
 
 /**
  * UploadPhotoResponse
- * TODO: describe what this type represents.
+ * API response containing the identified museum object ID and recognition confidence score after photo upload.
  */
 export type UploadPhotoResponse = {
   /**
@@ -108,7 +108,7 @@ export type UploadPhotoResponse = {
 
 /**
  * GenerateNarrativeResponse
- * TODO: describe what this type represents.
+ * API response containing the AI-generated narrative text for a museum object.
  */
 export type GenerateNarrativeResponse = {
   /**
@@ -119,7 +119,7 @@ export type GenerateNarrativeResponse = {
 
 /**
  * GenerateAudioResponse
- * TODO: describe what this type represents.
+ * API response containing the URL to the generated audio file for the narrative.
  */
 export type GenerateAudioResponse = {
   /**

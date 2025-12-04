@@ -1,8 +1,8 @@
 /**
  * LoginScreen
- * TODO: describe what it does.
+ * Authentication screen for user login (stub implementation).
  *
- * @returns {*} describe return value
+ * @returns {*} Login screen component
  */
 export const LoginScreen = (): null => {
   return null

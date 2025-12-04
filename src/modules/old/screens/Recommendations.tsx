@@ -7,6 +7,7 @@ import {useQuery} from '@tanstack/react-query'
 import {apiClient} from '@/core/api/client'
 import {apiKeys} from '@/core/api/keys'
 import {RecommendationsResponse} from '@/core/api/schema'
+import {logger} from '@/core/lib/logger'
 import {ToastType} from '@/shared/components/features/toast/Toast'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {useToast} from '@/shared/hooks/useToast'
@@ -49,7 +50,7 @@ export const Recommendations = (): React.JSX.Element => {
 
   useEffect(() => {
     if (error) {
-      console.error('Failed to load recommendations:', error)
+      logger.error('Failed to load recommendations:', error)
       toast.showToast({
         message: 'Error loading recommendations',
         type: ToastType.ERROR,

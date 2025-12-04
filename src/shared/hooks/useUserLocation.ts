@@ -4,7 +4,7 @@ import * as Location from 'expo-location'
 
 /**
  * Coordinates
- * TODO: describe what this type represents.
+ * Represents a geographic location with latitude and longitude coordinates.
  */
 export type Coordinates = {
   /**
@@ -18,11 +18,11 @@ export type Coordinates = {
 
 /**
  * haversineDistanceMeters
- * TODO: describe what it does.
+ * Calculates the distance in meters between two geographic coordinates using the Haversine formula.
  *
  * @param {*} a
  * @param {*} b
- * @returns {*} describe return value
+ * @returns {*} Distance in meters between the two coordinates
  */
 export function haversineDistanceMeters(
   a: Coordinates,
@@ -32,10 +32,10 @@ export function haversineDistanceMeters(
 
   /**
    * toRad
-   * TODO: describe what it does.
+   * Converts degrees to radians for trigonometric calculations.
    *
    * @param {*} deg
-   * @returns {*} describe return value
+   * @returns {*} Angle in radians
    */
   const toRad = (deg: number): number => (deg * Math.PI) / 180
   const dLat = toRad(b.latitude - a.latitude)
@@ -52,7 +52,7 @@ export function haversineDistanceMeters(
 
 /**
  * UseUserLocationOptions
- * TODO: describe what this type represents.
+ * Configuration options for the useUserLocation hook to control location tracking behavior.
  */
 export type UseUserLocationOptions = {
   /**
@@ -71,10 +71,10 @@ export type UseUserLocationOptions = {
 
 /**
  * useUserLocation
- * TODO: describe what it does.
+ * React hook that retrieves and optionally watches the user's current location with permission handling.
  *
  * @param {*} options
- * @returns {*} describe return value
+ * @returns {*} Object containing current coordinates, permission status, and any error messages
  */
 export function useUserLocation(options: UseUserLocationOptions = {}): {
   readonly coords: Coordinates | undefined
@@ -102,9 +102,9 @@ export function useUserLocation(options: UseUserLocationOptions = {}): {
 
     /**
      * run
-     * TODO: describe what it does.
+     * Requests location permissions, retrieves the current location, and optionally sets up location watching.
      *
-     * @returns {*} describe return value
+     * @returns {*} Promise that resolves when location setup is complete
      */
     const run = async (): Promise<void> => {
       try {
@@ -150,10 +150,10 @@ export function useUserLocation(options: UseUserLocationOptions = {}): {
             },
           )
         }
-      } catch (e: any) {
+      } catch {
         if (!isMounted) return
 
-        setError(e?.message || 'Failed to get location')
+        setError('Failed to get location')
       }
     }
     run()

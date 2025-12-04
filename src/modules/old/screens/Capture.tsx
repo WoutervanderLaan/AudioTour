@@ -11,6 +11,7 @@ import {useShallow} from 'zustand/react/shallow'
 
 import {apiClient} from '@/core/api/client'
 import {ProcessArtworkResponse} from '@/core/api/schema'
+import {logger} from '@/core/lib/logger'
 import {
   CheckboxControlled,
   SwitchControlled,
@@ -53,20 +54,20 @@ export const Capture = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission for the demo object form.
    *
    * @param {*} data
-   * @returns {*} describe return value
+   * @returns {*} void
    */
   const onSubmit = (data: ObjectForm): void => {
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   /**
    * pickImage
-   * TODO: describe what it does.
+   * Opens the image picker to allow the user to select a photo from their library.
    *
-   * @returns {*} describe return value
+   * @returns {*} Promise that resolves when image selection is complete
    */
   const pickImage = async (): Promise<void> => {
     setLocalError(undefined)
@@ -103,16 +104,16 @@ export const Capture = (): React.JSX.Element => {
       return response.data
     },
     onError: err => {
-      console.error('Error uploading photo: ', err)
+      logger.error('Error uploading photo: ', err)
       setLocalError('Error uploading photo')
     },
   })
 
   /**
    * upload
-   * TODO: describe what it does.
+   * Uploads the selected photo to the API for object recognition and navigates to the detail screen.
    *
-   * @returns {*} describe return value
+   * @returns {*} Promise that resolves when upload and navigation are complete
    */
   const upload = async (): Promise<void> => {
     if (!imageUri) return

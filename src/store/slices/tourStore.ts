@@ -4,7 +4,7 @@ import {immer} from 'zustand/middleware/immer'
 
 /**
  * TourState
- * TODO: describe what this type represents.
+ * Represents the state for managing an active audio tour session, including photo capture, object recognition, narrative generation, and audio playback.
  */
 type TourState = {
   /**

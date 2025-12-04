@@ -6,9 +6,9 @@ import {Box} from '@/shared/components/ui/layout/Box'
 
 /**
  * NotFound
- * TODO: describe what it does.
+ * 404 error screen displayed when a user navigates to an invalid route.
  *
- * @returns {*} describe return value
+ * @returns {*} Not found error screen component
  */
 export const NotFound = (): React.JSX.Element => {
   return (

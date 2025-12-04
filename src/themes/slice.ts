@@ -7,7 +7,7 @@ import {type Theme, ThemeVariant} from './types'
 
 /**
  * ThemeState
- * TODO: describe what this type represents.
+ * Zustand store state for managing the active theme variant (light or dark mode).
  */
 export type ThemeState = {
   /**
@@ -24,9 +24,9 @@ export const useThemeStore = create<ThemeState>()(
 
 /**
  * selectTheme
- * TODO: describe what it does.
+ * Selector function that retrieves the full theme object based on the current theme variant in state.
  *
  * @param {*} state
- * @returns {*} describe return value
+ * @returns {*} Complete theme object with all tokens and styles
  */
 export const selectTheme = (state: ThemeState): Theme => themes[state.theme]

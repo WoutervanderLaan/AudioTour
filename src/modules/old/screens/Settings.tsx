@@ -1,14 +1,16 @@
+import type React from 'react'
+
 import {Text} from '@react-navigation/elements'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 
 /**
  * Settings
- * TODO: describe what it does.
+ * Application settings screen (stub implementation).
  *
- * @returns {*} describe return value
+ * @returns {*} Settings screen component
  */
-export const Settings = (): any => {
+export const Settings = (): React.JSX.Element => {
   return (
     <Box
       flex={1}

@@ -1,6 +1,6 @@
 /**
  * ApiResponse
- * TODO: describe what this type represents.
+ * Generic type representing a successful API response with data, status code, and headers.
  */
 export type ApiResponse<T = unknown> = {
   /**
@@ -19,7 +19,7 @@ export type ApiResponse<T = unknown> = {
 
 /**
  * ApiError
- * TODO: describe what this type represents.
+ * Type representing an API error with message, status code, error code, and additional details.
  */
 export type ApiError = {
   /**
@@ -42,7 +42,7 @@ export type ApiError = {
 
 /**
  * RequestConfig
- * TODO: describe what this type represents.
+ * Configuration options for API requests including headers, query parameters, abort signal, and timeout.
  */
 export type RequestConfig = {
   /**
@@ -65,7 +65,7 @@ export type RequestConfig = {
 
 /**
  * IApiClient
- * TODO: describe what this type represents.
+ * Interface defining the contract for an API client with HTTP methods, authentication, and interceptor support.
  */
 export type IApiClient = {
   get<T = unknown>(url: string, config?: RequestConfig): Promise<ApiResponse<T>>
@@ -100,7 +100,7 @@ export type IApiClient = {
 
 /**
  * RequestInterceptor
- * TODO: describe what this type represents.
+ * Function type that intercepts and modifies outgoing API requests before they are sent.
  */
 export type RequestInterceptor = (
   url: string,
@@ -111,7 +111,7 @@ export type RequestInterceptor = (
 
 /**
  * ResponseInterceptor
- * TODO: describe what this type represents.
+ * Function type that intercepts and processes API responses before they are returned to the caller.
  */
 export type ResponseInterceptor = (
   response: Response,

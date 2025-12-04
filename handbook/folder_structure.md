@@ -13,11 +13,16 @@
     - **lib/** – API clients, helpers, utilities, constants
     - **types/** – global TypeScript types
 
-  - **modules/** – self-contained feature modules. TODO: deprecated, needs update
-    - **auth/**
-      - components/
-      - hooks/
-      - services/
+  - **modules/** – self-contained feature modules with their own navigation, screens, and business logic
+    - **auth/** – authentication module (login, register, auth state)
+      - api/ – auth API endpoints
+      - hooks/ – auth hooks (useAuth)
+      - navigation/ – auth navigation stack
+      - screens/ – login and register screens
+      - store/ – auth state management
+      - types.ts – auth types
+      - module.config.ts – module configuration
+    - **old/** – legacy screens awaiting migration to proper modules
       - types/
       - index.ts
     - **user/**

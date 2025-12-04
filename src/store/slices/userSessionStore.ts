@@ -5,7 +5,8 @@ import {immer} from 'zustand/middleware/immer'
 
 /**
  * UserProfile
- * TODO: describe what this type represents.
+ *
+ * Represents a user's profile information including identification and display preferences.
  */
 type UserProfile = {
   /**
@@ -20,7 +21,9 @@ type UserProfile = {
 
 /**
  * UserSessionState
- * TODO: describe what this type represents.
+ *
+ * Manages user session data including unique session identifier and profile information.
+ * Used to track user activity across app sessions and maintain user context.
  */
 type UserSessionState = {
   /**

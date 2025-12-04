@@ -159,19 +159,23 @@ Uses react-native-unistyles with a custom theme system:
 - Module resolution: bundler
 - Includes: src, index.tsx, config files, .storybook
 
-<!-- ## Module Development
+## Module Development
 
 When adding new Modules:
 
 1. Create a new folder under src/modules/ with the structure:
-   - components/ (feature-specific UI)
-   - hooks/ (feature-specific hooks)
-   - services/ (feature-specific business logic)
-   - types/ (feature-specific types)
-   - index.ts (public API exports)
-2. Features must only import from src/shared/ and src/store/
-3. Add a DOCS.md file explaining the feature (enforced by ESLint)
-4. Follow the existing patterns in auth/ and user/ modules --> TODO: deprecated, needs update
+   - **api/** - Module-specific API endpoints (queries and mutations)
+   - **hooks/** - Module-specific React hooks
+   - **navigation/** - Module navigation stack and routes
+   - **screens/** - Module screen components
+   - **store/** - Module state management (if needed)
+   - **types.ts** - Module-specific TypeScript types
+   - **module.config.ts** - Module configuration for app registry
+   - **DOCS.md** - Module documentation (enforced by ESLint)
+2. Modules must only import from src/shared/ and src/store/
+3. Each module exports a configuration object that plugs into the ModuleRegistry
+4. Follow the existing pattern in the auth/ module
+5. Screens from src/modules/old/ should be migrated to proper feature modules following this structure
 
 ## Documentation
 

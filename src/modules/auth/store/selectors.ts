@@ -7,23 +7,23 @@ import type {User} from '@/modules/auth/types'
 // Selectors for optimized re-renders
 /**
  * useUser
- * TODO: describe what it does.
+ * React hook that returns the current authenticated user from the auth store.
  *
- * @returns {*} describe return value
+ * @returns {*} Current user object or null if not authenticated
  */
 export const useUser = (): User | null => useAuthStore(state => state.user)
 /**
  * useToken
- * TODO: describe what it does.
+ * React hook that returns the current authentication token from the auth store.
  *
- * @returns {*} describe return value
+ * @returns {*} Authentication token string or null if not authenticated
  */
 export const useToken = (): string | null => useAuthStore(state => state.token)
 /**
  * useIsAuthenticated
- * TODO: describe what it does.
+ * React hook that returns whether the user is currently authenticated.
  *
- * @returns {*} describe return value
+ * @returns {*} Boolean indicating authentication status
  */
 export const useIsAuthenticated = (): boolean =>
   useAuthStore(state => state.isAuthenticated)
@@ -31,9 +31,9 @@ export const useIsAuthenticated = (): boolean =>
 // Action selectors
 /**
  * useAuthActions
- * TODO: describe what it does.
+ * React hook that returns all auth-related actions for managing authentication state.
  *
- * @returns {*} describe return value
+ * @returns {*} Object containing setUser, setToken, logout, and reset action functions
  */
 export const useAuthActions = (): {
   setUser: (user: User) => void

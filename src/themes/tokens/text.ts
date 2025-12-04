@@ -1,6 +1,6 @@
 /**
  * ParagraphVariants
- * TODO: describe what this type represents.
+ * Union type defining the available paragraph text styles including body, intro, quote, and small text variants.
  */
 export type ParagraphVariants =
   | 'body'
@@ -11,7 +11,7 @@ export type ParagraphVariants =
 
 /**
  * ParagraphTokens
- * TODO: describe what this type represents.
+ * Type defining font size tokens for all paragraph text variants.
  */
 type ParagraphTokens = {
   /**
@@ -38,7 +38,7 @@ type ParagraphTokens = {
 
 /**
  * TitleTokensPerLevel
- * TODO: describe what this type represents.
+ * Type defining font size tokens for all heading levels from h1 to h6.
  */
 export type TitleTokensPerLevel = {
   /**
@@ -79,7 +79,7 @@ export enum FontFamily {
 
 /**
  * TextTokens
- * TODO: describe what this type represents.
+ * Type defining all text-related theme tokens including font family, font size, and line height for all text variants.
  */
 export type TextTokens = {
   /**

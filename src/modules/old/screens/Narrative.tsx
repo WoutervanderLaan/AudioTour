@@ -43,8 +43,7 @@ export const Narrative = (): React.JSX.Element => {
     onSuccess(data) {
       setAudioUrl(data.audio_url)
     },
-    onError(err) {
-      console.error('Error generating audio: ', err)
+    onError() {
       setLocalError('Error generating audio')
     },
   })

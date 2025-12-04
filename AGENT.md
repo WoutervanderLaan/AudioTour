@@ -17,9 +17,10 @@ The codebase should remain clean, modular, explainable, and well-tested.
 - `/src` – entry for all source files
   - `/app` – global app entry, initialization, and navigation configuration
   - `/shared` – globally shared elements like components, types, utilities, and React Context providers
-  <!-- - `/features` – separate features and scoped elements --> TODO: deprecated, needs update
+  - `/modules` – self-contained feature modules with their own navigation, screens, and state
   - `/store` – global Zustand state management with slices and middleware
   - `/themes` – theme tokens and styling configuration (react-native-unistyles)
+  - `/core` – core infrastructure (API client, navigation system, utilities)
 - `/handbook` – project documentation
 
 For a detailed overview of the folder structure, consult the handbook: [Folder Structure](./handbook/folder_structure.md)

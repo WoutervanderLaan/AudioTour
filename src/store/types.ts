@@ -1,6 +1,7 @@
 /**
  * CreateStoreOptions
- * TODO: describe what this type represents.
+ *
+ * Configuration options for creating Zustand stores with optional persistence and devtools.
  */
 export type CreateStoreOptions = {
   /**

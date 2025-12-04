@@ -1,10 +1,10 @@
 /* eslint-disable max-lines */
 
-import type {Coordinates} from '@/shared/hooks/useUserLocation' // TODO: move file to feature folder
+import type {Coordinates} from '@/shared/hooks/useUserLocation'
 
 /**
  * MuseumLocation
- * TODO: describe what this type represents.
+ * Represents a museum with its name, location details, geographic coordinates, and optional distance from user.
  */
 export type MuseumLocation = {
   /**

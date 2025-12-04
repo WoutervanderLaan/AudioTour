@@ -5,6 +5,7 @@ import {Text} from '@react-navigation/elements'
 import {useShallow} from 'zustand/react/shallow'
 
 import {Column} from '@/shared/components/ui/layout/Column'
+import {Paragraph} from '@/shared/components/ui/typography'
 import {KNOWN_MUSEUMS, type MuseumLocation} from '@/shared/constants/museums'
 import {
   haversineDistanceMeters,
@@ -14,9 +15,9 @@ import {useMuseumStore} from '@/store/slices/museumStore'
 
 /**
  * Museum
- * TODO: describe what it does.
+ * Screen that displays a list of nearby museums sorted by distance from the user's current location.
  *
- * @returns {*} describe return value
+ * @returns {*} Museum selection screen component
  */
 export const Museum = (): React.JSX.Element => {
   const [loading, setLoading] = React.useState(true)
@@ -27,10 +28,6 @@ export const Museum = (): React.JSX.Element => {
       setMuseum: state.setMuseum,
     })),
   )
-
-  // useEffect(() => {
-  // setObjects();
-  // }, [currentMuseumId]);
 
   const {coords, error: locError} = useUserLocation({
     shouldWatch: true,
@@ -70,16 +67,12 @@ export const Museum = (): React.JSX.Element => {
       <FlatList
         data={sortedByDistance}
         keyExtractor={item => item.id}
-        contentContainerStyle={{gap: 8}}
         renderItem={({item}) => (
           <TouchableOpacity onPress={() => setMuseum(item.id)}>
-            <Text
-              style={{
-                fontWeight: currentMuseumId === item.id ? 'bold' : 'normal',
-                flex: 1,
-              }}>
+            <Paragraph
+              fontFamily={currentMuseumId === item.id ? 'bold' : 'regular'}>
               {item.name} ({item.distance?.toFixed(0) ?? '???'} m)
-            </Text>
+            </Paragraph>
           </TouchableOpacity>
         )}
       />

@@ -4,7 +4,7 @@
  * and their value is set to 'never', effectively disallowing them.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type DisallowKeys<T, K extends keyof any> = {
+type DisallowKeys<T, K extends PropertyKey> = {
   [P in K]?: never
 }
 
