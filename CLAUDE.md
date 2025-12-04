@@ -88,13 +88,16 @@ src/
 
 ### API Integration
 
-The app uses a custom `ApiClient` class (src/shared/lib/api/client.ts) that handles:
+The app uses a custom `ApiClient` class (src/core/api/client.ts) with TanStack Query for data fetching:
 
-- Photo upload for object recognition (`/process-artwork`)
-- Narrative generation (`/generate-narrative`)
-- Audio generation (`/generate-audio`)
-- Museum object listing (`/museum-objects/:id`)
-- Personalized recommendations (`/recommendations`)
+- **ApiClient**: Generic HTTP client with interceptors, auth token management, and FormData support
+- **TanStack Query**: Used throughout for queries and mutations (caching, refetching, state management)
+- **Endpoints**:
+  - Photo upload for object recognition (`/process-artwork`)
+  - Narrative generation (`/generate-narrative`)
+  - Audio generation (`/generate-audio`)
+  - Museum object listing (`/museum-objects/:id`)
+  - Personalized recommendations (`/recommendations`)
 
 API base URL is configured via `EXPO_PUBLIC_API_BASE_URL` environment variable (defaults to `http://localhost:8000` in dev).
 

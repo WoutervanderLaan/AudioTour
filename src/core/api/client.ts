@@ -79,12 +79,12 @@ export class ApiClient implements IApiClient {
   private buildHeaders(
     customHeaders?: Record<string, string | undefined>,
   ): HeadersInit {
-    const headers: Record<string, string> = {
+    const headers: Record<string, string | undefined> = {
       ...this.defaultHeaders,
       ...customHeaders,
     }
 
-    // Remove headers that are explicitly set to undefined
+    // Remove headers that are explicitly set to undefined (needed for FormData)
     Object.keys(headers).forEach(key => {
       if (headers[key] === undefined) {
         delete headers[key]
@@ -95,7 +95,7 @@ export class ApiClient implements IApiClient {
       headers['Authorization'] = `Bearer ${this.authToken}`
     }
 
-    return headers
+    return headers as Record<string, string>
   }
 
   /**
@@ -146,6 +146,9 @@ export class ApiClient implements IApiClient {
       const url = this.buildUrl(endpoint, config.params)
 
       // Check if body is FormData to handle it specially
+      // In React Native, FormData needs special handling:
+      // 1. Don't JSON.stringify it
+      // 2. Don't set Content-Type header (RN's fetch will set it with boundary)
       const isFormData = body instanceof FormData
 
       const requestConfig: RequestInit = {
@@ -159,7 +162,7 @@ export class ApiClient implements IApiClient {
       }
 
       if (body) {
-        // Don't JSON.stringify FormData
+        // Don't JSON.stringify FormData - pass it directly to fetch
         requestConfig.body = isFormData ? body : JSON.stringify(body)
       }
 

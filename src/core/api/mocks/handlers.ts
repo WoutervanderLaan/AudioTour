@@ -32,14 +32,10 @@ export const handlers = [
     })
   }),
   http.get(createHandler('/museum-objects/:museumId'), () => {
-    return HttpResponse.json({
-      data: [],
-    })
+    return HttpResponse.json([])
   }),
   http.get(createHandler('/recommendations'), () => {
-    return HttpResponse.json({
-      data: [],
-    })
+    return HttpResponse.json([])
   }),
   http.all('/symbolicate', () => {
     return passthrough()
