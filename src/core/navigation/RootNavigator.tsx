@@ -10,10 +10,16 @@ import {linking} from './linking'
 import {moduleRegistry} from './ModuleRegistry'
 import type {RootStackParamList} from './types'
 
+import {
+  getStackNavigatorOptions,
+  useNavigationTheme,
+} from '@/shared/hooks/useNavigationTheme'
+
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
 /**
  * RootNavigator component that manages the application's navigation structure.
+ * Automatically adapts header styling to the current theme (light/dark).
  *
  * Navigation Architecture:
  * - HomeTabs: Initial route containing the main tab navigator (Capture, Museum, Recommendations)
@@ -31,6 +37,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 export const RootNavigator: React.FC<
   Omit<NavigationContainerProps, 'children'>
 > = props => {
+  const navTheme = useNavigationTheme()
+
   // Get the main tabs navigator from the 'old' module
   // Note: This is hardcoded for now but should be made configurable in the future
   const mainModule = React.useMemo(() => {
@@ -50,7 +58,10 @@ export const RootNavigator: React.FC<
       {...props}
       linking={linking}>
       <Stack.Navigator
-        screenOptions={{headerShown: false}}
+        screenOptions={{
+          headerShown: false,
+          ...getStackNavigatorOptions(navTheme),
+        }}
         initialRouteName="HomeTabs">
         {/* Main tabs as the initial route */}
         {!!MainTabs && (
