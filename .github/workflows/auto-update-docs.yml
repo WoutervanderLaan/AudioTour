@@ -1,0 +1,251 @@
+name: Auto-Update Documentation
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+  actions: read
+
+jobs:
+  update-docs:
+    # Only run if the PR was actually merged (not just closed)
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history for better git context
+          ref: ${{ github.event.pull_request.base.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Get merged PR information
+        id: pr_info
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Get the list of changed files from the merged PR
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+          # Get changed files and save to a file
+          gh pr view $PR_NUMBER --json files --jq '.files[].path' > /tmp/changed_files.txt
+
+          echo "Changed files in PR #$PR_NUMBER:"
+          cat /tmp/changed_files.txt
+
+          # Get PR title and body for context
+          PR_TITLE=$(gh pr view $PR_NUMBER --json title --jq '.title')
+          PR_BODY=$(gh pr view $PR_NUMBER --json body --jq '.body')
+          echo "pr_title=$PR_TITLE" >> $GITHUB_OUTPUT
+
+          # Save PR body to file for use in prompt
+          echo "$PR_BODY" > /tmp/pr_body.txt
+
+      - name: Generate documentation update branch name
+        id: branch
+        run: |
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+          BRANCH="docs/auto-update-pr-${{ steps.pr_info.outputs.pr_number }}-${TIMESTAMP}"
+          echo "name=$BRANCH" >> $GITHUB_OUTPUT
+          echo "Generated branch name: $BRANCH"
+
+      - name: Run Claude Code to update documentation
+        id: claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          show_full_output: true
+          claude_args: "--allowedTools 'Edit,Read,Glob,Grep,Bash(git:*),Bash(gh:*)'"
+          prompt: |
+            # Documentation Update for Merged PR #${{ steps.pr_info.outputs.pr_number }}
+
+            **PR Title:** ${{ steps.pr_info.outputs.pr_title }}
+
+            A pull request has just been merged into the codebase. Your task is to review the changes and update ALL relevant documentation to ensure it remains accurate and current.
+
+            ## Changed Files
+
+            The following files were modified in the merged PR:
+            ```
+            $(cat /tmp/changed_files.txt)
+            ```
+
+            ## Your Task
+
+            **CRITICAL: You MUST follow these instructions exactly:**
+
+            ### Step 1: Analyze the Changes
+
+            1. Read each of the changed files listed above to understand what was modified
+            2. Identify the purpose and scope of the changes
+            3. Determine which documentation files might be affected:
+               - JSDoc comments in the same files
+               - JSDoc comments in related files in the same module/feature
+               - README.md files in affected directories
+               - Documentation in `handbook/` directory (if applicable)
+               - CLAUDE.md project instructions (if architecture changed)
+               - Module DOCS.md files under `src/modules/*/DOCS.md`
+
+            ### Step 2: Update JSDoc Comments
+
+            Review and update JSDoc comments to ensure they:
+            - Accurately describe the current function/type behavior
+            - Include all parameters with correct types
+            - Document return types accurately
+            - Reflect any changes in function signatures or logic
+            - Follow the project's JSDoc standards
+
+            **IMPORTANT:**
+            - ONLY update documentation (JSDoc comments and .md files)
+            - DO NOT modify any actual code implementation
+            - DO NOT change function logic, variable names, or imports
+            - DO NOT add new features or refactor code
+
+            ### Step 3: Update Markdown Documentation
+
+            For each affected directory:
+            1. Check if there's a README.md or DOCS.md file
+            2. Update it to reflect:
+               - New functions or components added
+               - Changed APIs or interfaces
+               - Updated usage examples
+               - Modified architecture or patterns
+
+            Also check and update if needed:
+            - `handbook/*.md` - High-level documentation
+            - `CLAUDE.md` - Project instructions (only if architecture changed significantly)
+            - Module-specific docs in `src/modules/*/DOCS.md`
+
+            ### Step 4: Create Branch and Commit Changes
+
+            **REQUIRED:** After making documentation updates:
+
+            1. Create a new branch:
+            ```bash
+            git checkout -b ${{ steps.branch.outputs.name }}
+            ```
+
+            2. Check what files were modified:
+            ```bash
+            git status
+            ```
+
+            3. If you made changes, commit them:
+            ```bash
+            git add .
+            git commit -m "docs: auto-update documentation for PR #${{ steps.pr_info.outputs.pr_number }}
+
+            Updates documentation to reflect changes from:
+            ${{ steps.pr_info.outputs.pr_title }}
+
+            Modified documentation in:
+            - JSDoc comments in affected files
+            - Related markdown documentation files
+
+            🤖 Auto-generated by Claude Code"
+            ```
+
+            4. Push the branch:
+            ```bash
+            git push -u origin ${{ steps.branch.outputs.name }}
+            ```
+
+            ### Step 5: Create Pull Request
+
+            **REQUIRED:** Create a PR for review:
+            ```bash
+            gh pr create \
+              --title "docs: Auto-update documentation for PR #${{ steps.pr_info.outputs.pr_number }}" \
+              --body "## Summary
+
+            This PR contains automatic documentation updates triggered by the merge of PR #${{ steps.pr_info.outputs.pr_number }}.
+
+            ## Original PR
+
+            - **Title:** ${{ steps.pr_info.outputs.pr_title }}
+            - **Link:** ${{ github.event.pull_request.html_url }}
+
+            ## Changes Made
+
+            [Provide a clear bulleted list of documentation updates made, e.g.:
+            - Updated JSDoc for \`functionName\` in \`src/path/file.ts\`
+            - Updated README.md in \`src/modules/feature/\`
+            - Updated handbook/product_spec.md to reflect new API]
+
+            ## Files Reviewed
+
+            The following files from the original PR were reviewed:
+            \`\`\`
+            $(cat /tmp/changed_files.txt)
+            \`\`\`
+
+            ## Review Checklist
+
+            - [ ] JSDoc comments are accurate and complete
+            - [ ] Markdown documentation reflects current codebase
+            - [ ] No code implementation was modified (documentation only)
+            - [ ] All affected documentation files were updated
+
+            ---
+
+            🤖 Auto-generated by Claude Code
+            🔗 Triggered by PR #${{ steps.pr_info.outputs.pr_number }}" \
+              --base ${{ github.event.pull_request.base.ref }}
+            ```
+
+            ### Final Verification
+
+            After completing all steps:
+            1. Verify the branch exists: `git ls-remote --heads origin ${{ steps.branch.outputs.name }}`
+            2. Verify the PR was created: `gh pr view`
+            3. Report the PR URL
+
+            ### Important Guidelines
+
+            - **ONLY update documentation** - Do not modify code logic
+            - If no documentation updates are needed, create a commit that says "docs: no updates needed for PR #${{ steps.pr_info.outputs.pr_number }}" and still create the PR explaining why
+            - Be thorough - check all potentially affected docs, not just obvious ones
+            - Maintain the existing documentation style and format
+            - Ensure all changes are accurate and reflect the actual code changes
+
+      - name: Add workflow summary
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "## Documentation Auto-Update Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Trigger Information" >> $GITHUB_STEP_SUMMARY
+          echo "- **Merged PR:** [#${{ steps.pr_info.outputs.pr_number }}](${{ github.event.pull_request.html_url }})" >> $GITHUB_STEP_SUMMARY
+          echo "- **PR Title:** ${{ steps.pr_info.outputs.pr_title }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Documentation Branch:** \`${{ steps.branch.outputs.name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Workflow Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Check if documentation PR was created
+          if gh pr list --head ${{ steps.branch.outputs.name }} --json number,title,url --jq '.[0]' > /tmp/doc_pr_info.json 2>/dev/null && [ -s /tmp/doc_pr_info.json ]; then
+            DOC_PR_URL=$(cat /tmp/doc_pr_info.json | jq -r '.url')
+            DOC_PR_NUMBER=$(cat /tmp/doc_pr_info.json | jq -r '.number')
+            DOC_PR_TITLE=$(cat /tmp/doc_pr_info.json | jq -r '.title')
+            echo "### ✅ Documentation PR Created" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR #${DOC_PR_NUMBER}:** [${DOC_PR_TITLE}](${DOC_PR_URL})" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Please review and merge the documentation updates." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### ⚠️ No Documentation PR Found" >> $GITHUB_STEP_SUMMARY
+            echo "The workflow completed but no documentation PR was detected. Check the logs for details." >> $GITHUB_STEP_SUMMARY
+          fi
