@@ -233,9 +233,9 @@ export default [
           rules: [
             {
               from: ['app'],
-              allow: ['shared', 'store', 'themes', 'modules', 'core'], // app can import from anywhere
+              allow: ['shared', 'store', 'themes', 'modules', 'core'],
             },
-            {from: ['core'], allow: []}, // core cannot import from anywhere
+            {from: ['core'], allow: ['shared']},
             {from: ['shared'], allow: ['themes', 'core']},
             {from: ['modules'], allow: ['shared', 'store', 'core']},
             {from: ['store'], allow: ['shared']},
