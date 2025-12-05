@@ -1,10 +1,10 @@
+import type {ModuleRoute} from '@/core/navigation/types'
 import {Capture} from '@/modules/old/screens/Capture'
 import {Museum} from '@/modules/old/screens/Museum'
 import {Narrative} from '@/modules/old/screens/Narrative'
 import {NotFound} from '@/modules/old/screens/NotFound'
 import {Recommendations} from '@/modules/old/screens/Recommendations'
 import {Settings} from '@/modules/old/screens/Settings'
-import {ModuleRoute} from '@/shared/types/module'
 
 /**
  * Tab routes that appear in the bottom tab navigator (main navigation)

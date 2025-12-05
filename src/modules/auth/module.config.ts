@@ -3,8 +3,8 @@ import {routes} from './navigation/routes'
 
 import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger'
+import type {ModuleConfig} from '@/core/navigation/types'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
-import {ModuleConfig} from '@/shared/types/module'
 
 /**
  * Authentication module configuration.

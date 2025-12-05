@@ -37,7 +37,5 @@ export const handlers = [
   http.get(createHandler('/recommendations'), () => {
     return HttpResponse.json([])
   }),
-  http.all('/symbolicate', () => {
-    return passthrough()
-  }),
+  http.all('/symbolicate', () => passthrough()),
 ]

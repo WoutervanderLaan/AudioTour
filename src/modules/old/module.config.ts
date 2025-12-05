@@ -2,7 +2,7 @@ import {Tabs} from './navigation/OldNavigator'
 import {stackScreens} from './navigation/routes'
 
 import {logger} from '@/core/lib/logger'
-import {ModuleConfig} from '@/shared/types/module'
+import type {ModuleConfig} from '@/core/navigation/types'
 
 /**
  * Old module configuration - contains the legacy app screens.

@@ -41,14 +41,13 @@ import {
  * ```
  */
 export class ApiClient implements IApiClient {
-  private baseURL: string
+  private readonly baseURL: string = ApiConfig.apiBaseUrl
   private defaultHeaders: Record<string, string>
   private authToken: string | null = null
   private requestInterceptors: RequestInterceptor[] = []
   private responseInterceptors: ResponseInterceptor[] = []
 
-  constructor(baseURL: string, defaultHeaders: Record<string, string> = {}) {
-    this.baseURL = baseURL
+  constructor(defaultHeaders: Record<string, string> = {}) {
     this.defaultHeaders = {
       'Content-Type': 'application/json',
       ...defaultHeaders,
@@ -323,7 +322,7 @@ export class ApiClient implements IApiClient {
   }
 }
 
-export const apiClient = new ApiClient(ApiConfig.apiBaseUrl)
+export const apiClient = new ApiClient()
 
 apiClient.addRequestInterceptor((url, config) => {
   if (__DEV__) {
