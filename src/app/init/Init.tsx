@@ -1,10 +1,10 @@
 import type React from 'react'
 import {useEffect} from 'react'
-import {StatusBar} from 'react-native'
-import {UnistylesRuntime} from 'react-native-unistyles'
 
 import * as NavigationElements from '@react-navigation/elements'
 import {Asset} from 'expo-asset'
+
+import {ThemedStatusBar} from '@/shared/components/ui/ThemedStatusBar'
 
 Asset.loadAsync([...NavigationElements.Assets])
 
@@ -27,26 +27,16 @@ async function enableMocking(): Promise<void> {
 /**
  * Init
  * Initialization component that sets up development tools (MSW mocking) and configures the status bar theme.
+ * Uses ThemedStatusBar which automatically adapts to light/dark theme changes.
  *
- * @returns {*} StatusBar component with theme-aware styling
+ * @returns {*} ThemedStatusBar component with automatic theme-aware styling
  */
 export const Init = (): React.JSX.Element => {
   useEffect(() => {
     if (__DEV__) {
       enableMocking()
     }
-
-    UnistylesRuntime.setRootViewBackgroundColor('blue')
   }, [])
 
-  return (
-    <StatusBar
-      barStyle={
-        UnistylesRuntime.colorScheme === 'dark'
-          ? 'light-content'
-          : 'dark-content'
-      }
-      animated
-    />
-  )
+  return <ThemedStatusBar />
 }
