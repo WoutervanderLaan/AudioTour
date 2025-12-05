@@ -29,10 +29,14 @@ export type ModuleConfig = {
   // Navigation
   /**
    * Optional React component that serves as the module's main navigator
+   * @deprecated Use routes with type: 'tab' instead. This property is no longer used
+   * in the modular navigation system and will be removed in a future version.
    */
   navigator?: ComponentType<unknown>
   /**
-   * Array of routes that this module provides to the root navigator
+   * Array of routes that this module provides to the navigation system.
+   * Routes can be of type 'tab' (bottom tab navigator), 'stack' (regular screen),
+   * or 'modal' (modal presentation).
    */
   routes?: ModuleRoute[]
 
