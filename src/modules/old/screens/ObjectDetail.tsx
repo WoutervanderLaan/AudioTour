@@ -16,7 +16,7 @@ import {useUserSessionStore} from '@/store/slices/userSessionStore'
 /**
  * Props for the ObjectDetail screen component.
  */
-type Props = StaticScreenProps<{objectId: string}>
+type Props = StaticScreenProps<{id: string}>
 
 /**
  * ObjectDetail screen component.
@@ -25,11 +25,11 @@ type Props = StaticScreenProps<{objectId: string}>
  * generate an AI-powered narrative description. The generated narrative
  * is stored in the tour store for access across the app.
  *
- * @param {Props} props - Component props containing route with objectId
+ * @param {Props} props - Component props containing route with object id
  * @returns The ObjectDetail screen component
  */
 export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
-  const {objectId} = route.params
+  const {id} = route.params
   const [localError, setLocalError] = React.useState<string | undefined>(
     undefined,
   )
@@ -48,7 +48,7 @@ export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
       const response = await apiClient.post<GenerateNarrativeResponse>(
         '/generate-narrative',
         {
-          object_id: objectId,
+          object_id: id,
           user_session_id: sessionId,
         },
       )
@@ -68,7 +68,7 @@ export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text>Object Detail</Text>
 
-      <Text>ID: {objectId}</Text>
+      <Text>ID: {id}</Text>
 
       <Button
         onPress={() => {

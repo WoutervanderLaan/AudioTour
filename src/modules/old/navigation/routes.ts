@@ -47,13 +47,13 @@ export const stackRoutes = [
   {
     name: 'ObjectDetail',
     type: 'stack' as const,
-    params: {objectId: '' as string},
+    params: {id: '' as string},
     screen: ObjectDetail,
     options: {
       title: 'Object Detail',
     },
     linking: {
-      path: 'object/:objectId',
+      path: 'object/:id',
     },
   },
   {

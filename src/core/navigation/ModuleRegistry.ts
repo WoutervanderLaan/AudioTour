@@ -15,9 +15,16 @@ class ModuleRegistryManager {
   private modules: ModuleRegistry = {}
   private initialized = false
 
+  // Route caches for performance
+  private tabRoutesCache?: ModuleRoute[]
+  private stackRoutesCache?: ModuleRoute[]
+  private modalRoutesCache?: ModuleRoute[]
+  private rootStackRoutesCache?: ModuleRoute[]
+
   /**
    * Registers a module with the registry.
    * Checks for dependencies and calls the module's onRegister hook.
+   * Invalidates route caches when a module is registered.
    *
    * @param config - The module configuration to register
    */
@@ -43,6 +50,10 @@ class ModuleRegistryManager {
       }
 
       this.modules[config.name] = config
+
+      // Invalidate route caches when a module is registered
+      this.clearRouteCaches()
+
       config.onRegister?.()
 
       logger.info(`Registered module: ${config.name}`)
@@ -52,8 +63,22 @@ class ModuleRegistryManager {
   }
 
   /**
+   * Clears all route caches.
+   * Called when modules are registered or unregistered to ensure fresh route lists.
+   *
+   * @private
+   */
+  private clearRouteCaches(): void {
+    this.tabRoutesCache = undefined
+    this.stackRoutesCache = undefined
+    this.modalRoutesCache = undefined
+    this.rootStackRoutesCache = undefined
+  }
+
+  /**
    * Unregisters a module and cleans up its resources.
    * Clears TanStack Query cache and calls the module's onUnregister hook.
+   * Invalidates route caches when a module is unregistered.
    *
    * @param moduleName - The name of the module to unregister
    */
@@ -72,6 +97,9 @@ class ModuleRegistryManager {
       await module.onUnregister?.()
 
       delete this.modules[moduleName]
+
+      // Invalidate route caches when a module is unregistered
+      this.clearRouteCaches()
 
       logger.info(`Unregistered module: ${moduleName}`)
     } catch (error) {
@@ -119,43 +147,89 @@ class ModuleRegistryManager {
   /**
    * Gets all tab routes from all registered modules.
    * Tab routes are rendered in the bottom tab navigator.
+   * Results are cached for performance.
    *
    * @returns Array of tab routes
    */
   getTabRoutes(): ModuleRoute[] {
-    return this.getRoutes().filter(route => route.type === 'tab')
+    if (!this.tabRoutesCache) {
+      this.tabRoutesCache = this.getRoutes().filter(route => {
+        if (!route.type) {
+          logger.error(
+            `Route '${route.name}' is missing required 'type' field. This route will be excluded from navigation.`,
+          )
+          return false
+        }
+        return route.type === 'tab'
+      })
+    }
+    return this.tabRoutesCache
   }
 
   /**
    * Gets all stack routes from all registered modules.
    * Stack routes are rendered in the root stack navigator (not tabs or modals).
+   * Results are cached for performance.
    *
    * @returns Array of stack routes
    */
   getStackRoutes(): ModuleRoute[] {
-    return this.getRoutes().filter(route => route.type === 'stack')
+    if (!this.stackRoutesCache) {
+      this.stackRoutesCache = this.getRoutes().filter(route => {
+        if (!route.type) {
+          logger.error(
+            `Route '${route.name}' is missing required 'type' field. This route will be excluded from navigation.`,
+          )
+          return false
+        }
+        return route.type === 'stack'
+      })
+    }
+    return this.stackRoutesCache
   }
 
   /**
    * Gets all modal routes from all registered modules.
    * Modal routes are rendered as modals in the root stack navigator.
+   * Results are cached for performance.
    *
    * @returns Array of modal routes
    */
   getModalRoutes(): ModuleRoute[] {
-    return this.getRoutes().filter(route => route.type === 'modal')
+    if (!this.modalRoutesCache) {
+      this.modalRoutesCache = this.getRoutes().filter(route => {
+        if (!route.type) {
+          logger.error(
+            `Route '${route.name}' is missing required 'type' field. This route will be excluded from navigation.`,
+          )
+          return false
+        }
+        return route.type === 'modal'
+      })
+    }
+    return this.modalRoutesCache
   }
 
   /**
    * Gets all non-tab routes (stack + modal) from all registered modules.
    * These are routes that should be registered in the root stack navigator.
+   * Results are cached for performance.
    *
    * @returns Array of stack and modal routes
    */
   getRootStackRoutes(): ModuleRoute[] {
-    return this.getRoutes().filter(
-      route => route.type === 'stack' || route.type === 'modal',
-    )
+    if (!this.rootStackRoutesCache) {
+      this.rootStackRoutesCache = this.getRoutes().filter(route => {
+        if (!route.type) {
+          logger.error(
+            `Route '${route.name}' is missing required 'type' field. This route will be excluded from navigation.`,
+          )
+          return false
+        }
+        return route.type === 'stack' || route.type === 'modal'
+      })
+    }
+    return this.rootStackRoutesCache
   }
 
   /**

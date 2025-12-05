@@ -23,4 +23,3 @@ export {linking} from './linking'
 
 // Navigation type utilities
 export type {ExtractParamList} from './navigationTypes'
-export {buildParamList} from './navigationTypes'
