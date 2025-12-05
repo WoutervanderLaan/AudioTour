@@ -1,4 +1,5 @@
-import {useUnistyles} from 'react-native-unistyles'
+import {useMemo} from 'react'
+import {useUnistyles, UnistylesRuntime} from 'react-native-unistyles'
 import type {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs'
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
 
@@ -27,6 +28,7 @@ export interface NavigationThemeOptions {
  * useNavigationTheme
  * Custom hook that provides theme-aware navigation styling options.
  * Returns colors and styles that automatically adapt to light/dark theme changes.
+ * Uses UnistylesRuntime.colorScheme for reliable theme detection.
  *
  * @returns {NavigationThemeOptions} Navigation theme options for headers, tabs, and status bar
  *
@@ -42,23 +44,30 @@ export interface NavigationThemeOptions {
 export const useNavigationTheme = (): NavigationThemeOptions => {
   const {theme} = useUnistyles()
 
-  return {
-    header: {
-      backgroundColor: theme.screen.background.default,
-      tintColor: theme.text.link,
-      titleColor: theme.text.default,
-    },
-    tabBar: {
-      backgroundColor: theme.screen.background.default,
-      activeTintColor: theme.text.link,
-      inactiveTintColor: theme.text.secondary,
-    },
-    statusBar: {
-      // Light content (white) for dark theme, dark content (black) for light theme
-      barStyle: theme.text.default === '#FFFFFF' ? 'light-content' : 'dark-content',
-      backgroundColor: theme.screen.background.default,
-    },
-  }
+  return useMemo(
+    () => ({
+      header: {
+        backgroundColor: theme.screen.background.default,
+        tintColor: theme.text.link,
+        titleColor: theme.text.default,
+      },
+      tabBar: {
+        backgroundColor: theme.screen.background.default,
+        activeTintColor: theme.text.link,
+        inactiveTintColor: theme.text.secondary,
+      },
+      statusBar: {
+        // Use UnistylesRuntime.colorScheme for reliable theme detection
+        // Light content (white text) for dark theme, dark content (black text) for light theme
+        barStyle:
+          UnistylesRuntime.colorScheme === 'dark'
+            ? 'light-content'
+            : 'dark-content',
+        backgroundColor: theme.screen.background.default,
+      },
+    }),
+    [theme]
+  )
 }
 
 /**
