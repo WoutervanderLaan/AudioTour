@@ -1,75 +1,36 @@
-import {ComponentType} from 'react'
-
 import type {BottomTabScreenProps} from '@react-navigation/bottom-tabs'
-import type {
-  CompositeScreenProps,
-  ParamListBase,
-  RouteProp,
-  Theme,
-} from '@react-navigation/native'
-import type {
-  NativeStackNavigationOptions,
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack'
-import {StateCreator} from 'zustand'
+import type {CompositeScreenProps} from '@react-navigation/native'
+import type {NativeStackScreenProps} from '@react-navigation/native-stack'
+
+import {ExtractParamList} from './navigationTypes'
+
+import {routes as authRoutes} from '@/modules/auth/navigation/routes'
+import {routes as oldRoutes} from '@/modules/old/navigation/routes'
+
+// Gather all module routes
+const allRoutes = [...authRoutes, ...oldRoutes] as const
+
+// Extract tab routes
+const tabRoutes = allRoutes.filter(r => r.type === 'tab')
+
+// Extract root stack routes (stack + modal)
+const rootStackRoutes = allRoutes.filter(
+  r => r.type === 'stack' || r.type === 'modal',
+)
 
 /**
- * Root stack parameter list - defines all screens accessible from the root navigator
+ * Home tabs parameter list - dynamically generated from module routes.
+ * Contains all routes with type: 'tab' from all registered modules.
+ */
+export type HomeTabsParamList = ExtractParamList<typeof tabRoutes>
+
+/**
+ * Root stack parameter list - dynamically generated from module routes.
+ * Contains HomeTabs plus all routes with type: 'stack' or 'modal' from all registered modules.
  */
 export type RootStackParamList = {
-  // Main tabs navigator
-  /**
-   * HomeTabs
-   */
   HomeTabs: undefined
-
-  // Old module screens (modal/detail screens)
-  /**
-   * ObjectDetail
-   */
-  ObjectDetail: {id: string}
-  /**
-   * Narrative
-   */
-  Narrative: {id: string}
-  /**
-   * Settings
-   */
-  Settings: undefined
-  /**
-   * NotFound
-   */
-  NotFound: undefined
-
-  // Auth module screens
-  /**
-   * Login
-   */
-  Login: undefined
-  /**
-   * Register
-   */
-  Register: undefined
-}
-
-/**
- * Home tabs parameter list - defines all tabs in the bottom tab navigator
- */
-export type HomeTabsParamList = {
-  /**
-   * Capture
-   */
-  Capture: undefined
-  /**
-   * Museum
-   */
-  Museum: undefined
-  /**
-   * Recommendations
-   */
-  Recommendations: undefined
-}
+} & ExtractParamList<typeof rootStackRoutes>
 
 /**
  * Root stack screen props helper type

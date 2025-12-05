@@ -117,6 +117,48 @@ class ModuleRegistryManager {
   }
 
   /**
+   * Gets all tab routes from all registered modules.
+   * Tab routes are rendered in the bottom tab navigator.
+   *
+   * @returns Array of tab routes
+   */
+  getTabRoutes(): ModuleRoute[] {
+    return this.getRoutes().filter(route => route.type === 'tab')
+  }
+
+  /**
+   * Gets all stack routes from all registered modules.
+   * Stack routes are rendered in the root stack navigator (not tabs or modals).
+   *
+   * @returns Array of stack routes
+   */
+  getStackRoutes(): ModuleRoute[] {
+    return this.getRoutes().filter(route => route.type === 'stack')
+  }
+
+  /**
+   * Gets all modal routes from all registered modules.
+   * Modal routes are rendered as modals in the root stack navigator.
+   *
+   * @returns Array of modal routes
+   */
+  getModalRoutes(): ModuleRoute[] {
+    return this.getRoutes().filter(route => route.type === 'modal')
+  }
+
+  /**
+   * Gets all non-tab routes (stack + modal) from all registered modules.
+   * These are routes that should be registered in the root stack navigator.
+   *
+   * @returns Array of stack and modal routes
+   */
+  getRootStackRoutes(): ModuleRoute[] {
+    return this.getRoutes().filter(
+      route => route.type === 'stack' || route.type === 'modal',
+    )
+  }
+
+  /**
    * Initializes all registered modules by calling their onAppStart hooks.
    * Uses Promise.allSettled to ensure graceful degradation - if one module fails,
    * others will still be initialized. Failed modules are logged but don't prevent

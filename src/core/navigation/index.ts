@@ -13,9 +13,14 @@ export type {
 
 // Navigator exports
 export {RootNavigator} from './RootNavigator'
+export {TabNavigator} from './TabNavigator'
 
 // Module registry exports
 export {moduleRegistry} from './ModuleRegistry'
 
 // Linking configuration
 export {linking} from './linking'
+
+// Navigation type utilities
+export type {ExtractParamList} from './navigationTypes'
+export {buildParamList} from './navigationTypes'

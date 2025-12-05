@@ -7,11 +7,15 @@ import {Settings} from '@/modules/old/screens/Settings'
 import {ModuleRoute} from '@/shared/types/module'
 
 /**
- * Tab routes that appear in the bottom tab navigator (main navigation)
+ * All routes from the old module.
+ * Includes tab routes (bottom tab navigator) and stack/modal routes (root stack navigator).
  */
-export const tabs: ModuleRoute[] = [
+export const routes = [
+  // Tab routes - appear in bottom tab navigator
   {
     name: 'Capture',
+    type: 'tab',
+    params: undefined,
     screen: Capture,
     options: {
       title: 'Capture',
@@ -19,6 +23,8 @@ export const tabs: ModuleRoute[] = [
   },
   {
     name: 'Museum',
+    type: 'tab',
+    params: undefined,
     screen: Museum,
     options: {
       title: 'Museum',
@@ -26,29 +32,19 @@ export const tabs: ModuleRoute[] = [
   },
   {
     name: 'Recommendations',
+    type: 'tab',
+    params: undefined,
     screen: Recommendations,
     options: {
       title: 'Recommendations',
     },
   },
-]
 
-/**
- * Modal and detail screens that appear in the root stack navigator
- */
-export const stackScreens: ModuleRoute[] = [
-  // {
-  //   name: 'ObjectDetail',
-  //   screen: ObjectDetail,
-  //   options: {
-  //     title: 'Object Detail',
-  //   },
-  //   linking: {
-  //     path: 'object/:id',
-  //   },
-  // },
+  // Stack routes - appear in root stack navigator
   {
     name: 'Narrative',
+    type: 'stack',
+    params: {id: '' as string},
     screen: Narrative,
     options: {
       title: 'Narrative',
@@ -58,7 +54,23 @@ export const stackScreens: ModuleRoute[] = [
     },
   },
   {
+    name: 'NotFound',
+    type: 'stack',
+    params: undefined,
+    screen: NotFound,
+    options: {
+      title: '404',
+    },
+    linking: {
+      path: '*',
+    },
+  },
+
+  // Modal routes - appear as modals in root stack navigator
+  {
     name: 'Settings',
+    type: 'modal',
+    params: undefined,
     screen: Settings,
     options: {
       title: 'Settings',
@@ -68,14 +80,4 @@ export const stackScreens: ModuleRoute[] = [
       path: 'settings',
     },
   },
-  {
-    name: 'NotFound',
-    screen: NotFound,
-    options: {
-      title: '404',
-    },
-    linking: {
-      path: '*',
-    },
-  },
-]
+] as const satisfies readonly ModuleRoute[]

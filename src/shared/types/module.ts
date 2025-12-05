@@ -78,18 +78,32 @@ export type ModuleConfig = {
 }
 
 /**
+ * Route type - defines where and how the route is rendered in the navigation structure
+ */
+export type RouteType =
+  | 'tab' // Rendered in the bottom tab navigator
+  | 'stack' // Rendered in the root stack navigator
+  | 'modal' // Rendered as a modal in the root stack
+
+/**
  * Represents a navigation route provided by a module.
  * Routes are registered with the root navigator and can have deep linking configuration.
  */
-export type ModuleRoute = {
+export type ModuleRoute<TParams = Record<string, unknown>> = {
   /**
    * Unique name for the route, used in navigation
    */
   name: string
   /**
-   * Optional path for deep linking
+   * Route type - determines where the route is rendered (tab, stack, or modal)
    */
-  path?: string
+  type: RouteType
+  /**
+   * TypeScript type definition for route parameters
+   * Use `undefined` for routes with no parameters
+   * Example: {id: string, mode?: 'edit' | 'view'}
+   */
+  params: TParams
   /**
    * React component to render for this route
    */
