@@ -13,6 +13,10 @@ const prefix = createURL('/')
  * This function gathers all routes from registered modules and generates
  * the deep linking paths based on their linking configuration.
  *
+ * IMPORTANT: This function is called at module initialization time, before the app starts.
+ * All modules must be registered before this module loads. Dynamic module registration
+ * after app initialization is not supported - the linking config is static once built.
+ *
  * @returns Deep linking configuration for React Navigation
  */
 const buildLinkingConfig = (): LinkingOptions<RootStackParamList> => {

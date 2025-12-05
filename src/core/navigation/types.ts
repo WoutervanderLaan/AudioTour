@@ -4,33 +4,49 @@ import type {NativeStackScreenProps} from '@react-navigation/native-stack'
 
 import {ExtractParamList} from './navigationTypes'
 
-import {routes as authRoutes} from '@/modules/auth/navigation/routes'
-import {routes as oldRoutes} from '@/modules/old/navigation/routes'
-
-// Gather all module routes
-const allRoutes = [...authRoutes, ...oldRoutes] as const
-
-// Extract tab routes
-const tabRoutes = allRoutes.filter(r => r.type === 'tab')
-
-// Extract root stack routes (stack + modal)
-const rootStackRoutes = allRoutes.filter(
-  r => r.type === 'stack' || r.type === 'modal',
-)
+import {
+  tabRoutes as authTabRoutes,
+  stackRoutes as authStackRoutes,
+  modalRoutes as authModalRoutes,
+} from '@/modules/auth/navigation/routes'
+import {
+  tabRoutes as oldTabRoutes,
+  stackRoutes as oldStackRoutes,
+  modalRoutes as oldModalRoutes,
+} from '@/modules/old/navigation/routes'
 
 /**
- * Home tabs parameter list - dynamically generated from module routes.
- * Contains all routes with type: 'tab' from all registered modules.
+ * Gather all tab routes from all modules.
+ * Pre-filtered at compile time for proper type inference.
  */
-export type HomeTabsParamList = ExtractParamList<typeof tabRoutes>
+const allTabRoutes = [...authTabRoutes, ...oldTabRoutes] as const
 
 /**
- * Root stack parameter list - dynamically generated from module routes.
+ * Gather all stack and modal routes from all modules.
+ * Pre-filtered at compile time for proper type inference.
+ */
+const allRootStackRoutes = [
+  ...authStackRoutes,
+  ...authModalRoutes,
+  ...oldStackRoutes,
+  ...oldModalRoutes,
+] as const
+
+/**
+ * Home tabs parameter list - statically generated from module tab routes.
+ * Contains all routes with type: 'tab' from all registered modules.
+ * Type-safe at compile time with proper parameter inference.
+ */
+export type HomeTabsParamList = ExtractParamList<typeof allTabRoutes>
+
+/**
+ * Root stack parameter list - statically generated from module stack and modal routes.
  * Contains HomeTabs plus all routes with type: 'stack' or 'modal' from all registered modules.
+ * Type-safe at compile time with proper parameter inference.
  */
 export type RootStackParamList = {
   HomeTabs: undefined
-} & ExtractParamList<typeof rootStackRoutes>
+} & ExtractParamList<typeof allRootStackRoutes>
 
 /**
  * Root stack screen props helper type

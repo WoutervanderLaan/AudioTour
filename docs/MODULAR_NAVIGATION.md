@@ -14,6 +14,29 @@ The navigation system now follows a **modular architecture** where each module d
 
 The central navigation system (`RootNavigator` and `TabNavigator`) automatically gathers these routes from all modules and builds the navigation structure dynamically.
 
+## Important Limitations
+
+### Static Module Loading
+
+**All modules must be registered before the app initializes.** The navigation system is designed for static module loading, not dynamic runtime module registration.
+
+- **Type Generation**: Navigation types (`RootStackParamList`, `HomeTabsParamList`) are generated at compile time from statically imported module routes.
+- **Linking Configuration**: Deep linking paths are built once when the `linking.ts` module loads, before app initialization.
+- **Tab Navigator**: Tab routes are gathered once when the `TabNavigator` component mounts and cached for its lifetime.
+
+**What this means:**
+- You cannot add or remove modules after the app starts
+- You cannot conditionally load modules based on runtime conditions (user roles, feature flags, etc.)
+- All module route imports in `src/core/navigation/types.ts` must be static
+
+**Why this design?**
+- Ensures compile-time type safety for navigation
+- Prevents runtime errors from missing routes
+- Improves performance (no runtime route resolution)
+- Keeps the architecture simple and predictable
+
+If you need feature flags or conditional routes, implement them at the **screen level**, not the module level.
+
 ## Architecture
 
 ### Key Components
@@ -63,30 +86,35 @@ The central navigation system (`RootNavigator` and `TabNavigator`) automatically
 
 Create or update `src/modules/{your-module}/navigation/routes.ts`:
 
+**IMPORTANT:** Export routes pre-filtered by type (`tabRoutes`, `stackRoutes`, `modalRoutes`) for proper compile-time type inference.
+
 ```typescript
-import {MyScreen} from '../screens/MyScreen'
+import {MyScreen, MyDetailScreen, MyModalScreen} from '../screens'
 import {ModuleRoute} from '@/shared/types/module'
 
 /**
- * Routes for MyModule
+ * Tab routes for MyModule
  */
-export const routes = [
-  // Tab route (appears in bottom tabs)
+export const tabRoutes = [
   {
     name: 'MyTab',
-    type: 'tab',
-    params: undefined, // No parameters
+    type: 'tab' as const, // Important: 'as const' for type narrowing
+    params: undefined,
     screen: MyScreen,
     options: {
       title: 'My Tab',
     },
   },
+] as const satisfies readonly ModuleRoute[]
 
-  // Stack route with parameters
+/**
+ * Stack routes for MyModule
+ */
+export const stackRoutes = [
   {
     name: 'MyDetail',
-    type: 'stack',
-    params: {id: '' as string}, // Requires an id parameter
+    type: 'stack' as const,
+    params: {id: '' as string}, // Type assertion for required params
     screen: MyDetailScreen,
     options: {
       title: 'Detail',
@@ -95,11 +123,15 @@ export const routes = [
       path: 'my-detail/:id',
     },
   },
+] as const satisfies readonly ModuleRoute[]
 
-  // Modal route
+/**
+ * Modal routes for MyModule
+ */
+export const modalRoutes = [
   {
     name: 'MyModal',
-    type: 'modal',
+    type: 'modal' as const,
     params: undefined,
     screen: MyModalScreen,
     options: {
@@ -111,6 +143,11 @@ export const routes = [
     },
   },
 ] as const satisfies readonly ModuleRoute[]
+
+/**
+ * All routes combined (for module config)
+ */
+export const routes = [...tabRoutes, ...stackRoutes, ...modalRoutes] as const
 ```
 
 ### Step 2: Update Your Module Config
@@ -136,11 +173,30 @@ export const myModuleConfig: ModuleConfig = {
 
 Update `src/core/navigation/types.ts` to include your module routes:
 
-```typescript
-import {routes as myModuleRoutes} from '@/modules/my-module/navigation/routes'
+**IMPORTANT:** Import the pre-filtered route arrays (`tabRoutes`, `stackRoutes`, `modalRoutes`), NOT the combined `routes` array.
 
-// Add to the allRoutes array
-const allRoutes = [...authRoutes, ...oldRoutes, ...myModuleRoutes] as const
+```typescript
+import {
+  tabRoutes as myModuleTabRoutes,
+  stackRoutes as myModuleStackRoutes,
+  modalRoutes as myModuleModalRoutes,
+} from '@/modules/my-module/navigation/routes'
+
+// Add to the appropriate route arrays
+const allTabRoutes = [
+  ...authTabRoutes,
+  ...oldTabRoutes,
+  ...myModuleTabRoutes, // Add here
+] as const
+
+const allRootStackRoutes = [
+  ...authStackRoutes,
+  ...authModalRoutes,
+  ...oldStackRoutes,
+  ...oldModalRoutes,
+  ...myModuleStackRoutes, // Add here
+  ...myModuleModalRoutes, // Add here
+] as const
 ```
 
 That's it! The navigation system will automatically:
