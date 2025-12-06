@@ -8,6 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
 import {linking} from './linking'
 import {moduleRegistry} from './ModuleRegistry'
+import {TabNavigator} from './TabNavigator'
 import type {RootStackParamList} from './types'
 
 import {
@@ -22,14 +23,15 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
  * Automatically adapts header styling to the current theme (light/dark).
  *
  * Navigation Architecture:
- * - HomeTabs: Initial route containing the main tab navigator (Capture, Museum, Recommendations)
- * - Module Routes: Additional screens from all modules registered as root stack screens
+ * - HomeTabs: Initial route containing the dynamically generated bottom tab navigator
+ * - Module Routes: Stack and modal screens from all modules
  *
- * The old module provides:
- * - navigator: The bottom tab navigator (rendered as HomeTabs)
- * - routes: Modal and detail screens (ObjectDetail, Narrative, Settings, NotFound)
+ * Modules define their routes with type annotations (tab, stack, modal):
+ * - 'tab' routes are gathered and rendered in the TabNavigator (HomeTabs)
+ * - 'stack' and 'modal' routes are registered in the root stack navigator
  *
- * Other modules can provide additional routes that will be registered in the root stack.
+ * This allows modules to be self-contained and define their own navigation structure
+ * without modifying central navigation files.
  *
  * @param props - Navigation container props (excluding children)
  * @returns The root navigation container with all module routes registered
@@ -39,18 +41,9 @@ export const RootNavigator: React.FC<
 > = props => {
   const navTheme = useNavigationTheme()
 
-  // Get the main tabs navigator from the 'old' module
-  // Note: This is hardcoded for now but should be made configurable in the future
-  const mainModule = React.useMemo(() => {
-    const modules = moduleRegistry.getEnabledModules()
-    return modules.find(m => m.name === 'old')
-  }, [])
-
-  const MainTabs = mainModule?.navigator
-
-  // Memoize routes to prevent unnecessary recalculations
-  const allRoutes = React.useMemo(() => {
-    return moduleRegistry.getRoutes()
+  // Memoize root stack routes (stack + modal) to prevent unnecessary recalculations
+  const rootStackRoutes = React.useMemo(() => {
+    return moduleRegistry.getRootStackRoutes()
   }, [])
 
   return (
@@ -63,17 +56,15 @@ export const RootNavigator: React.FC<
           ...getStackNavigatorOptions(navTheme),
         }}
         initialRouteName="HomeTabs">
-        {/* Main tabs as the initial route */}
-        {!!MainTabs && (
-          <Stack.Screen
-            name="HomeTabs"
-            component={MainTabs}
-            options={{headerShown: false}}
-          />
-        )}
+        {/* Main tabs as the initial route - dynamically gathers tab routes from all modules */}
+        <Stack.Screen
+          name="HomeTabs"
+          component={TabNavigator}
+          options={{headerShown: false}}
+        />
 
-        {/* Register all module routes as stack screens (no duplicates - HomeTabs is not in routes) */}
-        {allRoutes.map(route => (
+        {/* Register all stack and modal routes from modules */}
+        {rootStackRoutes.map(route => (
           <Stack.Screen
             key={route.name}
             name={route.name as keyof RootStackParamList}

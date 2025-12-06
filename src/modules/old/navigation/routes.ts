@@ -1,17 +1,20 @@
-import type {ModuleRoute} from '@/core/navigation/types'
 import {Capture} from '@/modules/old/screens/Capture'
 import {Museum} from '@/modules/old/screens/Museum'
 import {Narrative} from '@/modules/old/screens/Narrative'
 import {NotFound} from '@/modules/old/screens/NotFound'
+import {ObjectDetail} from '@/modules/old/screens/ObjectDetail'
 import {Recommendations} from '@/modules/old/screens/Recommendations'
 import {Settings} from '@/modules/old/screens/Settings'
+import {ModuleRoute} from '@/shared/types/module'
 
 /**
- * Tab routes that appear in the bottom tab navigator (main navigation)
+ * Tab routes - appear in bottom tab navigator
  */
-export const tabs: ModuleRoute[] = [
+export const tabRoutes = [
   {
     name: 'Capture',
+    type: 'tab' as const,
+    params: undefined,
     screen: Capture,
     options: {
       title: 'Capture',
@@ -19,6 +22,8 @@ export const tabs: ModuleRoute[] = [
   },
   {
     name: 'Museum',
+    type: 'tab' as const,
+    params: undefined,
     screen: Museum,
     options: {
       title: 'Museum',
@@ -26,29 +31,35 @@ export const tabs: ModuleRoute[] = [
   },
   {
     name: 'Recommendations',
+    type: 'tab' as const,
+    params: undefined,
     screen: Recommendations,
     options: {
       title: 'Recommendations',
     },
   },
-]
+] as const satisfies readonly ModuleRoute[]
 
 /**
- * Modal and detail screens that appear in the root stack navigator
+ * Stack routes - appear in root stack navigator
  */
-export const stackScreens: ModuleRoute[] = [
-  // {
-  //   name: 'ObjectDetail',
-  //   screen: ObjectDetail,
-  //   options: {
-  //     title: 'Object Detail',
-  //   },
-  //   linking: {
-  //     path: 'object/:id',
-  //   },
-  // },
+export const stackRoutes = [
+  {
+    name: 'ObjectDetail',
+    type: 'stack' as const,
+    params: {id: '' as string},
+    screen: ObjectDetail,
+    options: {
+      title: 'Object Detail',
+    },
+    linking: {
+      path: 'object/:id',
+    },
+  },
   {
     name: 'Narrative',
+    type: 'stack' as const,
+    params: {id: '' as string},
     screen: Narrative,
     options: {
       title: 'Narrative',
@@ -58,7 +69,27 @@ export const stackScreens: ModuleRoute[] = [
     },
   },
   {
+    name: 'NotFound',
+    type: 'stack' as const,
+    params: undefined,
+    screen: NotFound,
+    options: {
+      title: '404',
+    },
+    linking: {
+      path: '*',
+    },
+  },
+] as const satisfies readonly ModuleRoute[]
+
+/**
+ * Modal routes - appear as modals in root stack navigator
+ */
+export const modalRoutes = [
+  {
     name: 'Settings',
+    type: 'modal' as const,
+    params: undefined,
     screen: Settings,
     options: {
       title: 'Settings',
@@ -68,14 +99,10 @@ export const stackScreens: ModuleRoute[] = [
       path: 'settings',
     },
   },
-  {
-    name: 'NotFound',
-    screen: NotFound,
-    options: {
-      title: '404',
-    },
-    linking: {
-      path: '*',
-    },
-  },
-]
+] as const satisfies readonly ModuleRoute[]
+
+/**
+ * All routes from the old module combined.
+ * Exported for module config registration.
+ */
+export const routes = [...tabRoutes, ...stackRoutes, ...modalRoutes] as const

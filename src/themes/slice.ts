@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 

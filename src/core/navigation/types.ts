@@ -1,4 +1,4 @@
-import {ComponentType} from 'react'
+import type {ComponentType} from 'react'
 
 import type {BottomTabScreenProps} from '@react-navigation/bottom-tabs'
 import type {
@@ -12,64 +12,53 @@ import type {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack'
-import {StateCreator} from 'zustand'
+import type {StateCreator} from 'zustand'
+
+import {ExtractParamList} from './navigationTypes'
+
+import {
+  modalRoutes as authModalRoutes,
+  stackRoutes as authStackRoutes,
+  tabRoutes as authTabRoutes,
+} from '@/modules/auth/navigation/routes'
+import {
+  modalRoutes as oldModalRoutes,
+  stackRoutes as oldStackRoutes,
+  tabRoutes as oldTabRoutes,
+} from '@/modules/old/navigation/routes'
 
 /**
- * Root stack parameter list - defines all screens accessible from the root navigator
+ * Gather all tab routes from all modules.
+ * Pre-filtered at compile time for proper type inference.
+ */
+const _allTabRoutes = [...authTabRoutes, ...oldTabRoutes] as const
+
+/**
+ * Gather all stack and modal routes from all modules.
+ * Pre-filtered at compile time for proper type inference.
+ */
+const _allRootStackRoutes = [
+  ...authStackRoutes,
+  ...authModalRoutes,
+  ...oldStackRoutes,
+  ...oldModalRoutes,
+] as const
+
+/**
+ * Home tabs parameter list - statically generated from module tab routes.
+ * Contains all routes with type: 'tab' from all registered modules.
+ * Type-safe at compile time with proper parameter inference.
+ */
+export type HomeTabsParamList = ExtractParamList<typeof _allTabRoutes>
+
+/**
+ * Root stack parameter list - statically generated from module stack and modal routes.
+ * Contains HomeTabs plus all routes with type: 'stack' or 'modal' from all registered modules.
+ * Type-safe at compile time with proper parameter inference.
  */
 export type RootStackParamList = {
-  // Main tabs navigator
-  /**
-   * HomeTabs
-   */
   HomeTabs: undefined
-
-  // Old module screens (modal/detail screens)
-  /**
-   * ObjectDetail
-   */
-  ObjectDetail: {id: string}
-  /**
-   * Narrative
-   */
-  Narrative: {id: string}
-  /**
-   * Settings
-   */
-  Settings: undefined
-  /**
-   * NotFound
-   */
-  NotFound: undefined
-
-  // Auth module screens
-  /**
-   * Login
-   */
-  Login: undefined
-  /**
-   * Register
-   */
-  Register: undefined
-}
-
-/**
- * Home tabs parameter list - defines all tabs in the bottom tab navigator
- */
-export type HomeTabsParamList = {
-  /**
-   * Capture
-   */
-  Capture: undefined
-  /**
-   * Museum
-   */
-  Museum: undefined
-  /**
-   * Recommendations
-   */
-  Recommendations: undefined
-}
+} & ExtractParamList<typeof _allRootStackRoutes>
 
 /**
  * Root stack screen props helper type
@@ -122,10 +111,14 @@ export type ModuleConfig = {
   // Navigation
   /**
    * Optional React component that serves as the module's main navigator
+   * @deprecated Use routes with type: 'tab' instead. This property is no longer used
+   * in the modular navigation system and will be removed in a future version.
    */
   navigator?: ComponentType<unknown>
   /**
-   * Array of routes that this module provides to the root navigator
+   * Array of routes that this module provides to the navigation system.
+   * Routes can be of type 'tab' (bottom tab navigator), 'stack' (regular screen),
+   * or 'modal' (modal presentation).
    */
   routes?: ModuleRoute[]
 
@@ -171,18 +164,32 @@ export type ModuleConfig = {
 }
 
 /**
+ * Route type - defines where and how the route is rendered in the navigation structure
+ */
+export type RouteType =
+  | 'tab' // Rendered in the bottom tab navigator
+  | 'stack' // Rendered in the root stack navigator
+  | 'modal' // Rendered as a modal in the root stack
+
+/**
  * Represents a navigation route provided by a module.
  * Routes are registered with the root navigator and can have deep linking configuration.
  */
-export type ModuleRoute = {
+export type ModuleRoute<TParams = Record<string, unknown>> = {
   /**
    * Unique name for the route, used in navigation
    */
   name: string
   /**
-   * Optional path for deep linking
+   * Route type - determines where the route is rendered (tab, stack, or modal)
    */
-  path?: string
+  type: RouteType
+  /**
+   * TypeScript type definition for route parameters
+   * Use `undefined` for routes with no parameters
+   * Example: {id: string, mode?: 'edit' | 'view'}
+   */
+  params: TParams
   /**
    * React component to render for this route
    */
