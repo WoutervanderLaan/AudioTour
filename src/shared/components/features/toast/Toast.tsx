@@ -30,8 +30,8 @@ type Props = Readonly<{
  * Toast
  * Displays a temporary notification message at the top of the screen with different visual styles based on type.
  *
- * @param {*} options
- * @returns {*} Toast notification component
+ * @param props - Component props including message and type
+ * @returns Toast notification component
  */
 export const Toast = ({
   message,

@@ -8,8 +8,8 @@ import type {Theme} from '@/themes/types'
  * Spacer
  * Flexible spacing component that fills available space with optional padding size.
  *
- * @param {*} options
- * @returns {*} Spacer component
+ * @param props - Component props with optional size from theme
+ * @returns Spacer component
  */
 export const Spacer = ({
   size,

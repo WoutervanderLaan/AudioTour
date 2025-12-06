@@ -12,7 +12,7 @@ Asset.loadAsync([...NavigationElements.Assets])
  * enableMocking
  * Enables MSW (Mock Service Worker) for API mocking in development mode.
  *
- * @returns {*} Promise that resolves when mocking is enabled
+ * @returns Promise that resolves when mocking is enabled
  */
 async function enableMocking(): Promise<void> {
   await import('@/core/api/mocks/msw.polyfills')
@@ -25,7 +25,7 @@ async function enableMocking(): Promise<void> {
  * Initialization component that sets up development tools (MSW mocking) and configures the status bar theme.
  * Uses ThemedStatusBar which automatically adapts to light/dark theme changes.
  *
- * @returns {*} ThemedStatusBar component with automatic theme-aware styling
+ * @returns ThemedStatusBar component with automatic theme-aware styling
  */
 export const Init = (): React.JSX.Element => {
   useEffect(() => {

@@ -8,7 +8,7 @@ import {Box} from '@/shared/components/ui/layout/Box'
  * NotFound
  * 404 error screen displayed when a user navigates to an invalid route.
  *
- * @returns {*} Not found error screen component
+ * @returns Not found error screen component
  */
 export const NotFound = (): React.JSX.Element => {
   return (

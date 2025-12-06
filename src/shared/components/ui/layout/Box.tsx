@@ -101,8 +101,8 @@ export type BoxProps = ApplyExclusivityPair<
  * Box
  * Flexible layout container component with support for flexbox, alignment, spacing, and theme-based padding.
  *
- * @param {*} options
- * @returns {*} Box layout component
+ * @param props - Component props including layout, alignment, spacing, and padding options
+ * @returns Box layout component
  */
 export const Box = ({
   children,

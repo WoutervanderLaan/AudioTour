@@ -42,7 +42,7 @@ export const App = (): React.JSX.Element => {
      * initializeApp
      * Initializes all registered modules by calling their onAppStart hooks and handles errors gracefully.
      *
-     * @returns {*} Promise that resolves when all modules are initialized
+     * @returns Promise that resolves when all modules are initialized
      */
     const initializeApp = async (): Promise<void> => {
       try {

@@ -17,7 +17,7 @@ import {useMuseumStore} from '@/store/slices/museumStore'
  * Museum
  * Screen that displays a list of nearby museums sorted by distance from the user's current location.
  *
- * @returns {*} Museum selection screen component
+ * @returns Museum selection screen component
  */
 export const Museum = (): React.JSX.Element => {
   const [loading, setLoading] = React.useState(true)
