@@ -19,6 +19,9 @@ Comprehensive documentation for the project can be found in the repository. Refe
 - [Product Specification](./handbook/product_spec.md)
 - [Research Notes](./handbook/research_notes.md)
 - [Folder Structure](./handbook/folder_structure.md)
+- [GitHub Workflows](./.github/workflows/README.md) - Automated documentation updates and CI/CD
+
+The project uses automated documentation updates via GitHub Actions. When PRs are merged, an AI-powered workflow reviews code changes and updates relevant documentation, creating a new PR for review.
 
 ## Storybook
 

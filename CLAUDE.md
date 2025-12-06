@@ -185,3 +185,14 @@ See the handbook/ directory for detailed documentation:
 - product_spec.md - Core features and technical requirements
 - folder_structure.md - Detailed folder organization
 - research_notes.md - Research and decision logs
+
+### Automated Documentation Updates
+
+The project includes a GitHub workflow (`.github/workflows/auto-update-docs.yml`) that automatically reviews and updates documentation when PRs are merged. This workflow:
+
+- Triggers on PR merge to main/master branch
+- Uses Claude Code AI to analyze changed files
+- Updates JSDoc comments and markdown documentation
+- Creates a documentation PR for human review
+
+See `.github/workflows/README.md` for setup instructions and workflow details. The automation ensures documentation stays synchronized with code changes while maintaining quality through PR review.
