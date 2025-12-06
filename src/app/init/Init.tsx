@@ -15,10 +15,6 @@ Asset.loadAsync([...NavigationElements.Assets])
  * @returns {*} Promise that resolves when mocking is enabled
  */
 async function enableMocking(): Promise<void> {
-  if (!__DEV__) {
-    return
-  }
-
   await import('@/core/api/mocks/msw.polyfills')
   const {server} = await import('@/core/api/mocks/server.native')
   server.listen()

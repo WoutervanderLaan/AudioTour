@@ -1,5 +1,6 @@
 import {useMemo} from 'react'
-import {useUnistyles, UnistylesRuntime} from 'react-native-unistyles'
+import {UnistylesRuntime, useUnistyles} from 'react-native-unistyles'
+
 import type {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs'
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
 
@@ -7,17 +8,26 @@ import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
  * NavigationThemeOptions
  * Type definition for navigation theme options that can be used across navigators
  */
-export interface NavigationThemeOptions {
+export type NavigationThemeOptions = {
+  /**
+   * header
+   */
   header: {
     backgroundColor: string
     tintColor: string
     titleColor: string
   }
+  /**
+   * tabBar
+   */
   tabBar: {
     backgroundColor: string
     activeTintColor: string
     inactiveTintColor: string
   }
+  /**
+   * statusBar
+   */
   statusBar: {
     barStyle: 'light-content' | 'dark-content'
     backgroundColor: string
@@ -47,26 +57,24 @@ export const useNavigationTheme = (): NavigationThemeOptions => {
   return useMemo(
     () => ({
       header: {
-        backgroundColor: theme.screen.background.default,
-        tintColor: theme.text.link,
-        titleColor: theme.text.default,
+        backgroundColor: theme.color.screen.background.default,
+        tintColor: theme.color.text.link,
+        titleColor: theme.color.text.default,
       },
       tabBar: {
-        backgroundColor: theme.screen.background.default,
-        activeTintColor: theme.text.link,
-        inactiveTintColor: theme.text.secondary,
+        backgroundColor: theme.color.screen.background.default,
+        activeTintColor: theme.color.text.link,
+        inactiveTintColor: theme.color.text.secondary,
       },
       statusBar: {
-        // Use UnistylesRuntime.colorScheme for reliable theme detection
-        // Light content (white text) for dark theme, dark content (black text) for light theme
         barStyle:
           UnistylesRuntime.colorScheme === 'dark'
             ? 'light-content'
             : 'dark-content',
-        backgroundColor: theme.screen.background.default,
+        backgroundColor: theme.color.screen.background.default,
       },
     }),
-    [theme]
+    [theme],
   )
 }
 
@@ -84,7 +92,7 @@ export const useNavigationTheme = (): NavigationThemeOptions => {
  * ```
  */
 export const getStackNavigatorOptions = (
-  navTheme: NavigationThemeOptions
+  navTheme: NavigationThemeOptions,
 ): NativeStackNavigationOptions => ({
   headerStyle: {
     backgroundColor: navTheme.header.backgroundColor,
@@ -109,7 +117,7 @@ export const getStackNavigatorOptions = (
  * ```
  */
 export const getTabNavigatorOptions = (
-  navTheme: NavigationThemeOptions
+  navTheme: NavigationThemeOptions,
 ): BottomTabNavigationOptions => ({
   headerStyle: {
     backgroundColor: navTheme.header.backgroundColor,

@@ -7,7 +7,7 @@ import {useNavigationTheme} from '@/shared/hooks/useNavigationTheme'
  * ThemedStatusBarProps
  * Props for the ThemedStatusBar component
  */
-export interface ThemedStatusBarProps {
+export type ThemedStatusBarProps = {
   /**
    * Whether to animate status bar style changes
    * @default true

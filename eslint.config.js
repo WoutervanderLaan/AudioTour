@@ -184,8 +184,10 @@ export default [
       '@typescript-eslint/naming-convention': [
         'error',
         {
-          selector: 'variableLike',
+          selector: 'variable',
           format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+          leadingUnderscore: 'allow',
+          trailingUnderscore: 'allow',
         },
         {
           selector: 'typeLike',
@@ -233,9 +235,9 @@ export default [
           rules: [
             {
               from: ['app'],
-              allow: ['shared', 'store', 'themes', 'modules', 'core'], // app can import from anywhere
+              allow: ['shared', 'store', 'themes', 'modules', 'core'],
             },
-            {from: ['core'], allow: []}, // core cannot import from anywhere
+            {from: ['core'], allow: ['shared', 'modules']},
             {from: ['shared'], allow: ['themes', 'core']},
             {from: ['modules'], allow: ['shared', 'store', 'core']},
             {from: ['store'], allow: ['shared']},

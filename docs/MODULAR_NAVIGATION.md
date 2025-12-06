@@ -5,6 +5,7 @@ This document explains how the modular navigation system works and how to add ne
 ## Overview
 
 The navigation system now follows a **modular architecture** where each module defines its own routes, including:
+
 - Route name
 - Route type (`tab`, `stack`, or `modal`)
 - Route parameters (TypeScript types)
@@ -25,11 +26,13 @@ The central navigation system (`RootNavigator` and `TabNavigator`) automatically
 - **Tab Navigator**: Tab routes are gathered once when the `TabNavigator` component mounts and cached for its lifetime.
 
 **What this means:**
+
 - You cannot add or remove modules after the app starts
 - You cannot conditionally load modules based on runtime conditions (user roles, feature flags, etc.)
 - All module route imports in `src/core/navigation/types.ts` must be static
 
 **Why this design?**
+
 - Ensures compile-time type safety for navigation
 - Prevents runtime errors from missing routes
 - Improves performance (no runtime route resolution)
@@ -65,16 +68,19 @@ If you need feature flags or conditional routes, implement them at the **screen 
 ## Route Types
 
 ### `tab`
+
 - Rendered in the bottom tab navigator
 - Appears at the bottom of the screen with a tab bar
 - Example: Home, Profile, Settings tabs
 
 ### `stack`
+
 - Rendered as a regular screen in the root stack navigator
 - Can be navigated to from any screen
 - Example: Detail screens, list screens
 
 ### `modal`
+
 - Rendered as a modal in the root stack navigator
 - Slides up from bottom on iOS, fades in on Android
 - Automatically gets a close button
@@ -200,6 +206,7 @@ const allRootStackRoutes = [
 ```
 
 That's it! The navigation system will automatically:
+
 - Add tab routes to the bottom tab navigator
 - Register stack/modal routes in the root stack
 - Generate TypeScript types for type-safe navigation
@@ -208,6 +215,7 @@ That's it! The navigation system will automatically:
 ## Route Parameters
 
 ### No Parameters
+
 For routes without parameters, use `undefined`:
 
 ```typescript
@@ -220,6 +228,7 @@ For routes without parameters, use `undefined`:
 ```
 
 ### With Parameters
+
 For routes with parameters, define the shape:
 
 ```typescript
@@ -281,6 +290,7 @@ export const MyDetailScreen: React.FC<Props> = ({route}) => {
 ## Migration from Old System
 
 ### Before
+
 ```typescript
 // routes.ts
 export const tabs: ModuleRoute[] = [...]
@@ -292,6 +302,7 @@ routes: stackScreens,
 ```
 
 ### After
+
 ```typescript
 // routes.ts
 export const routes = [
@@ -306,5 +317,6 @@ routes,
 ## Examples
 
 See the following modules for examples:
+
 - **Auth Module**: `src/modules/auth/navigation/routes.ts` - Stack routes
 - **Old Module**: `src/modules/old/navigation/routes.ts` - Tab, stack, and modal routes

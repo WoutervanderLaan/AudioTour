@@ -1,4 +1,4 @@
-import type {ModuleRoute} from '@/shared/types/module'
+import type {ModuleRoute} from './types'
 
 /**
  * Helper type to extract parameter types from an array of module routes.
