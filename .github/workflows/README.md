@@ -9,11 +9,13 @@ This directory contains automated workflows for the AudioTour project.
 **Purpose:** Performs comprehensive audits of ALL documentation in the repository to identify and fix issues.
 
 **Triggers:**
+
 - **Manual:** Can be triggered manually from GitHub Actions with a custom reason
 - **Automatic (Optional):** Runs when a non-docs PR is merged to `main` or `master`
 - **Self-Protection:** Never triggers on its own documentation PRs (prevents infinite loops)
 
 **What it does:**
+
 1. Performs a comprehensive audit of ALL documentation across the entire repository
 2. Checks for specific issues:
    - ❌ Incomplete documentation (missing JSDoc, parameters, return types)
@@ -25,6 +27,7 @@ This directory contains automated workflows for the AudioTour project.
 4. If no issues found, completes successfully and reports why no updates were needed
 
 **Important:**
+
 - The workflow audits ALL documentation, not just recently changed files
 - It ONLY updates documentation when actual issues are detected
 - It NEVER modifies code implementation - documentation only
@@ -40,12 +43,14 @@ To enable this workflow, you need to configure the following GitHub secret:
 #### How to Use
 
 **Manual Trigger (Recommended):**
+
 1. Go to Actions → Auto-Update Documentation
 2. Click "Run workflow"
 3. Optionally enter a reason (e.g., "Monthly documentation audit")
 4. Click "Run workflow" button
 
 **Automatic Trigger:**
+
 - Automatically runs when a non-docs PR is merged to main/master
 - Skips if the merged PR is from a `docs/` branch or has `docs:` in the title
 
@@ -76,6 +81,7 @@ To enable this workflow, you need to configure the following GitHub secret:
 #### Workflow Outcomes
 
 **Scenario 1: Issues Found**
+
 - A PR is created with detailed fixes
 - PR includes:
   - List of all issues found (file paths and line numbers)
@@ -84,6 +90,7 @@ To enable this workflow, you need to configure the following GitHub secret:
 - Review and merge the PR to apply documentation updates
 
 **Scenario 2: No Issues Found**
+
 - Workflow completes successfully without creating a PR
 - GitHub Actions summary shows:
   - Detailed audit report
@@ -114,6 +121,7 @@ You can customize the workflow by editing `.github/workflows/auto-update-docs.ym
 #### Example Workflow Run
 
 **Example 1: Issues Found**
+
 ```
 Trigger: Manual - "Monthly documentation audit"
 
@@ -132,6 +140,7 @@ Result: Created PR #156 with fixes
 ```
 
 **Example 2: No Issues**
+
 ```
 Trigger: PR merge - PR #155 "feat: add dark mode"
 
@@ -152,26 +161,31 @@ Result: No PR created - documentation already current
 #### Troubleshooting
 
 **Workflow doesn't trigger (manual):**
+
 - Verify `CLAUDE_CODE_OAUTH_TOKEN` secret is set
 - Check GitHub Actions are enabled
 - Ensure you have permissions to run workflows
 
 **Workflow doesn't trigger (automatic):**
+
 - Confirm the PR was merged (not just closed)
 - Check the PR doesn't have `docs:` in title or come from `docs/` branch
 - Verify the target branch is `main` or `master`
 
 **Workflow succeeds but no PR created:**
+
 - **This is normal!** It means no documentation issues were found
 - Check the workflow summary for the audit report
 - Review the Claude Code step output for details
 
 **Issues not being detected:**
+
 - Review the audit criteria in the workflow prompt
 - Ensure the documentation issues match the defined problem types
 - Consider adjusting the prompt to be more or less strict
 
 **False positives (unnecessary changes):**
+
 - Review the PR carefully before merging
 - Adjust the prompt to clarify what constitutes an "issue"
 - Consider adding project-specific documentation standards to CLAUDE.md
@@ -216,6 +230,7 @@ Result: No PR created - documentation already current
 4. **Review the audit reports:** Even when no PR is created, the audit provides valuable insights
 
 **Recommended Schedule:**
+
 - After major feature releases
 - Monthly as part of maintenance
 - Before important releases

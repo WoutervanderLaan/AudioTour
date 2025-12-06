@@ -31,7 +31,6 @@ jobs:
        !startsWith(github.head_ref, 'docs/') &&
        !contains(github.event.pull_request.title, 'docs:'))
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
