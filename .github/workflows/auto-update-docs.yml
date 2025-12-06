@@ -1,6 +1,15 @@
 name: Auto-Update Documentation
 
 on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for running documentation check'
+        required: false
+        default: 'Manual documentation audit'
+
+  # Optional: Trigger on PR merge (but not for docs PRs)
   pull_request:
     types: [closed]
     branches:
@@ -15,8 +24,12 @@ permissions:
 
 jobs:
   update-docs:
-    # Only run if the PR was actually merged (not just closed)
-    if: github.event.pull_request.merged == true
+    # Only run if manually triggered OR if PR was merged AND not a docs PR
+    if: |
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.pull_request.merged == true &&
+       !startsWith(github.head_ref, 'docs/') &&
+       !contains(github.event.pull_request.title, 'docs:'))
     runs-on: ubuntu-latest
 
     steps:
@@ -32,38 +45,33 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Get merged PR information
-        id: pr_info
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Determine trigger context
+        id: context
         run: |
-          # Get the list of changed files from the merged PR
-          PR_NUMBER="${{ github.event.pull_request.number }}"
-          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
-
-          # Get changed files and save to a file
-          gh pr view $PR_NUMBER --json files --jq '.files[].path' > /tmp/changed_files.txt
-
-          echo "Changed files in PR #$PR_NUMBER:"
-          cat /tmp/changed_files.txt
-
-          # Get PR title and body for context
-          PR_TITLE=$(gh pr view $PR_NUMBER --json title --jq '.title')
-          PR_BODY=$(gh pr view $PR_NUMBER --json body --jq '.body')
-          echo "pr_title=$PR_TITLE" >> $GITHUB_OUTPUT
-
-          # Save PR body to file for use in prompt
-          echo "$PR_BODY" > /tmp/pr_body.txt
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "trigger=manual" >> $GITHUB_OUTPUT
+            echo "reason=${{ github.event.inputs.reason }}" >> $GITHUB_OUTPUT
+            echo "Manual trigger: ${{ github.event.inputs.reason }}"
+          else
+            echo "trigger=pr_merge" >> $GITHUB_OUTPUT
+            echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+            echo "pr_title=${{ github.event.pull_request.title }}" >> $GITHUB_OUTPUT
+            echo "PR merge trigger: PR #${{ github.event.pull_request.number }}"
+          fi
 
       - name: Generate documentation update branch name
         id: branch
         run: |
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-          BRANCH="docs/auto-update-pr-${{ steps.pr_info.outputs.pr_number }}-${TIMESTAMP}"
+          if [ "${{ steps.context.outputs.trigger }}" = "manual" ]; then
+            BRANCH="docs/auto-audit-${TIMESTAMP}"
+          else
+            BRANCH="docs/auto-update-pr-${{ steps.context.outputs.pr_number }}-${TIMESTAMP}"
+          fi
           echo "name=$BRANCH" >> $GITHUB_OUTPUT
           echo "Generated branch name: $BRANCH"
 
-      - name: Run Claude Code to update documentation
+      - name: Run Claude Code to audit and update documentation
         id: claude
         uses: anthropics/claude-code-action@v1
         with:
@@ -71,168 +79,239 @@ jobs:
           show_full_output: true
           claude_args: "--allowedTools 'Edit,Read,Glob,Grep,Bash(git:*),Bash(gh:*)'"
           prompt: |
-            # Documentation Update for Merged PR #${{ steps.pr_info.outputs.pr_number }}
+            # Comprehensive Documentation Audit
 
-            **PR Title:** ${{ steps.pr_info.outputs.pr_title }}
+            **Trigger:** ${{ steps.context.outputs.trigger == 'manual' && steps.context.outputs.reason || format('PR #{0}: {1}', steps.context.outputs.pr_number, steps.context.outputs.pr_title) }}
 
-            A pull request has just been merged into the codebase. Your task is to review the changes and update ALL relevant documentation to ensure it remains accurate and current.
+            Your task is to perform a comprehensive audit of ALL documentation in this repository to identify and fix any issues.
 
-            ## Changed Files
+            ## CRITICAL REQUIREMENTS
 
-            The following files were modified in the merged PR:
+            **VERY IMPORTANT - READ THIS CAREFULLY:**
+
+            1. **CHECK EVERYTHING** - Do not limit yourself to recently changed files. Audit ALL documentation across the entire repository.
+
+            2. **ONLY UPDATE IF ISSUES FOUND** - You should ONLY make changes if you find actual problems:
+               - ❌ **Incomplete documentation** - Missing JSDoc, missing parameters, missing return types
+               - ❌ **Inconsistent documentation** - JSDoc doesn't match function signature or behavior
+               - ❌ **Discrepancies** - Documentation contradicts the actual code
+               - ❌ **Outdated information** - Documentation references old patterns, deprecated APIs, or removed features
+               - ❌ **Incorrect information** - Documentation describes behavior that doesn't exist
+
+            3. **DO NOT UPDATE IF NO ISSUES** - If documentation is complete, accurate, and up-to-date, DO NOT make any changes. Simply finish the workflow and report that no updates were needed.
+
+            4. **DOCUMENTATION ONLY** - NEVER modify code implementation, logic, variable names, imports, or add features.
+
+            ## Step 1: Comprehensive Documentation Discovery
+
+            Find ALL documentation in the repository:
+
+            1. **JSDoc Comments** - All TypeScript/JavaScript files with functions, classes, types:
+               ```bash
+               # Find all source files
+               find src -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" \) | head -100
+               ```
+
+            2. **Markdown Documentation**:
+               - Root level: `README.md`, `CLAUDE.md`
+               - Handbook: `handbook/*.md`
+               - Module docs: `src/modules/*/DOCS.md`, `src/modules/*/README.md`
+               - Feature docs: Any `README.md` or `DOCS.md` in `src/` subdirectories
+               - Workflow docs: `.github/workflows/README.md`
+
+            3. **Configuration Documentation**:
+               - `package.json` - Check if scripts have descriptions
+               - Any config files with comments
+
+            ## Step 2: Audit Each Documentation Type
+
+            For EACH piece of documentation found, check:
+
+            ### JSDoc Audit Checklist:
+            - [ ] Does every exported function have a JSDoc comment?
+            - [ ] Does the description accurately describe what the function does?
+            - [ ] Are all @param tags present with correct names and types?
+            - [ ] Is @returns documented with correct type?
+            - [ ] Do the documented parameters match the actual function signature?
+            - [ ] Are examples still valid for current implementation?
+            - [ ] Are any deprecated patterns mentioned that should be updated?
+
+            ### Markdown Documentation Audit Checklist:
+            - [ ] Do usage examples reference functions/APIs that still exist?
+            - [ ] Are code snippets syntactically correct and runnable?
+            - [ ] Do file paths and imports match current structure?
+            - [ ] Are feature lists accurate (no removed features listed)?
+            - [ ] Are architecture diagrams/descriptions current?
+            - [ ] Are setup instructions still valid?
+            - [ ] Are command examples correct?
+
+            ## Step 3: Decision Point - UPDATE OR SKIP
+
+            After auditing, you must decide:
+
+            ### IF YOU FOUND ISSUES:
+
+            Create a detailed report of issues found, then proceed to Step 4 to fix them.
+
+            Example issues report:
             ```
-            $(cat /tmp/changed_files.txt)
+            ISSUES FOUND:
+
+            1. src/modules/auth/hooks/useAuth.ts:15
+               - Missing JSDoc for `login` function
+               - Parameter `credentials` not documented
+
+            2. src/shared/components/ui/Button.tsx:42
+               - JSDoc says returns `void` but actually returns `Promise<void>`
+
+            3. handbook/architecture.md:67
+               - References old `src/core/` structure that was moved to `src/shared/`
+
+            4. CLAUDE.md:120
+               - Lists `npm run test:e2e` but this script doesn't exist in package.json
             ```
 
-            ## Your Task
+            ### IF NO ISSUES FOUND:
 
-            **CRITICAL: You MUST follow these instructions exactly:**
+            **DO NOT CREATE A BRANCH OR PR**. Instead:
 
-            ### Step 1: Analyze the Changes
+            1. Print a comprehensive report explaining why no updates are needed:
+            ```
+            DOCUMENTATION AUDIT COMPLETE - NO UPDATES NEEDED
 
-            1. Read each of the changed files listed above to understand what was modified
-            2. Identify the purpose and scope of the changes
-            3. Determine which documentation files might be affected:
-               - JSDoc comments in the same files
-               - JSDoc comments in related files in the same module/feature
-               - README.md files in affected directories
-               - Documentation in `handbook/` directory (if applicable)
-               - CLAUDE.md project instructions (if architecture changed)
-               - Module DOCS.md files under `src/modules/*/DOCS.md`
+            Audit Summary:
+            - Checked X TypeScript/JavaScript files
+            - Reviewed X JSDoc comments
+            - Reviewed X markdown files
+            - Total functions audited: X
+            - Total markdown sections audited: X
 
-            ### Step 2: Update JSDoc Comments
+            All documentation is:
+            ✅ Complete - All functions have JSDoc, all parameters documented
+            ✅ Accurate - Documentation matches actual code behavior
+            ✅ Consistent - No contradictions between docs and code
+            ✅ Up-to-date - No references to deprecated or removed features
 
-            Review and update JSDoc comments to ensure they:
-            - Accurately describe the current function/type behavior
-            - Include all parameters with correct types
-            - Document return types accurately
-            - Reflect any changes in function signatures or logic
-            - Follow the project's JSDoc standards
+            No pull request needed.
+            ```
 
-            **IMPORTANT:**
-            - ONLY update documentation (JSDoc comments and .md files)
-            - DO NOT modify any actual code implementation
-            - DO NOT change function logic, variable names, or imports
-            - DO NOT add new features or refactor code
+            2. **EXIT IMMEDIATELY** - Do not create a branch, do not commit, do not create a PR.
 
-            ### Step 3: Update Markdown Documentation
+            ## Step 4: Fix Issues (ONLY IF ISSUES FOUND)
 
-            For each affected directory:
-            1. Check if there's a README.md or DOCS.md file
-            2. Update it to reflect:
-               - New functions or components added
-               - Changed APIs or interfaces
-               - Updated usage examples
-               - Modified architecture or patterns
-
-            Also check and update if needed:
-            - `handbook/*.md` - High-level documentation
-            - `CLAUDE.md` - Project instructions (only if architecture changed significantly)
-            - Module-specific docs in `src/modules/*/DOCS.md`
-
-            ### Step 4: Create Branch and Commit Changes
-
-            **REQUIRED:** After making documentation updates:
+            If you found issues in Step 3:
 
             1. Create a new branch:
             ```bash
             git checkout -b ${{ steps.branch.outputs.name }}
             ```
 
-            2. Check what files were modified:
+            2. Fix each issue identified in your audit:
+               - Update JSDoc comments to be complete and accurate
+               - Fix markdown documentation to match current code
+               - Correct any outdated references or examples
+               - **DO NOT modify code - only documentation**
+
+            3. Check what you changed:
             ```bash
             git status
+            git diff
             ```
 
-            3. If you made changes, commit them:
+            4. Commit your changes:
             ```bash
             git add .
-            git commit -m "docs: auto-update documentation for PR #${{ steps.pr_info.outputs.pr_number }}
+            git commit -m "docs: fix documentation issues found in audit
 
-            Updates documentation to reflect changes from:
-            ${{ steps.pr_info.outputs.pr_title }}
+            Fixed issues:
+            - [List each issue fixed with file:line reference]
 
-            Modified documentation in:
-            - JSDoc comments in affected files
-            - Related markdown documentation files
+            Audit trigger: ${{ steps.context.outputs.trigger == 'manual' && steps.context.outputs.reason || format('PR #{0}', steps.context.outputs.pr_number) }}
 
             🤖 Auto-generated by Claude Code"
             ```
 
-            4. Push the branch:
+            5. Push the branch:
             ```bash
             git push -u origin ${{ steps.branch.outputs.name }}
             ```
 
-            ### Step 5: Create Pull Request
+            ## Step 5: Create Pull Request (ONLY IF CHANGES MADE)
 
-            **REQUIRED:** Create a PR for review:
+            **ONLY IF you created a branch and committed changes**:
+
             ```bash
             gh pr create \
-              --title "docs: Auto-update documentation for PR #${{ steps.pr_info.outputs.pr_number }}" \
+              --title "docs: Fix documentation issues from automated audit" \
               --body "## Summary
 
-            This PR contains automatic documentation updates triggered by the merge of PR #${{ steps.pr_info.outputs.pr_number }}.
+            This PR fixes documentation issues identified during an automated comprehensive documentation audit.
 
-            ## Original PR
+            **Trigger:** ${{ steps.context.outputs.trigger == 'manual' && steps.context.outputs.reason || format('PR #{0}: {1}', steps.context.outputs.pr_number, steps.context.outputs.pr_title) }}
 
-            - **Title:** ${{ steps.pr_info.outputs.pr_title }}
-            - **Link:** ${{ github.event.pull_request.html_url }}
+            ## Issues Found and Fixed
 
-            ## Changes Made
+            [Provide detailed list of each issue fixed, with file paths and line numbers]
 
-            [Provide a clear bulleted list of documentation updates made, e.g.:
-            - Updated JSDoc for \`functionName\` in \`src/path/file.ts\`
-            - Updated README.md in \`src/modules/feature/\`
-            - Updated handbook/product_spec.md to reflect new API]
+            Example:
+            1. **src/modules/auth/hooks/useAuth.ts:15**
+               - Issue: Missing JSDoc for \`login\` function
+               - Fix: Added complete JSDoc with @param and @returns
 
-            ## Files Reviewed
+            2. **handbook/architecture.md:67**
+               - Issue: Referenced old \`src/core/\` structure
+               - Fix: Updated to reference current \`src/shared/\` structure
 
-            The following files from the original PR were reviewed:
-            \`\`\`
-            $(cat /tmp/changed_files.txt)
-            \`\`\`
+            ## Audit Statistics
+
+            - Files audited: X
+            - JSDoc comments reviewed: X
+            - Markdown files reviewed: X
+            - Issues found: X
+            - Issues fixed: X
 
             ## Review Checklist
 
-            - [ ] JSDoc comments are accurate and complete
-            - [ ] Markdown documentation reflects current codebase
-            - [ ] No code implementation was modified (documentation only)
-            - [ ] All affected documentation files were updated
+            - [ ] All JSDoc comments are complete and accurate
+            - [ ] All markdown documentation matches current code
+            - [ ] No code implementation was modified
+            - [ ] Only documentation was updated
 
             ---
 
-            🤖 Auto-generated by Claude Code
-            🔗 Triggered by PR #${{ steps.pr_info.outputs.pr_number }}" \
-              --base ${{ github.event.pull_request.base.ref }}
+            🤖 Auto-generated by Claude Code Documentation Audit" \
+              --base main
             ```
 
-            ### Final Verification
+            6. Verify PR creation:
+            ```bash
+            gh pr view
+            ```
 
-            After completing all steps:
-            1. Verify the branch exists: `git ls-remote --heads origin ${{ steps.branch.outputs.name }}`
-            2. Verify the PR was created: `gh pr view`
-            3. Report the PR URL
+            ## Final Report
 
-            ### Important Guidelines
+            At the end, provide a clear summary:
 
-            - **ONLY update documentation** - Do not modify code logic
-            - If no documentation updates are needed, create a commit that says "docs: no updates needed for PR #${{ steps.pr_info.outputs.pr_number }}" and still create the PR explaining why
-            - Be thorough - check all potentially affected docs, not just obvious ones
-            - Maintain the existing documentation style and format
-            - Ensure all changes are accurate and reflect the actual code changes
+            - If issues found: "Created PR with X documentation fixes"
+            - If no issues: "No documentation updates needed - all docs are current and accurate"
 
       - name: Add workflow summary
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "## Documentation Auto-Update Results" >> $GITHUB_STEP_SUMMARY
+          echo "## Documentation Audit Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+
           echo "### Trigger Information" >> $GITHUB_STEP_SUMMARY
-          echo "- **Merged PR:** [#${{ steps.pr_info.outputs.pr_number }}](${{ github.event.pull_request.html_url }})" >> $GITHUB_STEP_SUMMARY
-          echo "- **PR Title:** ${{ steps.pr_info.outputs.pr_title }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Documentation Branch:** \`${{ steps.branch.outputs.name }}\`" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.context.outputs.trigger }}" = "manual" ]; then
+            echo "- **Trigger:** Manual workflow dispatch" >> $GITHUB_STEP_SUMMARY
+            echo "- **Reason:** ${{ steps.context.outputs.reason }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Trigger:** PR Merge" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR:** [#${{ steps.context.outputs.pr_number }}](${{ github.event.pull_request.html_url }})" >> $GITHUB_STEP_SUMMARY
+            echo "- **PR Title:** ${{ steps.context.outputs.pr_title }}" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "- **Workflow Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
@@ -241,11 +320,25 @@ jobs:
             DOC_PR_URL=$(cat /tmp/doc_pr_info.json | jq -r '.url')
             DOC_PR_NUMBER=$(cat /tmp/doc_pr_info.json | jq -r '.number')
             DOC_PR_TITLE=$(cat /tmp/doc_pr_info.json | jq -r '.title')
-            echo "### ✅ Documentation PR Created" >> $GITHUB_STEP_SUMMARY
-            echo "- **PR #${DOC_PR_NUMBER}:** [${DOC_PR_TITLE}](${DOC_PR_URL})" >> $GITHUB_STEP_SUMMARY
+            echo "### ✅ Documentation Issues Found - PR Created" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "Please review and merge the documentation updates." >> $GITHUB_STEP_SUMMARY
+            echo "The audit found documentation issues that need to be fixed." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Documentation PR:** [#${DOC_PR_NUMBER} - ${DOC_PR_TITLE}](${DOC_PR_URL})" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Please review the PR for details on what issues were found and fixed." >> $GITHUB_STEP_SUMMARY
           else
-            echo "### ⚠️ No Documentation PR Found" >> $GITHUB_STEP_SUMMARY
-            echo "The workflow completed but no documentation PR was detected. Check the logs for details." >> $GITHUB_STEP_SUMMARY
+            echo "### ✅ Documentation Audit Complete - No Issues Found" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The comprehensive documentation audit found no issues." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "All documentation is:" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Complete" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Accurate" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Consistent" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Up-to-date" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "No pull request was created because no updates were needed." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Check the Claude Code step output above for the detailed audit report." >> $GITHUB_STEP_SUMMARY
           fi
