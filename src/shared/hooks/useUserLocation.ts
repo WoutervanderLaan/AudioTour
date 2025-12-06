@@ -20,9 +20,9 @@ export type Coordinates = {
  * haversineDistanceMeters
  * Calculates the distance in meters between two geographic coordinates using the Haversine formula.
  *
- * @param {*} a
- * @param {*} b
- * @returns {*} Distance in meters between the two coordinates
+ * @param a - First coordinate
+ * @param b - Second coordinate
+ * @returns Distance in meters between the two coordinates
  */
 export function haversineDistanceMeters(
   a: Coordinates,
@@ -34,8 +34,8 @@ export function haversineDistanceMeters(
    * toRad
    * Converts degrees to radians for trigonometric calculations.
    *
-   * @param {*} deg
-   * @returns {*} Angle in radians
+   * @param deg - Angle in degrees
+   * @returns Angle in radians
    */
   const toRad = (deg: number): number => (deg * Math.PI) / 180
   const dLat = toRad(b.latitude - a.latitude)
@@ -73,8 +73,8 @@ export type UseUserLocationOptions = {
  * useUserLocation
  * React hook that retrieves and optionally watches the user's current location with permission handling.
  *
- * @param {*} options
- * @returns {*} Object containing current coordinates, permission status, and any error messages
+ * @param options - Configuration options for location tracking
+ * @returns Object containing current coordinates, permission status, and any error messages
  */
 export function useUserLocation(options: UseUserLocationOptions = {}): {
   readonly coords: Coordinates | undefined
@@ -104,7 +104,7 @@ export function useUserLocation(options: UseUserLocationOptions = {}): {
      * run
      * Requests location permissions, retrieves the current location, and optionally sets up location watching.
      *
-     * @returns {*} Promise that resolves when location setup is complete
+     * @returns Promise that resolves when location setup is complete
      */
     const run = async (): Promise<void> => {
       try {

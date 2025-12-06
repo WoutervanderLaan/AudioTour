@@ -8,7 +8,7 @@ import {Box} from '@/shared/components/ui/layout/Box'
  * Settings
  * Application settings screen (stub implementation).
  *
- * @returns {*} Settings screen component
+ * @returns Settings screen component
  */
 export const Settings = (): React.JSX.Element => {
   return (

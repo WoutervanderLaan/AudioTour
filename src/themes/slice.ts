@@ -26,7 +26,7 @@ export const useThemeStore = create<ThemeState>()(
  * selectTheme
  * Selector function that retrieves the full theme object based on the current theme variant in state.
  *
- * @param {*} state
- * @returns {*} Complete theme object with all tokens and styles
+ * @param state - Theme state containing the current theme variant
+ * @returns Complete theme object with all tokens and styles
  */
 export const selectTheme = (state: ThemeState): Theme => themes[state.theme]

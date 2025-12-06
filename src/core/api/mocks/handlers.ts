@@ -6,8 +6,8 @@ import {ApiConfig} from '@/core/api/config'
  * createHandler
  * A simple utility that appends the provided path to the base url.
  *
- * @param {*} path i.e. '/user'
- * @returns {*} full url string
+ * @param path - API path (e.g., '/user')
+ * @returns Full URL string
  */
 const createHandler = (path: string): string => {
   return ApiConfig.getUrl(path)

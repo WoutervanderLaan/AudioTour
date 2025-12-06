@@ -56,8 +56,8 @@ export const Capture = (): React.JSX.Element => {
    * onSubmit
    * Handles form submission for the demo object form.
    *
-   * @param {*} data
-   * @returns {*} void
+   * @param data - Form data from the object form
+   * @returns void
    */
   const onSubmit = (data: ObjectForm): void => {
     logger.debug('Form submitted:', data)
@@ -67,7 +67,7 @@ export const Capture = (): React.JSX.Element => {
    * pickImage
    * Opens the image picker to allow the user to select a photo from their library.
    *
-   * @returns {*} Promise that resolves when image selection is complete
+   * @returns Promise that resolves when image selection is complete
    */
   const pickImage = async (): Promise<void> => {
     setLocalError(undefined)
@@ -113,7 +113,7 @@ export const Capture = (): React.JSX.Element => {
    * upload
    * Uploads the selected photo to the API for object recognition and navigates to the detail screen.
    *
-   * @returns {*} Promise that resolves when upload and navigation are complete
+   * @returns Promise that resolves when upload and navigation are complete
    */
   const upload = async (): Promise<void> => {
     if (!imageUri) return

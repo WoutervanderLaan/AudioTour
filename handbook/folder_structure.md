@@ -3,14 +3,19 @@
 - **src/**
   - **app/** – app-wide setup: providers, navigation, initialization
     - **init/** – app initialization logic
-    - **navigation/** – navigation configuration and screens
+    - **config/** – app configuration (module registry)
+  - **core/** – core infrastructure and utilities used throughout the application
+    - **api/** – API client, query configuration, types, and MSW mocks for data fetching
+    - **lib/** – shared utility functions and helpers (logger, etc.)
+    - **navigation/** – navigation configuration, routing, and type definitions
   - **shared/** – reusable, generic components and utilities
     - **components/**
       - **ui/** – generic UI components (Pressable, Typography, Form, Layout, Screen)
       - **features/** – complex reusable features (AudioPlayer, Toast)
     - **context/** – React Context providers (Keyboard, Toast)
     - **hooks/** – shared custom hooks
-    - **lib/** – API clients, helpers, utilities, constants
+    - **constants/** – shared constants and configuration values
+    - **utils/** – utility functions
     - **types/** – global TypeScript types
 
   - **modules/** – self-contained feature modules with their own navigation, screens, and business logic
