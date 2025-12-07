@@ -1,5 +1,6 @@
 import React, {useMemo} from 'react'
 
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {
   NavigationContainer,
   NavigationContainerProps,
@@ -10,23 +11,51 @@ import {linking} from './linking'
 import {moduleRegistry} from './ModuleRegistry'
 import type {RootStackParams} from './types'
 
-import {ModuleSlug} from '@/modules/slugs'
+import {
+  getTabNavigatorOptions,
+  useNavigationTheme,
+} from '@/shared/hooks/useNavigationTheme'
 
 const Stack = createNativeStackNavigator<RootStackParams>()
+const Tab = createBottomTabNavigator<RootStackParams>()
+
+/**
+ * Tabs component renders the bottom tab navigator with all module tab screens.
+ * Tab screens are collected from all registered modules via moduleRegistry.getTabs().
+ *
+ * @returns Tab navigator with all registered tab screens
+ */
+const Tabs = (): React.JSX.Element => {
+  const navTheme = useNavigationTheme()
+
+  const bottomTabs = useMemo(
+    () =>
+      Object.entries(moduleRegistry.getTabs()).map(([key, route]) => (
+        <Tab.Screen
+          key={key}
+          {...route}
+          options={getTabNavigatorOptions(navTheme)}
+        />
+      )),
+    [navTheme],
+  )
+
+  return <Tab.Navigator>{bottomTabs}</Tab.Navigator>
+}
 
 /**
  * RootNavigator component that manages the application's navigation structure.
- * Automatically adapts header styling to the current theme (light/dark).
  *
  * Navigation Architecture:
- * - HomeTabs: Initial route containing the main tab navigator (Capture, Museum, Recommendations)
- * - Module Routes: Additional screens from all modules registered as root stack screens
+ * - Tabs: Initial route containing the bottom tab navigator with all module tab screens
+ * - Stack Screens: Detail screens that appear above tabs (hide tab bar, show back button)
+ * - Modals: Full-screen modals with modal presentation
  *
- * The old module provides:
- * - navigator: The bottom tab navigator (rendered as HomeTabs)
- * - routes: Modal and detail screens (ObjectDetail, Narrative, Settings, NotFound)
- *
- * Other modules can provide additional routes that will be registered in the root stack.
+ * Navigation Flow:
+ * 1. User starts at a tab screen (e.g., Capture)
+ * 2. Navigating to a stack screen (e.g., NotFound) pushes it above the tabs
+ * 3. The back button returns to the tab screen
+ * 4. Modals appear with modal animation
  *
  * @param props - Navigation container props (excluding children)
  * @returns The root navigation container with all module routes registered
@@ -34,27 +63,18 @@ const Stack = createNativeStackNavigator<RootStackParams>()
 export const RootNavigator: React.FC<
   Omit<NavigationContainerProps, 'children'>
 > = props => {
-  const moduleStacks = useMemo(() => {
-    const stacks = Object.entries(moduleRegistry.getModules()).map(
-      ([name, module]) => {
-        if (!module.navigator) {
-          return null
-        }
+  const stackScreens = useMemo(
+    () =>
+      Object.entries(moduleRegistry.getStacks()).map(([key, route]) => (
+        <Stack.Screen
+          key={key}
+          {...route}
+        />
+      )),
+    [],
+  )
 
-        return (
-          <Stack.Screen
-            component={module.navigator}
-            key={name}
-            name={name as ModuleSlug}
-          />
-        )
-      },
-    )
-
-    return stacks.filter(Boolean)
-  }, [])
-
-  const modalStacks = useMemo(
+  const modalScreens = useMemo(
     () =>
       Object.entries(moduleRegistry.getModals()).map(([key, route]) => (
         <Stack.Screen
@@ -65,26 +85,26 @@ export const RootNavigator: React.FC<
     [],
   )
 
-  const initialRouteName = useMemo(() => {
-    return moduleStacks.some(module => module?.key === ModuleSlug.old)
-      ? ModuleSlug.old
-      : (Object.keys(moduleRegistry.getModules())[0] as ModuleSlug)
-  }, [moduleStacks])
-
   return (
     <NavigationContainer
       {...props}
       linking={linking}>
       <Stack.Navigator
-        initialRouteName={initialRouteName}
+        initialRouteName="Tabs"
         screenOptions={{headerShown: false}}>
-        {moduleStacks}
+        <Stack.Screen
+          name="Tabs"
+          component={Tabs}
+          options={{headerShown: false}}
+        />
+
+        {stackScreens}
 
         <Stack.Group
           screenOptions={{
             presentation: 'modal',
           }}>
-          {modalStacks}
+          {modalScreens}
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

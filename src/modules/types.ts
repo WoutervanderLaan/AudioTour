@@ -1,18 +1,21 @@
-import type {ComponentType} from 'react'
-
-import type {ParamListBase, RouteProp} from '@react-navigation/native'
-import type {
-  NativeStackNavigationOptions,
-  NativeStackNavigationProp,
-} from '@react-navigation/native-stack'
-import type {Theme} from 'storybook/theming'
 import type {StateCreator} from 'zustand'
 
+import type {
+  AuthModalParams,
+  AuthStackParams,
+  AuthTabParams,
+} from './auth/routes.types'
+import type {
+  OldModalParams,
+  OldStackParams,
+  OldTabParams,
+} from './old/routes.types'
 import type {ModuleSlug} from './slugs'
 
 import type {
   RootStackParams,
   StackNavigationRoutes,
+  TabNavigationRoutes,
 } from '@/core/navigation/types'
 
 /**
@@ -36,13 +39,22 @@ export type ModuleConfig = {
 
   // Navigation
   /**
-   * Optional React component that serves as the module's main navigator
+   * Stack screens that appear above tabs in the root navigator.
+   * These screens hide the bottom tabs and show a back button.
+   * Use for detail screens like ObjectDetail, Narrative, Login, Register, etc.
    */
-  navigator?: ComponentType<unknown>
+  stacks?: StackNavigationRoutes<RootStackParams>
   /**
-   * ??
+   * Modal screens that appear with modal presentation.
+   * Typically used for settings, forms, or full-screen overlays.
    */
   modals?: StackNavigationRoutes<RootStackParams>
+  /**
+   * Tab screens that appear in the bottom tab navigator.
+   * These are the main navigation destinations.
+   * Key is the route name, value contains component and options.
+   */
+  tabs?: TabNavigationRoutes<RootStackParams>
 
   // Store integration (Zustand)
   /**
@@ -86,40 +98,16 @@ export type ModuleConfig = {
 }
 
 /**
- * Represents a navigation route provided by a module.
- * Routes are registered with the root navigator and can have deep linking configuration.
+ * ModuleStackParams - Combined type of all module stack screen parameters
  */
-export type ModuleRoute = {
-  /**
-   * Unique name for the route, used in navigation
-   */
-  name: string
-  /**
-   * React component to render for this route
-   */
-  screen: ComponentType<unknown>
-  /**
-   * Navigation options for this route (can be static or dynamic)
-   */
-  options?: ModuleRouteOptions
-  /**
-   * Deep linking configuration
-   */
-  linking?: {
-    path: string
-    exact?: boolean
-  }
-}
+export type ModuleStackParams = AuthStackParams & OldStackParams
 
 /**
- * Options that can be passed to a module route.
- * Can be static navigation options or a function that returns options dynamically.
+ * ModalParams - Combined type of all module modal screen parameters
  */
-export type ModuleRouteOptions =
-  | NativeStackNavigationOptions
-  | ((props: {
-      route: RouteProp<ParamListBase, string>
-      navigation: NativeStackNavigationProp<ParamListBase, string, undefined>
-      theme: Theme
-    }) => NativeStackNavigationOptions)
-  | undefined
+export type ModalParams = AuthModalParams & OldModalParams
+
+/**
+ * TabParams - Combined type of all module tab screen parameters
+ */
+export type TabParams = AuthTabParams & OldTabParams

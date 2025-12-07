@@ -1,30 +1,46 @@
 import {LoginScreen} from './screens/LoginScreen'
 import {RegisterScreen} from './screens/RegisterScreen'
+import {SocialsScreen} from './screens/SocialsScreen'
 
-import {StackNavigationRoutes} from '@/core/navigation/types'
+import {
+  StackNavigationRoutes,
+  TabNavigationRoutes,
+} from '@/core/navigation/types'
 import {
   AuthModalParams,
   AuthRouteName,
   type AuthStackParams,
-} from '@/modules/auth/routes'
+  AuthTabName,
+  type AuthTabParams,
+} from '@/modules/auth/routes.types'
 
-export const screenConfig: StackNavigationRoutes<
-  AuthStackParams,
-  AuthRouteName
-> = {
-  [AuthRouteName.login]: {
-    component: LoginScreen,
-    name: AuthRouteName.login,
+export const authStacks: StackNavigationRoutes<AuthStackParams, AuthRouteName> =
+  {
+    [AuthRouteName.login]: {
+      component: LoginScreen,
+      name: AuthRouteName.login,
+      options: {
+        headerShown: true,
+        headerTitle: 'Login',
+      },
+    },
+    [AuthRouteName.register]: {
+      component: RegisterScreen,
+      name: AuthRouteName.register,
+      options: {
+        headerShown: true,
+        headerTitle: 'Register',
+      },
+    },
+  }
+
+export const authTabs: TabNavigationRoutes<AuthTabParams, AuthTabName> = {
+  [AuthTabName.socials]: {
+    component: SocialsScreen,
+    name: AuthTabName.socials,
     options: {
       headerShown: true,
-      headerTitle: 'Login',
-    },
-  },
-  [AuthRouteName.register]: {
-    component: RegisterScreen,
-    name: AuthRouteName.register,
-    options: {
-      headerTitle: 'Register',
+      headerTitle: 'Socials',
     },
   },
 }

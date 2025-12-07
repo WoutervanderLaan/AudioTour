@@ -3,7 +3,9 @@ import {
   OldModalParams,
   OldRouteName,
   OldStackParams,
-} from './routes'
+  OldTabName,
+  OldTabParams,
+} from './routes.types'
 import {Capture} from './screens/Capture'
 import {Museum} from './screens/Museum'
 import {Narrative} from './screens/Narrative'
@@ -12,59 +14,64 @@ import {ObjectDetail} from './screens/ObjectDetail'
 import {Recommendations} from './screens/Recommendations'
 import {Settings} from './screens/Settings'
 
-import {StackNavigationRoutes} from '@/core/navigation/types'
+import {
+  StackNavigationRoutes,
+  TabNavigationRoutes,
+} from '@/core/navigation/types'
 
-export const screenConfig: StackNavigationRoutes<OldStackParams, OldRouteName> =
-  {
-    [OldRouteName.capture]: {
-      component: Capture,
-      name: OldRouteName.capture,
-      options: {
-        headerShown: true,
-        headerTitle: 'Capture',
-      },
+export const oldStacks: StackNavigationRoutes<OldStackParams, OldRouteName> = {
+  [OldRouteName.objectDetail]: {
+    component: ObjectDetail,
+    name: OldRouteName.objectDetail,
+    options: {
+      headerShown: true,
+      headerTitle: 'Object Detail',
     },
-    [OldRouteName.museum]: {
-      component: Museum,
-      name: OldRouteName.museum,
-      options: {
-        headerShown: false,
-        headerTitle: 'Museum',
-      },
+  },
+  [OldRouteName.narrative]: {
+    component: Narrative,
+    name: OldRouteName.narrative,
+    options: {
+      headerShown: true,
+      headerTitle: 'Narrative',
     },
-    [OldRouteName.recommendations]: {
-      component: Recommendations,
-      name: OldRouteName.recommendations,
-      options: {
-        headerShown: false,
-        headerTitle: 'Recommendations',
-      },
+  },
+  [OldRouteName.notFound]: {
+    component: NotFound,
+    name: OldRouteName.notFound,
+    options: {
+      headerShown: true,
+      headerTitle: '404',
     },
-    [OldRouteName.objectDetail]: {
-      component: ObjectDetail,
-      name: OldRouteName.objectDetail,
-      options: {
-        headerShown: false,
-        headerTitle: 'Object Detail',
-      },
+  },
+}
+
+export const oldTabs: TabNavigationRoutes<OldTabParams, OldTabName> = {
+  [OldTabName.capture]: {
+    component: Capture,
+    name: OldTabName.capture,
+    options: {
+      headerShown: true,
+      headerTitle: 'Capture',
     },
-    [OldRouteName.narrative]: {
-      component: Narrative,
-      name: OldRouteName.narrative,
-      options: {
-        headerShown: false,
-        headerTitle: 'Narrative',
-      },
+  },
+  [OldTabName.museum]: {
+    component: Museum,
+    name: OldTabName.museum,
+    options: {
+      headerShown: true,
+      headerTitle: 'Museum',
     },
-    [OldRouteName.notFound]: {
-      component: NotFound,
-      name: OldRouteName.notFound,
-      options: {
-        headerShown: false,
-        headerTitle: '404',
-      },
+  },
+  [OldTabName.recommendations]: {
+    component: Recommendations,
+    name: OldTabName.recommendations,
+    options: {
+      headerShown: true,
+      headerTitle: 'Recommendations',
     },
-  }
+  },
+}
 
 export const oldModals: StackNavigationRoutes<OldModalParams, OldModalName> = {
   [OldModalName.settings]: {

@@ -2,8 +2,8 @@ import type React from 'react'
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
-import {OldRouteName} from './routes'
-import {screenConfig} from './screenConfig'
+import {OldRouteName} from './routes.types'
+import {oldStacks} from './screenConfig'
 
 import {RootStackParams} from '@/core/navigation/types'
 import {
@@ -14,20 +14,21 @@ import {
 const Stack = createNativeStackNavigator<RootStackParams>()
 
 /**
- * OldStack
- * TODO: describe what it does.
+ * OldStack - Legacy module stack navigator (no longer used).
+ * Replaced by direct registration of screens in the root navigator.
  *
- * @returns {*} describe return value
+ * @deprecated This component is no longer used in the new navigation architecture
+ * @returns Old module stack navigator component
  */
 export const OldStack = (): React.JSX.Element => {
   const navTheme = useNavigationTheme()
 
   return (
     <Stack.Navigator
-      initialRouteName={OldRouteName.capture}
+      initialRouteName={OldRouteName.narrative}
       screenOptions={getStackNavigatorOptions(navTheme)}>
       <Stack.Group>
-        {Object.entries(screenConfig).map(([key, route]) => (
+        {Object.entries(oldStacks).map(([key, route]) => (
           <Stack.Screen
             key={key}
             {...route}

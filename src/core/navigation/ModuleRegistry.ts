@@ -2,6 +2,7 @@ import type {
   ModuleRegistry,
   RootStackParams,
   StackNavigationRoutes,
+  TabNavigationRoutes,
 } from './types'
 
 import {clearModuleQueries} from '@/core/api/queryclient'
@@ -111,9 +112,32 @@ class ModuleRegistryManager {
   }
 
   /**
-   * Gets all routes from all registered modules.
+   * Gets all stack screens from all registered modules.
+   * Stack screens appear above tabs and hide the tab bar.
    *
-   * @returns Array of module routes
+   * @returns Object mapping route names to stack screen configurations
+   */
+  getStacks(): StackNavigationRoutes<RootStackParams> {
+    return Object.values(this.modules).reduce((acc, {stacks}) => {
+      if (stacks) {
+        const collisions = Object.keys(stacks).filter(key => key in acc)
+
+        if (collisions.length > 0) {
+          logger.error(
+            `Stack route collision detected: ${collisions.join(', ')}. Later module will override.`,
+          )
+        }
+        return {...acc, ...stacks}
+      }
+      return acc
+    }, {})
+  }
+
+  /**
+   * Gets all modal screens from all registered modules.
+   * Modals appear with modal presentation style.
+   *
+   * @returns Object mapping route names to modal screen configurations
    */
   getModals(): StackNavigationRoutes<RootStackParams> {
     return Object.values(this.modules).reduce((acc, {modals}) => {
@@ -126,6 +150,28 @@ class ModuleRegistryManager {
           )
         }
         return {...acc, ...modals}
+      }
+      return acc
+    }, {})
+  }
+
+  /**
+   * Gets all tab screens from all registered modules.
+   * Tab screens appear in the bottom tab navigator.
+   *
+   * @returns Object mapping route names to tab screen configurations
+   */
+  getTabs(): TabNavigationRoutes<RootStackParams> {
+    return Object.values(this.modules).reduce((acc, {tabs}) => {
+      if (tabs) {
+        const collisions = Object.keys(tabs).filter(key => key in acc)
+
+        if (collisions.length > 0) {
+          logger.error(
+            `Tab route collision detected: ${collisions.join(', ')}. Later module will override.`,
+          )
+        }
+        return {...acc, ...tabs}
       }
       return acc
     }, {})

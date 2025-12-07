@@ -5,6 +5,7 @@ import {Text} from '@react-navigation/elements'
 import {useShallow} from 'zustand/react/shallow'
 
 import {Column} from '@/shared/components/ui/layout/Column'
+import {Screen} from '@/shared/components/ui/screen'
 import {Paragraph} from '@/shared/components/ui/typography'
 import {KNOWN_MUSEUMS, type MuseumLocation} from '@/shared/constants/museums'
 import {
@@ -54,28 +55,30 @@ export const Museum = (): React.JSX.Element => {
   }, [coords])
 
   return (
-    <Column
-      flex={1}
-      padding="md"
-      gap="sm">
-      <Text>Museum</Text>
+    <Screen.Static>
+      <Column
+        flex={1}
+        padding="md"
+        gap="sm">
+        <Text>Museum</Text>
 
-      {!!loading && <ActivityIndicator />}
+        {!!loading && <ActivityIndicator />}
 
-      {!!locError && <Text>{locError}</Text>}
+        {!!locError && <Text>{locError}</Text>}
 
-      <FlatList
-        data={sortedByDistance}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <TouchableOpacity onPress={() => setMuseum(item.id)}>
-            <Paragraph
-              fontFamily={currentMuseumId === item.id ? 'bold' : 'regular'}>
-              {item.name} ({item.distance?.toFixed(0) ?? '???'} m)
-            </Paragraph>
-          </TouchableOpacity>
-        )}
-      />
-    </Column>
+        <FlatList
+          data={sortedByDistance}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <TouchableOpacity onPress={() => setMuseum(item.id)}>
+              <Paragraph
+                fontFamily={currentMuseumId === item.id ? 'bold' : 'regular'}>
+                {item.name} ({item.distance?.toFixed(0) ?? '???'} m)
+              </Paragraph>
+            </TouchableOpacity>
+          )}
+        />
+      </Column>
+    </Screen.Static>
   )
 }

@@ -1,11 +1,16 @@
 import type {ComponentType} from 'react'
 
+import type {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs'
 import type {ParamListBase} from '@react-navigation/native'
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
 
 import type {ModuleSlug} from '@/modules/slugs'
-import type {ModalParams, ModuleStackParams} from '@/modules/stacks'
-import type {ModuleConfig} from '@/modules/types'
+import type {
+  ModalParams,
+  ModuleConfig,
+  ModuleStackParams,
+  TabParams,
+} from '@/modules/types'
 
 /**
  * Global type declaration for React Navigation
@@ -29,8 +34,10 @@ export type ModuleRegistry = {
 }
 
 /**
- * ModuleParams
- * TODO: describe what this type represents.
+ * ModuleParams - Type for nested navigation to module screens (legacy, to be removed).
+ * Allows navigation like: navigate(ModuleSlug.old, { screen: OldRouteName.notFound })
+ *
+ * Note: With the new architecture, direct navigation is preferred: navigate(OldRouteName.notFound)
  */
 type ModuleParams<
   ParamList extends ParamListBase,
@@ -43,16 +50,19 @@ type ModuleParams<
 >
 
 /**
- * RootStackParams
- * TODO: describe what this type represents.
+ * RootStackParams - Combined parameters for all navigation screens in the app.
+ * Includes stack screens, modals, tabs, and a special "Tabs" screen for the tab navigator.
  */
 export type RootStackParams = ModuleParams<ModuleStackParams> &
   ModuleStackParams &
-  ModalParams
+  ModalParams &
+  TabParams & {
+    Tabs: undefined
+  }
 
 /**
- * StackNavigationRoutes
- * TODO: describe what this type represents.
+ * StackNavigationRoutes - Configuration object for stack navigation screens.
+ * Maps route names to their component, name, and options.
  */
 export type StackNavigationRoutes<
   R extends Record<string, any>,
@@ -66,5 +76,22 @@ export type StackNavigationRoutes<
     options?: NativeStackNavigationOptions
     screenType?: 'default' | 'settings'
     title?: string
+  }
+>
+
+/**
+ * TabNavigationRoutes - Configuration object for tab navigation screens.
+ * Maps route names to their component, name, and options for the bottom tab navigator.
+ */
+export type TabNavigationRoutes<
+  R extends Record<string, any>,
+  Route extends string = string,
+> = Record<
+  Route,
+  {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    component: ComponentType<any>
+    name: keyof R
+    options?: BottomTabNavigationOptions
   }
 >

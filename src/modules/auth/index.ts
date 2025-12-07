@@ -1,6 +1,6 @@
 import {ModuleSlug} from '../slugs'
 import type {ModuleConfig} from '../types'
-import {AuthStack} from './Stack'
+import {authModals, authStacks, authTabs} from './screenConfig'
 
 import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger'
@@ -8,14 +8,19 @@ import {useAuthStore} from '@/modules/auth/store/useAuthStore'
 
 /**
  * Authentication module configuration.
- * Handles user authentication flows (login, register) and manages auth tokens.
+ * Handles user authentication flows and manages auth tokens.
+ * Includes:
+ * - Tab screens: Socials
+ * - Stack screens: Login, Register
  */
 export const authModule: ModuleConfig = {
   name: ModuleSlug.auth,
   version: '1.0.0',
   enabled: true,
 
-  navigator: AuthStack,
+  stacks: authStacks,
+  modals: authModals,
+  tabs: authTabs,
 
   dependencies: [ModuleSlug.old],
 

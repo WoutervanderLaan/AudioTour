@@ -4,19 +4,31 @@ export enum AuthRouteName {
 }
 
 /**
- * AuthStackParams
- * Type mapping for authentication stack route names to their parameter shapes.
- * Routes with undefined params don't accept any parameters.
+ * AuthStackParams - Parameters for authentication stack screens
  */
 export type AuthStackParams = {
   /**
-   * property
+   * Login screen params
    */
   [AuthRouteName.login]: undefined
   /**
-   * property
+   * Register screen params
    */
   [AuthRouteName.register]: undefined
+}
+
+export enum AuthTabName {
+  socials = 'Socials',
+}
+
+/**
+ * AuthTabParams - Parameters for authentication tab screens
+ */
+export type AuthTabParams = {
+  /**
+   * Socials tab screen params
+   */
+  [AuthTabName.socials]: undefined
 }
 
 export enum AuthModalName {}

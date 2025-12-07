@@ -9,13 +9,11 @@ import {useMutation} from '@tanstack/react-query'
 import * as ImagePicker from 'expo-image-picker'
 import {useShallow} from 'zustand/react/shallow'
 
-import {OldRouteName} from '../routes'
+import {OldRouteName} from '../routes.types'
 
 import {apiClient} from '@/core/api/client'
 import {ProcessArtworkResponse} from '@/core/api/schema'
 import {logger} from '@/core/lib/logger'
-import {AuthRouteName} from '@/modules/auth/routes'
-import {ModuleSlug} from '@/modules/slugs'
 import {
   CheckboxControlled,
   SwitchControlled,
@@ -42,7 +40,7 @@ import {useUserSessionStore} from '@/store/slices/userSessionStore'
 export const Capture = (): React.JSX.Element => {
   const [imageUri, setImageUri] = useState<string | undefined>(undefined)
   const [localError, setLocalError] = useState<string | undefined>(undefined)
-  const navigate = useNavigation()
+  const {navigate} = useNavigation()
 
   const sessionId = useUserSessionStore(s => s.sessionId)
 
@@ -129,7 +127,7 @@ export const Capture = (): React.JSX.Element => {
     setLastPhotoData(imageUri, objectId, recognitionConfidence)
 
     if (objectId) {
-      navigate.navigate(OldRouteName.objectDetail, {objectId: objectId})
+      navigate(OldRouteName.objectDetail, {objectId: objectId})
     }
   }
 
@@ -185,19 +183,14 @@ export const Capture = (): React.JSX.Element => {
             label="Description"
             placeholder="Enter description"
           />
-          <Button
-            label="setting"
-            onPress={() =>
-              navigate.navigate(ModuleSlug.auth, {screen: AuthRouteName.login})
-            }
-          />
-          {/* <TextInputControlled
+
+          <TextInputControlled
             control={control}
             name="year"
             keyboardType="numeric"
             label="Year"
             placeholder="Enter year"
-          /> */}
+          />
 
           <Button
             onPress={handleSubmit(onSubmit)}

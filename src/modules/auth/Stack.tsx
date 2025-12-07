@@ -2,8 +2,8 @@ import type React from 'react'
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
-import {AuthRouteName} from './routes'
-import {screenConfig} from './screenConfig'
+import {AuthRouteName} from './routes.types'
+import {authStacks} from './screenConfig'
 
 import type {RootStackParams} from '@/core/navigation/types'
 import {
@@ -14,10 +14,11 @@ import {
 const Stack = createNativeStackNavigator<RootStackParams>()
 
 /**
- * AuthStack
- * TODO: describe what it does.
+ * AuthStack - Legacy authentication stack navigator (no longer used).
+ * Replaced by direct registration of screens in the root navigator.
  *
- * @returns {*} describe return value
+ * @deprecated This component is no longer used in the new navigation architecture
+ * @returns Auth stack navigator component
  */
 export const AuthStack = (): React.JSX.Element => {
   const navTheme = useNavigationTheme()
@@ -27,7 +28,7 @@ export const AuthStack = (): React.JSX.Element => {
       initialRouteName={AuthRouteName.login}
       screenOptions={getStackNavigatorOptions(navTheme)}>
       <Stack.Group>
-        {Object.entries(screenConfig).map(([key, route]) => (
+        {Object.entries(authStacks).map(([key, route]) => (
           <Stack.Screen
             key={key}
             {...route}
