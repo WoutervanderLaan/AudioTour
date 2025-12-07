@@ -55,35 +55,51 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Set authentication token
+   * Set authentication token for subsequent requests.
+   * Token will be automatically included in Authorization header as Bearer token.
+   *
+   * @param token - JWT token string or null to clear authentication
    */
   setAuthToken(token: string | null): void {
     this.authToken = token
   }
 
   /**
-   * Get current auth token
+   * Get current authentication token.
+   *
+   * @returns Current auth token or null if not set
    */
   getAuthToken(): string | null {
     return this.authToken
   }
 
   /**
-   * Add request interceptor
+   * Add request interceptor to modify requests before they are sent.
+   * Interceptors are executed in the order they are added.
+   *
+   * @param interceptor - Function that receives and returns modified request URL and config
    */
   addRequestInterceptor(interceptor: RequestInterceptor): void {
     this.requestInterceptors.push(interceptor)
   }
 
   /**
-   * Add response interceptor
+   * Add response interceptor to modify responses before they are returned.
+   * Interceptors are executed in the order they are added.
+   *
+   * @param interceptor - Function that receives and returns modified response
    */
   addResponseInterceptor(interceptor: ResponseInterceptor): void {
     this.responseInterceptors.push(interceptor)
   }
 
   /**
-   * Build full URL with query parameters
+   * Build full URL with query parameters.
+   * Combines base URL, endpoint, and optional query parameters.
+   *
+   * @param endpoint - API endpoint path
+   * @param params - Optional query parameters to append to URL
+   * @returns Complete URL string with query parameters
    */
   private buildUrl(endpoint: string, params?: Record<string, unknown>): string {
     const url = new URL(endpoint, this.baseURL)
@@ -100,7 +116,12 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Build headers
+   * Build headers for request.
+   * Merges default headers, custom headers, and authentication header.
+   * Handles special case of undefined headers (needed for FormData).
+   *
+   * @param customHeaders - Optional custom headers to merge with defaults
+   * @returns Complete headers object ready for fetch
    */
   private buildHeaders(
     customHeaders?: Record<string, string | undefined>,
@@ -125,7 +146,12 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Apply request interceptors
+   * Apply request interceptors sequentially.
+   * Each interceptor can modify the URL and request config.
+   *
+   * @param url - Request URL
+   * @param config - Request configuration
+   * @returns Modified URL and config after all interceptors
    */
   private async applyRequestInterceptors(
     url: string,
@@ -144,7 +170,11 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Apply response interceptors
+   * Apply response interceptors sequentially.
+   * Each interceptor can modify the response before it's returned.
+   *
+   * @param response - Response object from fetch
+   * @returns Modified response after all interceptors
    */
   private async applyResponseInterceptors(
     response: Response,
@@ -159,9 +189,16 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Make HTTP request
+   * Make HTTP request with full feature support.
+   * Handles FormData, timeouts, interceptors, auth, and error handling.
+   *
+   * @param method - HTTP method (GET, POST, PUT, PATCH, DELETE)
+   * @param endpoint - API endpoint path
+   * @param body - Optional request body (JSON object or FormData)
+   * @param config - Optional request configuration (params, headers, timeout, signal)
+   * @returns Promise resolving to API response with data, status, and headers
+   * @throws ApiError for network errors, timeouts, or non-2xx status codes
    */
-
   private async request<T>(
     method: string,
     endpoint: string,
@@ -269,7 +306,11 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * GET request
+   * Perform GET request.
+   *
+   * @param endpoint - API endpoint path
+   * @param config - Optional request configuration
+   * @returns Promise resolving to API response
    */
   async get<T = unknown>(
     endpoint: string,
@@ -279,7 +320,12 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * POST request
+   * Perform POST request.
+   *
+   * @param endpoint - API endpoint path
+   * @param body - Request body (JSON object or FormData)
+   * @param config - Optional request configuration
+   * @returns Promise resolving to API response
    */
   async post<T = unknown>(
     endpoint: string,
@@ -290,7 +336,12 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * PUT request
+   * Perform PUT request.
+   *
+   * @param endpoint - API endpoint path
+   * @param body - Request body (JSON object or FormData)
+   * @param config - Optional request configuration
+   * @returns Promise resolving to API response
    */
   async put<T = unknown>(
     endpoint: string,
@@ -301,7 +352,12 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * PATCH request
+   * Perform PATCH request.
+   *
+   * @param endpoint - API endpoint path
+   * @param body - Request body (JSON object or FormData)
+   * @param config - Optional request configuration
+   * @returns Promise resolving to API response
    */
   async patch<T = unknown>(
     endpoint: string,
@@ -312,7 +368,11 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * DELETE request
+   * Perform DELETE request.
+   *
+   * @param endpoint - API endpoint path
+   * @param config - Optional request configuration
+   * @returns Promise resolving to API response
    */
   async delete<T = unknown>(
     endpoint: string,

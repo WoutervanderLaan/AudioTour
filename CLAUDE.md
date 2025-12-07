@@ -113,11 +113,12 @@ Configuration is in app.config.js.
 
 ### Navigation Structure
 
-Static navigation configuration with TypeScript safety:
+Modular navigation system with TypeScript safety:
 
-- **Root Stack**: ObjectDetail, Narrative, Settings (modal), NotFound
-- **Home Tabs**: Capture, Museum, Recommendations
-- Deep linking configured in src/app/navigation/linking.ts
+- Navigation routes are registered dynamically through the ModuleRegistry
+- Each module defines its own routes via `routes.ts` and `screenConfig.ts` files
+- Modules export Stack components that are composed into the RootNavigator
+- Deep linking configured in src/core/navigation/linking.ts
 
 ### Code Quality
 

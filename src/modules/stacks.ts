@@ -5,13 +5,17 @@ import {RootStackParams, StackNavigationRoutes} from '@/core/navigation/types'
 
 /**
  * ModuleStackParams
- * TODO: describe what this type represents.
+ * Combined type of all route parameters from all registered modules.
+ * This type is the union of all module-specific stack parameter types,
+ * enabling type-safe navigation across all module routes.
  */
 export type ModuleStackParams = AuthStackParams & OldStackParams
 
 /**
  * ModalParams
- * TODO: describe what this type represents.
+ * Combined type of all modal route parameters from all registered modules.
+ * This type is the union of all module-specific modal parameter types,
+ * enabling type-safe modal navigation across all module routes.
  */
 export type ModalParams = OldModalParams
 
