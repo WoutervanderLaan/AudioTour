@@ -34,13 +34,16 @@ const Tabs = (): React.JSX.Element => {
         <Tab.Screen
           key={key}
           {...route}
-          options={getTabNavigatorOptions(navTheme)}
         />
       )),
-    [navTheme],
+    [],
   )
 
-  return <Tab.Navigator>{bottomTabs}</Tab.Navigator>
+  return (
+    <Tab.Navigator screenOptions={getTabNavigatorOptions(navTheme)}>
+      {bottomTabs}
+    </Tab.Navigator>
+  )
 }
 
 /**
