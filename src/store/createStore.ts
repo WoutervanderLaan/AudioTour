@@ -5,7 +5,12 @@ import {devtools, persist} from 'zustand/middleware'
 import type {CreateStoreOptions} from './types'
 
 /**
- * Factory function to create module stores with consistent middleware
+ * Factory function to create module stores with consistent middleware.
+ * Automatically applies devtools middleware in development and optional persistence via AsyncStorage.
+ *
+ * @param stateCreator - Zustand state creator function that defines the store's state and actions
+ * @param options - Configuration options for the store (name, devtools, persist)
+ * @returns Zustand store hook with applied middleware
  */
 export function createModuleStore<T extends object>(
   stateCreator: StateCreator<T>,
