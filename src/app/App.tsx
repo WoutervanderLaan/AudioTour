@@ -10,13 +10,13 @@ import * as SplashScreen from 'expo-splash-screen'
 
 // eslint-disable-next-line no-restricted-imports, boundaries/no-unknown
 import StorybookUI from '../../.rnstorybook/'
-import {registerModules} from './config/modules'
 import {Init} from './init/Init'
 
 import {queryClient} from '@/core/api/queryclient'
 import {logger} from '@/core/lib/logger'
 import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 import {RootNavigator} from '@/core/navigation/RootNavigator'
+import {registerModules} from '@/modules/modules'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
 
@@ -37,7 +37,6 @@ export const App = (): React.JSX.Element => {
   const [isReady, setIsReady] = React.useState(false)
 
   React.useEffect(() => {
-    // Initialize modules asynchronously (calls onAppStart hooks)
     /**
      * initializeApp
      * Initializes all registered modules by calling their onAppStart hooks and handles errors gracefully.
@@ -49,8 +48,6 @@ export const App = (): React.JSX.Element => {
         await moduleRegistry.initialize()
       } catch (error) {
         logger.error('Failed to initialize app:', error)
-        // Continue running the app even if initialization fails
-        // Individual module errors are already logged by the ModuleRegistry
       } finally {
         setIsReady(true)
       }
@@ -58,14 +55,11 @@ export const App = (): React.JSX.Element => {
 
     initializeApp()
 
-    // Cleanup function for when the component unmounts
     return (): void => {
       // Future: Add cleanup logic here if needed (e.g., unregister modules)
     }
   }, [])
 
-  // Show nothing until modules are initialized
-  // This prevents navigation errors and ensures a smooth startup
   if (!isReady) {
     return <React.Fragment />
   }

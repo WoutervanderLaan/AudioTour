@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
@@ -38,16 +36,16 @@ export const useMuseumStore = create<MuseumState>()(
   immer((set, _get) => ({
     currentMuseumId: undefined,
     objects: [],
-    setMuseum: id =>
+    setMuseum: (id?: string): void =>
       set(state => {
         state.currentMuseumId = id
       }),
-    reset: () =>
+    reset: (): void =>
       set(state => {
         state.objects = []
         state.currentMuseumId = undefined
       }),
-    setObjects: (objects: ObjectItem[]) => {
+    setObjects: (objects: ObjectItem[]): void => {
       set(state => {
         state.objects = objects
       })

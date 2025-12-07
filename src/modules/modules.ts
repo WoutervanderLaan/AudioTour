@@ -1,6 +1,7 @@
+import {authModule} from './auth'
+import {oldModule} from './old'
+
 import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
-import {authModuleConfig} from '@/modules/auth/module.config'
-import {oldModuleConfig} from '@/modules/old'
 
 /**
  * Registers all application modules with the module registry.
@@ -10,10 +11,6 @@ import {oldModuleConfig} from '@/modules/old'
  * in the module's configuration.
  */
 export const registerModules = (): void => {
-  // Core modules
-  moduleRegistry.register(oldModuleConfig)
-  moduleRegistry.register(authModuleConfig)
-
-  // Feature modules
-  // Add more feature modules here as they are developed
+  moduleRegistry.register(oldModule)
+  moduleRegistry.register(authModule)
 }

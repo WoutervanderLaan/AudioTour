@@ -1,10 +1,13 @@
+import type {
+  ModuleRegistry,
+  RootStackParams,
+  StackNavigationRoutes,
+} from './types'
+
 import {clearModuleQueries} from '@/core/api/queryclient'
 import {logger} from '@/core/lib/logger'
-import type {
-  ModuleConfig,
-  ModuleRegistry,
-  ModuleRoute,
-} from '@/core/navigation/types'
+import type {ModuleSlug} from '@/modules/slugs'
+import type {ModuleConfig} from '@/modules/types'
 
 /**
  * ModuleRegistryManager manages the lifecycle of application modules.
@@ -57,7 +60,7 @@ class ModuleRegistryManager {
    *
    * @param moduleName - The name of the module to unregister
    */
-  async unregister(moduleName: string): Promise<void> {
+  async unregister(moduleName: ModuleSlug): Promise<void> {
     try {
       const module = this.modules[moduleName]
       if (!module) {
@@ -94,7 +97,7 @@ class ModuleRegistryManager {
    * @param name - The name of the module to retrieve
    * @returns The module configuration or undefined if not found
    */
-  getModule(name: string): ModuleConfig | undefined {
+  getModule(name: ModuleSlug): ModuleConfig | undefined {
     return this.modules[name]
   }
 
@@ -112,8 +115,13 @@ class ModuleRegistryManager {
    *
    * @returns Array of module routes
    */
-  getRoutes(): ModuleRoute[] {
-    return Object.values(this.modules).flatMap(module => module.routes || [])
+  getModals(): StackNavigationRoutes<RootStackParams> {
+    return Object.values(this.modules).reduce((acc, {modals}) => {
+      if (modals) {
+        return {...acc, ...modals}
+      }
+      return acc
+    }, {})
   }
 
   /**

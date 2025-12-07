@@ -9,6 +9,8 @@ import {useMutation} from '@tanstack/react-query'
 import * as ImagePicker from 'expo-image-picker'
 import {useShallow} from 'zustand/react/shallow'
 
+import {OldRouteName} from '../routes'
+
 import {apiClient} from '@/core/api/client'
 import {ProcessArtworkResponse} from '@/core/api/schema'
 import {logger} from '@/core/lib/logger'
@@ -125,7 +127,7 @@ export const Capture = (): React.JSX.Element => {
     setLastPhotoData(imageUri, objectId, recognitionConfidence)
 
     if (objectId) {
-      navigate.navigate('ObjectDetail', {id: objectId})
+      navigate.navigate(OldRouteName.objectDetail, {objectId: objectId})
     }
   }
 

@@ -1,7 +1,7 @@
 import type {LinkingOptions} from '@react-navigation/native'
 import {createURL} from 'expo-linking'
 
-import type {RootStackParamList} from './types'
+import type {RootStackParams} from './types'
 
 const prefix = createURL('/')
 
@@ -10,19 +10,14 @@ const prefix = createURL('/')
  * Defines URL prefixes and path mappings for navigation.
  * Typed with RootStackParamList to ensure all routes are properly defined.
  */
-export const linking: LinkingOptions<RootStackParamList> = {
+export const linking: LinkingOptions<RootStackParams> = {
   prefixes: [prefix],
   enabled: true,
   config: {
     screens: {
-      HomeTabs: {
-        path: '',
-        screens: {
-          Capture: 'capture',
-          Museum: 'museum',
-          Recommendations: 'recommendations',
-        },
-      },
+      Capture: 'capture',
+      Museum: 'museum',
+      Recommendations: 'recommendations',
       Login: 'login',
       Register: 'register',
       ObjectDetail: 'object/:id',
