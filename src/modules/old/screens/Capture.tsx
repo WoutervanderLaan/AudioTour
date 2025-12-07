@@ -14,6 +14,8 @@ import {OldRouteName} from '../routes'
 import {apiClient} from '@/core/api/client'
 import {ProcessArtworkResponse} from '@/core/api/schema'
 import {logger} from '@/core/lib/logger'
+import {AuthRouteName} from '@/modules/auth/routes'
+import {ModuleSlug} from '@/modules/slugs'
 import {
   CheckboxControlled,
   SwitchControlled,
@@ -183,13 +185,19 @@ export const Capture = (): React.JSX.Element => {
             label="Description"
             placeholder="Enter description"
           />
-          <TextInputControlled
+          <Button
+            label="setting"
+            onPress={() =>
+              navigate.navigate(ModuleSlug.auth, {screen: AuthRouteName.login})
+            }
+          />
+          {/* <TextInputControlled
             control={control}
             name="year"
             keyboardType="numeric"
             label="Year"
             placeholder="Enter year"
-          />
+          /> */}
 
           <Button
             onPress={handleSubmit(onSubmit)}

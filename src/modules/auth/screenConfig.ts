@@ -16,7 +16,7 @@ export const screenConfig: StackNavigationRoutes<
     component: LoginScreen,
     name: AuthRouteName.login,
     options: {
-      headerShown: false,
+      headerShown: true,
       headerTitle: 'Login',
     },
   },

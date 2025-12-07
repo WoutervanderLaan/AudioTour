@@ -118,6 +118,13 @@ class ModuleRegistryManager {
   getModals(): StackNavigationRoutes<RootStackParams> {
     return Object.values(this.modules).reduce((acc, {modals}) => {
       if (modals) {
+        const collisions = Object.keys(modals).filter(key => key in acc)
+
+        if (collisions.length > 0) {
+          logger.error(
+            `Modal route collision detected: ${collisions.join(', ')}. Later module will override.`,
+          )
+        }
         return {...acc, ...modals}
       }
       return acc

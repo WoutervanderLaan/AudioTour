@@ -4,8 +4,9 @@ export enum AuthRouteName {
 }
 
 /**
- * ContactStackParams
- * TODO: describe what this type represents.
+ * AuthStackParams
+ * Type mapping for authentication stack route names to their parameter shapes.
+ * Routes with undefined params don't accept any parameters.
  */
 export type AuthStackParams = {
   /**
@@ -21,7 +22,8 @@ export type AuthStackParams = {
 export enum AuthModalName {}
 
 /**
- * ContactModalParams
- * TODO: describe what this type represents.
+ * AuthModalParams
+ * Type mapping for authentication modal names to their parameter shapes.
+ * Currently empty as no modals are defined.
  */
 export type AuthModalParams = Record<string, never>

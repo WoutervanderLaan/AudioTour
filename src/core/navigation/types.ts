@@ -54,7 +54,10 @@ export type RootStackParams = ModuleParams<ModuleStackParams> &
  * StackNavigationRoutes
  * TODO: describe what this type represents.
  */
-export type StackNavigationRoutes<R, Route extends string = string> = Record<
+export type StackNavigationRoutes<
+  R extends Record<string, any>,
+  Route extends string = string,
+> = Record<
   Route,
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

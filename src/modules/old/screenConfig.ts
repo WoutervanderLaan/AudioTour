@@ -20,7 +20,7 @@ export const screenConfig: StackNavigationRoutes<OldStackParams, OldRouteName> =
       component: Capture,
       name: OldRouteName.capture,
       options: {
-        headerShown: false,
+        headerShown: true,
         headerTitle: 'Capture',
       },
     },

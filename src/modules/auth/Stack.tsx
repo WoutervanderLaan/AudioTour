@@ -6,22 +6,26 @@ import {AuthRouteName} from './routes'
 import {screenConfig} from './screenConfig'
 
 import type {RootStackParams} from '@/core/navigation/types'
+import {
+  getStackNavigatorOptions,
+  useNavigationTheme,
+} from '@/shared/hooks/useNavigationTheme'
 
 const Stack = createNativeStackNavigator<RootStackParams>()
 
 /**
- * ContactStack
+ * AuthStack
  * TODO: describe what it does.
  *
  * @returns {*} describe return value
  */
 export const AuthStack = (): React.JSX.Element => {
-  //   const screenOptions = useScreenOptions()
+  const navTheme = useNavigationTheme()
 
   return (
     <Stack.Navigator
       initialRouteName={AuthRouteName.login}
-      screenOptions={undefined}>
+      screenOptions={getStackNavigatorOptions(navTheme)}>
       <Stack.Group>
         {Object.entries(screenConfig).map(([key, route]) => (
           <Stack.Screen

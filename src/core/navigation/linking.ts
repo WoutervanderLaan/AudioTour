@@ -8,7 +8,7 @@ const prefix = createURL('/')
 /**
  * Deep linking configuration for the application.
  * Defines URL prefixes and path mappings for navigation.
- * Typed with RootStackParamList to ensure all routes are properly defined.
+ * Typed with RootStackParams to ensure all routes are properly defined.
  */
 export const linking: LinkingOptions<RootStackParams> = {
   prefixes: [prefix],

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 
 import {
   NavigationContainer,
@@ -11,38 +11,8 @@ import {moduleRegistry} from './ModuleRegistry'
 import type {RootStackParams} from './types'
 
 import {ModuleSlug} from '@/modules/slugs'
-import {
-  getStackNavigatorOptions,
-  useNavigationTheme,
-} from '@/shared/hooks/useNavigationTheme'
 
 const Stack = createNativeStackNavigator<RootStackParams>()
-
-const moduleStacks = Object.entries(moduleRegistry.getModules()).map(
-  ([name, module]) => {
-    if (!module.navigator) {
-      return null
-    }
-
-    return (
-      <Stack.Screen
-        component={module.navigator}
-        key={name}
-        name={name as ModuleSlug}
-        // options={options}
-      />
-    )
-  },
-)
-
-const modalStacks = Object.entries(moduleRegistry.getModals()).map(
-  ([key, route]) => (
-    <Stack.Screen
-      key={key}
-      {...route}
-    />
-  ),
-)
 
 /**
  * RootNavigator component that manages the application's navigation structure.
@@ -64,18 +34,50 @@ const modalStacks = Object.entries(moduleRegistry.getModals()).map(
 export const RootNavigator: React.FC<
   Omit<NavigationContainerProps, 'children'>
 > = props => {
-  const navTheme = useNavigationTheme()
+  const moduleStacks = useMemo(() => {
+    const stacks = Object.entries(moduleRegistry.getModules()).map(
+      ([name, module]) => {
+        if (!module.navigator) {
+          return null
+        }
+
+        return (
+          <Stack.Screen
+            component={module.navigator}
+            key={name}
+            name={name as ModuleSlug}
+          />
+        )
+      },
+    )
+
+    return stacks.filter(Boolean)
+  }, [])
+
+  const modalStacks = useMemo(
+    () =>
+      Object.entries(moduleRegistry.getModals()).map(([key, route]) => (
+        <Stack.Screen
+          key={key}
+          {...route}
+        />
+      )),
+    [],
+  )
+
+  const initialRouteName = useMemo(() => {
+    return moduleStacks.some(module => module?.key === ModuleSlug.old)
+      ? ModuleSlug.old
+      : (Object.keys(moduleRegistry.getModules())[0] as ModuleSlug)
+  }, [moduleStacks])
 
   return (
     <NavigationContainer
       {...props}
       linking={linking}>
       <Stack.Navigator
-        initialRouteName={ModuleSlug.old}
-        screenOptions={{
-          headerShown: false,
-          ...getStackNavigatorOptions(navTheme),
-        }}>
+        initialRouteName={initialRouteName}
+        screenOptions={{headerShown: false}}>
         {moduleStacks}
 
         <Stack.Group

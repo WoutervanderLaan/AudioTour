@@ -95,10 +95,6 @@ export type ModuleRoute = {
    */
   name: string
   /**
-   * Optional path for deep linking
-   */
-  path?: string
-  /**
    * React component to render for this route
    */
   screen: ComponentType<unknown>

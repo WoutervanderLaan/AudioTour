@@ -43,7 +43,7 @@ export enum OldModalName {
 }
 
 /**
- * OldModalName
+ * OldModalParams
  * TODO: describe what this type represents.
  */
 export type OldModalParams = {
