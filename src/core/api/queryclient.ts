@@ -1,5 +1,15 @@
 import {QueryClient} from '@tanstack/react-query'
 
+/**
+ * Global TanStack Query client instance with default configuration.
+ *
+ * Configured with:
+ * - 5 minute stale time for queries
+ * - 10 minute garbage collection time
+ * - Single retry on failure
+ * - No refetch on window focus or mount
+ * - No retry for mutations
+ */
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

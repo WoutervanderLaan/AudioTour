@@ -3,7 +3,6 @@
 - **src/**
   - **app/** – app-wide setup: providers, navigation, initialization
     - **init/** – app initialization logic
-    - **config/** – app configuration (module registry)
   - **core/** – core infrastructure and utilities used throughout the application
     - **api/** – API client, query configuration, types, and MSW mocks for data fetching
     - **lib/** – shared utility functions and helpers (logger, etc.)
@@ -28,22 +27,9 @@
       - types.ts – auth types
       - module.config.ts – module configuration
     - **old/** – legacy screens awaiting migration to proper modules
-      - types/
-      - index.ts
-    - **user/**
-      - components/
-      - hooks/
-      - services/
-      - types/
-      - index.ts
-    - **capture/** – photo capture feature
-      - components/
-      - schemas/
-      - hooks/
-      - types/
+      - screens/ – old screens (Museum, Settings, Capture, etc.)
       - index.ts
   - **store/** – global Zustand state management
-    - slices/
-    - middleware/
+    - slices/ – store slices
   - **themes/** – theme configuration and tokens
     - **tokens/** - individual theme tokens

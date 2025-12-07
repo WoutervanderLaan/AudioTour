@@ -58,21 +58,24 @@ The codebase follows a strict feature-based architecture enforced by ESLint boun
 src/
 ├── app/              # App-wide setup: providers, navigation, initialization
 │   └── init/        # App initialization logic
+├── core/             # Core application infrastructure
+│   ├── api/         # API client, configuration, and mocks
+│   ├── lib/         # Core utilities and logger
+│   └── navigation/  # Navigation setup and module registry
 ├── shared/           # Reusable, generic components and utilities
 │   ├── components/
 │   │   ├── ui/      # Generic UI components
 │   │   └── features/ # Complex reusable features
+│   ├── constants/   # Shared constants
 │   ├── context/     # React Context providers
 │   ├── hooks/       # Shared custom hooks
-│   ├── lib/         # API clients, helpers, utilities, constants
-│   └── types/       # Global TypeScript types
-├── modules/        # Self-contained feature modules
+│   ├── types/       # Global TypeScript types
+│   └── utils/       # Utility functions
+├── modules/          # Self-contained feature modules
 │   ├── auth/        # Authentication module
-│   ├── user/        # User management module
-│   └── capture/     # Photo capture module
-├── store/           # Global Zustand state management
-│
-│   └── middleware/  # Store middleware
+│   └── old/         # Legacy screens (to be migrated)
+├── store/            # Global Zustand state management
+│   └── slices/      # Store slices
 └── themes/          # Theme configuration and tokens
     └── tokens/      # Individual theme tokens
 ```
