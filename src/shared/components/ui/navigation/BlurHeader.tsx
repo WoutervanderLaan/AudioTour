@@ -62,7 +62,7 @@ export const BlurHeader = ({
     <BlurBox
       tint={isDark ? 'dark' : 'light'}
       intensity={intensity}
-      featheredEdges={!!featheredBottomEdge && {bottom: true}}
+      featheredEdges={featheredBottomEdge ? {bottom: true} : undefined}
       featherRadius={featherRadius}
       style={[styles.container, {paddingTop: insets.top}]}>
       <Box style={styles.content}>

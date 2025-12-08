@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react'
+import React, {useCallback, useMemo, useState} from 'react'
 import {LayoutChangeEvent, StyleProp, ViewStyle} from 'react-native'
 import {useUnistyles} from 'react-native-unistyles'
 
@@ -182,6 +182,20 @@ const buildBlurBoxStyle = (
 })
 
 /**
+ * MAX_GRADIENT_COVERAGE
+ * Maximum proportion of the component that a single gradient edge can cover.
+ * Prevents top/bottom or left/right gradients from overlapping.
+ */
+const MAX_GRADIENT_COVERAGE = 0.5
+
+/**
+ * DIMENSION_CHANGE_THRESHOLD
+ * Minimum pixel change required to trigger dimension state update.
+ * Prevents unnecessary re-renders from sub-pixel layout changes.
+ */
+const DIMENSION_CHANGE_THRESHOLD = 1
+
+/**
  * EdgeConfig
  * Normalized configuration for feathered edges
  */
@@ -352,14 +366,25 @@ export const BlurBox = ({
 
   /**
    * handleLayout
-   * Handle layout changes to capture component dimensions for feather gradient calculations
+   * Handle layout changes to capture component dimensions for feather gradient calculations.
+   * Only updates state if dimensions change by more than DIMENSION_CHANGE_THRESHOLD to prevent
+   * unnecessary re-renders from sub-pixel layout changes.
    *
    * @param event - Layout change event
    */
-  const handleLayout = (event: LayoutChangeEvent): void => {
+  const handleLayout = useCallback((event: LayoutChangeEvent): void => {
     const {width, height} = event.nativeEvent.layout
-    setDimensions({width, height})
-  }
+    setDimensions(prev => {
+      const widthChanged = Math.abs(prev.width - width) >= DIMENSION_CHANGE_THRESHOLD
+      const heightChanged = Math.abs(prev.height - height) >= DIMENSION_CHANGE_THRESHOLD
+
+      if (!widthChanged && !heightChanged) {
+        return prev
+      }
+
+      return {width, height}
+    })
+  }, [])
 
   const gradientMask = useMemo(() => {
     if (!hasFeathering) {
@@ -367,10 +392,18 @@ export const BlurBox = ({
     }
 
     const {width, height} = dimensions
-    const topLocation = edges.top && height > 0 ? Math.min(featherRadius / height, 0.5) : 0
-    const bottomLocation = edges.bottom && height > 0 ? Math.max(1 - featherRadius / height, 0.5) : 1
-    const leftLocation = edges.left && width > 0 ? Math.min(featherRadius / width, 0.5) : 0
-    const rightLocation = edges.right && width > 0 ? Math.max(1 - featherRadius / width, 0.5) : 1
+    const topLocation = edges.top && height > 0
+      ? Math.min(featherRadius / height, MAX_GRADIENT_COVERAGE)
+      : 0
+    const bottomLocation = edges.bottom && height > 0
+      ? Math.max(1 - featherRadius / height, MAX_GRADIENT_COVERAGE)
+      : 1
+    const leftLocation = edges.left && width > 0
+      ? Math.min(featherRadius / width, MAX_GRADIENT_COVERAGE)
+      : 0
+    const rightLocation = edges.right && width > 0
+      ? Math.max(1 - featherRadius / width, MAX_GRADIENT_COVERAGE)
+      : 1
 
     const verticalGradient = buildVerticalGradient(edges, topLocation, bottomLocation)
     const horizontalGradient = buildHorizontalGradient(edges, leftLocation, rightLocation)
@@ -393,19 +426,19 @@ export const BlurBox = ({
     )
   }, [edges, featherRadius, dimensions, hasFeathering])
 
-  const blurContent = (
-    <BlurView
-      tint={tint}
-      intensity={intensity}
-      style={[dynamicStyle, style]}>
-      {children}
-    </BlurView>
-  )
-
+  // Render without feathering - apply styles directly to BlurView
   if (!hasFeathering) {
-    return blurContent
+    return (
+      <BlurView
+        tint={tint}
+        intensity={intensity}
+        style={[dynamicStyle, style]}>
+        {children}
+      </BlurView>
+    )
   }
 
+  // Render with feathering - apply styles to MaskedView wrapper only
   return (
     <MaskedView
       style={[dynamicStyle, style]}
@@ -415,7 +448,11 @@ export const BlurBox = ({
           {gradientMask}
         </Box>
       }>
-      {blurContent}
+      <BlurView
+        tint={tint}
+        intensity={intensity}>
+        {children}
+      </BlurView>
     </MaskedView>
   )
 }

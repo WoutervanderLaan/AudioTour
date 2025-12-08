@@ -50,7 +50,7 @@ export const BlurTabBar = ({
     <BlurBox
       tint={isDark ? 'dark' : 'light'}
       intensity={intensity}
-      featheredEdges={!!featheredTopEdge && {top: true}}
+      featheredEdges={featheredTopEdge ? {top: true} : undefined}
       featherRadius={featherRadius}
       style={styles.container}>
       <Box style={styles.border} />
