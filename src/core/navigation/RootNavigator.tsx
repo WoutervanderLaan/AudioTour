@@ -11,6 +11,7 @@ import {linking} from './linking'
 import {moduleRegistry} from './ModuleRegistry'
 import type {RootStackParams} from './types'
 
+import {BlurTabBar} from '@/shared/components/ui/navigation/BlurTabBar'
 import {
   getTabNavigatorOptions,
   useNavigationTheme,
@@ -40,7 +41,9 @@ const Tabs = (): React.JSX.Element => {
   )
 
   return (
-    <Tab.Navigator screenOptions={getTabNavigatorOptions(navTheme)}>
+    <Tab.Navigator
+      screenOptions={getTabNavigatorOptions(navTheme, true)}
+      tabBar={props => <BlurTabBar {...props} />}>
       {bottomTabs}
     </Tab.Navigator>
   )
