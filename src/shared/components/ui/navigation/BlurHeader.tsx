@@ -1,14 +1,12 @@
 import React from 'react'
-import {Platform, TouchableOpacity} from 'react-native'
+import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
-import {
-  NativeStackHeaderProps,
-  NativeStackNavigationOptions,
-} from '@react-navigation/native-stack'
+import type {NativeStackHeaderProps} from '@react-navigation/native-stack'
 
 import {BlurBox} from '../layout/BlurBox'
 import {Box} from '../layout/Box'
+import {PressableBase} from '../pressable/PressableBase'
 import {Title} from '../typography/Title'
 
 /**
@@ -40,6 +38,7 @@ export const BlurHeader = ({
   intensity = 80,
 }: BlurHeaderProps): React.JSX.Element => {
   const {theme} = useUnistyles()
+  const insets = useSafeAreaInsets()
   const isDark = theme.name === 'dark'
 
   const title =
@@ -51,22 +50,24 @@ export const BlurHeader = ({
     <BlurBox
       tint={isDark ? 'dark' : 'light'}
       intensity={intensity}
-      style={styles.container}>
+      style={[styles.container, {paddingTop: insets.top}]}>
       <Box style={styles.content}>
         {/* Left side - Back button */}
         {!!back && (
-          <TouchableOpacity
+          <PressableBase
             onPress={() => navigation.goBack()}
-            style={styles.leftButton}>
-            <Title style={{color: theme.color.text.link}}>{'<'} Back</Title>
-          </TouchableOpacity>
+            style={() => styles.leftButton}
+            accessibilityLabel="Go back"
+            accessibilityRole="button">
+            <Title style={styles.backButtonText}>{'<'} Back</Title>
+          </PressableBase>
         )}
 
         {/* Center - Title */}
         <Box style={styles.titleContainer}>
           <Title
             numberOfLines={1}
-            style={{color: theme.color.text.default}}>
+            style={styles.titleText}>
             {title}
           </Title>
         </Box>
@@ -82,40 +83,8 @@ export const BlurHeader = ({
   )
 }
 
-/**
- * getBlurHeaderOptions
- * Returns navigation options to enable the BlurHeader component.
- * Use this helper to configure screens with a blurred header.
- *
- * @param intensity - Optional blur intensity (0-100). Defaults to 80
- * @returns NativeStackNavigationOptions with custom blur header
- *
- * @example
- * ```tsx
- * <Stack.Screen
- *   name="MyScreen"
- *   component={MyScreen}
- *   options={getBlurHeaderOptions(90)}
- * />
- * ```
- */
-export const getBlurHeaderOptions = (
-  intensity?: number,
-): NativeStackNavigationOptions => ({
-  headerShown: true,
-  headerTransparent: true,
-  header: props => (
-    <BlurHeader
-      {...props}
-      intensity={intensity}
-    />
-  ),
-})
-
 const styles = StyleSheet.create(theme => ({
-  container: {
-    paddingTop: Platform.OS === 'ios' ? 44 : 0,
-  },
+  container: {},
   content: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -136,5 +105,11 @@ const styles = StyleSheet.create(theme => ({
   border: {
     height: StyleSheet.hairlineWidth,
     backgroundColor: theme.color.border.default,
+  },
+  backButtonText: {
+    color: theme.color.text.link,
+  },
+  titleText: {
+    color: theme.color.text.default,
   },
 }))

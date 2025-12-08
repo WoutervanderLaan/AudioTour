@@ -1,38 +1,11 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import {StyleProp, ViewStyle} from 'react-native'
 import {useUnistyles} from 'react-native-unistyles'
 
-import {BlurView} from 'expo-blur'
+import {type BlurTint,BlurView} from 'expo-blur'
 
 import type {ApplyExclusivityPair} from '@/shared/types/utils/ApplyExclusivityPair'
 import type {Theme} from '@/themes/types'
-
-/**
- * BlurTint
- * Available blur tint options for the BlurBox component
- */
-export type BlurTint =
-  | 'light'
-  | 'dark'
-  | 'default'
-  | 'extraLight'
-  | 'regular'
-  | 'prominent'
-  | 'systemUltraThinMaterial'
-  | 'systemThinMaterial'
-  | 'systemMaterial'
-  | 'systemThickMaterial'
-  | 'systemChromeMaterial'
-  | 'systemUltraThinMaterialLight'
-  | 'systemThinMaterialLight'
-  | 'systemMaterialLight'
-  | 'systemThickMaterialLight'
-  | 'systemChromeMaterialLight'
-  | 'systemUltraThinMaterialDark'
-  | 'systemThinMaterialDark'
-  | 'systemMaterialDark'
-  | 'systemThickMaterialDark'
-  | 'systemChromeMaterialDark'
 
 /**
  * BlurBoxPropsBase
@@ -204,7 +177,10 @@ export const BlurBox = ({
   ...layoutProps
 }: BlurBoxProps): React.JSX.Element => {
   const {theme} = useUnistyles()
-  const dynamicStyle = buildBlurBoxStyle(layoutProps, theme)
+  const dynamicStyle = useMemo(
+    () => buildBlurBoxStyle(layoutProps, theme),
+    [layoutProps, theme],
+  )
 
   return (
     <BlurView
