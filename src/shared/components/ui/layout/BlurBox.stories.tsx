@@ -192,3 +192,108 @@ export const WithLayout: Story = {
     </BlurBox>
   ),
 }
+
+export const FeatheredAllEdges: Story = {
+  args: {
+    tint: 'default',
+    intensity: 80,
+    padding: 'xxl',
+    featheredEdges: true,
+    featherRadius: 30,
+    style: {
+      borderRadius: 16,
+    },
+  },
+  render: args => (
+    <BlurBox {...args}>
+      <Title>Feathered Edges</Title>
+      <Label style={{marginTop: 8}}>
+        All edges fade smoothly into background
+      </Label>
+    </BlurBox>
+  ),
+}
+
+export const FeatheredBottomEdge: Story = {
+  args: {
+    tint: 'default',
+    intensity: 80,
+    padding: 'xxl',
+    featheredEdges: {bottom: true},
+    featherRadius: 40,
+    style: {
+      borderRadius: 16,
+    },
+  },
+  render: args => (
+    <BlurBox {...args}>
+      <Title>Feathered Bottom</Title>
+      <Label style={{marginTop: 8}}>
+        Bottom edge fades like a header
+      </Label>
+    </BlurBox>
+  ),
+}
+
+export const FeatheredTopEdge: Story = {
+  args: {
+    tint: 'default',
+    intensity: 80,
+    padding: 'xxl',
+    featheredEdges: {top: true},
+    featherRadius: 40,
+    style: {
+      borderRadius: 16,
+    },
+  },
+  render: args => (
+    <BlurBox {...args}>
+      <Title>Feathered Top</Title>
+      <Label style={{marginTop: 8}}>
+        Top edge fades like a tab bar
+      </Label>
+    </BlurBox>
+  ),
+}
+
+export const FeatheredVerticalEdges: Story = {
+  args: {
+    tint: 'light',
+    intensity: 80,
+    padding: 'xxl',
+    featheredEdges: {top: true, bottom: true},
+    featherRadius: 50,
+    style: {
+      borderRadius: 16,
+    },
+  },
+  render: args => (
+    <BlurBox {...args}>
+      <Title>Feathered Top & Bottom</Title>
+      <Label style={{marginTop: 8}}>
+        Vertical edges fade smoothly
+      </Label>
+    </BlurBox>
+  ),
+}
+
+export const FeatheredWithCustomRadius: Story = {
+  args: {
+    tint: 'default',
+    intensity: 80,
+    padding: 'xxl',
+    featheredEdges: true,
+    featherRadius: 80,
+    style: {
+      borderRadius: 16,
+    },
+  },
+  render: args => (
+    <BlurBox {...args}>
+      <Title>Large Feather Radius</Title>
+      <Label style={{marginTop: 8}}>
+        80px feather radius for subtle gradient
+      </Label>
+    </BlurBox>
+  ),
+}

@@ -19,15 +19,25 @@ export type BlurHeaderProps = NativeStackHeaderProps & {
    * The intensity of the blur effect (0-100). Defaults to 80
    */
   intensity?: number
+  /**
+   * featheredBottomEdge
+   * Enable feathered (gradient fade) bottom edge for smoother blending. Defaults to false
+   */
+  featheredBottomEdge?: boolean
+  /**
+   * featherRadius
+   * The radius (in pixels) of the feathered edge gradient. Defaults to 20
+   */
+  featherRadius?: number
 }
 
 /**
  * BlurHeader
  * Custom header component with blur effect for glassmorphism design.
  * Uses expo-blur's BlurView as background with platform-adaptive tinting.
- * Supports back button, title, and right action buttons.
+ * Supports back button, title, right action buttons, and optional feathered bottom edge.
  *
- * @param props - Header props including navigation, options, and intensity
+ * @param props - Header props including navigation, options, intensity, and feathered edge options
  * @returns BlurHeader component with blur effect
  */
 export const BlurHeader = ({
@@ -36,6 +46,8 @@ export const BlurHeader = ({
   route,
   back,
   intensity = 80,
+  featheredBottomEdge = false,
+  featherRadius = 20,
 }: BlurHeaderProps): React.JSX.Element => {
   const {theme} = useUnistyles()
   const insets = useSafeAreaInsets()
@@ -50,10 +62,12 @@ export const BlurHeader = ({
     <BlurBox
       tint={isDark ? 'dark' : 'light'}
       intensity={intensity}
+      featheredEdges={!!featheredBottomEdge && {bottom: true}}
+      featherRadius={featherRadius}
       style={[styles.container, {paddingTop: insets.top}]}>
       <Box style={styles.content}>
         {/* Left side - Back button */}
-        {!!back && (
+        {back !== undefined && (
           <PressableBase
             onPress={() => navigation.goBack()}
             style={() => styles.leftButton}
@@ -73,7 +87,7 @@ export const BlurHeader = ({
         </Box>
 
         {/* Right side - Custom right component */}
-        {!!options.headerRight && (
+        {options.headerRight !== undefined && (
           <Box style={styles.rightButton}>{options.headerRight({})}</Box>
         )}
       </Box>

@@ -88,6 +88,7 @@ const BlurNavigationDocs = (): React.JSX.Element => {
           overflow: 'hidden',
           borderWidth: 1,
           borderColor: 'rgba(255, 255, 255, 0.2)',
+          marginBottom: 20,
         }}>
         <Label style={{fontWeight: 'bold', marginBottom: 8}}>BlurBox</Label>
         <Paragraph>
@@ -103,6 +104,36 @@ const BlurNavigationDocs = (): React.JSX.Element => {
           }}>
           <Label style={{fontFamily: 'monospace', fontSize: 11}}>
             {`import {BlurBox} from '@/shared/components/ui/layout/BlurBox'\n\n<BlurBox\n  tint="light"\n  intensity={80}\n  padding="xl"\n>\n  <Text>Content</Text>\n</BlurBox>`}
+          </Label>
+        </View>
+      </BlurBox>
+
+      <BlurBox
+        padding="lg"
+        featheredEdges={true}
+        featherRadius={30}
+        style={{
+          borderRadius: 16,
+          borderWidth: 1,
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+        }}>
+        <Label style={{fontWeight: 'bold', marginBottom: 8}}>
+          Feathered Edges
+        </Label>
+        <Paragraph>
+          All blur components support feathered (gradient fade) edges for smoother
+          blending with the background. BlurBox supports all edges, BlurHeader
+          supports bottom edge, and BlurTabBar supports top edge.
+        </Paragraph>
+        <View
+          style={{
+            marginTop: 12,
+            padding: 12,
+            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+            borderRadius: 8,
+          }}>
+          <Label style={{fontFamily: 'monospace', fontSize: 11}}>
+            {`// Feather all edges\n<BlurBox featheredEdges={true} featherRadius={30} />\n\n// Feather specific edges\n<BlurBox featheredEdges={{bottom: true}} />\n\n// Header with feathered bottom\n<BlurHeader featheredBottomEdge={true} />\n\n// Tab bar with feathered top\n<BlurTabBar featheredTopEdge={true} />`}
           </Label>
         </View>
       </BlurBox>
