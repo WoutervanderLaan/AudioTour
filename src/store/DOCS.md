@@ -5,7 +5,7 @@ Global Zustand state management.
 ## Contents
 
 - **[slices/](./slices)** - Zustand store slices for different state domains
-- **[middleware/](./middleware)** - Store middleware for logging, persistence, etc.
+- **createStore.ts** - Store creation utilities
 - **types.ts** - Store-related TypeScript types
 
 ## Purpose

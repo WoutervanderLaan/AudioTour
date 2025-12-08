@@ -7,6 +7,7 @@ import type {KeyboardProviderProps} from './KeyboardContext.types'
 
 /**
  * Provider component that tracks keyboard visibility and height throughout the app.
+ *
  * Listens to keyboard show/hide events and provides both static and animated values.
  * Automatically adjusts keyboard height for safe area bottom inset.
  *
@@ -14,7 +15,15 @@ import type {KeyboardProviderProps} from './KeyboardContext.types'
  * for optimal timing with the keyboard animation.
  *
  * @param props - The provider properties
+ * @param props.children - Child components that will have access to keyboard context
  * @returns A context provider wrapping the children
+ *
+ * @example
+ * ```tsx
+ * <KeyboardProvider>
+ *   <App />
+ * </KeyboardProvider>
+ * ```
  */
 export const KeyboardProvider = ({
   children,

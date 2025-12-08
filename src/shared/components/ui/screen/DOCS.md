@@ -17,7 +17,7 @@ The `Screen` component is a flexible wrapper for all screen content in the appli
 
 ## Architecture
 
-The Screen component integrates with the global `KeyboardContext` ([KeyboardContext.tsx](src/shared/context/KeyboardContext.tsx)) to track keyboard state. The context provides:
+The Screen component integrates with the global `KeyboardContext` ([KeyboardContext.tsx](src/shared/context/keyboard/KeyboardContext.tsx)) to track keyboard state. The context provides:
 
 - `isKeyboardVisible`: Boolean indicating keyboard visibility
 - `keyboardHeight`: Numeric keyboard height (adjusted for safe area insets)
@@ -172,7 +172,7 @@ Use `extraPadding` when you have bottom-fixed elements (like buttons or submit c
 Use the `useKeyboard` hook to access keyboard state anywhere in the app:
 
 ```tsx
-import {useKeyboard} from '@/store/context/KeyboardContext'
+import {useKeyboard} from '@/shared/context/keyboard/KeyboardContext'
 
 const MyComponent = (): React.JSX.Element => {
   const {isKeyboardVisible, keyboardHeight} = useKeyboard()

@@ -9,11 +9,22 @@ import {Toast} from '@/shared/components/features/toast/Toast'
 import {DURATION} from '@/shared/constants/ui'
 
 /**
- * ToastProvider
- * Context provider that manages toast notification state and provides methods to show and close toast messages.
+ * Provider component that manages toast notification state throughout the app.
+ *
+ * Provides methods to show and close toast messages with automatic timeout handling.
+ * Supports multiple toast variants (success, error, info, warning) with customizable
+ * duration and messages.
  *
  * @param props - Component props with children to wrap
+ * @param props.children - Child components that will have access to toast context
  * @returns Toast context provider component
+ *
+ * @example
+ * ```tsx
+ * <ToastProvider>
+ *   <App />
+ * </ToastProvider>
+ * ```
  */
 export const ToastProvider = ({
   children,
