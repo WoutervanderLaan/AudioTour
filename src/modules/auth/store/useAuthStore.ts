@@ -9,6 +9,14 @@ const initialState = {
   isInitialized: false,
 }
 
+/**
+ * Zustand store for authentication state management.
+ *
+ * Manages user authentication state including user data, auth token, and authentication status.
+ * Persists to AsyncStorage to maintain auth state across app restarts.
+ *
+ * @returns Auth store hook with state and actions
+ */
 export const useAuthStore = createModuleStore<AuthState>(
   (set, get) => ({
     ...initialState,

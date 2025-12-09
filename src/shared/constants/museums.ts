@@ -37,6 +37,19 @@ export type MuseumLocation = {
   distance?: number
 }
 
+/**
+ * Comprehensive list of museums in the Netherlands with location data.
+ *
+ * Contains museum information including name, address, geographic coordinates,
+ * province, and website URL. Used for museum selection and distance calculations.
+ *
+ * @example
+ * ```tsx
+ * const nearbyMuseums = KNOWN_MUSEUMS.filter(museum =>
+ *   haversineDistanceMeters(userLocation, museum.coords) < 5000
+ * )
+ * ```
+ */
 export const KNOWN_MUSEUMS: MuseumLocation[] = [
   {
     id: 'rijksmuseum',
