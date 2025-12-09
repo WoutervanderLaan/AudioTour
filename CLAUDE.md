@@ -119,7 +119,7 @@ Configuration is in app.config.js.
 Modular navigation system with TypeScript safety:
 
 - Navigation routes are registered dynamically through the ModuleRegistry
-- Each module defines its own routes via `routes.ts` and `screenConfig.ts` files
+- Each module defines its own routes via route type files (e.g., `routes.types.ts`) and `screenConfig.ts` files
 - Modules export Stack components that are composed into the RootNavigator
 - Deep linking configured in src/core/navigation/linking.ts
 
@@ -170,11 +170,11 @@ When adding new Modules:
 1. Create a new folder under src/modules/ with the structure:
    - **api/** - Module-specific API endpoints (queries and mutations)
    - **hooks/** - Module-specific React hooks
-   - **navigation/** - Module navigation stack and routes
    - **screens/** - Module screen components
    - **store/** - Module state management (if needed)
-   - **types.ts** - Module-specific TypeScript types
-   - **module.config.ts** - Module configuration for app registry
+   - **types.ts** or **routes.types.ts** - Module-specific TypeScript types
+   - **screenConfig.ts** - Module navigation stack and routes configuration
+   - **index.ts** - Module configuration export for app registry
    - **DOCS.md** - Module documentation (enforced by ESLint)
 2. Modules must only import from src/shared/ and src/store/
 3. Each module exports a configuration object that plugs into the ModuleRegistry

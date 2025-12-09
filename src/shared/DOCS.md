@@ -7,7 +7,8 @@ Reusable components, utilities, and resources shared across the application.
 - **[components/](./components)** - Reusable UI components and complex features
 - **[context/](./context)** - React Context providers (Keyboard, Toast)
 - **[hooks/](./hooks)** - Shared custom React hooks
-- **[lib/](./lib)** - API clients, utilities, constants, and helper functions
+- **[constants/](./constants)** - Shared constants
+- **[utils/](./utils)** - Utility functions
 - **[types/](./types)** - Global TypeScript type definitions
 
 ## Purpose

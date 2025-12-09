@@ -4,9 +4,10 @@ Legacy module containing screens that have not yet been migrated to proper featu
 
 ## Structure
 
-- **navigation/** - Old navigation configuration and routes
 - **screens/** - Legacy screen components (Capture, Museum, ObjectDetail, Narrative, Recommendations, Settings, NotFound)
-- **module.config.ts** - Temporary module configuration
+- **routes.types.ts** - Old route type definitions
+- **screenConfig.ts** - Old navigation stack configuration
+- **index.ts** - Temporary module configuration export
 
 ## Purpose
 
