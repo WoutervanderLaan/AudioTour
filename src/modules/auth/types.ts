@@ -19,7 +19,7 @@ export type User = {
 
 /**
  * AuthTokens
- * TODO: describe what this type represents.
+ * JWT authentication tokens with their expiration timestamps for both access and refresh tokens.
  */
 export type AuthTokens = {
   /**
@@ -119,7 +119,7 @@ export type LoginCredentials = {
 
 /**
  * RegisterData
- * TODO: describe what this type represents.
+ * User registration data required to create a new account including email, password, and name.
  */
 export type RegisterData = {
   /**
@@ -153,7 +153,7 @@ export type LoginResponse = {
 
 /**
  * RefreshTokenResponse
- * TODO: describe what this type represents.
+ * API response containing new access and refresh tokens after successfully refreshing an expired access token.
  */
 export type RefreshTokenResponse = {
   /**

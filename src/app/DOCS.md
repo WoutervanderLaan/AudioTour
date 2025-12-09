@@ -5,7 +5,6 @@ Application-wide setup, initialization, and configuration.
 ## Structure
 
 - **init/** - App initialization logic and startup routines
-- **config/** - Module registry and app-wide configuration
 - **App.tsx** - Root application component with providers and navigation setup
 
 ## Purpose

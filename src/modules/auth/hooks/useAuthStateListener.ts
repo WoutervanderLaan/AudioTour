@@ -17,10 +17,10 @@ export const useAuthStateListener = (): void => {
   useEffect(() => {
     // Check if access token is expired
     /**
-     * checkTokenExpiration
-     * TODO: describe what it does.
+     * Checks if the access token or refresh token has expired and triggers logout if necessary.
+     * Runs every minute to ensure tokens are validated periodically.
      *
-     * @returns {*} describe return value
+     * @returns void
      */
     const checkTokenExpiration = (): void => {
       if (!tokens?.accessTokenExpiresAt) return
@@ -58,11 +58,10 @@ export const useAuthStateListener = (): void => {
   // Listen for global 401 errors that couldn't be refreshed
   useEffect(() => {
     /**
-     * handleUnauthorized
-     * TODO: describe what it does.
+     * Handles 401 Unauthorized API errors by logging out the user and clearing query cache.
      *
-     * @param {*} error
-     * @returns {*} describe return value
+     * @param error - The API error to handle
+     * @returns void
      */
     const _handleUnauthorized = (error: ApiError): void => {
       if (error.status === 401 && isAuthenticated) {
