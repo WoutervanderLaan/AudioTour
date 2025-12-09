@@ -4,6 +4,7 @@ import {
   type UseQueryResult,
 } from '@tanstack/react-query'
 
+import {useAuthStore} from '../store/useAuthStore'
 import {authKeys} from './keys'
 
 import {apiClient} from '@/core/api/client'
@@ -29,13 +30,17 @@ import {type SessionResponse, User} from '@/modules/auth/types'
 export const useSessionQuery = (
   options?: Omit<UseQueryOptions<SessionResponse>, 'queryKey' | 'queryFn'>,
 ): UseQueryResult<SessionResponse, Error> => {
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+
   return useQuery({
     queryKey: authKeys.session(),
     queryFn: async () => {
       const response = await apiClient.get<SessionResponse>('/auth/session')
       return response.data
     },
+    enabled: isAuthenticated,
     staleTime: 1000 * 60 * 5,
+    retry: false,
     ...options,
   })
 }
@@ -60,12 +65,41 @@ export const useSessionQuery = (
 export const useProfileQuery = (
   options?: Omit<UseQueryOptions<User>, 'queryKey' | 'queryFn'>,
 ): UseQueryResult<User, Error> => {
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
+
   return useQuery({
     queryKey: authKeys.profile(),
     queryFn: async () => {
       const response = await apiClient.get<User>('/auth/profile')
       return response.data
     },
+    enabled: isAuthenticated,
+    staleTime: 1000 * 60 * 10, // 10 minutes
+    ...options,
+  })
+}
+
+/**
+ * Verify token validity
+ */
+export const useVerifyTokenQuery = (
+  options?: Omit<UseQueryOptions<boolean>, 'queryKey' | 'queryFn'>,
+): UseQueryResult<boolean, Error> => {
+  const tokens = useAuthStore(state => state.tokens)
+
+  return useQuery({
+    queryKey: authKeys.verify(),
+    queryFn: async () => {
+      try {
+        await apiClient.get('/auth/verify')
+        return true
+      } catch {
+        return false
+      }
+    },
+    enabled: !!tokens?.accessToken,
+    staleTime: 1000 * 60, // 1 minute
+    retry: false,
     ...options,
   })
 }

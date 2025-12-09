@@ -4,7 +4,7 @@ import type {TextTokens} from './tokens/text'
 
 /**
  * ColorTokens
- * Type defining all color tokens for the theme including colors for pressable elements, screens, text, and text inputs.
+ * Type defining all color tokens for the theme including colors for pressable elements, screens, text, borders, transparent colors, and text inputs.
  */
 export type ColorTokens = {
   /**
@@ -57,6 +57,18 @@ export type ColorTokens = {
     secondary: string
     tertiary: string
     warning: string
+  }
+  /**
+   * border
+   */
+  border: {
+    default: string
+  }
+  /**
+   * transparent
+   */
+  transparent: {
+    full: string
   }
   /**
    * textInput

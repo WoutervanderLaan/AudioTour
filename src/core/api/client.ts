@@ -1,3 +1,5 @@
+/* eslint-disable complexity */
+/* eslint-disable max-lines */
 import {logger} from '../lib/logger'
 import {ApiConfig} from './config'
 import {
@@ -43,9 +45,13 @@ import {
 export class ApiClient implements IApiClient {
   private readonly baseURL: string = ApiConfig.apiBaseUrl
   private defaultHeaders: Record<string, string>
-  private authToken: string | null = null
+  private accessToken: string | null = null
+  private refreshToken: string | null = null
   private requestInterceptors: RequestInterceptor[] = []
   private responseInterceptors: ResponseInterceptor[] = []
+  // Token refresh state
+  private isRefreshing = false
+  private refreshSubscribers: Array<(token: string) => void> = []
 
   constructor(defaultHeaders: Record<string, string> = {}) {
     this.defaultHeaders = {
@@ -55,22 +61,33 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Set authentication token for subsequent requests.
-   * Token will be automatically included in Authorization header as Bearer token.
-   *
-   * @param token - JWT token string or null to clear authentication
+   * Set authentication tokens
    */
-  setAuthToken(token: string | null): void {
-    this.authToken = token
+  setTokens(accessToken: string, refreshToken: string): void {
+    this.accessToken = accessToken
+    this.refreshToken = refreshToken
   }
 
   /**
-   * Get current authentication token.
-   *
-   * @returns Current auth token or null if not set
+   * Clear authentication tokens
    */
-  getAuthToken(): string | null {
-    return this.authToken
+  clearTokens(): void {
+    this.accessToken = null
+    this.refreshToken = null
+  }
+
+  /**
+   * Get access token
+   */
+  getAccessToken(): string | null {
+    return this.accessToken
+  }
+
+  /**
+   * Get refresh token
+   */
+  getRefreshToken(): string | null {
+    return this.refreshToken
   }
 
   /**
@@ -91,6 +108,91 @@ export class ApiClient implements IApiClient {
    */
   addResponseInterceptor(interceptor: ResponseInterceptor): void {
     this.responseInterceptors.push(interceptor)
+  }
+
+  /**
+   * Subscribe to token refresh
+   */
+  private subscribeTokenRefresh(callback: (token: string) => void): void {
+    this.refreshSubscribers.push(callback)
+  }
+
+  /**
+   * Notify all subscribers of new token
+   */
+  private onTokenRefreshed(token: string): void {
+    this.refreshSubscribers.forEach(callback => callback(token))
+    this.refreshSubscribers = []
+  }
+
+  /**
+   * Refresh access token
+   */
+  private async refreshAccessToken(): Promise<string> {
+    if (!this.refreshToken) {
+      throw new Error('No refresh token available')
+    }
+
+    try {
+      const response = await fetch(`${this.baseURL}/auth/refresh`, {
+        //TODO: add mock
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          refreshToken: this.refreshToken,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Token refresh failed')
+      }
+
+      const data = await response.json() // TODO: type
+
+      if (!data.accessToken) {
+        throw new Error('Invalid refresh response')
+      }
+
+      this.accessToken = data.accessToken
+
+      if (data.refreshToken) {
+        this.refreshToken = data.refreshToken
+      }
+
+      return data.accessToken
+    } catch (error) {
+      this.clearTokens()
+      throw error
+    }
+  }
+
+  /**
+   * Handle token refresh with queueing
+   */
+  private async handleTokenRefresh(): Promise<string> {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true
+
+      try {
+        const newToken = await this.refreshAccessToken()
+        this.isRefreshing = false
+        this.onTokenRefreshed(newToken)
+        return newToken
+      } catch (error) {
+        this.isRefreshing = false
+        this.refreshSubscribers = []
+        throw error
+      }
+    }
+
+    // Wait for the ongoing refresh to complete
+    return new Promise(resolve => {
+      this.subscribeTokenRefresh((token: string) => {
+        resolve(token)
+      })
+    })
   }
 
   /**
@@ -138,8 +240,8 @@ export class ApiClient implements IApiClient {
       }
     }
 
-    if (this.authToken) {
-      headers['Authorization'] = `Bearer ${this.authToken}`
+    if (this.accessToken) {
+      headers['Authorization'] = `Bearer ${this.accessToken}`
     }
 
     return headers as Record<string, string>
@@ -249,6 +351,29 @@ export class ApiClient implements IApiClient {
         clearTimeout(timeoutId)
       }
 
+      // Handle 401 with token refresh
+      if (
+        response.status === 401 &&
+        !config.skipAuthRefresh &&
+        this.refreshToken
+      ) {
+        try {
+          // Attempt to refresh token
+          await this.handleTokenRefresh()
+
+          // Retry original request with new token
+          requestConfig.headers = this.buildHeaders(config.headers)
+
+          const {url: retryUrl, config: retryConfig} =
+            await this.applyRequestInterceptors(interceptedUrl, requestConfig)
+
+          response = await fetch(retryUrl, retryConfig)
+        } catch (refreshError) {
+          // Token refresh failed - will be handled by error below
+          logger.error('[API] Token refresh failed:', refreshError)
+        }
+      }
+
       // Apply response interceptors
       response = await this.applyResponseInterceptors(response)
 
@@ -262,6 +387,7 @@ export class ApiClient implements IApiClient {
         try {
           const errorData = await response.json()
           error.message = errorData.message || error.message
+          error.code = errorData.code
           error.details = errorData
         } catch {
           // Response is not JSON

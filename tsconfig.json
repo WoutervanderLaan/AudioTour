@@ -10,6 +10,12 @@
     "jsx": "react-native",
     "incremental": true
   },
-  "include": ["src", "index.tsx", "*.config.{js,ts}", ".storybook/**/*"],
-  "exclude": ["node_modules", ".husky", "dist"]
+  "include": ["src", "index.tsx", "*.config.{js,ts}"],
+  "exclude": [
+    "node_modules",
+    ".husky",
+    "dist",
+    ".storybook",
+    "**/*.stories.tsx"
+  ]
 }

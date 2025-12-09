@@ -185,9 +185,7 @@ export const WithLayout: Story = {
       />
       <View>
         <Title>With Layout Props</Title>
-        <Label style={{marginTop: 4}}>
-          Supports all Box layout features
-        </Label>
+        <Label style={{marginTop: 4}}>Supports all Box layout features</Label>
       </View>
     </BlurBox>
   ),

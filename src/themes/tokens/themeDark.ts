@@ -47,6 +47,12 @@ export const darkColorTokens = {
     tertiary: color.neutral.grey3,
     warning: color.primary.red,
   },
+  border: {
+    default: color.neutral.grey4,
+  },
+  transparent: {
+    full: color.transparent.full,
+  },
   textInput: {
     container: {
       background: color.neutral.grey4,

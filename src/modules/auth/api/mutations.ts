@@ -8,8 +8,13 @@ import {
 import {authKeys} from './keys'
 
 import {apiClient} from '@/core/api/client'
+import {logger} from '@/core/lib/logger'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
-import type {LoginCredentials, LoginResponse} from '@/modules/auth/types'
+import type {
+  LoginCredentials,
+  LoginResponse,
+  RefreshTokenResponse,
+} from '@/modules/auth/types'
 
 /**
  * React Query mutation hook for user login.
@@ -36,25 +41,20 @@ export const useLoginMutation = (
   >,
 ): UseMutationResult<LoginResponse, Error, LoginCredentials, unknown> => {
   const queryClient = useQueryClient()
-  const {setUser, setToken} = useAuthStore()
+  const {setAuth} = useAuthStore()
 
   return useMutation({
     mutationFn: async (credentials: LoginCredentials) => {
       const response = await apiClient.post<LoginResponse>(
         '/auth/login',
         credentials,
+        {skipAuthRefresh: true},
       )
       return response.data
     },
     onSuccess: data => {
-      // Update Zustand store
-      setUser(data.user)
-      setToken(data.token)
+      setAuth(data.user, data.tokens)
 
-      // Set token in API client
-      apiClient.setAuthToken(data.token)
-
-      // Invalidate and refetch queries
       queryClient.invalidateQueries({queryKey: authKeys.session()})
     },
     ...options,
@@ -87,17 +87,26 @@ export const useLogoutMutation = (
 
   return useMutation({
     mutationFn: async () => {
-      await apiClient.post('/auth/logout')
+      try {
+        // Optional: Call logout endpoint to invalidate refresh token on server
+        await apiClient.post('/auth/logout', undefined, {
+          skipAuthRefresh: true,
+        })
+      } catch (error) {
+        // Continue with logout even if server call fails
+        logger.error('[Auth] Logout API call failed:', error)
+      }
     },
     onSuccess: () => {
       // Clear Zustand store
       logout()
 
-      // Remove token from API client
-      apiClient.setAuthToken(null)
-
       // Clear all auth queries
-      queryClient.removeQueries({queryKey: authKeys.all})
+      queryClient.clear()
+    },
+    onSettled: () => {
+      logout()
+      queryClient.clear()
     },
     ...options,
   })
@@ -139,21 +148,56 @@ export const useRegisterMutation = (
   unknown
 > => {
   const queryClient = useQueryClient()
-  const {setUser, setToken} = useAuthStore()
+  const {setAuth} = useAuthStore()
 
   return useMutation({
     mutationFn: async data => {
       const response = await apiClient.post<LoginResponse>(
         '/auth/register',
         data,
+        {skipAuthRefresh: true},
       )
       return response.data
     },
     onSuccess: data => {
-      setUser(data.user)
-      setToken(data.token)
-      apiClient.setAuthToken(data.token)
+      setAuth(data.user, data.tokens)
       queryClient.invalidateQueries({queryKey: authKeys.session()})
+    },
+    ...options,
+  })
+}
+
+/**
+ * Manual token refresh mutation (optional - mostly handled automatically)
+ */
+export const useRefreshTokenMutation = (
+  options?: Omit<
+    UseMutationOptions<RefreshTokenResponse, Error, void>,
+    'mutationFn'
+  >,
+): UseMutationResult<RefreshTokenResponse, Error, void, unknown> => {
+  const {tokens, updateTokens} = useAuthStore()
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!tokens?.refreshToken) {
+        throw new Error('No refresh token available')
+      }
+
+      const response = await apiClient.post<RefreshTokenResponse>(
+        '/auth/refresh',
+        {refreshToken: tokens.refreshToken},
+        {skipAuthRefresh: true},
+      )
+
+      return response.data
+    },
+    onSuccess: data => {
+      updateTokens({
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken || tokens!.refreshToken,
+        accessTokenExpiresAt: data.accessTokenExpiresAt,
+      })
     },
     ...options,
   })

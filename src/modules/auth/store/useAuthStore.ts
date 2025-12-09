@@ -1,23 +1,60 @@
+import {apiClient} from '@/core/api/client'
 import type {AuthState} from '@/modules/auth/types'
 import {createModuleStore} from '@/store/createStore'
 
 const initialState = {
   user: null,
-  token: null,
+  tokens: null,
   isAuthenticated: false,
+  isInitialized: false,
 }
 
 export const useAuthStore = createModuleStore<AuthState>(
-  set => ({
+  (set, get) => ({
     ...initialState,
 
-    setUser: (user): void => set({user, isAuthenticated: true}),
+    setAuth: (user, tokens): void => {
+      set({
+        user,
+        tokens,
+        isAuthenticated: true,
+        isInitialized: true,
+      })
 
-    setToken: (token): void => set({token}),
+      apiClient.setTokens(tokens.accessToken, tokens.refreshToken)
+    },
 
-    logout: (): void => set({user: null, token: null, isAuthenticated: false}),
+    setUser: (user): void => set({user}),
 
-    reset: (): void => set(initialState),
+    updateTokens: (tokens): void => {
+      set({tokens})
+      apiClient.setTokens(tokens.accessToken, tokens.refreshToken)
+    },
+
+    logout: (): void => {
+      set({
+        user: null,
+        tokens: null,
+        isAuthenticated: false,
+        isInitialized: true,
+      })
+      apiClient.clearTokens()
+    },
+
+    reset: (): void => {
+      set(initialState)
+      apiClient.clearTokens()
+    },
+
+    initialize: (): void => {
+      const state = get()
+
+      if (state.tokens) {
+        apiClient.setTokens(state.tokens.accessToken, state.tokens.refreshToken)
+      }
+
+      set({isInitialized: true})
+    },
   }),
   {
     name: 'auth-module',

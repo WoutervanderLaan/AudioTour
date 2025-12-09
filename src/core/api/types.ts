@@ -61,6 +61,10 @@ export type RequestConfig = {
    * timeout
    */
   timeout?: number
+  /**
+   * skipAuthRefresh
+   */
+  skipAuthRefresh?: boolean
 }
 
 /**
@@ -89,9 +93,11 @@ export type IApiClient = {
     config?: RequestConfig,
   ): Promise<ApiResponse<T>>
 
-  // Token/auth management
-  setAuthToken(token: string | null): void
-  getAuthToken(): string | null
+  // Token management
+  setTokens(accessToken: string, refreshToken: string): void
+  clearTokens(): void
+  getAccessToken(): string | null
+  getRefreshToken(): string | null
 
   // Interceptors
   addRequestInterceptor(interceptor: RequestInterceptor): void

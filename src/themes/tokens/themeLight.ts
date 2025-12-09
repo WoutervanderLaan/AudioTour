@@ -47,6 +47,12 @@ export const lightColorTokens = {
     tertiary: color.neutral.grey2,
     warning: color.primary.red,
   },
+  border: {
+    default: color.neutral.grey1,
+  },
+  transparent: {
+    full: color.transparent.full,
+  },
   textInput: {
     container: {
       background: color.primary.white,

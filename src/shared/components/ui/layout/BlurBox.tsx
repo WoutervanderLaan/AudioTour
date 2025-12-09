@@ -2,7 +2,7 @@ import React, {useMemo} from 'react'
 import {StyleProp, ViewStyle} from 'react-native'
 import {useUnistyles} from 'react-native-unistyles'
 
-import {type BlurTint,BlurView} from 'expo-blur'
+import {type BlurTint, BlurView} from 'expo-blur'
 
 import type {ApplyExclusivityPair} from '@/shared/types/utils/ApplyExclusivityPair'
 import type {Theme} from '@/themes/types'
@@ -139,8 +139,8 @@ const buildBlurBoxStyle = (
   flex: props.flex,
   flexShrink: props.flex === undefined ? 0 : undefined,
   flexDirection: props.row ? 'row' : props.column ? 'column' : undefined,
-  justifyContent: props.center ?? props.centerY ? 'center' : undefined,
-  alignItems: props.center ?? props.centerX ? 'center' : undefined,
+  justifyContent: (props.center ?? props.centerY) ? 'center' : undefined,
+  alignItems: (props.center ?? props.centerX) ? 'center' : undefined,
   gap: props.gap !== undefined ? theme.size[props.gap] : undefined,
   padding: props.padding !== undefined ? theme.size[props.padding] : undefined,
   paddingHorizontal:

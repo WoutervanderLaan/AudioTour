@@ -95,3 +95,5 @@ export type TabNavigationRoutes<
     options?: BottomTabNavigationOptions
   }
 >
+
+export const BLUR_INTENSITY = 40

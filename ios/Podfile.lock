@@ -205,6 +205,8 @@ PODS:
     - Yoga
   - ExpoAsset (12.0.9):
     - ExpoModulesCore
+  - ExpoBlur (15.0.8):
+    - ExpoModulesCore
   - ExpoCrypto (15.0.7):
     - ExpoModulesCore
   - ExpoFileSystem (19.0.17):
@@ -2250,7 +2252,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - RNWorklets (0.5.1):
+  - RNWorklets (0.6.1):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2272,9 +2274,9 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
-    - RNWorklets/worklets (= 0.5.1)
+    - RNWorklets/worklets (= 0.6.1)
     - Yoga
-  - RNWorklets/worklets (0.5.1):
+  - RNWorklets/worklets (0.6.1):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2296,9 +2298,9 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
-    - RNWorklets/worklets/apple (= 0.5.1)
+    - RNWorklets/worklets/apple (= 0.6.1)
     - Yoga
-  - RNWorklets/worklets/apple (0.5.1):
+  - RNWorklets/worklets/apple (0.6.1):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2357,6 +2359,7 @@ DEPENDENCIES:
   - expo-dev-menu (from `../node_modules/expo-dev-menu`)
   - expo-dev-menu-interface (from `../node_modules/expo-dev-menu-interface/ios`)
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
+  - ExpoBlur (from `../node_modules/expo-blur/ios`)
   - ExpoCrypto (from `../node_modules/expo-crypto/ios`)
   - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../node_modules/expo-font/ios`)
@@ -2469,6 +2472,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-dev-menu-interface/ios"
   ExpoAsset:
     :path: "../node_modules/expo-asset/ios"
+  ExpoBlur:
+    :path: "../node_modules/expo-blur/ios"
   ExpoCrypto:
     :path: "../node_modules/expo-crypto/ios"
   ExpoFileSystem:
@@ -2660,6 +2665,7 @@ SPEC CHECKSUMS:
   expo-dev-menu: ba531f712b01ebf26d4227648a0bd56ebbafca01
   expo-dev-menu-interface: 600df12ea01efecdd822daaf13cc0ac091775533
   ExpoAsset: 3c3b7dd9b1318846a02ef05ce420e63d542aeb9f
+  ExpoBlur: 688c53d5d26575cbb6c72e7fbd4caef8d8cfadf6
   ExpoCrypto: 4c50a152f5939e16a2ca10be77b002a3a391c4d3
   ExpoFileSystem: 56f081328f5b48a6dcc8302eee51d4f2d9d0049b
   ExpoFont: b881d43057dceb7b31ff767b24f612609e80f60f
@@ -2746,7 +2752,7 @@ SPEC CHECKSUMS:
   RNReanimated: 00771d2ba7c810124852092eb29c0d1edf50cc58
   RNScreens: dd61bc3a3e6f6901ad833efa411917d44827cf51
   RNSVG: a97976dfa46d3edffa2c6ef5837b16fe8e031375
-  RNWorklets: 28ee7370ca8da356fcc914e3e68b97e9752196d2
+  RNWorklets: 83609071441ac7d623f1e0e63b9043f4f345e2a2
   Unistyles: 6d129e0903a49b458fdfbf9b48b0cf7961665866
   Yoga: 5934998fbeaef7845dbf698f698518695ab4cd1a
 

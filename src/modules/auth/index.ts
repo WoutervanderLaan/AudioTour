@@ -2,7 +2,6 @@ import {ModuleSlug} from '../slugs'
 import type {ModuleConfig} from '../types'
 import {authModals, authStacks, authTabs} from './screenConfig'
 
-import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
 
@@ -30,17 +29,21 @@ export const authModule: ModuleConfig = {
 
   onUnregister: () => {
     logger.debug('Auth Module unregistered')
-    // Clear store
     useAuthStore.getState().reset()
-    apiClient.setAuthToken(null)
   },
 
   onAppStart: () => {
-    // Restore token to API client if it exists
-    const token = useAuthStore.getState().token
-    if (token) {
-      apiClient.setAuthToken(token)
-      logger.debug('Auth token restored from store')
+    logger.debug('[Auth Module] Initializing...')
+
+    // Initialize auth state and restore tokens to API client
+    useAuthStore.getState().initialize()
+
+    const {tokens, isAuthenticated} = useAuthStore.getState()
+
+    if (isAuthenticated && tokens) {
+      logger.debug('[Auth Module] Restored authenticated session')
+    } else {
+      logger.debug('[Auth Module] No authenticated session')
     }
   },
 

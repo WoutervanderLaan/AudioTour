@@ -36,6 +36,12 @@ export const authKeys = {
   profile: () => [...authKeys.all, 'profile'] as const,
 
   /**
+   * Query key for the current token refresh.
+   * @returns Verify query key array
+   */
+  verify: () => [...authKeys.all, 'verify'] as const,
+
+  /**
    * Query key for a specific user by ID.
    * @param id - The user ID
    * @returns User-specific query key array

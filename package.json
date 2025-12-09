@@ -15,7 +15,7 @@
     "clean": "react-native-clean-project",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "NODE_OPTIONS=--max-old-space-size=8192 tsc --noEmit",
     "validate": "npm run lint && npm run typecheck && npm run format",
     "test": "jest --watchAll",
     "storybook-generate": "sb-rn-get-stories",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~6.1.2",
+    "@expo/vector-icons": "^15.0.3",
     "@hookform/resolvers": "^5.2.2",
     "@react-navigation/bottom-tabs": "^7.8.11",
     "@react-navigation/elements": "^2.6.4",

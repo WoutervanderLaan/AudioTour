@@ -4,6 +4,7 @@ import {useEffect} from 'react'
 import * as NavigationElements from '@react-navigation/elements'
 import {Asset} from 'expo-asset'
 
+import {useAuthStateListener} from '@/modules/auth/hooks/useAuthStateListener'
 import {ThemedStatusBar} from '@/shared/components/ui/ThemedStatusBar'
 
 Asset.loadAsync([...NavigationElements.Assets])
@@ -28,6 +29,8 @@ async function enableMocking(): Promise<void> {
  * @returns ThemedStatusBar component with automatic theme-aware styling
  */
 export const Init = (): React.JSX.Element => {
+  useAuthStateListener()
+
   useEffect(() => {
     if (__DEV__) {
       enableMocking()

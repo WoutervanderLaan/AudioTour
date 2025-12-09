@@ -2,7 +2,7 @@
 
 import {useAuthStore} from './useAuthStore'
 
-import type {User} from '@/modules/auth/types'
+import type {AuthTokens, User} from '@/modules/auth/types'
 
 // Selectors for optimized re-renders
 /**
@@ -13,12 +13,13 @@ import type {User} from '@/modules/auth/types'
  */
 export const useUser = (): User | null => useAuthStore(state => state.user)
 /**
- * useToken
- * React hook that returns the current authentication token from the auth store.
+ * useTokens
+ * React hook that returns the current authentication tokens from the auth store.
  *
- * @returns Authentication token string or null if not authenticated
+ * @returns Authentication tokens object or null if not authenticated
  */
-export const useToken = (): string | null => useAuthStore(state => state.token)
+export const useTokens = (): AuthTokens | null =>
+  useAuthStore(state => state.tokens)
 /**
  * useIsAuthenticated
  * React hook that returns whether the user is currently authenticated.
@@ -33,17 +34,19 @@ export const useIsAuthenticated = (): boolean =>
  * useAuthActions
  * React hook that returns all auth-related actions for managing authentication state.
  *
- * @returns Object containing setUser, setToken, logout, and reset action functions
+ * @returns Object containing setUser, setAuth, updateTokens, logout, and reset action functions
  */
 export const useAuthActions = (): {
   setUser: (user: User) => void
-  setToken: (token: string) => void
+  setAuth: (user: User, tokens: AuthTokens) => void
+  updateTokens: (tokens: AuthTokens) => void
   logout: () => void
   reset: () => void
 } =>
   useAuthStore(state => ({
     setUser: state.setUser,
-    setToken: state.setToken,
+    setAuth: state.setAuth,
+    updateTokens: state.updateTokens,
     logout: state.logout,
     reset: state.reset,
   }))
