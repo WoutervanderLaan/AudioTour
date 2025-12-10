@@ -7,7 +7,7 @@ import {z} from 'zod'
 import {TextInputControlled} from './TextInputControlled'
 
 import {Button} from '@/shared/components/ui/pressable'
-import {Label} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 const meta = {
   title: 'Form/TextInputControlled',
@@ -137,7 +137,7 @@ const ComplexFormExample = (): React.JSX.Element => {
 
   return (
     <View style={{gap: 16}}>
-      <Label>Sign Up Form</Label>
+      <Text.Label>Sign Up Form</Text.Label>
 
       <TextInputControlled
         control={control}
@@ -200,15 +200,15 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <View style={{marginTop: 8}}>
-        <Label color="secondary">
+        <Text.Label color="secondary">
           Form Valid: {formState.isValid ? 'Yes' : 'No'}
-        </Label>
-        <Label color="secondary">
+        </Text.Label>
+        <Text.Label color="secondary">
           Errors:{' '}
           {Object.keys(formState.errors).length > 0
             ? Object.keys(formState.errors).join(', ')
             : 'None'}
-        </Label>
+        </Text.Label>
       </View>
     </View>
   )

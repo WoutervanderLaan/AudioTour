@@ -12,7 +12,7 @@ import {TextInputControlled} from '@/shared/components/ui/form'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
-import {Paragraph, Title} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * LoginScreen
@@ -51,7 +51,7 @@ export const LoginScreen: React.FC = () => {
         center
         flex={1}
         padding="md">
-        <Title>Login</Title>
+        <Text.Title>Login</Text.Title>
 
         <Column
           gap="lg"
@@ -72,11 +72,11 @@ export const LoginScreen: React.FC = () => {
           />
 
           {!!loginError && (
-            <Paragraph
+            <Text.Paragraph
               variant="small"
               color="warning">
               {loginError.message || 'Login failed'}
-            </Paragraph>
+            </Text.Paragraph>
           )}
 
           <Button

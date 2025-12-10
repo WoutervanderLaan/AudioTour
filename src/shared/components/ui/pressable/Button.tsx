@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {PressableBase, type PressableBaseProps} from './PressableBase'
 
-import {Label} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * ButtonVariant
@@ -47,7 +47,9 @@ export const Button = ({
       styles[variant]({pressed, disabled: !!disabled}),
     ]}
     {...rest}>
-    <Label color={variant === 'primary' ? 'inverse' : 'default'}>{label}</Label>
+    <Text.Label color={variant === 'primary' ? 'inverse' : 'default'}>
+      {label}
+    </Text.Label>
   </PressableBase>
 )
 

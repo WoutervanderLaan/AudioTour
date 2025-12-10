@@ -1,12 +1,12 @@
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {Paragraph} from './Paragraph'
+import {Text} from './index'
 
 const meta = {
   title: 'Typography/Paragraph',
-  component: Paragraph,
+  component: Text.Paragraph,
   tags: ['autodocs'],
-} satisfies Meta<typeof Paragraph>
+} satisfies Meta<typeof Text.Paragraph>
 
 export default meta
 

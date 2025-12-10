@@ -7,7 +7,7 @@ import {z} from 'zod'
 import {CheckboxControlled} from './CheckboxControlled'
 
 import {Button} from '@/shared/components/ui/pressable'
-import {Label} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 const meta = {
   title: 'Form/CheckboxControlled',
@@ -146,7 +146,7 @@ const ComplexFormExample = (): React.JSX.Element => {
 
   return (
     <View style={{gap: 16}}>
-      <Label>Sign Up Form</Label>
+      <Text.Label>Sign Up Form</Text.Label>
 
       <View style={{gap: 12}}>
         <CheckboxControlled
@@ -172,7 +172,7 @@ const ComplexFormExample = (): React.JSX.Element => {
       </View>
 
       <View style={{marginTop: 8}}>
-        <Label>Preferences (Optional)</Label>
+        <Text.Label>Preferences (Optional)</Text.Label>
       </View>
 
       <View style={{gap: 12}}>
@@ -206,15 +206,15 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <View style={{marginTop: 8}}>
-        <Label color="secondary">
+        <Text.Label color="secondary">
           Form Valid: {formState.isValid ? 'Yes' : 'No'}
-        </Label>
-        <Label color="secondary">
+        </Text.Label>
+        <Text.Label color="secondary">
           Errors:{' '}
           {Object.keys(formState.errors).length > 0
             ? Object.keys(formState.errors).join(', ')
             : 'None'}
-        </Label>
+        </Text.Label>
       </View>
     </View>
   )
@@ -332,7 +332,7 @@ const ConditionalValidationExample = (): React.JSX.Element => {
 
   return (
     <View style={{gap: 16}}>
-      <Label>Checkout</Label>
+      <Text.Label>Checkout</Text.Label>
 
       <CheckboxControlled
         control={control}
@@ -356,9 +356,9 @@ const ConditionalValidationExample = (): React.JSX.Element => {
       />
 
       <View style={{marginTop: 8}}>
-        <Label color="secondary">
+        <Text.Label color="secondary">
           Form Valid: {formState.isValid ? 'Yes' : 'No'}
-        </Label>
+        </Text.Label>
       </View>
     </View>
   )

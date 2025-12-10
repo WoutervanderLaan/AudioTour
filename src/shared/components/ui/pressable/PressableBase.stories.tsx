@@ -3,7 +3,7 @@ import {View} from 'react-native'
 
 import {PressableBase} from './PressableBase'
 
-import {Label} from '@/shared/components/ui/typography/Label'
+import {Text} from '@/shared/components/ui/typography'
 
 const meta = {
   title: 'Pressable/PressableBase',
@@ -28,13 +28,13 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: <Label>Press me</Label>,
+    children: <Text.Label>Press me</Text.Label>,
   },
 }
 
 export const WithOnPress: Story = {
   args: {
-    children: <Label>Tap to log</Label>,
+    children: <Text.Label>Tap to log</Text.Label>,
     onPress: (): void => {
       // eslint-disable-next-line no-console
       console.log('Pressed!')
@@ -44,7 +44,7 @@ export const WithOnPress: Story = {
 
 export const Disabled: Story = {
   args: {
-    children: <Label>Disabled</Label>,
+    children: <Text.Label>Disabled</Text.Label>,
     disabled: true,
   },
 }

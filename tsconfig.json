@@ -11,11 +11,5 @@
     "incremental": true
   },
   "include": ["src", "index.tsx", "*.config.{js,ts}"],
-  "exclude": [
-    "node_modules",
-    ".husky",
-    "dist",
-    ".storybook",
-    "**/*.stories.tsx"
-  ]
+  "exclude": ["node_modules", ".husky", "dist", "ios", "android", ".storybook"]
 }

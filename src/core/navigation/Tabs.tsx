@@ -1,7 +1,9 @@
 import React, {useMemo} from 'react'
 
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
+import {TAB_BAR_ICON_SIZE} from './constants'
 import {moduleRegistry} from './ModuleRegistry'
 import {type RootStackParams} from './types'
 
@@ -27,6 +29,16 @@ export const Tabs = (): React.JSX.Element => {
         <Tab.Screen
           key={key}
           {...route}
+          options={{
+            tabBarIcon: ({color}) => (
+              <MaterialIcons
+                color={color}
+                size={TAB_BAR_ICON_SIZE}
+                name={route.icon}
+              />
+            ),
+            ...route.options,
+          }}
         />
       )),
     [],

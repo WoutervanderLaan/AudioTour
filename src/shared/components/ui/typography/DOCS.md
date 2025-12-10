@@ -28,7 +28,7 @@ import {TextBase} from '@/shared/components/ui/typography/TextBase'
 <TextBase color="secondary" fontFamily="bold">Bold text</TextBase>
 ```
 
-### Title
+### Text.Title
 
 Semantic heading component for titles (h1-h6).
 
@@ -42,13 +42,13 @@ Semantic heading component for titles (h1-h6).
 **Usage:**
 
 ```tsx
-import {Title} from '@/shared/components/ui/typography'
+import {Text.Title} from '@/shared/components/ui/typography'
 
-<Title level="h1">Main Title</Title>
-<Title level="h2" bold={false}>Subtitle</Title>
+<Text.Title level="h1">Main Text.Title</Text.Title>
+<Text.Title level="h2" bold={false}>Subtitle</Text.Title>
 ```
 
-### Paragraph
+### Text.Paragraph
 
 Semantic paragraph component for body text.
 
@@ -61,14 +61,14 @@ Semantic paragraph component for body text.
 **Usage:**
 
 ```tsx
-import {Paragraph} from '@/shared/components/ui/typography'
+import {Text.Paragraph} from '@/shared/components/ui/typography'
 
-<Paragraph variant="body">This is body text.</Paragraph>
-<Paragraph variant="intro">This is intro text.</Paragraph>
-<Paragraph variant="small">This is small text.</Paragraph>
+<Text.Paragraph variant="body">This is body text.</Text.Paragraph>
+<Text.Paragraph variant="intro">This is intro text.</Text.Paragraph>
+<Text.Paragraph variant="small">This is small text.</Text.Paragraph>
 ```
 
-### Label
+### Text.Label
 
 Semantic label component for form labels and UI labels.
 
@@ -80,8 +80,8 @@ Semantic label component for form labels and UI labels.
 **Usage:**
 
 ```tsx
-import {Label} from '@/shared/components/ui/typography'
-;<Label color="secondary">Field Label</Label>
+import {Text} from '@/shared/components/ui/typography'
+;<Text.Label color="secondary">Field Text.Label</Text.Label>
 ```
 
 ## Design Pattern
@@ -89,7 +89,7 @@ import {Label} from '@/shared/components/ui/typography'
 These components follow the same pattern as the Box/Row/Column layout components:
 
 - **Text** is the base component (like Box)
-- **Title**, **Paragraph**, **Label** are specific variants (like Row/Column)
+- **Text.Title**, **Text.Paragraph**, **Text.Label** are specific variants (like Row/Column)
 - All components use react-native-unistyles for theming
 - All components support full accessibility features
 

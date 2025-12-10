@@ -303,19 +303,46 @@ export default [
               name: 'react-native',
               importNames: ['Text', 'TextBase'],
               message:
-                'Do not use Text from react-native. Use a Typography component from @/shared/components/ui/typography instead.',
+                'Do not use Text from react-native. Use the Text component from @/shared/components/ui/typography instead.',
             },
             {
               name: '@/shared/components/ui/typography/TextBase',
               importNames: ['TextBase'],
               message:
-                'Do not use TextBase directly. Use a defined Typography component instead.',
+                'Do not use TextBase directly. Use the Text component instead.',
+            },
+            {
+              name: '@/shared/components/ui/typography/Label',
+              importNames: ['Label'],
+              message:
+                'Do not use Label directly. Use the Text component instead.',
+            },
+            {
+              name: '@/shared/components/ui/typography/Title',
+              importNames: ['Title'],
+              message:
+                'Do not use Title directly. Use the Text component instead.',
+            },
+            {
+              name: '@/shared/components/ui/typography/Paragraph',
+              importNames: ['Paragraph'],
+              message:
+                'Do not use Paragraph directly. Use the Text component instead.',
             },
             {
               name: 'react-native',
-              importNames: ['Pressable', 'Button'],
+              importNames: [
+                'Pressable',
+                'Button',
+                'PressableBase',
+                'TouchableOpacity',
+                'TouchableHighlight',
+                'TouchableWithoutFeedback',
+                'TouchableNativeFeedback',
+                'Touchable',
+              ],
               message:
-                'Do not use Pressable or Button from react-native. Use a Pressable component from @/shared/components/ui/pressable instead.',
+                'Do not use pressable components from react-native. Use a Pressable component from @/shared/components/ui/pressable instead.',
             },
             {
               name: 'react-native',

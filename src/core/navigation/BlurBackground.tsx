@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {BlurView} from 'expo-blur'
 
-import {BLUR_INTENSITY} from './types'
+import {BLUR_INTENSITY} from './constants'
 
 /**
  * Background

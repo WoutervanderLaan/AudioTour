@@ -50,6 +50,7 @@ export const oldTabs: TabNavigationRoutes<OldTabParams, OldTabName> = {
   [OldTabName.capture]: {
     component: Capture,
     name: OldTabName.capture,
+    icon: 'camera',
     options: {
       headerShown: true,
       headerTitle: 'Capture',
@@ -58,6 +59,7 @@ export const oldTabs: TabNavigationRoutes<OldTabParams, OldTabName> = {
   [OldTabName.museum]: {
     component: Museum,
     name: OldTabName.museum,
+    icon: 'museum',
     options: {
       headerShown: true,
       headerTitle: 'Museum',
@@ -66,6 +68,7 @@ export const oldTabs: TabNavigationRoutes<OldTabParams, OldTabName> = {
   [OldTabName.recommendations]: {
     component: Recommendations,
     name: OldTabName.recommendations,
+    icon: 'recommend',
     options: {
       headerShown: true,
       headerTitle: 'Recommendations',

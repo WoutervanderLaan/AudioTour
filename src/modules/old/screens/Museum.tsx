@@ -1,12 +1,12 @@
 import React from 'react'
-import {ActivityIndicator, FlatList, TouchableOpacity} from 'react-native'
+import {ActivityIndicator, FlatList} from 'react-native'
 
-import {Text} from '@react-navigation/elements'
 import {useShallow} from 'zustand/react/shallow'
 
 import {Column} from '@/shared/components/ui/layout/Column'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Screen} from '@/shared/components/ui/screen'
-import {Paragraph} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 import {KNOWN_MUSEUMS, type MuseumLocation} from '@/shared/constants/museums'
 import {
   haversineDistanceMeters,
@@ -60,22 +60,22 @@ export const Museum = (): React.JSX.Element => {
         flex={1}
         padding="md"
         gap="sm">
-        <Text>Museum</Text>
+        <Text.Paragraph>Museum</Text.Paragraph>
 
         {!!loading && <ActivityIndicator />}
 
-        {!!locError && <Text>{locError}</Text>}
+        {!!locError && <Text.Label>{locError}</Text.Label>}
 
         <FlatList
           data={sortedByDistance}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <TouchableOpacity onPress={() => setMuseum(item.id)}>
-              <Paragraph
+            <PressableBase onPress={() => setMuseum(item.id)}>
+              <Text.Paragraph
                 fontFamily={currentMuseumId === item.id ? 'bold' : 'regular'}>
                 {item.name} ({item.distance?.toFixed(0) ?? '???'} m)
-              </Paragraph>
-            </TouchableOpacity>
+              </Text.Paragraph>
+            </PressableBase>
           )}
         />
       </Column>

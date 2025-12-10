@@ -20,7 +20,7 @@ The base pressable component with accessibility features and theme integration. 
 ```tsx
 import {PressableBase} from '@/shared/components/ui/pressable'
 ;<PressableBase onPress={() => console.log('Pressed')}>
-  <Label>Press me</Label>
+  <Text.Label>Press me</Text.Label>
 </PressableBase>
 ```
 
@@ -57,10 +57,10 @@ import {Button} from '@/shared/components/ui/pressable'
 
 ## Design Pattern
 
-These components follow the same pattern as the Box/Row/Column layout components and Text/Title/Paragraph typography components:
+These components follow the same pattern as the Box/Row/Column layout components and the typography components:
 
 - **PressableBase** is the base component (like Box or TextBase)
-- **Button** is a specific variant (like Row/Column or Title/Paragraph)
+- **Button** is a specific variant (like Row/Column or Label/Title/Paragraph)
 - All components use react-native-unistyles for theming
 - All components support full accessibility features
 - All components use theme color tokens for consistent styling

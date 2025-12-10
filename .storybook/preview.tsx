@@ -1,5 +1,5 @@
 import type {Preview} from '@storybook/react-native-web-vite'
-import {StyleSheet, useUnistyles} from 'react-native-unistyles'
+import {StyleSheet} from 'react-native-unistyles'
 import {themes} from '../src/themes/themes'
 import type {FC} from 'react'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
@@ -15,15 +15,13 @@ StyleSheet.configure({
 })
 
 const MainDecorator = (Story: FC) => {
-  const {theme} = useUnistyles()
-
   return (
     <SafeAreaProvider>
       <View
         style={{
           flex: 1,
-          padding: theme.size.lg,
-          minHeight: theme.size.xxl,
+          padding: 16,
+          minHeight: 200,
           justifyContent: 'center',
           alignItems: 'center',
           position: 'relative',

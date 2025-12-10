@@ -7,7 +7,7 @@ import {useUnistyles} from 'react-native-unistyles'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {Label} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * SwitchProps
@@ -68,20 +68,20 @@ const SwitchLabel = ({
   required,
 }: SwitchLabelProps): React.JSX.Element => (
   <Row>
-    <Label
+    <Text.Label
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
       accessibilityRole="text">
       {label}
       {!!required && (
-        <Label
+        <Text.Label
           color="warning"
           accessibilityLabel="required">
           {' '}
           *
-        </Label>
+        </Text.Label>
       )}
-    </Label>
+    </Text.Label>
   </Row>
 )
 
@@ -110,13 +110,13 @@ const HelpText = ({
   helpTextId,
   hasError,
 }: HelpTextProps): React.JSX.Element => (
-  <Label
+  <Text.Label
     nativeID={helpTextId}
     color={hasError ? 'warning' : 'secondary'}
     accessibilityRole="text"
     accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
     {text}
-  </Label>
+  </Text.Label>
 )
 
 /**

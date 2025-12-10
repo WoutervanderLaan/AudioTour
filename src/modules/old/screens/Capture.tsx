@@ -23,7 +23,7 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
-import {Label} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 import {ObjectForm, objectSchema} from '@/shared/schema'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
@@ -138,7 +138,7 @@ export const Capture = (): React.JSX.Element => {
         paddingH="md"
         paddingV="lg"
         center>
-        <Label>{sessionId}</Label>
+        <Text.Label>{sessionId}</Text.Label>
 
         <Button
           onPress={pickImage}
@@ -158,7 +158,7 @@ export const Capture = (): React.JSX.Element => {
         />
 
         {!!uploadPhoto.isPending && <ActivityIndicator />}
-        {!!localError && <Label>{localError}</Label>}
+        {!!localError && <Text.Label>{localError}</Text.Label>}
 
         <Column gap="lg">
           <SwitchControlled

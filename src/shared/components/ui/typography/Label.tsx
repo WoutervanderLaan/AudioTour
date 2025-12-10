@@ -4,12 +4,12 @@ import {TextBase, type TextProps} from './TextBase'
 
 /**
  * LabelProps
- * Props for the Label component
+ * Props for the Text.Label component
  */
 export type LabelProps = Omit<TextProps, 'fontSize' | 'lineHeight'>
 
 /**
- * Label
+ * Text.Label
  * Semantic label component for form labels and UI labels.
  * Uses the base TextBase component with small text size.
  *

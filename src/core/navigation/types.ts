@@ -1,5 +1,6 @@
 import type {ComponentType} from 'react'
 
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import type {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs'
 import type {ParamListBase} from '@react-navigation/native'
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
@@ -93,7 +94,12 @@ export type TabNavigationRoutes<
     component: ComponentType<any>
     name: keyof R
     options?: BottomTabNavigationOptions
+    icon: IconName
   }
 >
 
-export const BLUR_INTENSITY = 40
+/**
+ * IconName
+ * TODO: describe what this type represents.
+ */
+export type IconName = keyof typeof MaterialIcons.glyphMap

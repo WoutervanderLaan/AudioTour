@@ -4,7 +4,7 @@ import {ActivityIndicator} from 'react-native'
 import {Button} from '@react-navigation/elements'
 
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Label} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * AudioPlayer
@@ -34,7 +34,7 @@ export const AudioPlayer = ({src}: {src: string}): React.JSX.Element => {
 
   return (
     <Column gap="sm">
-      <Label>{src}</Label>
+      <Text.Label>{src}</Text.Label>
 
       <Button onPress={toggle}>{playing ? 'Pause' : 'Play'}</Button>
 

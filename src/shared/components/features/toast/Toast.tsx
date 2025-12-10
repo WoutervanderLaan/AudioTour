@@ -3,7 +3,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Box} from '@/shared/components/ui/layout/Box'
-import {Label} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 import {Z_INDEX} from '@/shared/constants/ui'
 
 export enum ToastType {
@@ -44,7 +44,7 @@ export const Toast = ({
       style={[styles.toast, styles[type], {top: top + 20}]}
       center
       padding="md">
-      <Label>{message}</Label>
+      <Text.Label>{message}</Text.Label>
     </Box>
   )
 }

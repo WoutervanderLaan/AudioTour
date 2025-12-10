@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {CheckboxPressable} from '@/shared/components/ui/pressable'
-import {Label} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * CHECKBOX_SIZE
@@ -68,20 +68,20 @@ const CheckboxLabel = ({
   required,
 }: CheckboxLabelProps): React.JSX.Element => (
   <Box flex={1}>
-    <Label
+    <Text.Label
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
       accessibilityRole="text">
       {label}
       {!!required && (
-        <Label
+        <Text.Label
           color="warning"
           accessibilityLabel="required">
           {' '}
           *
-        </Label>
+        </Text.Label>
       )}
-    </Label>
+    </Text.Label>
   </Box>
 )
 
@@ -111,13 +111,13 @@ const HelpText = ({
   hasError,
 }: HelpTextProps): React.JSX.Element => (
   <Box>
-    <Label
+    <Text.Label
       nativeID={helpTextId}
       color={hasError ? 'warning' : 'secondary'}
       accessibilityRole="text"
       accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
       {text}
-    </Label>
+    </Text.Label>
   </Box>
 )
 

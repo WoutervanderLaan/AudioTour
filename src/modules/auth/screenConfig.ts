@@ -38,6 +38,7 @@ export const authTabs: TabNavigationRoutes<AuthTabParams, AuthTabName> = {
   [AuthTabName.socials]: {
     component: SocialsScreen,
     name: AuthTabName.socials,
+    icon: 'person',
     options: {
       headerShown: true,
       headerTitle: 'Socials',
