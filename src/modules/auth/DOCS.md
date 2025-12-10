@@ -6,11 +6,12 @@ Authentication module handling user login, registration, and auth state manageme
 
 - **api/** - Authentication API endpoints (queries and mutations)
 - **hooks/** - Auth-specific hooks (useAuth)
-- **navigation/** - Auth navigation stack and routes
 - **screens/** - Login and register screens
 - **store/** - Auth state management with Zustand (selectors and store)
 - **types.ts** - Auth-related TypeScript types
-- **module.config.ts** - Module configuration for app registry
+- **routes.types.ts** - Auth route type definitions
+- **screenConfig.ts** - Auth navigation stack and routes configuration
+- **index.ts** - Module configuration export for app registry
 
 ## Purpose
 

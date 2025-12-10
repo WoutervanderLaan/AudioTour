@@ -5,7 +5,6 @@ App initialization logic and configuration.
 ## Contents
 
 - **Init.tsx** - Main initialization component that sets up app-wide providers (QueryClientProvider, SafeAreaProvider, etc.)
-- **queryclient.ts** - TanStack Query (React Query) client configuration
 
 ## Purpose
 

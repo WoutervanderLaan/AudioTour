@@ -4,8 +4,8 @@ React Context providers for UI state.
 
 ## Contexts
 
-- **KeyboardContext.tsx** - Keyboard visibility and state management
-- **ToastContext.tsx** - Toast notification queue and display management
+- **[keyboard/](./keyboard)** - Keyboard context with visibility and state management
+- **[toast/](./toast)** - Toast notification context with queue and display management
 
 ## Purpose
 

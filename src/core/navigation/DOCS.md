@@ -8,7 +8,8 @@ Navigation infrastructure and module registry system.
 - **ModuleRegistry.ts** - Dynamic module registration system
 - **types.ts** - Navigation type definitions
 - **linking.ts** - Deep linking configuration
-- **index.ts** - Public exports
+- **Tabs.tsx** - Bottom tab navigation component
+- **BlurBackground.tsx** - Blur overlay component for navigation stacks
 
 ## Purpose
 

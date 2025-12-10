@@ -46,11 +46,10 @@ export const useAuth = (): {
   const registerMutation = useRegisterMutation()
 
   /**
-   * login
-   * TODO: describe what it does.
+   * Authenticates a user with the provided credentials and updates the auth store with the response.
    *
-   * @param {*} credentials
-   * @returns {*} describe return value
+   * @param credentials - The user's login credentials (email and password)
+   * @returns Promise resolving to the login response containing user data and tokens
    */
   const login = async (
     credentials: LoginCredentials,
@@ -60,11 +59,10 @@ export const useAuth = (): {
   }
 
   /**
-   * register
-   * TODO: describe what it does.
+   * Registers a new user account with the provided registration data and updates the auth store.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The user's registration information (email, password, name, etc.)
+   * @returns Promise resolving to the login response containing user data and tokens
    */
   const register = async (data: RegisterData): Promise<LoginResponse> => {
     const response = await registerMutation.mutateAsync(data)
@@ -72,10 +70,10 @@ export const useAuth = (): {
   }
 
   /**
-   * logout
-   * TODO: describe what it does.
+   * Logs out the current user by invalidating tokens on the server and clearing local auth state.
+   * Handles logout failures gracefully by logging errors.
    *
-   * @returns {*} describe return value
+   * @returns Promise that resolves when logout is complete
    */
   const logout = async (): Promise<void> => {
     try {
