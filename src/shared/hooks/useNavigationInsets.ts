@@ -1,7 +1,8 @@
 import {useMemo} from 'react'
 
-import {useBottomTabBarHeight} from '@react-navigation/bottom-tabs'
 import {useHeaderHeight} from '@react-navigation/elements'
+
+import {useBottomTabBarHeight} from './useBottomTabBarHeight'
 
 /**
  * NavigationInsets

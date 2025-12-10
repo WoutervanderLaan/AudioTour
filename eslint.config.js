@@ -350,6 +350,12 @@ export default [
               message:
                 'Do not use View from react-native. Use a layout component from @/shared/components/ui/layout instead, or create a new layout element that meets a specific requirement (only if existing layout components do not suffice).',
             },
+            {
+              name: '@react-navigation/bottom-tabs',
+              importNames: ['useBottomTabBarHeight'],
+              message:
+                'Do not import useBottomTabBarHeight from @react-navigation/bottom-tabs, use the custom useBottomTabBarHeight from @/shared/hooks/useBottomTabBarHeight.',
+            },
           ],
         },
       ],
