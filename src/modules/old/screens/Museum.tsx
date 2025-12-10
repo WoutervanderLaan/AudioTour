@@ -1,5 +1,4 @@
 import React from 'react'
-import {ActivityIndicator, FlatList} from 'react-native'
 
 import {useShallow} from 'zustand/react/shallow'
 
@@ -21,7 +20,7 @@ import {useMuseumStore} from '@/store/slices/museumStore'
  * @returns Museum selection screen component
  */
 export const Museum = (): React.JSX.Element => {
-  const [loading, setLoading] = React.useState(true)
+  const [_loading, setLoading] = React.useState(true)
 
   const {currentMuseumId, setMuseum} = useMuseumStore(
     useShallow(state => ({
@@ -30,7 +29,7 @@ export const Museum = (): React.JSX.Element => {
     })),
   )
 
-  const {coords, error: locError} = useUserLocation({
+  const {coords, error: _locError} = useUserLocation({
     shouldWatch: true,
     distanceInterval: 25,
   })
@@ -55,30 +54,21 @@ export const Museum = (): React.JSX.Element => {
   }, [coords])
 
   return (
-    <Screen.Static>
+    <Screen.Scrollable>
       <Column
-        flex={1}
         padding="md"
         gap="sm">
-        <Text.Paragraph>Museum</Text.Paragraph>
-
-        {!!loading && <ActivityIndicator />}
-
-        {!!locError && <Text.Label>{locError}</Text.Label>}
-
-        <FlatList
-          data={sortedByDistance}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <PressableBase onPress={() => setMuseum(item.id)}>
-              <Text.Paragraph
-                fontFamily={currentMuseumId === item.id ? 'bold' : 'regular'}>
-                {item.name} ({item.distance?.toFixed(0) ?? '???'} m)
-              </Text.Paragraph>
-            </PressableBase>
-          )}
-        />
+        {sortedByDistance.map(item => (
+          <PressableBase
+            key={item.id}
+            onPress={() => setMuseum(item.id)}>
+            <Text.Paragraph
+              fontFamily={currentMuseumId === item.id ? 'bold' : 'regular'}>
+              {item.name} ({item.distance?.toFixed(0) ?? '???'} m)
+            </Text.Paragraph>
+          </PressableBase>
+        ))}
       </Column>
-    </Screen.Static>
+    </Screen.Scrollable>
   )
 }

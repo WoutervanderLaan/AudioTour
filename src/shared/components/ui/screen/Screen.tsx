@@ -10,6 +10,7 @@ import {
 import {StyleSheet} from 'react-native-unistyles'
 
 import {useKeyboard} from '@/shared/hooks/useKeyboard'
+import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
 
 /**
  * Base props shared by all Screen variants.
@@ -87,16 +88,26 @@ const Static = ({
   animated = true,
 }: StaticScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
+  const {top, bottom} = useNavigationInsets()
 
   // Memoize the animated padding to avoid recreating on every render
   const animatedPaddingBottom = useMemo(
-    () => Animated.add(animatedKeyboardHeight, extraPadding),
-    [animatedKeyboardHeight, extraPadding],
+    () => Animated.add(animatedKeyboardHeight, extraPadding + bottom),
+    [animatedKeyboardHeight, extraPadding, bottom],
   )
 
-  // No keyboard avoiding - use simple View
+  // No keyboard avoiding - use simple View with navigation insets
   if (!keyboardAvoiding) {
-    return <View style={[styles.container, style]}>{children}</View>
+    return (
+      <View
+        style={[
+          styles.container,
+          {paddingTop: top, paddingBottom: bottom},
+          style,
+        ]}>
+        {children}
+      </View>
+    )
   }
 
   // Keyboard avoiding with animation
@@ -105,6 +116,7 @@ const Static = ({
       <Animated.View
         style={[
           styles.container,
+          {paddingTop: top},
           style,
           {
             paddingBottom: animatedPaddingBottom,
@@ -120,8 +132,9 @@ const Static = ({
     <View
       style={[
         styles.container,
+        {paddingTop: top},
         style,
-        {paddingBottom: keyboardHeight + extraPadding},
+        {paddingBottom: keyboardHeight + extraPadding + bottom},
       ]}>
       {children}
     </View>
@@ -146,20 +159,23 @@ const Scrollable = ({
   scrollViewProps,
 }: ScrollableScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
+  const {top, bottom} = useNavigationInsets()
 
   // Calculate padding based on keyboard avoiding and animation settings
   const paddingBottom = useMemo(() => {
-    if (!keyboardAvoiding) return 0
+    const basePadding = bottom
+    if (!keyboardAvoiding) return basePadding
     if (animated) {
-      return Animated.add(animatedKeyboardHeight, extraPadding)
+      return Animated.add(animatedKeyboardHeight, extraPadding + basePadding)
     }
-    return keyboardHeight + extraPadding
+    return keyboardHeight + extraPadding + basePadding
   }, [
     keyboardAvoiding,
     animated,
     animatedKeyboardHeight,
     extraPadding,
     keyboardHeight,
+    bottom,
   ])
 
   // Use Animated.ScrollView when animation is enabled with keyboard avoiding
@@ -171,6 +187,7 @@ const Scrollable = ({
       style={[styles.container, style]}
       contentContainerStyle={[
         styles.scrollContent,
+        {paddingTop: top},
         contentContainerStyle,
         {paddingBottom},
       ]}
@@ -190,7 +207,18 @@ const Scrollable = ({
  * @returns A basic screen wrapper component
  */
 const BaseScreen = ({children, style}: BaseScreenProps): React.JSX.Element => {
-  return <View style={[styles.container, style]}>{children}</View>
+  const {top, bottom} = useNavigationInsets()
+
+  return (
+    <View
+      style={[
+        styles.container,
+        {paddingTop: top, paddingBottom: bottom},
+        style,
+      ]}>
+      {children}
+    </View>
+  )
 }
 
 /**

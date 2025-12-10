@@ -101,7 +101,7 @@ export const getStackNavigatorOptions = (
   headerTitleStyle: {
     color: navTheme.header.titleColor,
   },
-  header: BlurBackground,
+  headerBackground: BlurBackground,
 })
 
 /**
@@ -109,13 +109,12 @@ export const getStackNavigatorOptions = (
  * Returns React Navigation bottom tab navigator screen options that adapt to the theme.
  *
  * @param {NavigationThemeOptions} navTheme - Navigation theme options from useNavigationTheme
- * @param {boolean} useBlur - Whether to use blur tab bar. Defaults to false
  * @returns {BottomTabNavigationOptions} Tab navigator screen options
  *
  * @example
  * ```tsx
  * const navTheme = useNavigationTheme()
- * <Tab.Navigator screenOptions={getTabNavigatorOptions(navTheme, true)} />
+ * <Tab.Navigator screenOptions={getTabNavigatorOptions(navTheme)} />
  * ```
  */
 export const getTabNavigatorOptions = (
