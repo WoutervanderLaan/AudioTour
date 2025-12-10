@@ -1,6 +1,8 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {CheckboxPressable} from '@/shared/components/ui/pressable'
@@ -124,12 +126,16 @@ const HelpText = ({
 /**
  * CheckIndicator
  * Renders the check indicator inside the checkbox when checked.
- * Uses a simple filled rounded square for clear visual indication.
+ * Uses a MaterialIcons checkmark icon for clear visual indication.
  *
  * @returns {React.JSX.Element} Rendered check indicator element
  */
 const CheckIndicator = (): React.JSX.Element => (
-  <Box style={styles.checkIndicator} />
+  <MaterialIcons
+    name="check"
+    size={18}
+    style={styles.checkIndicator}
+  />
 )
 
 /**
@@ -290,9 +296,6 @@ const styles = StyleSheet.create(theme => ({
   //   marginLeft: CHECKBOX_SIZE + theme.size.sm,
   // },
   checkIndicator: {
-    width: 12,
-    height: 12,
-    borderRadius: 2,
-    backgroundColor: theme.color.pressable.primary.default.label,
+    color: theme.color.pressable.primary.default.label,
   },
 }))
