@@ -1,10 +1,11 @@
-import {useMemo} from 'react'
+import React, {useMemo} from 'react'
 import {UnistylesRuntime, useUnistyles} from 'react-native-unistyles'
 
 import type {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs'
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
 
 import {BlurBackground} from '@/core/navigation/BlurBackground'
+import {ProfileHeaderButton} from '@/core/navigation/ProfileHeaderButton'
 
 /**
  * NavigationThemeOptions
@@ -83,6 +84,7 @@ export const useNavigationTheme = (): NavigationThemeOptions => {
 /**
  * getStackNavigatorOptions
  * Returns React Navigation stack navigator screen options that adapt to the theme.
+ * Includes a profile header button on the right side of all stack screens.
  *
  * @param {NavigationThemeOptions} navTheme - Navigation theme options from useNavigationTheme
  * @returns {NativeStackNavigationOptions} Stack navigator screen options
@@ -102,11 +104,13 @@ export const getStackNavigatorOptions = (
     color: navTheme.header.titleColor,
   },
   headerBackground: BlurBackground,
+  headerRight: () => React.createElement(ProfileHeaderButton),
 })
 
 /**
  * getTabNavigatorOptions
  * Returns React Navigation bottom tab navigator screen options that adapt to the theme.
+ * Includes a profile header button on the right side of all tab screens.
  *
  * @param {NavigationThemeOptions} navTheme - Navigation theme options from useNavigationTheme
  * @returns {BottomTabNavigationOptions} Tab navigator screen options
@@ -138,4 +142,5 @@ export const getTabNavigatorOptions = (
   tabBarInactiveTintColor: navTheme.tabBar.inactiveTintColor,
   headerBackground: BlurBackground,
   tabBarBackground: BlurBackground,
+  headerRight: () => React.createElement(ProfileHeaderButton),
 })

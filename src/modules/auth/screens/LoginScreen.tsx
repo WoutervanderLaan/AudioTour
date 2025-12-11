@@ -1,36 +1,32 @@
-import React from 'react'
+import type React from 'react'
 import {useForm} from 'react-hook-form'
 import {ActivityIndicator} from 'react-native'
 
 import {zodResolver} from '@hookform/resolvers/zod'
+import {useNavigation} from '@react-navigation/native'
 
 import {useAuth} from '../hooks/useAuth'
+import {AuthRouteName} from '../routes.types'
 import {type LoginForm, loginSchema} from '../schema'
 
 import {logger} from '@/core/lib/logger'
 import {TextInputControlled} from '@/shared/components/ui/form'
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Button} from '@/shared/components/ui/pressable'
+import {Row} from '@/shared/components/ui/layout/Row'
+import {Button, LinkButton} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
 
 /**
  * LoginScreen
- * TODO: describe what it does.
+ * Authentication screen that allows users to sign in with email and password.
+ * Includes a link to navigate to the registration screen for new users.
  *
- * @returns {*} describe return value
+ * @returns {React.JSX.Element} The login screen component
  */
-export const LoginScreen: React.FC = () => {
-  const {
-    login,
-    logout,
-    logoutError,
-    isLoggingIn,
-    loginError,
-    isAuthenticated,
-    user,
-    isLoggingOut,
-  } = useAuth()
+export const LoginScreen = (): React.JSX.Element => {
+  const {navigate} = useNavigation()
+  const {login, isLoggingIn, loginError} = useAuth()
 
   const {
     control,
@@ -39,11 +35,11 @@ export const LoginScreen: React.FC = () => {
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   })
+
   /**
-   * handleLogin
-   * TODO: describe what it does.
+   * Handles the login form submission by authenticating the user with provided credentials.
    *
-   * @returns {*} describe return value
+   * @param credentials - The login form data containing email and password
    */
   const handleLogin = async ({email, password}: LoginForm): Promise<void> => {
     try {
@@ -54,17 +50,10 @@ export const LoginScreen: React.FC = () => {
   }
 
   /**
-   * handleLogout
-   * TODO: describe what it does.
-   *
-   * @returns {*} describe return value
+   * Navigates to the registration screen when the sign up link is pressed.
    */
-  const handleLogout = async (): Promise<void> => {
-    try {
-      await logout()
-    } catch (error) {
-      logger.error('Logout failed:', error)
-    }
+  const handleSignUpPress = (): void => {
+    navigate(AuthRouteName.register)
   }
 
   return (
@@ -75,9 +64,7 @@ export const LoginScreen: React.FC = () => {
         flex={1}
         padding="md">
         <Text.Title>Login</Text.Title>
-        <Text.Paragraph>
-          {isAuthenticated ? `Welcome ${user?.name}` : 'Who are you?'}
-        </Text.Paragraph>
+        <Text.Paragraph>Sign in to your account</Text.Paragraph>
 
         <Column
           gap="lg"
@@ -97,13 +84,11 @@ export const LoginScreen: React.FC = () => {
             secureTextEntry
           />
 
-          {(!!loginError || !!logoutError) && (
+          {!!loginError && (
             <Text.Paragraph
               variant="small"
               color="warning">
-              {loginError?.message ||
-                logoutError?.message ||
-                'Something went wrong...'}
+              {loginError.message || 'Something went wrong...'}
             </Text.Paragraph>
           )}
 
@@ -113,14 +98,20 @@ export const LoginScreen: React.FC = () => {
             disabled={isLoggingIn || isLoading}
           />
 
-          <Button
-            label={isLoggingOut ? 'Logging out...' : 'Logout'}
-            onPress={handleLogout}
-            disabled={isLoggingOut || isLoading}
-          />
-
           {!!(isLoggingIn || isLoading) && <ActivityIndicator />}
         </Column>
+
+        <Row
+          gap="xs"
+          centerY>
+          <Text.Paragraph variant="small">
+            Don&apos;t have an account?
+          </Text.Paragraph>
+          <LinkButton
+            label="Sign up"
+            onPress={handleSignUpPress}
+          />
+        </Row>
       </Column>
     </Screen.Static>
   )
