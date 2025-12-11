@@ -109,6 +109,7 @@ export const LoginScreen = (): React.JSX.Element => {
           </Text.Paragraph>
           <LinkButton
             label="Sign up"
+            variant="small"
             onPress={handleSignUpPress}
           />
         </Row>

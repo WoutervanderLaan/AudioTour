@@ -116,6 +116,7 @@ export const RegisterScreen = (): React.JSX.Element => {
           </Text.Paragraph>
           <LinkButton
             label="Sign in"
+            variant="small"
             onPress={handleSignInPress}
           />
         </Row>

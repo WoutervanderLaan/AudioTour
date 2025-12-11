@@ -1,6 +1,7 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
+import type {ParagraphProps} from '../typography/Paragraph'
 import {PressableBase, type PressableBaseProps} from './PressableBase'
 
 import {Text} from '@/shared/components/ui/typography'
@@ -9,12 +10,17 @@ import {Text} from '@/shared/components/ui/typography'
  * LinkButtonProps
  * Props for the LinkButton component
  */
-export type LinkButtonProps = Omit<PressableBaseProps, 'style' | 'children'> & {
-  /**
-   * label - Text content of the link button
-   */
-  label: string
-}
+export type LinkButtonProps = Omit<PressableBaseProps, 'style' | 'children'> &
+  Omit<ParagraphProps, 'style' | 'children'> & {
+    /**
+     * label - Text content of the link button
+     */
+    label: string
+    /**
+     * textVariant - Text variant to use for the label
+     */
+    textVariant?: keyof typeof Text
+  }
 
 /**
  * LinkButton
@@ -27,25 +33,29 @@ export type LinkButtonProps = Omit<PressableBaseProps, 'style' | 'children'> & {
 export const LinkButton = ({
   label,
   disabled,
+  textVariant = 'Paragraph',
+  variant = 'body',
   ...rest
-}: LinkButtonProps): React.JSX.Element => (
-  <PressableBase
-    disabled={disabled}
-    style={({pressed}) => [styles.base, pressed && styles.pressed]}
-    accessibilityRole="link"
-    {...rest}>
-    <Text.Paragraph
-      color="link"
-      style={!!disabled && styles.disabledText}>
-      {label}
-    </Text.Paragraph>
-  </PressableBase>
-)
+}: LinkButtonProps): React.JSX.Element => {
+  const TextComponent = Text[textVariant]
 
-const styles = StyleSheet.create(theme => ({
-  base: {
-    paddingVertical: theme.size.xs,
-  },
+  return (
+    <PressableBase
+      disabled={disabled}
+      style={({pressed}) => [pressed && styles.pressed]}
+      accessibilityRole="link"
+      {...rest}>
+      <TextComponent
+        color="link"
+        variant={variant}
+        style={!!disabled && styles.disabledText}>
+        {label}
+      </TextComponent>
+    </PressableBase>
+  )
+}
+
+const styles = StyleSheet.create(() => ({
   pressed: {
     opacity: 0.7,
   },
