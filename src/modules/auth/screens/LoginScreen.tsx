@@ -21,7 +21,16 @@ import {Text} from '@/shared/components/ui/typography'
  * @returns {*} describe return value
  */
 export const LoginScreen: React.FC = () => {
-  const {login, isLoggingIn, loginError} = useAuth()
+  const {
+    login,
+    logout,
+    logoutError,
+    isLoggingIn,
+    loginError,
+    isAuthenticated,
+    user,
+    isLoggingOut,
+  } = useAuth()
 
   const {
     control,
@@ -44,6 +53,20 @@ export const LoginScreen: React.FC = () => {
     }
   }
 
+  /**
+   * handleLogout
+   * TODO: describe what it does.
+   *
+   * @returns {*} describe return value
+   */
+  const handleLogout = async (): Promise<void> => {
+    try {
+      await logout()
+    } catch (error) {
+      logger.error('Logout failed:', error)
+    }
+  }
+
   return (
     <Screen.Static keyboardAvoiding>
       <Column
@@ -52,6 +75,9 @@ export const LoginScreen: React.FC = () => {
         flex={1}
         padding="md">
         <Text.Title>Login</Text.Title>
+        <Text.Paragraph>
+          {isAuthenticated ? `Welcome ${user?.name}` : 'Who are you?'}
+        </Text.Paragraph>
 
         <Column
           gap="lg"
@@ -71,11 +97,13 @@ export const LoginScreen: React.FC = () => {
             secureTextEntry
           />
 
-          {!!loginError && (
+          {(!!loginError || !!logoutError) && (
             <Text.Paragraph
               variant="small"
               color="warning">
-              {loginError.message || 'Login failed'}
+              {loginError?.message ||
+                logoutError?.message ||
+                'Something went wrong...'}
             </Text.Paragraph>
           )}
 
@@ -83,6 +111,12 @@ export const LoginScreen: React.FC = () => {
             label={isLoggingIn ? 'Logging in...' : 'Login'}
             onPress={handleSubmit(handleLogin)}
             disabled={isLoggingIn || isLoading}
+          />
+
+          <Button
+            label={isLoggingOut ? 'Logging out...' : 'Logout'}
+            onPress={handleLogout}
+            disabled={isLoggingOut || isLoading}
           />
 
           {!!(isLoggingIn || isLoading) && <ActivityIndicator />}

@@ -1,19 +1,8 @@
 import {http, HttpResponse, passthrough} from 'msw'
 
-import {ApiConfig} from '@/core/api/config'
+import {createHandler} from './createHandler'
 
-/**
- * createHandler
- * A simple utility that appends the provided path to the base url.
- *
- * @param path - API path (e.g., '/user')
- * @returns Full URL string
- */
-const createHandler = (path: string): string => {
-  return ApiConfig.getUrl(path)
-}
-
-export const handlers = [
+export const globalHandlers = [
   http.post(createHandler('/process-artwork'), () => {
     return HttpResponse.json({
       object_id: 'abc-123',

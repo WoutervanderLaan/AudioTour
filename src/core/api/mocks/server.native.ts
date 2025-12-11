@@ -1,5 +1,7 @@
 import {setupServer} from 'msw/native'
 
-import {handlers} from './handlers'
+import {globalHandlers} from './handlers'
 
-export const server = setupServer(...handlers)
+import {authHandlers} from '@/modules/auth/api/mocks'
+
+export const server = setupServer(...globalHandlers, ...authHandlers)

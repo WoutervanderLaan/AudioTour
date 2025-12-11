@@ -7,6 +7,7 @@ Authentication API endpoints using TanStack Query.
 - **queries.ts** - Auth-related query hooks (e.g., fetching user profile)
 - **mutations.ts** - Auth mutation hooks (login, register, logout)
 - **keys.ts** - Query key factory for auth queries
+- **mocks.ts** - Mock api responses for development and testing purposes
 
 ## Purpose
 
