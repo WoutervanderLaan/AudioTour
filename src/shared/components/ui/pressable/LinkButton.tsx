@@ -43,7 +43,7 @@ export const LinkButton = ({
     <PressableBase
       disabled={disabled}
       style={({pressed}) => [pressed && styles.pressed]}
-      accessibilityRole="link"
+      accessibilityRole="button"
       {...rest}>
       <TextComponent
         color="link"
