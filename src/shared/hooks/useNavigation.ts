@@ -8,9 +8,10 @@ import type {RootStackParams} from '@/core/navigation/types'
 
 /**
  * useNavigation
- * TODO: describe what it does.
+ * Type-safe wrapper around React Navigation's useNavigation hook.
+ * Provides navigation methods for the app's root navigation stack with full TypeScript support.
  *
- * @returns {*} describe return value
+ * @returns {NavigationProp<RootStackParams>} Navigation prop with type-safe methods for navigating between screens in the RootStackParams
  */
 export const useNavigation = (): NavigationProp<RootStackParams> =>
   useNavigationRN<NavigationProp<RootStackParams>>()
