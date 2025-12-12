@@ -5,6 +5,7 @@ Generic UI building blocks.
 ## Components
 
 - **[form/](./form)** - Form components (inputs, labels, validation display)
+- **[gradient/](./gradient)** - Gradient background components
 - **[layout/](./layout)** - Layout components (containers, grids, stacks)
 - **[pressable/](./pressable)** - Touchable/pressable components (buttons, links)
 - **[screen/](./screen)** - Screen wrapper components
