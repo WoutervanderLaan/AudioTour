@@ -45,13 +45,7 @@ export const useNotificationStore = createModuleStore<NotificationState>(
     },
 
     setPermissionGranted: (granted): void => {
-      set({
-        permissionGranted: granted,
-        preferences: {
-          ...get().preferences,
-          pushEnabled: granted,
-        },
-      })
+      set({permissionGranted: granted})
     },
 
     setPreferences: (preferences): void => {

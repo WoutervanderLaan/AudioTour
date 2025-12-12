@@ -75,14 +75,14 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
 
         {!!preferences.pushEnabled && (
           <Column gap="md">
-            <Text.Label color="secondary">Notification Types</Text.Label>
+            <Text.Label color="secondary">
+              Notification Types (Coming Soon)
+            </Text.Label>
 
             <Switch
               label="Tour Notifications"
               value={preferences.tourNotifications}
-              onChange={() => {
-                // Individual preference toggles can be added here
-              }}
+              disabled
               hint="Get notified about tour completions and achievements"
               testID="tour-notifications-toggle"
             />
@@ -90,9 +90,7 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
             <Switch
               label="Narrative Notifications"
               value={preferences.narrativeNotifications}
-              onChange={() => {
-                // Individual preference toggles can be added here
-              }}
+              disabled
               hint="Discover new stories about captured objects"
               testID="narrative-notifications-toggle"
             />
@@ -100,9 +98,7 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
             <Switch
               label="Recommendation Notifications"
               value={preferences.recommendationNotifications}
-              onChange={() => {
-                // Individual preference toggles can be added here
-              }}
+              disabled
               hint="Receive personalized suggestions"
               testID="recommendation-notifications-toggle"
             />
@@ -110,12 +106,17 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
             <Switch
               label="Social Notifications"
               value={preferences.socialNotifications}
-              onChange={() => {
-                // Individual preference toggles can be added here
-              }}
+              disabled
               hint="Updates about friends and community"
               testID="social-notifications-toggle"
             />
+
+            <Text.Paragraph
+              variant="small"
+              color="secondary">
+              Individual notification preferences will be available in a future
+              update.
+            </Text.Paragraph>
           </Column>
         )}
       </Column>

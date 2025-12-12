@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {Platform} from 'react-native'
 
 import {
@@ -117,6 +117,8 @@ export const useNotifications = (): UseNotificationsReturn => {
   const [permissionStatus, setPermissionStatus] =
     useState<PermissionStatus>('not_determined')
 
+  const hasCheckedPermission = useRef(false)
+
   const registerMutation = useRegisterDeviceMutation()
   const unregisterMutation = useUnregisterDeviceMutation()
   const toggleMutation = useToggleNotificationsMutation()
@@ -127,27 +129,34 @@ export const useNotifications = (): UseNotificationsReturn => {
     toggleMutation.isPending
 
   /**
-   * Check permission status on mount
+   * Check permission status on mount.
+   * Only runs once to avoid unnecessary re-checks and potential loops.
    */
   useEffect(() => {
+    if (hasCheckedPermission.current) {
+      return
+    }
+
     /**
      * checkPermission
-     * TODO: describe what it does.
+     * Checks the current notification permission status via Notifee
+     * and syncs the result with the notification store.
      *
-     * @returns {*} describe return value
+     * @returns {Promise<void>}
      */
     const checkPermission = async (): Promise<void> => {
       const status = await notificationService.checkPermission()
       setPermissionStatus(status)
 
-      if (status === 'granted' && !permissionGranted) {
+      if (status === 'granted') {
         setPermissionGranted(true)
         setHasRequestedPermission(true)
       }
     }
 
     checkPermission()
-  }, [permissionGranted, setPermissionGranted, setHasRequestedPermission])
+    hasCheckedPermission.current = true
+  }, [setPermissionGranted, setHasRequestedPermission])
 
   /**
    * showPermissionModal

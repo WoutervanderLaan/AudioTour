@@ -52,6 +52,11 @@ export const useRegisterDeviceMutation = (
 
   return useMutation({
     mutationFn: async (data: RegisterDeviceRequest) => {
+      // Validate device token before sending to backend
+      if (!data.deviceToken || data.deviceToken.trim().length === 0) {
+        throw new Error('Invalid device token: token cannot be empty')
+      }
+
       const response = await apiClient.post<RegisterDeviceResponse>(
         '/notifications/register-device',
         data,

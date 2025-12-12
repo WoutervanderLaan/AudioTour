@@ -1,6 +1,7 @@
 import {ModuleSlug} from '../slugs'
 import type {ModuleConfig} from '../types'
 import {notificationModals, notificationStacks} from './screenConfig'
+import {notificationService} from './services/notificationService'
 import {useNotificationStore} from './store/useNotificationStore'
 
 import {logger} from '@/core/lib/logger'
@@ -34,8 +35,36 @@ export const notificationsModule: ModuleConfig = {
     useNotificationStore.getState().reset()
   },
 
-  onAppStart: () => {
+  onAppStart: async () => {
     logger.debug('[Notifications Module] Initializing...')
     useNotificationStore.getState().initialize()
+
+    // Initialize notification service with event handlers
+    try {
+      await notificationService.initialize({
+        onForegroundEvent: event => {
+          logger.debug('[Notifications] Foreground event:', event.type)
+          // Handle foreground notification events (e.g., show in-app toast)
+        },
+        onBackgroundEvent: event => {
+          logger.debug('[Notifications] Background event:', event.type)
+          // Handle background notification events (e.g., update badge count)
+          return Promise.resolve()
+        },
+      })
+
+      // Check for initial notification (app launched from notification)
+      const initialNotification =
+        await notificationService.getInitialNotification()
+      if (initialNotification) {
+        logger.debug(
+          '[Notifications] App launched from notification:',
+          initialNotification,
+        )
+        // Handle deep linking from notification
+      }
+    } catch (error) {
+      logger.error('[Notifications] Failed to initialize service:', error)
+    }
   },
 }
