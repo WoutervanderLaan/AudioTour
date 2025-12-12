@@ -3,8 +3,6 @@ import React, {useCallback, useMemo, useState} from 'react'
 import {BannerContext} from './BannerContext'
 import type {BannerProps} from './BannerContext.types'
 
-import {StickyBanner} from '@/shared/components/ui/banner/StickyBanner'
-
 /**
  * Provider component that manages banner state throughout the app.
  *
@@ -54,14 +52,11 @@ export const BannerProvider = ({
   }, [])
 
   const value = useMemo(
-    () => ({showBanner, hideBanner}),
-    [showBanner, hideBanner],
+    () => ({showBanner, hideBanner, banner}),
+    [showBanner, hideBanner, banner],
   )
 
   return (
-    <BannerContext.Provider value={value}>
-      {!!banner && <StickyBanner {...banner} />}
-      {children}
-    </BannerContext.Provider>
+    <BannerContext.Provider value={value}>{children}</BannerContext.Provider>
   )
 }

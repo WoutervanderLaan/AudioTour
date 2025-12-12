@@ -21,4 +21,9 @@ export type BannerContextType = {
    * Hides the currently displayed banner
    */
   hideBanner: () => void
+  /**
+   * banner
+   * The currently displayed banner configuration, or null if no banner is shown
+   */
+  banner: BannerProps | null
 }
