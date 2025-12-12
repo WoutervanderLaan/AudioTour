@@ -43,21 +43,24 @@ export const Button = ({
   <PressableBase
     disabled={disabled}
     style={({pressed}) => [
-      styles.base,
+      styles.base({pressed, disabled: !!disabled}),
       styles[variant]({pressed, disabled: !!disabled}),
     ]}
     {...rest}>
-    <Text.Label color={variant === 'primary' ? 'inverse' : 'default'}>
-      {label}
-    </Text.Label>
+    <Text.Label color="link">{label}</Text.Label>
   </PressableBase>
 )
 
 const styles = StyleSheet.create(theme => ({
-  base: {
+  base: (state: {pressed: boolean; disabled?: boolean}): object => ({
     justifyContent: 'center',
     alignItems: 'center',
-  },
+    borderWidth: 1,
+    borderRadius: theme.size.xxl,
+    paddingVertical: theme.size.sm,
+    paddingHorizontal: theme.size.lg,
+    opacity: state.disabled ? 0.5 : 1,
+  }),
   primary: (state: {pressed: boolean; disabled?: boolean}): object => ({
     backgroundColor: state.pressed
       ? theme.color.pressable.primary.pressed.background
@@ -65,11 +68,6 @@ const styles = StyleSheet.create(theme => ({
     borderColor: state.pressed
       ? theme.color.pressable.primary.pressed.border
       : theme.color.pressable.primary.default.border,
-    borderWidth: 1,
-    borderRadius: theme.size.lg,
-    paddingVertical: theme.size.sm,
-    paddingHorizontal: theme.size.md,
-    opacity: state.disabled ? 0.5 : 1,
   }),
   secondary: (state: {pressed: boolean; disabled?: boolean}): object => ({
     backgroundColor: state.pressed
@@ -78,10 +76,5 @@ const styles = StyleSheet.create(theme => ({
     borderColor: state.pressed
       ? theme.color.pressable.secondary.pressed.border
       : theme.color.pressable.secondary.default.border,
-    borderWidth: 1,
-    borderRadius: theme.size.lg,
-    paddingVertical: theme.size.sm,
-    paddingHorizontal: theme.size.md,
-    opacity: state.disabled ? 0.5 : 1,
   }),
 }))

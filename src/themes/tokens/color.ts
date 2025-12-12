@@ -4,7 +4,7 @@
 export const color = {
   primary: {
     black: '#000000',
-    blue: '#004699',
+    blue: '#0073ffff',
     red: '#ec0000',
     white: '#ffffff',
   },
@@ -22,6 +22,7 @@ export const color = {
     purple: '#a00078',
     yellow: '#ffe600',
     darkblue: '#102E62',
+    lightBlue: '#bad6f8ff',
   },
   // Colors which are not part of the design system
   custom: {
