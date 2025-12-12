@@ -4,6 +4,7 @@ React Context providers for UI state.
 
 ## Contexts
 
+- **[banner/](./banner)** - Banner notification context for displaying sticky banners
 - **[keyboard/](./keyboard)** - Keyboard context with visibility and state management
 - **[toast/](./toast)** - Toast notification context with queue and display management
 
