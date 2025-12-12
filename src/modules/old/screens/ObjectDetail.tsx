@@ -1,8 +1,7 @@
 import React from 'react'
-import {ActivityIndicator, ScrollView} from 'react-native'
+import {ActivityIndicator} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Button, Text} from '@react-navigation/elements'
 import {StaticScreenProps} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
@@ -10,6 +9,10 @@ import {useShallow} from 'zustand/react/shallow'
 import {apiClient} from '@/core/api/client'
 import {GenerateNarrativeResponse} from '@/core/api/schema'
 import {logger} from '@/core/lib/logger'
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Button} from '@/shared/components/ui/pressable'
+import {Screen} from '@/shared/components/ui/screen'
+import {Text} from '@/shared/components/ui/typography'
 import {useTourStore} from '@/store/slices/tourStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
 
@@ -65,26 +68,29 @@ export const ObjectDetail = ({route}: Readonly<Props>): React.JSX.Element => {
   })
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text>Object Detail</Text>
+    <Screen.Scrollable contentContainerStyle={styles.container}>
+      <Column
+        gap="sm"
+        flex={1}
+        center>
+        <Text.Label>ID: {objectId}</Text.Label>
 
-      <Text>ID: {objectId}</Text>
+        <Button
+          label="Generate Narrative"
+          onPress={() => {
+            setLocalError(undefined)
+            generate.mutate()
+          }}
+          disabled={generate.isPending}
+        />
 
-      <Button
-        onPress={() => {
-          setLocalError(undefined)
-          generate.mutate()
-        }}
-        disabled={generate.isPending}>
-        Generate Narrative
-      </Button>
+        {!!generate.isPending && <ActivityIndicator />}
 
-      {!!generate.isPending && <ActivityIndicator />}
+        {!!localError && <Text.Label>{localError}</Text.Label>}
 
-      {!!localError && <Text>{localError}</Text>}
-
-      {!!narrativeText && <Text>{narrativeText}</Text>}
-    </ScrollView>
+        {!!narrativeText && <Text.Paragraph>{narrativeText}</Text.Paragraph>}
+      </Column>
+    </Screen.Scrollable>
   )
 }
 

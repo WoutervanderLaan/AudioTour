@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react'
-import {ActivityIndicator, FlatList} from 'react-native'
+import {ActivityIndicator} from 'react-native'
 
-import {Text} from '@react-navigation/elements'
 import {useQuery} from '@tanstack/react-query'
 
 import {apiClient} from '@/core/api/client'
@@ -10,6 +9,8 @@ import {RecommendationsResponse} from '@/core/api/schema'
 import {logger} from '@/core/lib/logger'
 import {ToastType} from '@/shared/components/features/toast/Toast'
 import {Column} from '@/shared/components/ui/layout/Column'
+import {Screen} from '@/shared/components/ui/screen'
+import {Text} from '@/shared/components/ui/typography'
 import {useToast} from '@/shared/hooks/useToast'
 import {useMuseumStore} from '@/store/slices/museumStore'
 import {useUserSessionStore} from '@/store/slices/userSessionStore'
@@ -59,33 +60,37 @@ export const Recommendations = (): React.JSX.Element => {
   }, [error, toast])
 
   return (
-    <Column
-      flex={1}
-      padding="md"
-      gap="sm">
-      <Text>Recommendations</Text>
+    <Screen.Scrollable>
+      <Column
+        flex={1}
+        padding="md"
+        gap="sm">
+        {!!loading && <ActivityIndicator />}
 
-      {!!loading && <ActivityIndicator />}
-
-      {!!error && (
-        <Text>
-          {error instanceof Error
-            ? error.message
-            : 'Failed to load recommendations'}
-        </Text>
-      )}
-
-      <FlatList
-        data={items}
-        keyExtractor={item => item.object_id}
-        renderItem={({item}) => (
-          <Column paddingV="xs">
-            <Text>Object {item.object_id}</Text>
-
-            {item.score != null && <Text>Score: {item.score.toFixed(2)}</Text>}
-          </Column>
+        {!!error && (
+          <Text.Title>
+            {error instanceof Error
+              ? error.message
+              : 'Failed to load recommendations'}
+          </Text.Title>
         )}
-      />
-    </Column>
+
+        {!items.length && !loading && !error && (
+          <Text.Title>No recommendations available.</Text.Title>
+        )}
+
+        {items.map(item => (
+          <Column
+            paddingV="xs"
+            key={item.object_id}>
+            <Text.Label>Object {item.object_id}</Text.Label>
+
+            {item.score != null && (
+              <Text.Label>Score: {item.score.toFixed(2)}</Text.Label>
+            )}
+          </Column>
+        ))}
+      </Column>
+    </Screen.Scrollable>
   )
 }

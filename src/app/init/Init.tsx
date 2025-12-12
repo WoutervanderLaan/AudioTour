@@ -1,6 +1,7 @@
 import type React from 'react'
 import {useEffect} from 'react'
 
+// eslint-disable-next-line no-restricted-imports
 import * as NavigationElements from '@react-navigation/elements'
 import {Asset} from 'expo-asset'
 

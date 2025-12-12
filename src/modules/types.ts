@@ -10,6 +10,11 @@ import type {
   OldStackParams,
   OldTabParams,
 } from './old/routes.types'
+import type {
+  ProfileModalParams,
+  ProfileStackParams,
+  ProfileTabParams,
+} from './profile/routes.types'
 import type {ModuleSlug} from './slugs'
 
 import type {
@@ -100,14 +105,16 @@ export type ModuleConfig = {
 /**
  * ModuleStackParams - Combined type of all module stack screen parameters
  */
-export type ModuleStackParams = AuthStackParams & OldStackParams
+export type ModuleStackParams = AuthStackParams &
+  OldStackParams &
+  ProfileStackParams
 
 /**
  * ModalParams - Combined type of all module modal screen parameters
  */
-export type ModalParams = AuthModalParams & OldModalParams
+export type ModalParams = AuthModalParams & OldModalParams & ProfileModalParams
 
 /**
  * TabParams - Combined type of all module tab screen parameters
  */
-export type TabParams = AuthTabParams & OldTabParams
+export type TabParams = AuthTabParams & OldTabParams & ProfileTabParams

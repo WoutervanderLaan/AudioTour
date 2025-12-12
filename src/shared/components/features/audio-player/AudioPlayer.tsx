@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
 import {ActivityIndicator} from 'react-native'
 
-import {Button} from '@react-navigation/elements'
-
 import {Column} from '@/shared/components/ui/layout/Column'
+import {Button} from '@/shared/components/ui/pressable'
 import {Text} from '@/shared/components/ui/typography'
 
 /**
@@ -36,7 +35,10 @@ export const AudioPlayer = ({src}: {src: string}): React.JSX.Element => {
     <Column gap="sm">
       <Text.Label>{src}</Text.Label>
 
-      <Button onPress={toggle}>{playing ? 'Pause' : 'Play'}</Button>
+      <Button
+        label={playing ? 'Pause' : 'Play'}
+        onPress={toggle}
+      />
 
       {!!loading && <ActivityIndicator />}
     </Column>

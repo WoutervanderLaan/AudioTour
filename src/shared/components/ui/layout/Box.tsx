@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 // eslint-disable-next-line no-restricted-imports
 import {StyleProp, View, type ViewProps, ViewStyle} from 'react-native'
@@ -76,6 +77,10 @@ export type BoxPropsBase = {
    * paddingLeft
    */
   paddingLeft?: keyof Theme['size']
+  /**
+   * stretch
+   */
+  stretch?: boolean
 } & ViewProps
 
 /**
@@ -121,6 +126,7 @@ export const Box = ({
   paddingRight,
   paddingBottom,
   paddingLeft,
+  stretch,
 }: BoxProps): React.JSX.Element => {
   const {theme} = useUnistyles()
 
@@ -130,6 +136,7 @@ export const Box = ({
     flexDirection: row ? 'row' : column ? 'column' : undefined,
     justifyContent: center || centerY ? 'center' : undefined,
     alignItems: center || centerX ? 'center' : undefined,
+    alignSelf: stretch ? 'stretch' : undefined,
     gap: gap ? theme.size[gap] : undefined,
     padding: padding ? theme.size[padding] : undefined,
     paddingHorizontal: paddingH ? theme.size[paddingH] : undefined,

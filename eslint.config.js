@@ -356,6 +356,11 @@ export default [
               message:
                 'Do not import useBottomTabBarHeight from @react-navigation/bottom-tabs, use the custom useBottomTabBarHeight from @/shared/hooks/useBottomTabBarHeight.',
             },
+            {
+              name: '@react-navigation/elements',
+              message:
+                'Do not import from @react-navigation/elements, use custom elements and hooks instead.',
+            },
           ],
         },
       ],

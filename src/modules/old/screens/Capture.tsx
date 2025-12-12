@@ -138,29 +138,29 @@ export const Capture = (): React.JSX.Element => {
         paddingH="md"
         paddingV="lg"
         center>
-        <Text.Label>{sessionId}</Text.Label>
+        <Column gap="md">
+          <Text.Label>{sessionId}</Text.Label>
 
-        <Button
-          onPress={pickImage}
-          label="Take Photo"
-        />
-        {!!imageUri && (
-          <Image
-            source={{uri: imageUri}}
-            style={styles.preview}
+          <Button
+            onPress={pickImage}
+            label="Take Photo"
           />
-        )}
+          {!!imageUri && (
+            <Image
+              source={{uri: imageUri}}
+              style={styles.preview}
+            />
+          )}
 
-        <Button
-          onPress={upload}
-          disabled={!imageUri || uploadPhoto.isPending}
-          label="Upload & Identify"
-        />
+          <Button
+            onPress={upload}
+            disabled={!imageUri || uploadPhoto.isPending}
+            label="Upload & Identify"
+          />
 
-        {!!uploadPhoto.isPending && <ActivityIndicator />}
-        {!!localError && <Text.Label>{localError}</Text.Label>}
+          {!!uploadPhoto.isPending && <ActivityIndicator />}
+          {!!localError && <Text.Label>{localError}</Text.Label>}
 
-        <Column gap="lg">
           <SwitchControlled
             control={control}
             name="notifications"
@@ -207,5 +207,6 @@ const styles = StyleSheet.create(() => ({
     width: 200,
     height: 200,
     borderRadius: 8,
+    alignSelf: 'center',
   },
 }))

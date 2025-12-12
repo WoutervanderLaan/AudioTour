@@ -7,7 +7,7 @@ export const lightColorTokens = {
   pressable: {
     primary: {
       default: {
-        background: color.primary.blue,
+        background: color.secondary.lightBlue,
         border: color.transparent.full,
         label: color.primary.white,
       },

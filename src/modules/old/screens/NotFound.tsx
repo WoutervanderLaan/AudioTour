@@ -1,8 +1,7 @@
 import type React from 'react'
 
-import {Text} from '@react-navigation/elements'
-
 import {Box} from '@/shared/components/ui/layout/Box'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * NotFound
@@ -15,7 +14,7 @@ export const NotFound = (): React.JSX.Element => {
     <Box
       flex={1}
       center>
-      <Text>404</Text>
+      <Text.Title>404</Text.Title>
       {/* <Button screen="HomeTabs">Go to Home</Button> */}
     </Box>
   )

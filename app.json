@@ -4,7 +4,7 @@
     "slug": "AudioTour",
     "version": "1.0.0",
     "orientation": "default",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "scheme": "audiotour",
@@ -34,7 +34,11 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#ffffff",
-          "image": "./assets/splash-icon.png"
+          "image": "./assets/app-icon.png",
+          "dark": {
+            "image": "./assets/app-icon.png",
+            "backgroundColor": "#000000"
+          }
         }
       ],
       [

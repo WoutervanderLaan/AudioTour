@@ -248,8 +248,8 @@ export const TextInput = ({
 const styles = StyleSheet.create(theme => ({
   input: {
     backgroundColor: theme.color.textInput.container.background,
-    borderWidth: 1,
-    borderColor: theme.color.text.tertiary,
+    borderWidth: 2,
+    borderColor: theme.color.transparent.full,
     borderRadius: theme.size.sm,
     paddingVertical: theme.size.smd,
     paddingHorizontal: theme.size.md,
