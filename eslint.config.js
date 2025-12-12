@@ -361,6 +361,12 @@ export default [
               message:
                 'Do not import from @react-navigation/elements, use custom elements and hooks instead.',
             },
+            {
+              name: '@react-navigation/native',
+              importNames: ['useNavigation'],
+              message:
+                'Do not use useNavigation from @react-navigation/native, use the custom useNavigation from @/shared/hooks/useNavigation instead.',
+            },
           ],
         },
       ],

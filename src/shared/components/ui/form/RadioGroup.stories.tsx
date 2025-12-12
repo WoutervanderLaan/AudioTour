@@ -132,6 +132,6 @@ const InteractiveWrapper = (): React.JSX.Element => {
   )
 }
 
-export const Interactive: Story = {
+export const Interactive = {
   render: () => <InteractiveWrapper />,
 }

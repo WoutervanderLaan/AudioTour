@@ -3,11 +3,7 @@ export {
   CheckboxControlled,
   type CheckboxControlledProps,
 } from './CheckboxControlled'
-export {
-  RadioGroup,
-  type RadioGroupProps,
-  type RadioOption,
-} from './RadioGroup'
+export {RadioGroup, type RadioGroupProps, type RadioOption} from './RadioGroup'
 export {
   RadioGroupControlled,
   type RadioGroupControlledProps,

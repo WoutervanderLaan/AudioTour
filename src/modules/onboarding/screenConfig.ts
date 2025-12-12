@@ -1,9 +1,16 @@
-import {OnboardingRouteName, type OnboardingStackParams, type OnboardingModalParams} from './routes.types'
+import {
+  type OnboardingModalParams,
+  OnboardingRouteName,
+  type OnboardingStackParams,
+} from './routes.types'
 import {OnboardingFlowScreen} from './screens/OnboardingFlowScreen'
 
 import {type StackNavigationRoutes} from '@/core/navigation/types'
 
-export const onboardingStacks: StackNavigationRoutes<OnboardingStackParams, OnboardingRouteName> = {
+export const onboardingStacks: StackNavigationRoutes<
+  OnboardingStackParams,
+  OnboardingRouteName
+> = {
   [OnboardingRouteName.flow]: {
     component: OnboardingFlowScreen,
     name: OnboardingRouteName.flow,

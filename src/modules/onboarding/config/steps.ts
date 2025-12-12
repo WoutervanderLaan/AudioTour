@@ -1,4 +1,4 @@
-import {OnboardingStepType, type OnboardingStep} from '../types'
+import {type OnboardingStep, OnboardingStepType} from '../types'
 
 /**
  * ONBOARDING_STEPS
@@ -35,8 +35,7 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     id: 'preferred_style',
     type: OnboardingStepType.RADIO,
     title: 'How do you prefer to learn?',
-    description:
-      'We will adjust the narrative style based on your preference',
+    description: 'We will adjust the narrative style based on your preference',
     required: true,
     options: [
       {

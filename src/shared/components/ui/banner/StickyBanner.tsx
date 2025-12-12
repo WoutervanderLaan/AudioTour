@@ -1,12 +1,13 @@
 import type React from 'react'
+import {useMemo} from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import {Column} from '../layout/Column'
 import {Row} from '../layout/Row'
-import {PressableBase} from '../pressable/PressableBase'
 import {IconButton} from '../pressable/IconButton'
+import {PressableBase} from '../pressable/PressableBase'
 import {Text} from '../typography'
 
 /**
@@ -84,6 +85,18 @@ export const StickyBanner = ({
     onCtaPress?.()
   }
 
+  const iconName = useMemo(() => {
+    switch (variant) {
+      case 'warning':
+        return 'warning'
+      case 'success':
+        return 'check-circle'
+      case 'info':
+      default:
+        return 'info'
+    }
+  }, [variant])
+
   return (
     <Column
       testID={testID}
@@ -92,13 +105,7 @@ export const StickyBanner = ({
         gap="sm"
         centerY>
         <MaterialIcons
-          name={
-            variant === 'warning'
-              ? 'warning'
-              : variant === 'success'
-                ? 'check-circle'
-                : 'info'
-          }
+          name={iconName}
           size={20}
           style={styles.icon}
         />
@@ -164,7 +171,7 @@ const styles = StyleSheet.create(theme => ({
     borderBottomColor: theme.color.pressable.primary.default.border,
   },
   icon: {
-    color: theme.color.text.primary,
+    color: theme.color.text.default,
   },
   ctaButton: {
     flexDirection: 'row',
@@ -181,6 +188,6 @@ const styles = StyleSheet.create(theme => ({
     opacity: 0.7,
   },
   ctaIcon: {
-    color: theme.color.text.primary,
+    color: theme.color.text.default,
   },
 }))

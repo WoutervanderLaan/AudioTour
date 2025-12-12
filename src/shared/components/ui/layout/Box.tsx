@@ -44,7 +44,10 @@ export type BoxPropsBase = {
    * centerY
    */
   centerY?: boolean
-
+  /**
+   * justifyContent
+   */
+  justifyContent?: ViewStyle['justifyContent']
   /**
    * gap
    */
@@ -119,6 +122,7 @@ export const Box = ({
   centerX,
   centerY,
   gap,
+  justifyContent,
   padding,
   paddingH,
   paddingV,
@@ -134,7 +138,7 @@ export const Box = ({
     flex,
     flexShrink: flex === undefined ? 0 : undefined,
     flexDirection: row ? 'row' : column ? 'column' : undefined,
-    justifyContent: center || centerY ? 'center' : undefined,
+    justifyContent: center || centerY ? 'center' : justifyContent,
     alignItems: center || centerX ? 'center' : undefined,
     alignSelf: stretch ? 'stretch' : undefined,
     gap: gap ? theme.size[gap] : undefined,

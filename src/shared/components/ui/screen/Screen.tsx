@@ -184,6 +184,7 @@ const Scrollable = ({
 
   return (
     <Component
+      alwaysBounceVertical={false}
       style={[styles.container, style]}
       contentContainerStyle={[
         styles.scrollContent,
@@ -196,28 +197,6 @@ const Scrollable = ({
       {...scrollViewProps}>
       {children}
     </Component>
-  )
-}
-
-/**
- * Base screen component - simple wrapper with flex container.
- * This is the default export when using `<Screen>` without a variant.
- *
- * @param props - The base screen properties
- * @returns A basic screen wrapper component
- */
-const BaseScreen = ({children, style}: BaseScreenProps): React.JSX.Element => {
-  const {top, bottom} = useNavigationInsets()
-
-  return (
-    <View
-      style={[
-        styles.container,
-        {paddingTop: top, paddingBottom: bottom},
-        style,
-      ]}>
-      {children}
-    </View>
   )
 }
 
@@ -308,10 +287,10 @@ const BaseScreen = ({children, style}: BaseScreenProps): React.JSX.Element => {
  * );
  * ```
  */
-export const Screen = Object.assign(BaseScreen, {
+export const Screen = {
   Static,
   Scrollable,
-})
+}
 
 const styles = StyleSheet.create(({color}) => ({
   container: {

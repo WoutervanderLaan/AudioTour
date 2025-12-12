@@ -123,7 +123,6 @@ const HelpText = ({
 }): React.JSX.Element => (
   <Text.Label
     color={hasError ? 'warning' : 'secondary'}
-    variant="small"
     accessibilityRole="text"
     accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
     {text}
@@ -280,7 +279,7 @@ const styles = StyleSheet.create(theme => ({
     paddingHorizontal: theme.size.md,
     borderRadius: theme.size.sm,
     borderWidth: 1,
-    borderColor: theme.color.textInput.container.border,
+    borderColor: theme.color.textInput.container.background,
     backgroundColor: state.pressed
       ? theme.color.pressable.secondary.pressed.background
       : theme.color.textInput.container.background,

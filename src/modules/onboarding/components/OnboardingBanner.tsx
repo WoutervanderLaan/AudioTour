@@ -1,12 +1,10 @@
 import type React from 'react'
 import {useCallback} from 'react'
 
-import {useNavigation} from '@react-navigation/native'
-
-import {StickyBanner} from '../ui/banner'
-
 import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {useOnboardingStore} from '@/modules/onboarding/store/useOnboardingStore'
+import {StickyBanner} from '@/shared/components/ui/banner/StickyBanner'
+import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
  * OnboardingBanner

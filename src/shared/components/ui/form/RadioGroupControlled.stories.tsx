@@ -92,7 +92,7 @@ const FormWrapper = (): React.JSX.Element => {
   )
 }
 
-export const WithForm: Story = {
+export const WithForm = {
   render: () => <FormWrapper />,
 }
 
@@ -163,6 +163,6 @@ const PreferencesFormWrapper = (): React.JSX.Element => {
   )
 }
 
-export const WithDefaultValue: Story = {
+export const WithDefaultValue = {
   render: () => <PreferencesFormWrapper />,
 }

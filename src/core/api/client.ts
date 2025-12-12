@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable complexity */
 /* eslint-disable max-lines */
 import {logger} from '../lib/logger'

@@ -78,8 +78,7 @@ Steps are defined in `config/steps.ts` with the following structure:
 ```typescript
 import {useOnboardingStore} from '@/modules/onboarding/store/useOnboardingStore'
 
-const {answers, completed, setAnswer, completeOnboarding} =
-  useOnboardingStore()
+const {answers, completed, setAnswer, completeOnboarding} = useOnboardingStore()
 ```
 
 ### Displaying the Onboarding Banner
@@ -100,7 +99,7 @@ export const MyScreen = () => (
 ### Navigating to Onboarding Flow
 
 ```typescript
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation} from '@/shared/hooks/useNavigation'
 
 const navigation = useNavigation()
 navigation.navigate('OnboardingFlow')

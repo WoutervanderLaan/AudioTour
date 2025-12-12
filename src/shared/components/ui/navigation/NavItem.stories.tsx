@@ -45,25 +45,6 @@ export const WithChevron: Story = {
   args: {
     label: 'Notifications',
     icon: 'notifications',
-    rightContent: <MaterialIcons name="chevron-right" size={24} />,
-  },
-}
-
-export const WithBadge: Story = {
-  args: {
-    label: 'Messages',
-    icon: 'mail',
-    rightContent: (
-      <View
-        style={{
-          backgroundColor: '#ff0000',
-          borderRadius: 10,
-          paddingHorizontal: 8,
-          paddingVertical: 2,
-        }}>
-        <Text.Label color="link">3</Text.Label>
-      </View>
-    ),
   },
 }
 
@@ -72,17 +53,5 @@ export const Disabled: Story = {
     label: 'Disabled Item',
     icon: 'block',
     disabled: true,
-  },
-}
-
-export const WithOnPress: Story = {
-  args: {
-    label: 'Tap to log',
-    icon: 'touch-app',
-    onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('NavItem pressed!')
-    },
-    rightContent: <MaterialIcons name="chevron-right" size={24} />,
   },
 }
