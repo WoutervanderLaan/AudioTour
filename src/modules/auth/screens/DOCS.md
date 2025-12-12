@@ -6,6 +6,7 @@ Authentication screen components.
 
 - **LoginScreen.tsx** - User login screen with email/password form
 - **RegisterScreen.tsx** - New user registration screen
+- **SocialsScreen.tsx** - Social connections and profile screen
 
 ## Purpose
 

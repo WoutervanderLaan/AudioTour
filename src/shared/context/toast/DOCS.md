@@ -4,7 +4,7 @@ React Context for managing toast notifications.
 
 ## Files
 
-- **ToastContext.ts** - Context definition
+- **ToastContext.tsx** - Context definition
 - **ToastContext.provider.tsx** - Provider component managing toast state and lifecycle
 - **ToastContext.types.ts** - TypeScript types for toast props and context
 

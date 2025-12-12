@@ -5,6 +5,7 @@ Custom React hooks for authentication functionality.
 ## Files
 
 - **useAuth.ts** - Main authentication hook providing login, logout, register, and auth state access
+- **useAuthStateListener.ts** - Hook for listening to authentication state changes
 
 ## Purpose
 

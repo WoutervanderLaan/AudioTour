@@ -5,28 +5,27 @@ import {StyleSheet} from 'react-native-unistyles'
 import {LinearGradient, type LinearGradientProps} from 'expo-linear-gradient'
 
 /**
- * GradientBackgroundProps
- * TODO: describe what this type represents.
+ * Props for the GradientBackground component
  */
 type GradientBackgroundProps = {
   /**
-   * children
+   * Child components to render on top of the gradient background
    */
   children?: ReactNode
   /**
-   * style
+   * Optional additional styles to apply to the gradient container
    */
   style?: ViewStyle
   /**
-   * colors
+   * Optional custom gradient colors array (defaults to blue gradient)
    */
   colors?: LinearGradientProps['colors']
   /**
-   * start
+   * Optional gradient start position coordinates (defaults to top: {x: 0, y: 0})
    */
   start?: {x: number; y: number}
   /**
-   * end
+   * Optional gradient end position coordinates (defaults to bottom: {x: 0, y: 1})
    */
   end?: {x: number; y: number}
 }

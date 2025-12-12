@@ -99,7 +99,7 @@ export type TabNavigationRoutes<
 >
 
 /**
- * IconName
- * TODO: describe what this type represents.
+ * Type representing valid Material Icons names for type-safe icon selection.
+ * Extracted from the Material Icons glyph map to ensure only valid icon names are used.
  */
 export type IconName = keyof typeof MaterialIcons.glyphMap
