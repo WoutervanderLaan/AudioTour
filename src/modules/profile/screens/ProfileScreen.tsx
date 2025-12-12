@@ -4,6 +4,7 @@ import {useCallback} from 'react'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import {useNavigation} from '@react-navigation/native'
 
+import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {OnboardingBanner} from '@/shared/components/features'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {NavItem} from '@/shared/components/ui/navigation'
@@ -25,7 +26,7 @@ export const ProfileScreen = (): React.JSX.Element => {
    * Navigates to the onboarding flow
    */
   const handleOnboardingPress = useCallback((): void => {
-    navigation.navigate('OnboardingFlow' as never)
+    navigation.navigate(OnboardingRouteName.flow)
   }, [navigation])
 
   return (

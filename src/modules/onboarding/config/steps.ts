@@ -109,6 +109,8 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     type: OnboardingStepType.TOGGLE,
     title: 'Accessibility preferences',
     description: 'Enable features to improve your experience',
+    label: 'Enable accessibility features',
+    hint: 'Larger text, high contrast, and screen reader support',
     required: false,
   },
 ]

@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native'
 
 import {StickyBanner} from '../ui/banner'
 
+import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {useOnboardingStore} from '@/modules/onboarding/store/useOnboardingStore'
 
 /**
@@ -24,7 +25,7 @@ export const OnboardingBanner = (): React.JSX.Element | null => {
    * Navigates to the onboarding flow screen
    */
   const handleCtaPress = useCallback((): void => {
-    navigation.navigate('OnboardingFlow' as never)
+    navigation.navigate(OnboardingRouteName.flow)
   }, [navigation])
 
   /**

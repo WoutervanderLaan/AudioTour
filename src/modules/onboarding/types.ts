@@ -38,6 +38,14 @@ export type OnboardingStep = {
    */
   placeholder?: string
   /**
+   * label - Label for toggle/input steps
+   */
+  label?: string
+  /**
+   * hint - Helper text for toggle/input steps
+   */
+  hint?: string
+  /**
    * required - Whether this step is required
    */
   required?: boolean

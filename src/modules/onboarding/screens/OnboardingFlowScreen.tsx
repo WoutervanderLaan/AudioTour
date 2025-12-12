@@ -1,5 +1,5 @@
 import type React from 'react'
-import {useCallback, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {StyleSheet} from 'react-native-unistyles'
 
@@ -39,13 +39,23 @@ const createStepSchema = (stepIndex: number): z.ZodObject<{[key: string]: z.ZodT
   let fieldSchema: z.ZodTypeAny
 
   switch (step.type) {
-    case OnboardingStepType.RADIO:
-      if (step.required) {
-        fieldSchema = z.string({required_error: 'Please select an option'})
+    case OnboardingStepType.RADIO: {
+      const validValues = step.options?.map(o => o.value) ?? []
+      if (validValues.length > 0) {
+        if (step.required) {
+          fieldSchema = z.enum(validValues as [string, ...string[]], {
+            required_error: 'Please select an option',
+          })
+        } else {
+          fieldSchema = z.enum(validValues as [string, ...string[]]).optional()
+        }
       } else {
-        fieldSchema = z.string().optional()
+        fieldSchema = step.required
+          ? z.string({required_error: 'Please select an option'})
+          : z.string().optional()
       }
       break
+    }
     case OnboardingStepType.TOGGLE:
       fieldSchema = z.boolean().optional()
       break
@@ -85,12 +95,29 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
   const stepSchema = createStepSchema(currentStepIndex)
   type StepFormData = z.infer<typeof stepSchema>
 
-  const {control, handleSubmit, formState} = useForm<StepFormData>({
+  const {control, handleSubmit, formState, reset} = useForm<StepFormData>({
     resolver: zodResolver(stepSchema),
     defaultValues: {
       [currentStep.id]: answers[currentStep.id] ?? (currentStep.type === OnboardingStepType.TOGGLE ? false : ''),
     } as StepFormData,
   })
+
+  /**
+   * Reset form values when step changes to preserve user's previous answers
+   */
+  useEffect(() => {
+    const previousAnswer = answers[currentStep.id]
+    const defaultValue =
+      previousAnswer !== undefined
+        ? previousAnswer
+        : currentStep.type === OnboardingStepType.TOGGLE
+          ? false
+          : ''
+
+    reset({
+      [currentStep.id]: defaultValue,
+    } as StepFormData)
+  }, [currentStepIndex, currentStep.id, currentStep.type, answers, reset])
 
   /**
    * handleNext
@@ -154,8 +181,8 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
           <SwitchControlled
             control={control}
             name={currentStep.id as keyof StepFormData}
-            label="Enable accessibility features"
-            hint="Larger text, high contrast, and screen reader support"
+            label={currentStep.label ?? 'Enable this option'}
+            hint={currentStep.hint}
           />
         )
       case OnboardingStepType.TEXT:
