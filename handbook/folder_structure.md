@@ -26,6 +26,19 @@
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – auth route type definitions
       - index.ts – module configuration export
+    - **onboarding/** – user onboarding module (multi-step configuration flow)
+      - components/ – onboarding-specific components
+      - config/ – onboarding step configuration
+      - screens/ – onboarding flow screen
+      - store/ – onboarding state management
+      - screenConfig.ts – navigation stack configuration
+      - routes.types.ts – onboarding route type definitions
+      - index.ts – module configuration export
+    - **profile/** – user profile module
+      - screens/ – profile screen
+      - screenConfig.ts – navigation stack configuration
+      - routes.types.ts – profile route type definitions
+      - index.ts – module configuration export
     - **old/** – legacy screens awaiting migration to proper modules
       - screens/ – old screens (Museum, Settings, Capture, etc.)
       - index.ts

@@ -73,6 +73,8 @@ src/
 │   └── utils/       # Utility functions
 ├── modules/          # Self-contained feature modules
 │   ├── auth/        # Authentication module
+│   ├── onboarding/  # User onboarding module
+│   ├── profile/     # User profile module
 │   └── old/         # Legacy screens (to be migrated)
 ├── store/            # Global Zustand state management
 │   └── slices/      # Store slices
