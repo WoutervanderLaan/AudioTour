@@ -1,7 +1,5 @@
 import type React from 'react'
 
-import {useNavigation} from '@react-navigation/native'
-
 import {AuthRouteName} from '../routes.types'
 
 import {
@@ -12,6 +10,7 @@ import {
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
+import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
  * SocialsScreen - A tab screen for social features with navigation test buttons.

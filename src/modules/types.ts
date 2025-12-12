@@ -11,6 +11,10 @@ import type {
   OldTabParams,
 } from './old/routes.types'
 import type {
+  OnboardingModalParams,
+  OnboardingStackParams,
+} from './onboarding/routes.types'
+import type {
   ProfileModalParams,
   ProfileStackParams,
   ProfileTabParams,
@@ -107,12 +111,17 @@ export type ModuleConfig = {
  */
 export type ModuleStackParams = AuthStackParams &
   OldStackParams &
+  OnboardingStackParams &
   ProfileStackParams
 
 /**
  * ModalParams - Combined type of all module modal screen parameters
  */
-export type ModalParams = AuthModalParams & OldModalParams & ProfileModalParams
+export type ModalParams =
+  | AuthModalParams
+  | OldModalParams
+  | OnboardingModalParams
+  | ProfileModalParams
 
 /**
  * TabParams - Combined type of all module tab screen parameters

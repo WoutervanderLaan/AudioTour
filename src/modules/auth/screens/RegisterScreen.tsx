@@ -3,7 +3,6 @@ import {useForm} from 'react-hook-form'
 import {ActivityIndicator} from 'react-native'
 
 import {zodResolver} from '@hookform/resolvers/zod'
-import {useNavigation} from '@react-navigation/native'
 
 import {useAuth} from '../hooks/useAuth'
 import {AuthRouteName} from '../routes.types'
@@ -16,6 +15,7 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {Button, LinkButton} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
+import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
  * RegisterScreen

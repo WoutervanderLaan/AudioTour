@@ -1,26 +1,36 @@
 import type React from 'react'
 
+import {OnboardingBanner} from '@/modules/onboarding/components/OnboardingBanner'
+import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {Column} from '@/shared/components/ui/layout/Column'
+import {NavItem} from '@/shared/components/ui/navigation'
 import {Screen} from '@/shared/components/ui/screen'
-import {Text} from '@/shared/components/ui/typography'
+import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
  * ProfileScreen
  * Displays the user profile information and settings.
- * Currently shows a placeholder title while the full implementation is pending.
+ * Includes navigation to onboarding flow and shows completion banner if needed.
  *
  * @returns {React.JSX.Element} The profile screen component
  */
 export const ProfileScreen = (): React.JSX.Element => {
+  const navigation = useNavigation()
+
   return (
-    <Screen.Static>
+    <Screen.Scrollable>
+      <OnboardingBanner />
+
       <Column
-        gap="md"
-        center
+        gap="xs"
         flex={1}
         padding="md">
-        <Text.Title>Profile</Text.Title>
+        <NavItem
+          label="Preferences"
+          icon="tune"
+          onPress={() => navigation.navigate(OnboardingRouteName.flow)}
+        />
       </Column>
-    </Screen.Static>
+    </Screen.Scrollable>
   )
 }
