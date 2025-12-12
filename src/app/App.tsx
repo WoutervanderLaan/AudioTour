@@ -17,6 +17,7 @@ import {logger} from '@/core/lib/logger'
 import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 import {RootNavigator} from '@/core/navigation/RootNavigator'
 import {registerModules} from '@/modules/modules'
+import {BannerProvider} from '@/shared/context/banner/BannerContext.provider'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
 
@@ -69,12 +70,14 @@ export const App = (): React.JSX.Element => {
       <SafeAreaProvider initialMetrics={initialWindowMetrics}>
         <KeyboardProvider>
           <ToastProvider>
-            <Init />
-            <RootNavigator
-              onReady={() => {
-                SplashScreen.hideAsync()
-              }}
-            />
+            <BannerProvider>
+              <Init />
+              <RootNavigator
+                onReady={() => {
+                  SplashScreen.hideAsync()
+                }}
+              />
+            </BannerProvider>
           </ToastProvider>
         </KeyboardProvider>
       </SafeAreaProvider>
