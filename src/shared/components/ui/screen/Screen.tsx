@@ -9,6 +9,9 @@ import {
 } from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
+import {StickyBanner} from '../banner/StickyBanner'
+
+import {useBanner} from '@/shared/hooks/useBanner'
 import {useKeyboard} from '@/shared/hooks/useKeyboard'
 import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
 
@@ -89,7 +92,7 @@ const Static = ({
 }: StaticScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
   const {top, bottom} = useNavigationInsets()
-
+  const {banner} = useBanner()
   // Memoize the animated padding to avoid recreating on every render
   const animatedPaddingBottom = useMemo(
     () => Animated.add(animatedKeyboardHeight, extraPadding + bottom),
@@ -105,6 +108,7 @@ const Static = ({
           {paddingTop: top, paddingBottom: bottom},
           style,
         ]}>
+        {!!banner && <StickyBanner {...banner} />}
         {children}
       </View>
     )
@@ -122,6 +126,7 @@ const Static = ({
             paddingBottom: animatedPaddingBottom,
           },
         ]}>
+        {!!banner && <StickyBanner {...banner} />}
         {children}
       </Animated.View>
     )
@@ -136,6 +141,7 @@ const Static = ({
         style,
         {paddingBottom: keyboardHeight + extraPadding + bottom},
       ]}>
+      {!!banner && <StickyBanner {...banner} />}
       {children}
     </View>
   )
@@ -160,7 +166,7 @@ const Scrollable = ({
 }: ScrollableScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
   const {top, bottom} = useNavigationInsets()
-
+  const {banner} = useBanner()
   // Calculate padding based on keyboard avoiding and animation settings
   const paddingBottom = useMemo(() => {
     const basePadding = bottom
@@ -195,6 +201,7 @@ const Scrollable = ({
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       {...scrollViewProps}>
+      {!!banner && <StickyBanner {...banner} />}
       {children}
     </Component>
   )

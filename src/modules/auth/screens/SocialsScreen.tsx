@@ -10,6 +10,7 @@ import {
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
+import {useBanner} from '@/shared/hooks/useBanner'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
@@ -20,6 +21,8 @@ import {useNavigation} from '@/shared/hooks/useNavigation'
  */
 export const SocialsScreen = (): React.JSX.Element => {
   const {navigate} = useNavigation()
+  const {showBanner, hideBanner} = useBanner()
+
   return (
     <Screen.Static>
       <Column gap="md">
@@ -53,6 +56,19 @@ export const SocialsScreen = (): React.JSX.Element => {
         <Button
           label="Register"
           onPress={() => navigate(AuthRouteName.register)}
+        />
+        <Button
+          label="Banner Test"
+          onPress={() =>
+            showBanner({
+              title: 'Test Banner',
+              message: 'This is a test banner message',
+              ctaLabel: 'OK',
+              onCtaPress: hideBanner,
+              variant: 'info',
+              testID: 'test-banner',
+            })
+          }
         />
       </Column>
     </Screen.Static>

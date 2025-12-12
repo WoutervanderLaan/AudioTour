@@ -1,53 +1,47 @@
 import type React from 'react'
-import {useCallback} from 'react'
+import {useEffect} from 'react'
 
 import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {useOnboardingStore} from '@/modules/onboarding/store/useOnboardingStore'
-import {StickyBanner} from '@/shared/components/ui/banner/StickyBanner'
+import {useBanner} from '@/shared/hooks/useBanner'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
  * OnboardingBanner
- * Displays a sticky banner prompting users to complete onboarding.
+ * Manages the display of a sticky banner prompting users to complete onboarding.
+ * Uses the useBanner hook to show/hide the banner based on onboarding state.
  * Only shows if onboarding is incomplete and not dismissed.
  * Navigates to the onboarding flow when the CTA is pressed.
  *
- * @returns {React.JSX.Element | null} The onboarding banner or null if not needed
+ * @returns {React.JSX.Element | null} Returns null (banner is managed via context)
  */
 export const OnboardingBanner = (): React.JSX.Element | null => {
   const navigation = useNavigation()
   const {completed, dismissed, dismissBanner} = useOnboardingStore()
+  const {showBanner, hideBanner} = useBanner()
 
-  /**
-   * handleCtaPress
-   * Navigates to the onboarding flow screen
-   */
-  const handleCtaPress = useCallback((): void => {
-    navigation.navigate(OnboardingRouteName.flow)
-  }, [navigation])
+  useEffect(() => {
+    // Show banner if onboarding is not completed and not dismissed
+    if (!completed && !dismissed) {
+      showBanner({
+        title: 'Complete your profile',
+        message: 'Answer a few questions to personalize your experience',
+        ctaLabel: 'Get Started',
+        onCtaPress: () => {
+          navigation.navigate(OnboardingRouteName.flow)
+        },
+        onDismiss: () => {
+          dismissBanner()
+          hideBanner()
+        },
+        variant: 'info',
+        testID: 'onboarding-banner',
+      })
+    } else {
+      // Hide banner if conditions no longer met
+      hideBanner()
+    }
+  }, [completed, dismissed, showBanner, hideBanner, navigation, dismissBanner])
 
-  /**
-   * handleDismiss
-   * Dismisses the banner temporarily
-   */
-  const handleDismiss = useCallback((): void => {
-    dismissBanner()
-  }, [dismissBanner])
-
-  // Don't show banner if onboarding is completed or if it was dismissed
-  if (completed || dismissed) {
-    return null
-  }
-
-  return (
-    <StickyBanner
-      title="Complete your profile"
-      message="Answer a few questions to personalize your experience"
-      ctaLabel="Get Started"
-      onCtaPress={handleCtaPress}
-      onDismiss={handleDismiss}
-      variant="info"
-      testID="onboarding-banner"
-    />
-  )
+  return null
 }
