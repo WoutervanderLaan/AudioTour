@@ -86,7 +86,7 @@ const {answers, completed, setAnswer, completeOnboarding} = useOnboardingStore()
 The `OnboardingBanner` component automatically shows when onboarding is incomplete:
 
 ```typescript
-import {OnboardingBanner} from '@/shared/components/features'
+import {OnboardingBanner} from '@/modules/onboarding/components/OnboardingBanner'
 
 export const MyScreen = () => (
   <Screen.Static>
