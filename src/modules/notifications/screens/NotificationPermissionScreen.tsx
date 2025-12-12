@@ -1,11 +1,13 @@
-import type React from 'react'
+import React, {useState} from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import {useToggleNotificationsMutation} from '../api/mutations'
+import {notificationService} from '../services/notificationService'
 import {useNotificationStore} from '../store/useNotificationStore'
 
+import {logger} from '@/core/lib/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable'
@@ -17,7 +19,7 @@ import {useNavigation} from '@/shared/hooks/useNavigation'
  * NotificationPermissionScreen
  * Modal screen that requests push notification permission from the user.
  * Provides a user-friendly explanation of why notifications are useful
- * before triggering the system permission dialog.
+ * before triggering the system permission dialog via Notifee.
  *
  * @returns {React.JSX.Element} The notification permission request modal
  */
@@ -26,24 +28,42 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
   const {setHasRequestedPermission, setPermissionGranted} =
     useNotificationStore()
   const toggleMutation = useToggleNotificationsMutation()
+  const [isRequesting, setIsRequesting] = useState(false)
 
   /**
    * handleEnableNotifications
    * Handles the user pressing the enable notifications button.
-   * Sets permission flags and triggers the toggle mutation.
+   * Triggers the system permission dialog via Notifee, then syncs with backend.
    */
-  const handleEnableNotifications = (): void => {
-    setHasRequestedPermission(true)
-    setPermissionGranted(true)
+  const handleEnableNotifications = async (): Promise<void> => {
+    setIsRequesting(true)
 
-    toggleMutation.mutate(
-      {enabled: true},
-      {
-        onSettled: () => {
-          navigation.goBack()
-        },
-      },
-    )
+    try {
+      // Request actual system permission via Notifee
+      const status = await notificationService.requestPermission()
+
+      setHasRequestedPermission(true)
+      setPermissionGranted(status === 'granted')
+
+      if (status === 'granted') {
+        // Sync with backend
+        toggleMutation.mutate(
+          {enabled: true},
+          {
+            onSettled: () => {
+              navigation.goBack()
+            },
+          },
+        )
+      } else {
+        // Permission denied, close modal
+        logger.debug('[Notifications] Permission denied by user')
+        navigation.goBack()
+      }
+    } catch (error) {
+      logger.error('[Notifications] Permission request failed:', error)
+      setIsRequesting(false)
+    }
   }
 
   /**
@@ -56,6 +76,17 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
     setPermissionGranted(false)
     navigation.goBack()
   }
+
+  /**
+   * handleOpenSettings
+   * Opens the device notification settings for this app.
+   * Useful if the user previously denied permission.
+   */
+  const handleOpenSettings = async (): Promise<void> => {
+    await notificationService.openSettings()
+  }
+
+  const isPending = isRequesting || toggleMutation.isPending
 
   return (
     <Screen.Static>
@@ -111,13 +142,19 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
           <Button
             label="Enable Notifications"
             onPress={handleEnableNotifications}
-            disabled={toggleMutation.isPending}
+            disabled={isPending}
           />
           <Button
             label="Not Now"
             variant="secondary"
             onPress={handleSkip}
-            disabled={toggleMutation.isPending}
+            disabled={isPending}
+          />
+          <Button
+            label="Open Settings"
+            variant="secondary"
+            onPress={handleOpenSettings}
+            disabled={isPending}
           />
         </Column>
       </Column>

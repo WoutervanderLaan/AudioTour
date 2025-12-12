@@ -1,4 +1,4 @@
-import {useCallback} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {Platform} from 'react-native'
 
 import {
@@ -7,6 +7,10 @@ import {
   useUnregisterDeviceMutation,
 } from '../api/mutations'
 import {NotificationModalName} from '../routes.types'
+import {
+  notificationService,
+  type PermissionStatus,
+} from '../services/notificationService'
 import {useNotificationStore} from '../store/useNotificationStore'
 
 import {logger} from '@/core/lib/logger'
@@ -34,6 +38,10 @@ type UseNotificationsReturn = {
    */
   hasRequestedPermission: boolean
   /**
+   * Current permission status from the system
+   */
+  permissionStatus: PermissionStatus
+  /**
    * Whether a mutation is currently pending
    */
   isLoading: boolean
@@ -50,9 +58,13 @@ type UseNotificationsReturn = {
    */
   toggleNotifications: (enabled: boolean) => void
   /**
-   * Open the permission request modal
+   * Open the permission request modal (pre-permission screen)
    */
-  requestPermission: () => void
+  showPermissionModal: () => void
+  /**
+   * Request system notification permission directly via Notifee
+   */
+  requestSystemPermission: () => Promise<PermissionStatus>
   /**
    * Register device with a push token
    */
@@ -61,11 +73,20 @@ type UseNotificationsReturn = {
    * Unregister device from push notifications
    */
   unregisterDevice: () => void
+  /**
+   * Open device notification settings
+   */
+  openSettings: () => Promise<void>
+  /**
+   * Display a local notification
+   */
+  displayNotification: (title: string, body: string) => Promise<string>
 }
 
 /**
  * useNotifications
  * Hook for managing push notification state and actions.
+ * Integrates with Notifee for native notification functionality.
  * Provides a simple interface for enabling/disabling notifications,
  * requesting permissions, and registering devices.
  *
@@ -73,13 +94,13 @@ type UseNotificationsReturn = {
  *
  * @example
  * ```tsx
- * const { isEnabled, toggleNotifications, requestPermission } = useNotifications()
+ * const { isEnabled, toggleNotifications, requestSystemPermission } = useNotifications()
  *
  * // Toggle notifications
  * <Switch value={isEnabled} onChange={toggleNotifications} />
  *
- * // Request permission
- * <Button onPress={requestPermission} label="Enable Notifications" />
+ * // Request system permission
+ * const status = await requestSystemPermission()
  * ```
  */
 export const useNotifications = (): UseNotificationsReturn => {
@@ -93,6 +114,9 @@ export const useNotifications = (): UseNotificationsReturn => {
     setHasRequestedPermission,
   } = useNotificationStore()
 
+  const [permissionStatus, setPermissionStatus] =
+    useState<PermissionStatus>('not_determined')
+
   const registerMutation = useRegisterDeviceMutation()
   const unregisterMutation = useUnregisterDeviceMutation()
   const toggleMutation = useToggleNotificationsMutation()
@@ -103,12 +127,53 @@ export const useNotifications = (): UseNotificationsReturn => {
     toggleMutation.isPending
 
   /**
-   * requestPermission
-   * Opens the notification permission modal
+   * Check permission status on mount
    */
-  const requestPermission = useCallback((): void => {
+  useEffect(() => {
+    /**
+     * checkPermission
+     * TODO: describe what it does.
+     *
+     * @returns {*} describe return value
+     */
+    const checkPermission = async (): Promise<void> => {
+      const status = await notificationService.checkPermission()
+      setPermissionStatus(status)
+
+      if (status === 'granted' && !permissionGranted) {
+        setPermissionGranted(true)
+        setHasRequestedPermission(true)
+      }
+    }
+
+    checkPermission()
+  }, [permissionGranted, setPermissionGranted, setHasRequestedPermission])
+
+  /**
+   * showPermissionModal
+   * Opens the notification permission modal (pre-permission screen)
+   */
+  const showPermissionModal = useCallback((): void => {
     navigation.navigate(NotificationModalName.permission)
   }, [navigation])
+
+  /**
+   * requestSystemPermission
+   * Requests system notification permission via Notifee.
+   * This triggers the actual OS permission dialog.
+   *
+   * @returns {Promise<PermissionStatus>} The resulting permission status
+   */
+  const requestSystemPermission =
+    useCallback(async (): Promise<PermissionStatus> => {
+      const status = await notificationService.requestPermission()
+      setPermissionStatus(status)
+
+      setHasRequestedPermission(true)
+      setPermissionGranted(status === 'granted')
+
+      return status
+    }, [setHasRequestedPermission, setPermissionGranted])
 
   /**
    * enableNotifications
@@ -117,7 +182,7 @@ export const useNotifications = (): UseNotificationsReturn => {
    */
   const enableNotifications = useCallback((): void => {
     if (!hasRequestedPermission || !permissionGranted) {
-      requestPermission()
+      showPermissionModal()
       return
     }
 
@@ -125,7 +190,7 @@ export const useNotifications = (): UseNotificationsReturn => {
   }, [
     hasRequestedPermission,
     permissionGranted,
-    requestPermission,
+    showPermissionModal,
     toggleMutation,
   ])
 
@@ -186,17 +251,44 @@ export const useNotifications = (): UseNotificationsReturn => {
     unregisterMutation.mutate()
   }, [unregisterMutation])
 
+  /**
+   * openSettings
+   * Opens the device notification settings for this app
+   */
+  const openSettings = useCallback(async (): Promise<void> => {
+    await notificationService.openSettings()
+  }, [])
+
+  /**
+   * displayNotification
+   * Displays a local notification to the user
+   *
+   * @param {string} title - Notification title
+   * @param {string} body - Notification body text
+   * @returns {Promise<string>} The notification ID
+   */
+  const displayNotification = useCallback(
+    async (title: string, body: string): Promise<string> => {
+      return notificationService.displayNotification({title, body})
+    },
+    [],
+  )
+
   return {
     isEnabled: preferences.pushEnabled,
     isRegistered,
     permissionGranted,
     hasRequestedPermission,
+    permissionStatus,
     isLoading,
     enableNotifications,
     disableNotifications,
     toggleNotifications,
-    requestPermission,
+    showPermissionModal,
+    requestSystemPermission,
     registerDevice,
     unregisterDevice,
+    openSettings,
+    displayNotification,
   }
 }
