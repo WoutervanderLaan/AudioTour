@@ -12,6 +12,10 @@ import {StickyBanner} from '@/shared/components/ui/banner/StickyBanner'
  * is rendered at the app level and can be triggered from any screen
  * using the useBanner hook.
  *
+ * **Important**: Only one banner can be displayed at a time. Calling
+ * `showBanner()` multiple times will replace the current banner with
+ * the new one (last-call-wins strategy).
+ *
  * @param props - Component props with children to wrap
  * @param props.children - Child components that will have access to banner context
  * @returns Banner context provider component
@@ -32,7 +36,8 @@ export const BannerProvider = ({
 
   /**
    * showBanner
-   * Displays a banner with the provided configuration
+   * Displays a banner with the provided configuration.
+   * If a banner is already shown, it will be replaced with the new one.
    *
    * @param bannerProps - Banner configuration including title, message, CTA, etc.
    */
@@ -55,12 +60,7 @@ export const BannerProvider = ({
 
   return (
     <BannerContext.Provider value={value}>
-      {!!banner && (
-        <StickyBanner
-          {...banner}
-          testID="app-banner"
-        />
-      )}
+      {!!banner && <StickyBanner {...banner} />}
       {children}
     </BannerContext.Provider>
   )

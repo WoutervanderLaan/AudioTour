@@ -1,5 +1,5 @@
 import type React from 'react'
-import {useCallback, useEffect} from 'react'
+import {useEffect} from 'react'
 
 import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {useOnboardingStore} from '@/modules/onboarding/store/useOnboardingStore'
@@ -20,23 +20,6 @@ export const OnboardingBanner = (): React.JSX.Element | null => {
   const {completed, dismissed, dismissBanner} = useOnboardingStore()
   const {showBanner, hideBanner} = useBanner()
 
-  /**
-   * handleCtaPress
-   * Navigates to the onboarding flow screen
-   */
-  const handleCtaPress = useCallback((): void => {
-    navigation.navigate(OnboardingRouteName.flow)
-  }, [navigation])
-
-  /**
-   * handleDismiss
-   * Dismisses the banner temporarily
-   */
-  const handleDismiss = useCallback((): void => {
-    dismissBanner()
-    hideBanner()
-  }, [dismissBanner, hideBanner])
-
   useEffect(() => {
     // Show banner if onboarding is not completed and not dismissed
     if (!completed && !dismissed) {
@@ -44,22 +27,21 @@ export const OnboardingBanner = (): React.JSX.Element | null => {
         title: 'Complete your profile',
         message: 'Answer a few questions to personalize your experience',
         ctaLabel: 'Get Started',
-        onCtaPress: handleCtaPress,
-        onDismiss: handleDismiss,
+        onCtaPress: () => {
+          navigation.navigate(OnboardingRouteName.flow)
+        },
+        onDismiss: () => {
+          dismissBanner()
+          hideBanner()
+        },
         variant: 'info',
+        testID: 'onboarding-banner',
       })
     } else {
       // Hide banner if conditions no longer met
       hideBanner()
     }
-  }, [
-    completed,
-    dismissed,
-    showBanner,
-    hideBanner,
-    handleCtaPress,
-    handleDismiss,
-  ])
+  }, [completed, dismissed, showBanner, hideBanner, navigation, dismissBanner])
 
   return null
 }

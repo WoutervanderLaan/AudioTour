@@ -2,9 +2,9 @@ import type {StickyBannerProps} from '@/shared/components/ui/banner/StickyBanner
 
 /**
  * BannerProps
- * Props for displaying a banner, omitting testID which is managed internally
+ * Props for displaying a banner including optional testID for testing purposes
  */
-export type BannerProps = Omit<StickyBannerProps, 'testID'>
+export type BannerProps = StickyBannerProps
 
 /**
  * BannerContextType
