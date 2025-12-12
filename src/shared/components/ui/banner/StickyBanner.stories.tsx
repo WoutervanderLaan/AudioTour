@@ -1,0 +1,98 @@
+import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import {View} from 'react-native'
+
+import {StickyBanner} from './StickyBanner'
+
+const meta = {
+  title: 'Banner/StickyBanner',
+  component: StickyBanner,
+  tags: ['autodocs'],
+  decorators: [
+    (Story): React.JSX.Element => (
+      <View>
+        <Story />
+      </View>
+    ),
+  ],
+} satisfies Meta<typeof StickyBanner>
+
+export default meta
+
+/**
+ * Story
+ * Storybook story type for StickyBanner component
+ */
+type Story = StoryObj<typeof meta>
+
+export const Info: Story = {
+  args: {
+    title: 'Complete your profile',
+    message: 'Answer a few questions to personalize your experience',
+    ctaLabel: 'Get Started',
+    onCtaPress: (): void => {
+      // eslint-disable-next-line no-console
+      console.log('CTA pressed')
+    },
+    onDismiss: (): void => {
+      // eslint-disable-next-line no-console
+      console.log('Banner dismissed')
+    },
+    variant: 'info',
+  },
+}
+
+export const Warning: Story = {
+  args: {
+    title: 'Action Required',
+    message: 'Please verify your email address',
+    ctaLabel: 'Verify Now',
+    variant: 'warning',
+    onCtaPress: (): void => {
+      // eslint-disable-next-line no-console
+      console.log('CTA pressed')
+    },
+  },
+}
+
+export const Success: Story = {
+  args: {
+    title: 'Profile Updated',
+    message: 'Your changes have been saved successfully',
+    variant: 'success',
+    onDismiss: (): void => {
+      // eslint-disable-next-line no-console
+      console.log('Banner dismissed')
+    },
+  },
+}
+
+export const WithoutMessage: Story = {
+  args: {
+    title: 'New feature available!',
+    ctaLabel: 'Learn More',
+    onCtaPress: (): void => {
+      // eslint-disable-next-line no-console
+      console.log('CTA pressed')
+    },
+  },
+}
+
+export const WithoutCTA: Story = {
+  args: {
+    title: 'System Maintenance',
+    message: 'We will be performing maintenance tonight from 2-4 AM',
+    onDismiss: (): void => {
+      // eslint-disable-next-line no-console
+      console.log('Banner dismissed')
+    },
+  },
+}
+
+export const NotDismissible: Story = {
+  args: {
+    title: 'Complete Onboarding',
+    message: 'You must complete onboarding to continue',
+    ctaLabel: 'Start Onboarding',
+    variant: 'info',
+  },
+}
