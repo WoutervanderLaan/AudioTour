@@ -1,8 +1,7 @@
 import type React from 'react'
 
-import {Text} from '@react-navigation/elements'
-
 import {Box} from '@/shared/components/ui/layout/Box'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * Settings
@@ -15,7 +14,7 @@ export const Settings = (): React.JSX.Element => {
     <Box
       flex={1}
       center>
-      <Text>Settings Screen</Text>
+      <Text.Title>Settings Screen</Text.Title>
     </Box>
   )
 }

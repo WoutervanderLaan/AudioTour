@@ -1,5 +1,6 @@
 import {useMemo} from 'react'
 
+// eslint-disable-next-line no-restricted-imports
 import {useHeaderHeight} from '@react-navigation/elements'
 
 import {useBottomTabBarHeight} from './useBottomTabBarHeight'

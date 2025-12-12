@@ -68,7 +68,7 @@ export const LoginScreen = (): React.JSX.Element => {
 
         <Column
           gap="lg"
-          style={{alignSelf: 'stretch'}}>
+          stretch>
           <TextInputControlled<LoginForm>
             placeholder="Email"
             name="email"

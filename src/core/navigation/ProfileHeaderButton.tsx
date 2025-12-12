@@ -1,6 +1,8 @@
 import type React from 'react'
 
-import {useNavigation} from '@react-navigation/native'
+import {type NavigationProp, useNavigation} from '@react-navigation/native'
+
+import type {RootStackParams} from './types'
 
 import {AuthRouteName} from '@/modules/auth/routes.types'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
@@ -16,7 +18,7 @@ import {IconButton} from '@/shared/components/ui/pressable'
  * @returns {React.JSX.Element} The profile header button component
  */
 export const ProfileHeaderButton = (): React.JSX.Element => {
-  const {navigate} = useNavigation()
+  const {navigate} = useNavigation<NavigationProp<RootStackParams>>()
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
 
   /**

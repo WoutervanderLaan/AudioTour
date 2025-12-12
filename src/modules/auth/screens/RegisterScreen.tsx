@@ -67,8 +67,8 @@ export const RegisterScreen = (): React.JSX.Element => {
         <Text.Paragraph>Create your account</Text.Paragraph>
 
         <Column
-          gap="lg"
-          style={{alignSelf: 'stretch'}}>
+          stretch
+          gap="lg">
           <TextInputControlled<RegisterForm>
             placeholder="Name"
             name="name"

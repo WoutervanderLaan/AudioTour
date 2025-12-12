@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import {ActivityIndicator} from 'react-native'
 
-import {Button, Text} from '@react-navigation/elements'
 import {useMutation} from '@tanstack/react-query'
 import {useShallow} from 'zustand/react/shallow'
 
@@ -10,6 +9,8 @@ import {GenerateAudioResponse} from '@/core/api/schema'
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
+import {Button} from '@/shared/components/ui/pressable'
+import {Text} from '@/shared/components/ui/typography'
 import {useTourStore} from '@/store/slices/tourStore'
 
 /**
@@ -54,7 +55,7 @@ export const Narrative = (): React.JSX.Element => {
         flex={1}
         padding="md"
         gap="sm">
-        <Text>No narrative available</Text>
+        <Text.Title>No narrative available</Text.Title>
       </Box>
     )
   }
@@ -64,22 +65,20 @@ export const Narrative = (): React.JSX.Element => {
       flex={1}
       padding="md"
       gap="sm">
-      <Text>Narrative</Text>
-
-      <Text numberOfLines={8}>{narrativeText}</Text>
+      <Text.Paragraph numberOfLines={8}>{narrativeText}</Text.Paragraph>
 
       <Button
+        label="Generate Audio"
         onPress={() => {
           setLocalError(undefined)
           synthesize.mutate()
         }}
-        disabled={synthesize.isPending}>
-        Generate Audio
-      </Button>
+        disabled={synthesize.isPending}
+      />
 
       {!!synthesize.isPending && <ActivityIndicator />}
 
-      {!!localError && <Text>{localError}</Text>}
+      {!!localError && <Text.Label>{localError}</Text.Label>}
 
       {!!audioUrl && <AudioPlayer src={audioUrl} />}
     </Column>
