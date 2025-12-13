@@ -212,10 +212,68 @@ async function sendNotification(userId, title, body, data) {
 }
 ```
 
+## Push Token Acquisition (Required for Production)
+
+The current implementation handles local notification display via Notifee but does not yet acquire
+FCM (Firebase Cloud Messaging) or APNs push tokens required for server-sent push notifications.
+
+### Implementation Requirements
+
+To enable server-sent push notifications, the following steps are needed:
+
+1. **Install Firebase packages:**
+
+   ```bash
+   npx expo install @react-native-firebase/app @react-native-firebase/messaging
+   ```
+
+2. **Configure Firebase:**
+   - Create a Firebase project at https://console.firebase.google.com
+   - Add iOS app with bundle ID and download GoogleService-Info.plist
+   - Add Android app and download google-services.json
+   - Configure APNs key for iOS in Firebase Console
+
+3. **Acquire push tokens:**
+
+   ```tsx
+   import messaging from '@react-native-firebase/messaging'
+
+   const getToken = async (): Promise<string | null> => {
+     const authStatus = await messaging().requestPermission()
+     const enabled =
+       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+       authStatus === messaging.AuthorizationStatus.PROVISIONAL
+
+     if (enabled) {
+       const token = await messaging().getToken()
+       return token
+     }
+     return null
+   }
+   ```
+
+4. **Register token with backend:**
+   - Call `registerDevice` mutation with the FCM token
+   - Handle token refresh via `messaging().onTokenRefresh()`
+
+5. **Handle background messages:**
+   ```tsx
+   messaging().setBackgroundMessageHandler(async remoteMessage => {
+     // Handle FCM message in background
+   })
+   ```
+
+### Architecture Notes
+
+- Notifee handles local notification display
+- Firebase Messaging handles push token acquisition and remote message handling
+- Both libraries work together: FCM delivers the payload, Notifee displays the notification
+
 ## Future Enhancements
 
-- [ ] Add Notifee for rich notification display
+- [x] Add Notifee for rich notification display
+- [x] Add notification categories/channels
+- [ ] Add Firebase Messaging for push token acquisition
 - [ ] Implement notification history screen
-- [ ] Add notification categories/channels
 - [ ] Support quiet hours
 - [ ] Add notification analytics

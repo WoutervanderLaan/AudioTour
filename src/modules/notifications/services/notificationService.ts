@@ -44,43 +44,23 @@ type NotificationServiceConfig = {
   onBackgroundEvent?: (event: Event) => Promise<void>
 }
 
-/**
- * NotificationService
- * Singleton service for managing push notifications via Notifee.
- * Handles initialization, permission requests, channel creation, and event handling.
- */
+/** Singleton service for managing push notifications via Notifee */
 class NotificationService {
   private isInitialized = false
   private config: NotificationServiceConfig = {}
 
-  /**
-   * initialize
-   * Initializes the notification service with optional event handlers.
-   * Creates Android notification channels and sets up event listeners.
-   *
-   * @param {NotificationServiceConfig} config - Configuration options
-   * @returns {Promise<void>}
-   */
+  /** Initializes the notification service with optional event handlers */
   async initialize(config?: NotificationServiceConfig): Promise<void> {
     if (this.isInitialized) {
-      logger.debug('[NotificationService] Already initialized')
       return
     }
-
     this.config = config ?? {}
-
     try {
-      // Create Android notification channels
       if (Platform.OS === 'android') {
         await this.createAndroidChannels()
       }
-
-      // Set up foreground event handler
       notifee.onForegroundEvent(this.handleForegroundEvent.bind(this))
-
-      // Set up background event handler
       notifee.onBackgroundEvent(this.handleBackgroundEvent.bind(this))
-
       this.isInitialized = true
       logger.debug('[NotificationService] Initialized successfully')
     } catch (error) {
@@ -89,12 +69,7 @@ class NotificationService {
     }
   }
 
-  /**
-   * createAndroidChannels
-   * Creates Android notification channels for different notification types.
-   *
-   * @returns {Promise<void>}
-   */
+  /** Creates Android notification channels for different notification types */
   private async createAndroidChannels(): Promise<void> {
     await notifee.createChannels([
       {
@@ -127,127 +102,71 @@ class NotificationService {
         importance: AndroidImportance.LOW,
       },
     ])
-
     logger.debug('[NotificationService] Android channels created')
   }
 
-  /**
-   * handleForegroundEvent
-   * Handles notification events when the app is in the foreground.
-   *
-   * @param {Event} event - The notification event
-   */
+  /** Handles notification events when the app is in the foreground */
   private handleForegroundEvent(event: Event): void {
     const {type, detail} = event
-
     switch (type) {
       case EventType.DISMISSED:
-        logger.debug('[NotificationService] Notification dismissed:', detail)
-        break
       case EventType.PRESS:
-        logger.debug('[NotificationService] Notification pressed:', detail)
-        break
       case EventType.DELIVERED:
-        logger.debug('[NotificationService] Notification delivered:', detail)
+        logger.debug('[NotificationService] Foreground event:', type, detail)
         break
       default:
         break
     }
-
     this.config.onForegroundEvent?.(event)
   }
 
-  /**
-   * handleBackgroundEvent
-   * Handles notification events when the app is in the background.
-   *
-   * @param {Event} event - The notification event
-   * @returns {Promise<void>}
-   */
+  /** Handles notification events when the app is in the background */
   private async handleBackgroundEvent(event: Event): Promise<void> {
-    const {type, detail} = event
-
-    logger.debug('[NotificationService] Background event:', type, detail)
-
+    logger.debug(
+      '[NotificationService] Background event:',
+      event.type,
+      event.detail,
+    )
     await this.config.onBackgroundEvent?.(event)
   }
 
-  /**
-   * requestPermission
-   * Requests notification permission from the user.
-   * On iOS, shows the system permission dialog.
-   * On Android 13+, requests POST_NOTIFICATIONS permission.
-   *
-   * @returns {Promise<PermissionStatus>} The resulting permission status
-   */
+  /** Requests notification permission from the user */
   async requestPermission(): Promise<PermissionStatus> {
     try {
       const settings = await notifee.requestPermission()
-
-      if (settings.authorizationStatus === AuthorizationStatus.AUTHORIZED) {
-        logger.debug('[NotificationService] Permission granted')
-        return 'granted'
-      }
-
-      if (settings.authorizationStatus === AuthorizationStatus.DENIED) {
-        logger.debug('[NotificationService] Permission denied')
-        return 'denied'
-      }
-
-      logger.debug('[NotificationService] Permission not determined')
-      return 'not_determined'
+      return this.mapAuthorizationStatus(settings.authorizationStatus)
     } catch (error) {
       logger.error('[NotificationService] Permission request failed:', error)
       return 'denied'
     }
   }
 
-  /**
-   * checkPermission
-   * Checks the current notification permission status without prompting.
-   *
-   * @returns {Promise<PermissionStatus>} The current permission status
-   */
+  /** Checks the current notification permission status without prompting */
   async checkPermission(): Promise<PermissionStatus> {
     try {
       const settings = await notifee.getNotificationSettings()
-
-      if (settings.authorizationStatus === AuthorizationStatus.AUTHORIZED) {
-        return 'granted'
-      }
-
-      if (settings.authorizationStatus === AuthorizationStatus.DENIED) {
-        return 'denied'
-      }
-
-      return 'not_determined'
+      return this.mapAuthorizationStatus(settings.authorizationStatus)
     } catch (error) {
       logger.error('[NotificationService] Check permission failed:', error)
       return 'denied'
     }
   }
 
-  /**
-   * openSettings
-   * Opens the device notification settings for this app.
-   *
-   * @returns {Promise<void>}
-   */
+  /** Maps Notifee authorization status to PermissionStatus */
+  private mapAuthorizationStatus(
+    status: AuthorizationStatus,
+  ): PermissionStatus {
+    if (status === AuthorizationStatus.AUTHORIZED) return 'granted'
+    if (status === AuthorizationStatus.DENIED) return 'denied'
+    return 'not_determined'
+  }
+
+  /** Opens the device notification settings for this app */
   async openSettings(): Promise<void> {
     await notifee.openNotificationSettings()
   }
 
-  /**
-   * displayNotification
-   * Displays a local notification to the user.
-   *
-   * @param {Object} params - Notification parameters
-   * @param {string} params.title - Notification title
-   * @param {string} params.body - Notification body text
-   * @param {Record<string, string>} params.data - Custom data payload
-   * @param {NotificationChannelId} params.channelId - Android channel ID
-   * @returns {Promise<string>} The notification ID
-   */
+  /** Displays a local notification to the user */
   async displayNotification({
     title,
     body,
@@ -263,17 +182,9 @@ class NotificationService {
       title,
       body,
       data,
-      android: {
-        channelId,
-        pressAction: {
-          id: 'default',
-        },
-      },
-      ios: {
-        sound: 'default',
-      },
+      android: {channelId, pressAction: {id: 'default'}},
+      ios: {sound: 'default'},
     }
-
     const notificationId = await notifee.displayNotification(notification)
     logger.debug(
       '[NotificationService] Notification displayed:',
@@ -282,13 +193,7 @@ class NotificationService {
     return notificationId
   }
 
-  /**
-   * cancelNotification
-   * Cancels a displayed notification by ID.
-   *
-   * @param {string} notificationId - The notification ID to cancel
-   * @returns {Promise<void>}
-   */
+  /** Cancels a displayed notification by ID */
   async cancelNotification(notificationId: string): Promise<void> {
     await notifee.cancelNotification(notificationId)
     logger.debug(
@@ -297,45 +202,23 @@ class NotificationService {
     )
   }
 
-  /**
-   * cancelAllNotifications
-   * Cancels all displayed notifications.
-   *
-   * @returns {Promise<void>}
-   */
+  /** Cancels all displayed notifications */
   async cancelAllNotifications(): Promise<void> {
     await notifee.cancelAllNotifications()
     logger.debug('[NotificationService] All notifications cancelled')
   }
 
-  /**
-   * setBadgeCount
-   * Sets the app badge count (iOS only).
-   *
-   * @param {number} count - The badge count to display
-   * @returns {Promise<void>}
-   */
+  /** Sets the app badge count (iOS only) */
   async setBadgeCount(count: number): Promise<void> {
     await notifee.setBadgeCount(count)
-    logger.debug('[NotificationService] Badge count set:', count)
   }
 
-  /**
-   * getBadgeCount
-   * Gets the current app badge count (iOS only).
-   *
-   * @returns {Promise<number>} The current badge count
-   */
+  /** Gets the current app badge count (iOS only) */
   async getBadgeCount(): Promise<number> {
     return notifee.getBadgeCount()
   }
 
-  /**
-   * getInitialNotification
-   * Gets the notification that launched the app from a killed state.
-   *
-   * @returns {Promise<InitialNotification | null>} The initial notification or null
-   */
+  /** Gets the notification that launched the app from a killed state */
   async getInitialNotification(): Promise<InitialNotification | null> {
     return notifee.getInitialNotification()
   }

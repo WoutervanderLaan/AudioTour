@@ -33,6 +33,11 @@ export const notificationsModule: ModuleConfig = {
   onUnregister: () => {
     logger.debug('Notifications Module unregistered')
     useNotificationStore.getState().reset()
+
+    // Cancel all pending notifications on module cleanup
+    notificationService.cancelAllNotifications().catch(error => {
+      logger.error('[Notifications] Failed to cancel notifications:', error)
+    })
   },
 
   onAppStart: async () => {

@@ -128,73 +128,51 @@ export const useNotifications = (): UseNotificationsReturn => {
     unregisterMutation.isPending ||
     toggleMutation.isPending
 
-  /**
-   * Check permission status on mount.
-   * Only runs once to avoid unnecessary re-checks and potential loops.
-   */
+  // Check permission status on mount (only once, with cleanup)
   useEffect(() => {
     if (hasCheckedPermission.current) {
       return
     }
+    let isMounted = true
+    hasCheckedPermission.current = true
 
-    /**
-     * checkPermission
-     * Checks the current notification permission status via Notifee
-     * and syncs the result with the notification store.
-     *
-     * @returns {Promise<void>}
-     */
+    /** Checks permission status and syncs with store */
     const checkPermission = async (): Promise<void> => {
       const status = await notificationService.checkPermission()
+      if (!isMounted) return
       setPermissionStatus(status)
-
       if (status === 'granted') {
         setPermissionGranted(true)
         setHasRequestedPermission(true)
       }
     }
-
     checkPermission()
-    hasCheckedPermission.current = true
+    return (): void => {
+      isMounted = false
+    }
   }, [setPermissionGranted, setHasRequestedPermission])
 
-  /**
-   * showPermissionModal
-   * Opens the notification permission modal (pre-permission screen)
-   */
+  /** Opens the notification permission modal (pre-permission screen) */
   const showPermissionModal = useCallback((): void => {
     navigation.navigate(NotificationModalName.permission)
   }, [navigation])
 
-  /**
-   * requestSystemPermission
-   * Requests system notification permission via Notifee.
-   * This triggers the actual OS permission dialog.
-   *
-   * @returns {Promise<PermissionStatus>} The resulting permission status
-   */
+  /** Requests system notification permission via Notifee */
   const requestSystemPermission =
     useCallback(async (): Promise<PermissionStatus> => {
       const status = await notificationService.requestPermission()
       setPermissionStatus(status)
-
       setHasRequestedPermission(true)
       setPermissionGranted(status === 'granted')
-
       return status
     }, [setHasRequestedPermission, setPermissionGranted])
 
-  /**
-   * enableNotifications
-   * Enables push notifications. Opens permission modal if permission
-   * hasn't been granted yet.
-   */
+  /** Enables push notifications (opens permission modal if needed) */
   const enableNotifications = useCallback((): void => {
     if (!hasRequestedPermission || !permissionGranted) {
       showPermissionModal()
       return
     }
-
     toggleMutation.mutate({enabled: true})
   }, [
     hasRequestedPermission,
@@ -203,41 +181,23 @@ export const useNotifications = (): UseNotificationsReturn => {
     toggleMutation,
   ])
 
-  /**
-   * disableNotifications
-   * Disables push notifications
-   */
+  /** Disables push notifications */
   const disableNotifications = useCallback((): void => {
     toggleMutation.mutate({enabled: false})
   }, [toggleMutation])
 
-  /**
-   * toggleNotifications
-   * Toggles push notifications on or off
-   *
-   * @param {boolean} enabled - Whether to enable notifications
-   */
+  /** Toggles push notifications on or off */
   const toggleNotifications = useCallback(
     (enabled: boolean): void => {
-      if (enabled) {
-        enableNotifications()
-      } else {
-        disableNotifications()
-      }
+      enabled ? enableNotifications() : disableNotifications()
     },
     [enableNotifications, disableNotifications],
   )
 
-  /**
-   * registerDevice
-   * Registers the device with a push notification token
-   *
-   * @param {string} token - The device push token from FCM/APNs
-   */
+  /** Registers the device with a push notification token */
   const registerDevice = useCallback(
     (token: string): void => {
       const platform = Platform.OS === 'ios' ? 'ios' : 'android'
-
       registerMutation.mutate(
         {deviceToken: token, platform},
         {
@@ -252,30 +212,17 @@ export const useNotifications = (): UseNotificationsReturn => {
     [registerMutation, setPermissionGranted, setHasRequestedPermission],
   )
 
-  /**
-   * unregisterDevice
-   * Unregisters the device from push notifications
-   */
+  /** Unregisters the device from push notifications */
   const unregisterDevice = useCallback((): void => {
     unregisterMutation.mutate()
   }, [unregisterMutation])
 
-  /**
-   * openSettings
-   * Opens the device notification settings for this app
-   */
+  /** Opens the device notification settings for this app */
   const openSettings = useCallback(async (): Promise<void> => {
     await notificationService.openSettings()
   }, [])
 
-  /**
-   * displayNotification
-   * Displays a local notification to the user
-   *
-   * @param {string} title - Notification title
-   * @param {string} body - Notification body text
-   * @returns {Promise<string>} The notification ID
-   */
+  /** Displays a local notification to the user */
   const displayNotification = useCallback(
     async (title: string, body: string): Promise<string> => {
       return notificationService.displayNotification({title, body})

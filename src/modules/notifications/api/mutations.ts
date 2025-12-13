@@ -104,6 +104,11 @@ export const useUnregisterDeviceMutation = (
 
   return useMutation({
     mutationFn: async () => {
+      // Validate device token before making API call
+      if (!deviceToken) {
+        throw new Error('No device token to unregister')
+      }
+
       const response = await apiClient.post<UnregisterDeviceResponse>(
         '/notifications/unregister-device',
         {deviceToken},
