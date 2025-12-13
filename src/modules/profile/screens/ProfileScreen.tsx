@@ -1,5 +1,6 @@
 import type React from 'react'
 
+import {NotificationRouteName} from '@/modules/notifications/routes.types'
 import {OnboardingBanner} from '@/modules/onboarding/components/OnboardingBanner'
 import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {Column} from '@/shared/components/ui/layout/Column'
@@ -29,6 +30,11 @@ export const ProfileScreen = (): React.JSX.Element => {
           label="Preferences"
           icon="tune"
           onPress={() => navigation.navigate(OnboardingRouteName.flow)}
+        />
+        <NavItem
+          label="Push Notifications"
+          icon="notifications"
+          onPress={() => navigation.navigate(NotificationRouteName.settings)}
         />
       </Column>
     </Screen.Scrollable>
