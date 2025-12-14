@@ -6,11 +6,8 @@ import {
   OldTabName,
   OldTabParams,
 } from './routes.types'
-import {Capture} from './screens/Capture'
 import {Museum} from './screens/Museum'
-import {Narrative} from './screens/Narrative'
 import {NotFound} from './screens/NotFound'
-import {ObjectDetail} from './screens/ObjectDetail'
 import {Recommendations} from './screens/Recommendations'
 import {Settings} from './screens/Settings'
 
@@ -19,23 +16,12 @@ import {
   TabNavigationRoutes,
 } from '@/core/navigation/types'
 
+/**
+ * Old module stack screens
+ * NOTE: Capture, ObjectDetail, and Narrative screens have been replaced by the tour module
+ * and are no longer registered here.
+ */
 export const oldStacks: StackNavigationRoutes<OldStackParams, OldRouteName> = {
-  [OldRouteName.objectDetail]: {
-    component: ObjectDetail,
-    name: OldRouteName.objectDetail,
-    options: {
-      headerShown: true,
-      headerTitle: 'Object Detail',
-    },
-  },
-  [OldRouteName.narrative]: {
-    component: Narrative,
-    name: OldRouteName.narrative,
-    options: {
-      headerShown: true,
-      headerTitle: 'Narrative',
-    },
-  },
   [OldRouteName.notFound]: {
     component: NotFound,
     name: OldRouteName.notFound,
@@ -46,16 +32,11 @@ export const oldStacks: StackNavigationRoutes<OldStackParams, OldRouteName> = {
   },
 }
 
+/**
+ * Old module tab screens
+ * NOTE: Capture tab has been replaced by the tour module's tour tab
+ */
 export const oldTabs: TabNavigationRoutes<OldTabParams, OldTabName> = {
-  [OldTabName.capture]: {
-    component: Capture,
-    name: OldTabName.capture,
-    icon: 'camera',
-    options: {
-      headerShown: true,
-      headerTitle: 'Capture',
-    },
-  },
   [OldTabName.museum]: {
     component: Museum,
     name: OldTabName.museum,

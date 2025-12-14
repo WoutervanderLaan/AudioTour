@@ -1,41 +1,39 @@
+/**
+ * OldRouteName
+ * Stack routes for the old module
+ * NOTE: objectDetail and narrative routes have been deprecated in favor of the tour module
+ */
 export enum OldRouteName {
-  objectDetail = 'ObjectDetail',
-  narrative = 'Narrative',
   notFound = 'NotFound',
 }
 
 /**
- * OldStackParams - Parameters for stack screens (detail screens above tabs)
+ * OldStackParams
+ * Parameters for stack screens (detail screens above tabs)
+ * NOTE: Capture, ObjectDetail, and Narrative screens have been moved to the tour module
  */
 export type OldStackParams = {
-  /**
-   * Object detail screen params
-   */
-  [OldRouteName.objectDetail]: {objectId: string}
-  /**
-   * Narrative screen params
-   */
-  [OldRouteName.narrative]: undefined
   /**
    * Not found screen params
    */
   [OldRouteName.notFound]: undefined
 }
 
+/**
+ * OldTabName
+ * Tab routes for the old module
+ * NOTE: capture tab has been deprecated in favor of the tour module's tour tab
+ */
 export enum OldTabName {
-  capture = 'Capture',
   museum = 'Museum',
   recommendations = 'Recommendations',
 }
 
 /**
- * OldTabParams - Parameters for tab screens in the bottom navigator
+ * OldTabParams
+ * Parameters for tab screens in the bottom navigator
  */
 export type OldTabParams = {
-  /**
-   * Capture tab screen params
-   */
-  [OldTabName.capture]: undefined
   /**
    * Museum tab screen params
    */
