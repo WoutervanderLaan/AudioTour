@@ -60,6 +60,7 @@ export const createStepSchema = (
 
 /**
  * StepFormData
- * TODO: describe what this type represents.
+ * Represents the form data for a single onboarding step as a key-value record.
+ * The key is the step ID and the value is the user's answer (string, boolean, or other type).
  */
 export type StepFormData = Record<string, unknown>

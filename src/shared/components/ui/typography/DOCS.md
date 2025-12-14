@@ -42,7 +42,7 @@ Semantic heading component for titles (h1-h6).
 **Usage:**
 
 ```tsx
-import {Text.Title} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 <Text.Title level="h1">Main Text.Title</Text.Title>
 <Text.Title level="h2" bold={false}>Subtitle</Text.Title>
@@ -61,7 +61,7 @@ Semantic paragraph component for body text.
 **Usage:**
 
 ```tsx
-import {Text.Paragraph} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography'
 
 <Text.Paragraph variant="body">This is body text.</Text.Paragraph>
 <Text.Paragraph variant="intro">This is intro text.</Text.Paragraph>

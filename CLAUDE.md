@@ -74,6 +74,7 @@ src/
 ├── modules/          # Self-contained feature modules
 │   ├── auth/        # Authentication module
 │   ├── onboarding/  # User onboarding module
+│   ├── notifications/  # Push notification module
 │   ├── profile/     # User profile module
 │   └── old/         # Legacy screens (to be migrated)
 ├── store/            # Global Zustand state management

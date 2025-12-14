@@ -8,31 +8,31 @@ import {immer} from 'zustand/middleware/immer'
  */
 type TourState = {
   /**
-   * lastPhotoUri
+   * URI of the last photo taken by the user during the tour, used for object recognition
    */
   lastPhotoUri?: string
   /**
-   * currentObjectId
+   * Unique identifier of the currently recognized museum object from the photo
    */
   currentObjectId?: string
   /**
-   * recognitionConfidence
+   * Confidence score (0-1) indicating the accuracy of the object recognition result
    */
   recognitionConfidence?: number
   /**
-   * narrativeText
+   * Generated narrative text describing the museum object and its context
    */
   narrativeText?: string
   /**
-   * audioUrl
+   * URL to the generated audio file containing the spoken narrative
    */
   audioUrl?: string
   /**
-   * setLastPhoto
+   * Updates the URI of the last captured photo
    */
   setLastPhoto: (uri?: string) => void
   /**
-   * setLastPhotoData
+   * Updates the photo URI along with the recognized object ID and confidence score
    */
   setLastPhotoData: (
     uri: string,
@@ -40,15 +40,15 @@ type TourState = {
     recognitionConfidence: number,
   ) => void
   /**
-   * setNarrativeText
+   * Updates the narrative text for the current tour object
    */
   setNarrativeText: (narrativeText: string) => void
   /**
-   * setAudioUrl
+   * Updates the audio URL for the current narrative
    */
   setAudioUrl: (audioUrl: string) => void
   /**
-   * reset
+   * Resets all tour state to initial values, clearing photo, object, narrative, and audio data
    */
   reset: () => void
 }

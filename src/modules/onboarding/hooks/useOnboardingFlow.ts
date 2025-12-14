@@ -11,31 +11,32 @@ import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
  * UseOnboardingFlowReturn
- * TODO: describe what this type represents.
+ * Return type for the useOnboardingFlow hook containing the current onboarding state,
+ * step navigation handlers, and form validation schema.
  */
 type UseOnboardingFlowReturn = {
   /**
-   * currentStep
+   * The current onboarding step configuration
    */
   currentStep: OnboardingStep
   /**
-   * currentStepIndex
+   * Zero-based index of the current step in the onboarding flow
    */
   currentStepIndex: number
   /**
-   * isLastStep
+   * Whether the current step is the last step in the flow
    */
   isLastStep: boolean
   /**
-   * isFirstStep
+   * Whether the current step is the first step in the flow
    */
   isFirstStep: boolean
   /**
-   * answers
+   * Record of all user answers keyed by question ID
    */
   answers: OnboardingAnswers
   /**
-   * stepSchema
+   * Zod validation schema for the current step's form
    */
   stepSchema: z.ZodObject<
     {
@@ -66,9 +67,11 @@ type UseOnboardingFlowReturn = {
 
 /**
  * useOnboardingFlow
- * TODO: describe what it does.
+ * Hook that manages the multi-step onboarding flow state and navigation.
+ * Provides step-by-step navigation, answer persistence, and form validation
+ * for the user preference collection process.
  *
- * @returns {*} describe return value
+ * @returns {UseOnboardingFlowReturn} Object containing current step state, navigation handlers, and validation schema
  */
 export const useOnboardingFlow = (): UseOnboardingFlowReturn => {
   const navigation = useNavigation()

@@ -10,7 +10,7 @@
   - **shared/** – reusable, generic components and utilities
     - **components/**
       - **ui/** – generic UI components (Pressable, Typography, Form, Layout, Screen)
-      - **features/** – complex reusable features (AudioPlayer, Toast)
+      - **features/** – complex reusable features (AudioPlayer, ProgressIndicator)
     - **context/** – React Context providers (Keyboard, Toast)
     - **hooks/** – shared custom hooks
     - **constants/** – shared constants and configuration values
@@ -33,6 +33,15 @@
       - store/ – onboarding state management
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – onboarding route type definitions
+      - index.ts – module configuration export
+    - **notifications/** – push notification module
+      - api/ – notification API endpoints
+      - hooks/ – notification hooks (useNotifications)
+      - screens/ – notification settings screen
+      - services/ – notification service layer
+      - store/ – notification state management
+      - screenConfig.ts – navigation stack configuration
+      - routes.types.ts – notification route type definitions
       - index.ts – module configuration export
     - **profile/** – user profile module
       - screens/ – profile screen

@@ -62,7 +62,10 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Set authentication tokens
+   * Set authentication tokens for API requests
+   *
+   * @param accessToken - JWT access token for authenticating API requests
+   * @param refreshToken - JWT refresh token for obtaining new access tokens
    */
   setTokens(accessToken: string, refreshToken: string): void {
     this.accessToken = accessToken
@@ -70,7 +73,9 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Clear authentication tokens
+   * Clear authentication tokens from the client
+   *
+   * @returns void
    */
   clearTokens(): void {
     this.accessToken = null
@@ -78,14 +83,18 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Get access token
+   * Get the current access token
+   *
+   * @returns The access token string if set, otherwise null
    */
   getAccessToken(): string | null {
     return this.accessToken
   }
 
   /**
-   * Get refresh token
+   * Get the current refresh token
+   *
+   * @returns The refresh token string if set, otherwise null
    */
   getRefreshToken(): string | null {
     return this.refreshToken
