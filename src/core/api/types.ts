@@ -4,15 +4,15 @@
  */
 export type ApiResponse<T = unknown> = {
   /**
-   * data
+   * Response payload data returned from the API
    */
   data: T
   /**
-   * status
+   * HTTP status code of the response (e.g., 200, 404, 500)
    */
   status: number
   /**
-   * headers
+   * HTTP response headers containing metadata about the response
    */
   headers: Headers
 }
@@ -23,19 +23,19 @@ export type ApiResponse<T = unknown> = {
  */
 export type ApiError = {
   /**
-   * message
+   * Human-readable error message describing what went wrong
    */
   message: string
   /**
-   * status
+   * HTTP status code of the failed request (e.g., 400, 401, 500)
    */
   status?: number
   /**
-   * code
+   * Machine-readable error code for programmatic error handling (e.g., 'TIMEOUT', 'NETWORK_ERROR')
    */
   code?: string
   /**
-   * details
+   * Additional error details or context from the API response
    */
   details?: unknown
 }
@@ -46,23 +46,23 @@ export type ApiError = {
  */
 export type RequestConfig = {
   /**
-   * headers
+   * Custom HTTP headers to include in the request
    */
   headers?: Record<string, string>
   /**
-   * params
+   * Query parameters to append to the request URL
    */
   params?: Record<string, unknown>
   /**
-   * signal
+   * AbortSignal to cancel the request if needed
    */
   signal?: AbortSignal
   /**
-   * timeout
+   * Request timeout in milliseconds before aborting
    */
   timeout?: number
   /**
-   * skipAuthRefresh
+   * When true, skips automatic token refresh on 401 responses
    */
   skipAuthRefresh?: boolean
 }

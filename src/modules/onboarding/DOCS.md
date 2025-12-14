@@ -34,12 +34,18 @@ The onboarding module provides a multi-step configuration flow that helps person
 
 ```
 src/modules/onboarding/
+├── components/
+│   └── OnboardingBanner.tsx      # Sticky banner component
 ├── config/
 │   └── steps.ts              # Onboarding step configuration
+├── hooks/
+│   └── useOnboardingFlow.ts      # Onboarding flow hook
 ├── screens/
 │   └── OnboardingFlowScreen.tsx  # Multi-step form screen
 ├── store/
 │   └── useOnboardingStore.ts     # Zustand store with persistence
+├── utils/
+│   └── createStepSchema.ts       # Zod schema generation utilities
 ├── DOCS.md                   # This file
 ├── index.ts                  # Module configuration export
 ├── routes.types.ts           # Route type definitions

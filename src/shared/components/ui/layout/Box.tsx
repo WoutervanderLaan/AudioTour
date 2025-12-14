@@ -13,75 +13,75 @@ import type {Theme} from '@/themes/types'
  */
 export type BoxPropsBase = {
   /**
-   * children
+   * Child elements to render inside the Box container
    */
   children?: React.ReactNode
   /**
-   * style
+   * Additional styles to apply to the Box component
    */
   style?: StyleProp<ViewStyle>
   /**
-   * flex
+   * Flex grow value for flexible sizing (0 = fixed size, 1 = grow to fill space)
    */
   flex?: number
   /**
-   * row
+   * When true, arranges children horizontally in a row (sets flexDirection: 'row')
    */
   row?: boolean
   /**
-   * column
+   * When true, arranges children vertically in a column (sets flexDirection: 'column')
    */
   column?: boolean
   /**
-   * center
+   * When true, centers children both horizontally and vertically
    */
   center?: boolean
   /**
-   * centerX
+   * When true, centers children horizontally (sets alignItems: 'center')
    */
   centerX?: boolean
   /**
-   * centerY
+   * When true, centers children vertically (sets justifyContent: 'center')
    */
   centerY?: boolean
   /**
-   * justifyContent
+   * Controls how children are distributed along the main axis
    */
   justifyContent?: ViewStyle['justifyContent']
   /**
-   * gap
+   * Spacing between child elements using theme size tokens
    */
   gap?: keyof Theme['size']
   /**
-   * padding
+   * Uniform padding on all sides using theme size tokens
    */
   padding?: keyof Theme['size']
   /**
-   * paddingH
+   * Horizontal padding (left and right) using theme size tokens
    */
   paddingH?: keyof Theme['size']
   /**
-   * paddingV
+   * Vertical padding (top and bottom) using theme size tokens
    */
   paddingV?: keyof Theme['size']
   /**
-   * paddingTop
+   * Top padding using theme size tokens
    */
   paddingTop?: keyof Theme['size']
   /**
-   * paddingRight
+   * Right padding using theme size tokens
    */
   paddingRight?: keyof Theme['size']
   /**
-   * paddingBottom
+   * Bottom padding using theme size tokens
    */
   paddingBottom?: keyof Theme['size']
   /**
-   * paddingLeft
+   * Left padding using theme size tokens
    */
   paddingLeft?: keyof Theme['size']
   /**
-   * stretch
+   * When true, stretches the Box to fill available width (sets alignSelf: 'stretch')
    */
   stretch?: boolean
 } & ViewProps
