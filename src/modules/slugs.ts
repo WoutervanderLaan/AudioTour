@@ -3,4 +3,5 @@ export enum ModuleSlug {
   old = 'old',
   profile = 'profile',
   onboarding = 'onboarding',
+  tour = 'tour',
 }

@@ -1,6 +1,93 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
+import * as Crypto from 'expo-crypto'
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
+
+/**
+ * FeedItemStatus
+ * Status of a feed item in the tour
+ */
+export type FeedItemStatus =
+  | 'uploading'
+  | 'processing'
+  | 'generating_narrative'
+  | 'generating_audio'
+  | 'ready'
+  | 'error'
+
+/**
+ * FeedItemMetadata
+ * Optional metadata for a tour object
+ */
+export type FeedItemMetadata = {
+  /**
+   * Object title
+   */
+  title?: string
+  /**
+   * Artist name
+   */
+  artist?: string
+  /**
+   * Year of creation
+   */
+  year?: string
+  /**
+   * Material/medium
+   */
+  material?: string
+  /**
+   * Description
+   */
+  description?: string
+}
+
+/**
+ * FeedItem
+ * Represents a single item in the tour feed
+ */
+export type FeedItem = {
+  /**
+   * Unique ID for this feed item
+   */
+  id: string
+  /**
+   * Array of photo URIs
+   */
+  photos: string[]
+  /**
+   * Optional metadata
+   */
+  metadata?: FeedItemMetadata
+  /**
+   * Current status of this item
+   */
+  status: FeedItemStatus
+  /**
+   * Object ID from recognition API
+   */
+  objectId?: string
+  /**
+   * Recognition confidence score (0-100)
+   */
+  recognitionConfidence?: number
+  /**
+   * Generated narrative text
+   */
+  narrativeText?: string
+  /**
+   * Generated audio URL
+   */
+  audioUrl?: string
+  /**
+   * Error message if status is 'error'
+   */
+  error?: string
+  /**
+   * Timestamp when item was created
+   */
+  createdAt: number
+}
 
 /**
  * TourState
@@ -8,31 +95,55 @@ import {immer} from 'zustand/middleware/immer'
  */
 type TourState = {
   /**
-   * lastPhotoUri
+   * Array of feed items in the current tour
+   */
+  feedItems: FeedItem[]
+  /**
+   * Whether the feed is currently processing (prevents new submissions)
+   */
+  feedLoading: boolean
+  /**
+   * lastPhotoUri (legacy, kept for backward compatibility)
    */
   lastPhotoUri?: string
   /**
-   * currentObjectId
+   * currentObjectId (legacy, kept for backward compatibility)
    */
   currentObjectId?: string
   /**
-   * recognitionConfidence
+   * recognitionConfidence (legacy, kept for backward compatibility)
    */
   recognitionConfidence?: number
   /**
-   * narrativeText
+   * narrativeText (legacy, kept for backward compatibility)
    */
   narrativeText?: string
   /**
-   * audioUrl
+   * audioUrl (legacy, kept for backward compatibility)
    */
   audioUrl?: string
   /**
-   * setLastPhoto
+   * addFeedItem - Add a new feed item
+   */
+  addFeedItem: (photos: string[], metadata?: FeedItemMetadata) => string
+  /**
+   * updateFeedItem - Update an existing feed item
+   */
+  updateFeedItem: (id: string, updates: Partial<FeedItem>) => void
+  /**
+   * setFeedLoading - Set the feed loading state
+   */
+  setFeedLoading: (loading: boolean) => void
+  /**
+   * getFeedItem - Get a feed item by ID
+   */
+  getFeedItem: (id: string) => FeedItem | undefined
+  /**
+   * setLastPhoto (legacy)
    */
   setLastPhoto: (uri?: string) => void
   /**
-   * setLastPhotoData
+   * setLastPhotoData (legacy)
    */
   setLastPhotoData: (
     uri: string,
@@ -40,11 +151,11 @@ type TourState = {
     recognitionConfidence: number,
   ) => void
   /**
-   * setNarrativeText
+   * setNarrativeText (legacy)
    */
   setNarrativeText: (narrativeText: string) => void
   /**
-   * setAudioUrl
+   * setAudioUrl (legacy)
    */
   setAudioUrl: (audioUrl: string) => void
   /**
@@ -54,26 +165,64 @@ type TourState = {
 }
 
 export const useTourStore = create<TourState>()(
-  immer(set => ({
+  immer((set, get) => ({
+    feedItems: [],
+    feedLoading: false,
     lastPhotoUri: undefined,
     currentObjectId: undefined,
     recognitionConfidence: undefined,
     narrativeText: undefined,
     audioUrl: undefined,
-    loading: false,
-    error: undefined,
+
+    addFeedItem: (photos: string[], metadata?: FeedItemMetadata): string => {
+      const id = Crypto.randomUUID()
+      set(state => {
+        state.feedItems.push({
+          id,
+          photos,
+          metadata,
+          status: 'uploading',
+          createdAt: Date.now(),
+        })
+      })
+      return id
+    },
+
+    updateFeedItem: (id: string, updates: Partial<FeedItem>): void => {
+      set(state => {
+        const item = state.feedItems.find(i => i.id === id)
+        if (item) {
+          Object.assign(item, updates)
+        }
+      })
+    },
+
+    setFeedLoading: (loading: boolean): void => {
+      set(state => {
+        state.feedLoading = loading
+      })
+    },
+
+    getFeedItem: (id: string): FeedItem | undefined => {
+      return get().feedItems.find(i => i.id === id)
+    },
+
     setLastPhoto: uri =>
       set(state => {
         state.lastPhotoUri = uri
       }),
+
     reset: () =>
       set(state => {
+        state.feedItems = []
+        state.feedLoading = false
         state.lastPhotoUri = undefined
         state.currentObjectId = undefined
         state.recognitionConfidence = undefined
         state.narrativeText = undefined
         state.audioUrl = undefined
       }),
+
     setLastPhotoData: (
       uri: string,
       objectId: string,
@@ -85,11 +234,13 @@ export const useTourStore = create<TourState>()(
         state.recognitionConfidence = recognitionConfidence
       })
     },
+
     setNarrativeText: (narrativeText: string) => {
       set(state => {
         state.narrativeText = narrativeText
       })
     },
+
     setAudioUrl: (audioUrl: string) => {
       set(state => {
         state.audioUrl = audioUrl
