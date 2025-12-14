@@ -496,10 +496,68 @@ Create a complete audio tour flow where users can:
 
 ---
 
+### **Phase 12: Cleanup & Migration**
+
+#### Task 12.1: Remove Deprecated Code from Old Module
+**Complexity**: Medium | **Estimated time**: 1 hour
+- Identify screens in `src/modules/old/` that are now replaced by tour module
+- Remove or deprecate `Capture.tsx` (replaced by TourCamera + TourPhotoSubmit)
+- Remove or deprecate `ObjectDetail.tsx` (replaced by TourObjectDetail)
+- Remove or deprecate `Narrative.tsx` (replaced by TourFeed + FeedItem)
+- Update old module's screenConfig to remove deprecated screens
+- Update old module's route types
+
+**Acceptance Criteria**:
+- Deprecated screens removed or marked as deprecated
+- No broken imports or references
+- Old module still functional for any remaining screens
+- No duplicate functionality
+
+---
+
+#### Task 12.2: Move Tour-Specific Global Code to Tour Module
+**Complexity**: Medium | **Estimated time**: 1 hour
+- Move tour-specific logic from global stores to tour module
+- Review `src/store/slices/tourStore.ts` - keep or move to module
+- Review `src/store/slices/museumStore.ts` - keep or move to module
+- Move any tour-specific utilities to tour module
+- Update imports throughout codebase
+- Ensure proper module boundaries maintained
+
+**Files to Review**:
+- `src/store/slices/tourStore.ts` (might stay global or move)
+- `src/store/slices/museumStore.ts` (might stay global or move)
+- `src/shared/schema.ts` (objectSchema might belong in tour module)
+
+**Acceptance Criteria**:
+- Tour-specific code lives in tour module where appropriate
+- Global code is truly app-wide and not tour-specific
+- Module boundaries respected (ESLint passing)
+- All imports updated correctly
+
+---
+
+#### Task 12.3: Clean Up Unused Dependencies and Imports
+**Complexity**: Low | **Estimated time**: 30 min
+- Remove any unused imports from refactored files
+- Run linter and fix any issues
+- Run typecheck and ensure no errors
+- Remove any dead code
+- Update any outdated comments or documentation
+
+**Acceptance Criteria**:
+- Linter passes with no errors
+- TypeScript compilation successful
+- No unused imports
+- No dead code
+- Documentation up to date
+
+---
+
 ## Task Summary
 
-**Total Tasks**: 33 individual tasks
-**Estimated Total Time**: ~22-25 hours
+**Total Tasks**: 36 individual tasks
+**Estimated Total Time**: ~24.5-27.5 hours
 
 ### Tasks by Phase:
 1. **Module Structure**: 2 tasks (~30 min)
@@ -513,6 +571,7 @@ Create a complete audio tour flow where users can:
 9. **Module Registration**: 3 tasks (~1.25 hours)
 10. **State Enhancement**: 2 tasks (~1.5 hours)
 11. **Polish & Testing**: 3 tasks (~3.25 hours)
+12. **Cleanup & Migration**: 3 tasks (~2.5 hours)
 
 ### Priority Order:
 1. Phase 1 (Foundation) - **Must do first**
@@ -526,6 +585,7 @@ Create a complete audio tour flow where users can:
 9. Phase 7 (Audio) - **Enhancement**
 10. Phase 10 (State) - **Enhancement**
 11. Phase 11 (Polish) - **Final**
+12. Phase 12 (Cleanup) - **Final cleanup**
 
 ---
 
