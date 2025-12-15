@@ -317,6 +317,7 @@ export class ApiClient implements IApiClient {
     body?: unknown,
     config: RequestConfig = {},
   ): Promise<ApiResponse<T>> {
+    const startTime = Date.now()
     try {
       const url = this.buildUrl(endpoint, config.params)
 
@@ -416,12 +417,26 @@ export class ApiClient implements IApiClient {
         data = (await response.text()) as any
       }
 
+      // Log successful request with timing
+      if (__DEV__) {
+        const duration = Date.now() - startTime
+        logger.success(
+          `${method} ${endpoint} - ${response.status} (${duration}ms)`,
+        )
+      }
+
       return {
         data,
         status: response.status,
         headers: response.headers,
       }
     } catch (error: any) {
+      // Log failed request with timing
+      if (__DEV__) {
+        const duration = Date.now() - startTime
+        logger.error(`${method} ${endpoint} - Failed (${duration}ms)`, error)
+      }
+
       // Handle network errors
       if (error.name === 'AbortError') {
         throw {
@@ -520,16 +535,27 @@ export class ApiClient implements IApiClient {
 
 export const apiClient = new ApiClient()
 
+// Request interceptor with detailed logging
 apiClient.addRequestInterceptor((url, config) => {
   if (__DEV__) {
-    logger.debug(`[API] ${config.method} ${url}`)
+    logger.group(`API ${config.method} Request`)
+    logger.info('Endpoint:', url)
+    if (config.body && !(config.body instanceof FormData)) {
+      logger.json(JSON.parse(config.body as string), 'Request Body')
+    }
+    logger.groupEnd()
   }
   return {url, config}
 })
 
-apiClient.addResponseInterceptor(response => {
+// Response interceptor with detailed logging
+apiClient.addResponseInterceptor(async response => {
   if (__DEV__) {
-    logger.debug(`[API] Response ${response.status} ${response.url}`)
+    logger.group(`API ${response.status} Response`)
+    logger.info('URL:', response.url)
+    logger.info('Status:', `${response.status} ${response.statusText}`)
+    logger.info('Content-Type:', response.headers.get('content-type') || 'N/A')
+    logger.groupEnd()
   }
   return response
 })

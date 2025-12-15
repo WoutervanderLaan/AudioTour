@@ -54,8 +54,11 @@ export const useLoginMutation = (
     },
     onSuccess: data => {
       setAuth(data.user, data.tokens)
-
       queryClient.invalidateQueries({queryKey: authKeys.session()})
+      logger.success(`User logged in: ${data.user.email}`)
+    },
+    onError: error => {
+      logger.error('[Auth] Login failed:', error)
     },
     ...options,
   })
@@ -103,6 +106,7 @@ export const useLogoutMutation = (
 
       // Clear all auth queries
       queryClient.clear()
+      logger.success('User logged out successfully')
     },
     onSettled: () => {
       logout()
@@ -162,6 +166,10 @@ export const useRegisterMutation = (
     onSuccess: data => {
       setAuth(data.user, data.tokens)
       queryClient.invalidateQueries({queryKey: authKeys.session()})
+      logger.success(`User registered: ${data.user.email}`)
+    },
+    onError: error => {
+      logger.error('[Auth] Registration failed:', error)
     },
     ...options,
   })
@@ -198,6 +206,10 @@ export const useRefreshTokenMutation = (
         refreshToken: data.refreshToken || tokens!.refreshToken,
         accessTokenExpiresAt: data.accessTokenExpiresAt,
       })
+      logger.success('[Auth] Token refreshed successfully')
+    },
+    onError: error => {
+      logger.error('[Auth] Token refresh failed:', error)
     },
     ...options,
   })

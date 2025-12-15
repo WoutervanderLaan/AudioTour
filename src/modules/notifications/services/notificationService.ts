@@ -62,7 +62,7 @@ class NotificationService {
       notifee.onForegroundEvent(this.handleForegroundEvent.bind(this))
       notifee.onBackgroundEvent(this.handleBackgroundEvent.bind(this))
       this.isInitialized = true
-      logger.debug('[NotificationService] Initialized successfully')
+      logger.success('[NotificationService] Initialized successfully')
     } catch (error) {
       logger.error('[NotificationService] Initialization failed:', error)
       throw error
@@ -71,7 +71,7 @@ class NotificationService {
 
   /** Creates Android notification channels for different notification types */
   private async createAndroidChannels(): Promise<void> {
-    await notifee.createChannels([
+    const channels = [
       {
         id: NotificationChannelId.default,
         name: 'Default',
@@ -101,8 +101,20 @@ class NotificationService {
         description: 'Updates about friends and community activity',
         importance: AndroidImportance.LOW,
       },
-    ])
-    logger.debug('[NotificationService] Android channels created')
+    ]
+
+    await notifee.createChannels(channels)
+
+    // Log channels in a table
+    logger.table(
+      channels.map(ch => ({
+        id: ch.id,
+        name: ch.name,
+        importance: ch.importance === AndroidImportance.HIGH ? 'HIGH' :
+                     ch.importance === AndroidImportance.LOW ? 'LOW' : 'DEFAULT',
+      })),
+      'Android Notification Channels',
+    )
   }
 
   /** Handles notification events when the app is in the foreground */
@@ -134,7 +146,15 @@ class NotificationService {
   async requestPermission(): Promise<PermissionStatus> {
     try {
       const settings = await notifee.requestPermission()
-      return this.mapAuthorizationStatus(settings.authorizationStatus)
+      const status = this.mapAuthorizationStatus(settings.authorizationStatus)
+
+      if (status === 'granted') {
+        logger.success('[NotificationService] Permission granted')
+      } else {
+        logger.warn(`[NotificationService] Permission ${status}`)
+      }
+
+      return status
     } catch (error) {
       logger.error('[NotificationService] Permission request failed:', error)
       return 'denied'
@@ -186,9 +206,8 @@ class NotificationService {
       ios: {sound: 'default'},
     }
     const notificationId = await notifee.displayNotification(notification)
-    logger.debug(
-      '[NotificationService] Notification displayed:',
-      notificationId,
+    logger.success(
+      `[NotificationService] Notification displayed: ${title}`,
     )
     return notificationId
   }
@@ -205,7 +224,7 @@ class NotificationService {
   /** Cancels all displayed notifications */
   async cancelAllNotifications(): Promise<void> {
     await notifee.cancelAllNotifications()
-    logger.debug('[NotificationService] All notifications cancelled')
+    logger.info('[NotificationService] All notifications cancelled')
   }
 
   /** Sets the app badge count (iOS only) */
