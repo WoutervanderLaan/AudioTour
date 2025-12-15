@@ -10,6 +10,8 @@ Navigation infrastructure and module registry system.
 - **linking.ts** - Deep linking configuration
 - **Tabs.tsx** - Bottom tab navigation component
 - **BlurBackground.tsx** - Blur overlay component for navigation stacks
+- **ProfileHeaderButton.tsx** - Profile header button component
+- **constants.ts** - Navigation constants
 
 ## Purpose
 

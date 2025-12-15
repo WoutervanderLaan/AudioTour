@@ -121,14 +121,24 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Subscribe to token refresh
+   * Subscribe to token refresh events.
+   *
+   * Adds a callback to the subscriber queue that will be notified when a token refresh completes.
+   * Used to queue requests that are waiting for token refresh.
+   *
+   * @param callback - Function to call with the new access token when refresh completes
    */
   private subscribeTokenRefresh(callback: (token: string) => void): void {
     this.refreshSubscribers.push(callback)
   }
 
   /**
-   * Notify all subscribers of new token
+   * Notify all subscribers of a new token.
+   *
+   * Calls all queued subscriber callbacks with the new access token and clears the subscriber queue.
+   * This allows queued requests to retry with the refreshed token.
+   *
+   * @param token - The new access token to pass to subscribers
    */
   private onTokenRefreshed(token: string): void {
     this.refreshSubscribers.forEach(callback => callback(token))
@@ -136,7 +146,13 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Refresh access token
+   * Refresh the access token using the refresh token.
+   *
+   * Makes a POST request to the /auth/refresh endpoint with the current refresh token.
+   * Updates both access and refresh tokens if successful. Clears tokens on failure.
+   *
+   * @returns The new access token
+   * @throws {Error} If no refresh token is available or if the refresh request fails
    */
   private async refreshAccessToken(): Promise<string> {
     if (!this.refreshToken) {
@@ -179,7 +195,14 @@ export class ApiClient implements IApiClient {
   }
 
   /**
-   * Handle token refresh with queueing
+   * Handle token refresh with request queueing.
+   *
+   * Ensures only one token refresh happens at a time. If a refresh is already in progress,
+   * subsequent calls will wait for the ongoing refresh to complete rather than making
+   * duplicate refresh requests.
+   *
+   * @returns The new access token (either from this refresh or the ongoing one)
+   * @throws {Error} If the token refresh fails
    */
   private async handleTokenRefresh(): Promise<string> {
     if (!this.isRefreshing) {

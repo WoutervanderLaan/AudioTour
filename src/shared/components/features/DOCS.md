@@ -5,7 +5,7 @@ Complex reusable feature components.
 ## Features
 
 - **[audio-player/](./audio-player)** - Audio playback component with controls
-- **[toast/](./toast)** - Toast notification system
+- **[progress-indicator/](./progress-indicator)** - Progress indicator component for multi-step flows
 
 ## Purpose
 
