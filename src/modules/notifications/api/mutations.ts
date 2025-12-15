@@ -67,7 +67,7 @@ export const useRegisterDeviceMutation = (
       setDeviceToken(variables.deviceToken)
       setIsRegistered(true)
       queryClient.invalidateQueries({queryKey: notificationKeys.registration()})
-      logger.debug('[Notifications] Device registered successfully')
+      logger.success('[Notifications] Device registered successfully')
     },
     onError: error => {
       logger.error('[Notifications] Failed to register device:', error)
@@ -119,7 +119,7 @@ export const useUnregisterDeviceMutation = (
       setDeviceToken(null)
       setIsRegistered(false)
       queryClient.invalidateQueries({queryKey: notificationKeys.registration()})
-      logger.debug('[Notifications] Device unregistered successfully')
+      logger.success('[Notifications] Device unregistered successfully')
     },
     onError: error => {
       logger.error('[Notifications] Failed to unregister device:', error)
@@ -175,7 +175,9 @@ export const useToggleNotificationsMutation = (
     onSuccess: data => {
       setPreferences(data.preferences)
       queryClient.invalidateQueries({queryKey: notificationKeys.preferences()})
-      logger.debug('[Notifications] Notifications toggled successfully')
+      logger.success(
+        `[Notifications] Notifications ${data.preferences.enabled ? 'enabled' : 'disabled'}`,
+      )
     },
     onError: error => {
       logger.error('[Notifications] Failed to toggle notifications:', error)

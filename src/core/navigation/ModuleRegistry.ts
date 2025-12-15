@@ -28,7 +28,7 @@ class ModuleRegistryManager {
   register(config: ModuleConfig): void {
     try {
       if (!config.enabled) {
-        logger.info(`Module ${config.name} is disabled`)
+        logger.warn(`Module ${config.name} is disabled`)
         return
       }
 
@@ -49,7 +49,7 @@ class ModuleRegistryManager {
       this.modules[config.name] = config
       config.onRegister?.()
 
-      logger.info(`Registered module: ${config.name}`)
+      logger.success(`Registered module: ${config.name}`)
     } catch (error) {
       logger.error(`Failed to register module ${config.name}:`, error)
     }
@@ -77,7 +77,7 @@ class ModuleRegistryManager {
 
       delete this.modules[moduleName]
 
-      logger.info(`Unregistered module: ${moduleName}`)
+      logger.success(`Unregistered module: ${moduleName}`)
     } catch (error) {
       logger.error(`Failed to unregister module ${moduleName}:`, error)
     }
@@ -191,13 +191,30 @@ class ModuleRegistryManager {
       return
     }
 
+    logger.separator('=', 60)
+    logger.group('Module Initialization')
+
     const modules = this.getEnabledModules()
+
+    // Display registered modules in a table
+    const moduleTable = modules.map(m => ({
+      module: m.name,
+      stacks: Object.keys(m.stacks || {}).length,
+      tabs: Object.keys(m.tabs || {}).length,
+      modals: Object.keys(m.modals || {}).length,
+      dependencies: m.dependencies?.join(', ') || 'none',
+    }))
+
+    logger.table(moduleTable, 'Registered Modules')
+    logger.separator()
 
     // Use allSettled to allow other modules to initialize even if one fails
     const results = await Promise.allSettled(
       modules.map(async module => {
         try {
+          logger.info(`Initializing ${module.name}...`)
           await module.onAppStart?.()
+          logger.success(`${module.name} initialized`)
           return {module: module.name, success: true}
         } catch (error) {
           logger.error(`Failed to initialize module ${module.name}:`, error)
@@ -210,13 +227,17 @@ class ModuleRegistryManager {
     const successful = results.filter(r => r.status === 'fulfilled').length
     const failed = results.filter(r => r.status === 'rejected').length
 
+    logger.separator()
     if (failed > 0) {
       logger.warn(
-        `Module initialization completed with errors: ${successful} succeeded, ${failed} failed`,
+        `Module initialization completed: ${successful} succeeded, ${failed} failed`,
       )
     } else {
-      logger.info(`All ${successful} modules initialized successfully`)
+      logger.success(`All ${successful} modules initialized successfully`)
     }
+
+    logger.groupEnd()
+    logger.separator('=', 60)
 
     this.initialized = true
   }
