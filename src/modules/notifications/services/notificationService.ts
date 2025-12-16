@@ -119,8 +119,12 @@ class NotificationService {
       channels.map(ch => ({
         id: ch.id,
         name: ch.name,
-        importance: ch.importance === AndroidImportance.HIGH ? 'HIGH' :
-                     ch.importance === AndroidImportance.LOW ? 'LOW' : 'DEFAULT',
+        importance:
+          ch.importance === AndroidImportance.HIGH
+            ? 'HIGH'
+            : ch.importance === AndroidImportance.LOW
+              ? 'LOW'
+              : 'DEFAULT',
       })),
       'Android Notification Channels',
     )
@@ -249,9 +253,7 @@ class NotificationService {
       ios: {sound: 'default'},
     }
     const notificationId = await notifee.displayNotification(notification)
-    logger.success(
-      `[NotificationService] Notification displayed: ${title}`,
-    )
+    logger.success(`[NotificationService] Notification displayed: ${title}`)
     return notificationId
   }
 

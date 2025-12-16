@@ -111,7 +111,9 @@ const formatPrefix = (level: LogLevel): string => {
  * @param data - Array of objects or single object to format as table
  * @returns Formatted table string
  */
-const formatTable = (data: Record<string, unknown>[] | Record<string, unknown>): string => {
+const formatTable = (
+  data: Record<string, unknown>[] | Record<string, unknown>,
+): string => {
   const rows = Array.isArray(data) ? data : [data]
 
   if (rows.length === 0) {
@@ -119,9 +121,7 @@ const formatTable = (data: Record<string, unknown>[] | Record<string, unknown>):
   }
 
   // Get all unique keys
-  const keys = Array.from(
-    new Set(rows.flatMap(row => Object.keys(row)))
-  )
+  const keys = Array.from(new Set(rows.flatMap(row => Object.keys(row))))
 
   if (keys.length === 0) {
     return 'Empty table'
@@ -131,30 +131,36 @@ const formatTable = (data: Record<string, unknown>[] | Record<string, unknown>):
   const columnWidths: Record<string, number> = {}
   keys.forEach(key => {
     const maxContentWidth = Math.max(
-      ...rows.map(row => String(row[key] ?? '').length)
+      ...rows.map(row => String(row[key] ?? '').length),
     )
     columnWidths[key] = Math.max(key.length, maxContentWidth, 3)
   })
 
   // Create table border
+  /**
+   * createBorder
+   * TODO: describe what it does.
+   *
+   * @param {*} char
+   * @returns {*} describe return value
+   */
   const createBorder = (char: string): string => {
     return keys.map(key => char.repeat(columnWidths[key] + 2)).join('+')
   }
 
   // Create header row
-  const header = keys
-    .map(key => ` ${key.padEnd(columnWidths[key])} `)
-    .join('|')
+  const header = keys.map(key => ` ${key.padEnd(columnWidths[key])} `).join('|')
 
   // Create data rows
   const dataRows = rows.map(row =>
     keys
       .map(key => {
         const value = row[key]
-        const stringValue = value === undefined || value === null ? '' : String(value)
+        const stringValue =
+          value === undefined || value === null ? '' : String(value)
         return ` ${stringValue.padEnd(columnWidths[key])} `
       })
-      .join('|')
+      .join('|'),
   )
 
   // Assemble table
@@ -277,12 +283,12 @@ export const logger = {
    */
   table: (
     data: Record<string, unknown>[] | Record<string, unknown>,
-    title?: string
+    title?: string,
   ): void => {
     if (config.enabled) {
       if (title) {
         console.log(
-          `${formatPrefix(LogLevel.INFO)} ${colorize(title, colors.bright)}`
+          `${formatPrefix(LogLevel.INFO)} ${colorize(title, colors.bright)}`,
         )
       }
       console.log(formatTable(data))
@@ -359,7 +365,7 @@ export const logger = {
     if (config.enabled) {
       if (title) {
         console.log(
-          `${formatPrefix(LogLevel.INFO)} ${colorize(title, colors.bright)}`
+          `${formatPrefix(LogLevel.INFO)} ${colorize(title, colors.bright)}`,
         )
       }
       console.log(JSON.stringify(obj, null, 2))

@@ -176,7 +176,7 @@ export const useToggleNotificationsMutation = (
       setPreferences(data.preferences)
       queryClient.invalidateQueries({queryKey: notificationKeys.preferences()})
       logger.success(
-        `[Notifications] Notifications ${data.preferences.enabled ? 'enabled' : 'disabled'}`,
+        `[Notifications] Notifications ${data.preferences.pushEnabled ? 'enabled' : 'disabled'}`,
       )
     },
     onError: error => {

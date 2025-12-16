@@ -56,6 +56,8 @@ export const usePhotoSubmit = (): {
     try {
       setFeedLoading(true)
 
+      //TODO: The main call should generate audio. This is prio. It should arrive streamed. The text can be transcribed after.
+
       const feedItemId = addFeedItem(photos, metadata)
       logger.debug('[TourPhotoSubmit] Created feed item:', feedItemId)
 

@@ -135,6 +135,10 @@ export const TourPhotoSubmitScreen = ({
         paddingBottom="xl">
         <Column gap="lg">
           <Text.Label>
+            {/*
+            - TODO: Add image form component 
+            - TODO: Move all image related code to own component
+            */}
             {photos.length} / {MAX_PHOTOS} photos
           </Text.Label>
 
