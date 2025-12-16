@@ -8,8 +8,9 @@ import {useLogger} from '@/shared/hooks/useLogger'
 import {type FeedItemMetadata, useTourStore} from '@/store/slices/tourStore'
 
 /**
- * UsePhotoSubmitReturn
- * TODO: describe what this type represents.
+ * SubmitReturn
+ * Represents the result of a photo submission operation using a tuple pattern for error handling.
+ * Returns either a success tuple with the feed item ID or an error tuple with an error message.
  */
 type SubmitReturn = Promise<
   | [
@@ -23,9 +24,13 @@ type SubmitReturn = Promise<
 
 /**
  * usePhotoSubmit
- * TODO: describe what it does.
+ * Hook that orchestrates the complete photo submission workflow for museum object recognition.
+ * Manages the multi-step process of uploading photos, processing artwork recognition,
+ * generating narratives, and creating audio content.
  *
- * @returns {*} describe return value
+ * @returns {object} Object containing submit function and loading state
+ * @returns {Function} submit - Function to submit photos with optional metadata
+ * @returns {boolean} isLoading - Combined loading state of all processing steps
  */
 export const usePhotoSubmit = (): {
   submit: (photos: string[], metadata?: FeedItemMetadata) => SubmitReturn
@@ -43,11 +48,13 @@ export const usePhotoSubmit = (): {
 
   /**
    * submit
-   * TODO: describe what it does.
+   * Submits photos for processing through the complete tour generation pipeline.
+   * Handles artwork recognition, narrative generation, and audio creation in sequence.
+   * Updates feed item status at each step and manages error handling.
    *
-   * @param {*} photos
-   * @param {*} metadata
-   * @returns {*} describe return value
+   * @param {string[]} photos - Array of photo URIs to submit for processing
+   * @param {FeedItemMetadata} [metadata] - Optional metadata to attach to the feed item
+   * @returns {SubmitReturn} Promise resolving to tuple with either success (feedItemId) or error
    */
   const submit = async (
     photos: string[],
