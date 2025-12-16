@@ -11,7 +11,7 @@
     - **components/**
       - **ui/** – generic UI components (Pressable, Typography, Form, Layout, Screen)
       - **features/** – complex reusable features (AudioPlayer, ProgressIndicator)
-    - **context/** – React Context providers (Keyboard, Toast)
+    - **context/** – React Context providers (Banner, Keyboard, Toast)
     - **hooks/** – shared custom hooks
     - **constants/** – shared constants and configuration values
     - **utils/** – utility functions

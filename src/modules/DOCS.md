@@ -5,6 +5,9 @@ Self-contained feature modules with their own screens, navigation, and business 
 ## Structure
 
 - **auth/** - Authentication module (login, register, auth state)
+- **notifications/** - Push notification module
+- **onboarding/** - User onboarding module
+- **profile/** - User profile module
 - **old/** - Legacy module containing screens that need to be migrated to proper feature modules
 
 ## Purpose

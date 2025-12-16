@@ -35,11 +35,11 @@ export type PermissionStatus = 'granted' | 'denied' | 'not_determined'
  */
 type NotificationServiceConfig = {
   /**
-   * onForegroundEvent
+   * Optional callback invoked when a notification event occurs in the foreground
    */
   onForegroundEvent?: (event: Event) => void
   /**
-   * onBackgroundEvent
+   * Optional callback invoked when a notification event occurs in the background
    */
   onBackgroundEvent?: (event: Event) => Promise<void>
 }
@@ -49,7 +49,12 @@ class NotificationService {
   private isInitialized = false
   private config: NotificationServiceConfig = {}
 
-  /** Initializes the notification service with optional event handlers */
+  /**
+   * Initializes the notification service with optional event handlers
+   *
+   * @param config - Optional configuration for foreground and background event handlers
+   * @returns A promise that resolves when initialization is complete
+   */
   async initialize(config?: NotificationServiceConfig): Promise<void> {
     if (this.isInitialized) {
       return
@@ -69,7 +74,11 @@ class NotificationService {
     }
   }
 
-  /** Creates Android notification channels for different notification types */
+  /**
+   * Creates Android notification channels for different notification types
+   *
+   * @returns A promise that resolves when all channels are created
+   */
   private async createAndroidChannels(): Promise<void> {
     const channels = [
       {
@@ -117,7 +126,11 @@ class NotificationService {
     )
   }
 
-  /** Handles notification events when the app is in the foreground */
+  /**
+   * Handles notification events when the app is in the foreground
+   *
+   * @param event - The notification event to handle
+   */
   private handleForegroundEvent(event: Event): void {
     const {type, detail} = event
     switch (type) {
@@ -132,7 +145,12 @@ class NotificationService {
     this.config.onForegroundEvent?.(event)
   }
 
-  /** Handles notification events when the app is in the background */
+  /**
+   * Handles notification events when the app is in the background
+   *
+   * @param event - The notification event to handle
+   * @returns A promise that resolves when the event is handled
+   */
   private async handleBackgroundEvent(event: Event): Promise<void> {
     logger.debug(
       '[NotificationService] Background event:',
@@ -142,7 +160,11 @@ class NotificationService {
     await this.config.onBackgroundEvent?.(event)
   }
 
-  /** Requests notification permission from the user */
+  /**
+   * Requests notification permission from the user
+   *
+   * @returns A promise that resolves to the permission status after the request
+   */
   async requestPermission(): Promise<PermissionStatus> {
     try {
       const settings = await notifee.requestPermission()
@@ -161,7 +183,11 @@ class NotificationService {
     }
   }
 
-  /** Checks the current notification permission status without prompting */
+  /**
+   * Checks the current notification permission status without prompting
+   *
+   * @returns A promise that resolves to the current permission status
+   */
   async checkPermission(): Promise<PermissionStatus> {
     try {
       const settings = await notifee.getNotificationSettings()
@@ -172,7 +198,12 @@ class NotificationService {
     }
   }
 
-  /** Maps Notifee authorization status to PermissionStatus */
+  /**
+   * Maps Notifee authorization status to PermissionStatus
+   *
+   * @param status - The Notifee authorization status to map
+   * @returns The corresponding PermissionStatus value
+   */
   private mapAuthorizationStatus(
     status: AuthorizationStatus,
   ): PermissionStatus {
@@ -181,12 +212,24 @@ class NotificationService {
     return 'not_determined'
   }
 
-  /** Opens the device notification settings for this app */
+  /**
+   * Opens the device notification settings for this app
+   *
+   * @returns A promise that resolves when the settings screen is opened
+   */
   async openSettings(): Promise<void> {
     await notifee.openNotificationSettings()
   }
 
-  /** Displays a local notification to the user */
+  /**
+   * Displays a local notification to the user
+   *
+   * @param title - The notification title
+   * @param body - The notification body text
+   * @param data - Optional key-value data to attach to the notification
+   * @param channelId - The Android notification channel ID (defaults to 'default')
+   * @returns A promise that resolves to the notification ID
+   */
   async displayNotification({
     title,
     body,
@@ -212,7 +255,12 @@ class NotificationService {
     return notificationId
   }
 
-  /** Cancels a displayed notification by ID */
+  /**
+   * Cancels a displayed notification by ID
+   *
+   * @param notificationId - The ID of the notification to cancel
+   * @returns A promise that resolves when the notification is cancelled
+   */
   async cancelNotification(notificationId: string): Promise<void> {
     await notifee.cancelNotification(notificationId)
     logger.debug(
@@ -221,23 +269,40 @@ class NotificationService {
     )
   }
 
-  /** Cancels all displayed notifications */
+  /**
+   * Cancels all displayed notifications
+   *
+   * @returns A promise that resolves when all notifications are cancelled
+   */
   async cancelAllNotifications(): Promise<void> {
     await notifee.cancelAllNotifications()
     logger.info('[NotificationService] All notifications cancelled')
   }
 
-  /** Sets the app badge count (iOS only) */
+  /**
+   * Sets the app badge count (iOS only)
+   *
+   * @param count - The badge count to set
+   * @returns A promise that resolves when the badge count is set
+   */
   async setBadgeCount(count: number): Promise<void> {
     await notifee.setBadgeCount(count)
   }
 
-  /** Gets the current app badge count (iOS only) */
+  /**
+   * Gets the current app badge count (iOS only)
+   *
+   * @returns A promise that resolves to the current badge count
+   */
   async getBadgeCount(): Promise<number> {
     return notifee.getBadgeCount()
   }
 
-  /** Gets the notification that launched the app from a killed state */
+  /**
+   * Gets the notification that launched the app from a killed state
+   *
+   * @returns A promise that resolves to the initial notification, or null if none
+   */
   async getInitialNotification(): Promise<InitialNotification | null> {
     return notifee.getInitialNotification()
   }

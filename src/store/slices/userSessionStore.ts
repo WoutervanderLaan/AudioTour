@@ -10,11 +10,11 @@ import {immer} from 'zustand/middleware/immer'
  */
 type UserProfile = {
   /**
-   * id
+   * Unique identifier for the user
    */
   id?: string
   /**
-   * displayName
+   * User's display name shown in the UI
    */
   displayName?: string
 }
@@ -27,19 +27,19 @@ type UserProfile = {
  */
 type UserSessionState = {
   /**
-   * sessionId
+   * Unique session identifier generated on app start or regenerated on demand
    */
   sessionId: string
   /**
-   * user
+   * Current user's profile information, undefined when not logged in
    */
   user?: UserProfile
   /**
-   * setUser
+   * Update the current user's profile information
    */
   setUser: (user?: UserProfile) => void
   /**
-   * regenerateSession
+   * Generate a new session ID for the current session
    */
   regenerateSession: () => void
 }

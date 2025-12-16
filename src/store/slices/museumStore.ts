@@ -11,23 +11,23 @@ import type {ObjectItem} from '@/shared/types/types'
  */
 type MuseumState = {
   /**
-   * currentMuseumId
+   * The ID of the currently selected museum
    */
   currentMuseumId?: string
   /**
-   * objects
+   * Array of museum objects/artworks in the current museum
    */
   objects: ObjectItem[]
   /**
-   * setMuseum
+   * Set the current museum by ID
    */
   setMuseum: (id?: string) => void
   /**
-   * setObjects
+   * Update the museum objects collection
    */
   setObjects: (objects: ObjectItem[]) => void
   /**
-   * reset
+   * Reset museum state to initial values
    */
   reset: () => void
 }
