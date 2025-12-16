@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import {ActivityIndicator, Pressable, View} from 'react-native'
+import {ActivityIndicator} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Audio} from 'expo-av'
+import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio'
 
 import {logger} from '@/core/lib/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography'
 
 /**
@@ -44,76 +45,22 @@ const formatTime = (millis: number): string => {
  * @returns Audio player component with controls
  */
 export const AudioPlayer = ({src}: AudioPlayerProps): React.JSX.Element => {
-  const [sound, setSound] = useState<Audio.Sound | null>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [position, setPosition] = useState(0)
-  const [duration, setDuration] = useState(0)
+  const player = useAudioPlayer(src)
+  const status = useAudioPlayerStatus(player)
   const [error, setError] = useState<string | undefined>(undefined)
-
-  /**
-   * loadSound
-   * Loads the audio file from the source URL
-   *
-   * @returns Promise that resolves when sound is loaded
-   */
-  const loadSound = async (): Promise<void> => {
-    try {
-      setIsLoading(true)
-      setError(undefined)
-
-      logger.debug('[AudioPlayer] Loading sound:', src)
-
-      const {sound: newSound} = await Audio.Sound.createAsync(
-        {uri: src},
-        {shouldPlay: false},
-        onPlaybackStatusUpdate,
-      )
-
-      setSound(newSound)
-      logger.debug('[AudioPlayer] Sound loaded')
-    } catch (err) {
-      logger.error('[AudioPlayer] Error loading sound:', err)
-      setError('Failed to load audio')
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  /**
-   * onPlaybackStatusUpdate
-   * Callback for audio playback status updates
-   *
-   * @param status - Playback status object
-   * @returns void
-   */
-  const onPlaybackStatusUpdate = (status: Audio.SoundStatus): void => {
-    if (status.isLoaded) {
-      setPosition(status.positionMillis)
-      setDuration(status.durationMillis || 0)
-      setIsPlaying(status.isPlaying)
-
-      if (status.didJustFinish) {
-        setIsPlaying(false)
-        setPosition(0)
-      }
-    }
-  }
 
   /**
    * togglePlayback
    * Toggles between play and pause
    *
-   * @returns Promise that resolves when playback state changes
+   * @returns void
    */
-  const togglePlayback = async (): Promise<void> => {
-    if (!sound) return
-
+  const togglePlayback = (): void => {
     try {
-      if (isPlaying) {
-        await sound.pauseAsync()
+      if (status.playing) {
+        player.pause()
       } else {
-        await sound.playAsync()
+        player.play()
       }
     } catch (err) {
       logger.error('[AudioPlayer] Error toggling playback:', err)
@@ -125,40 +72,32 @@ export const AudioPlayer = ({src}: AudioPlayerProps): React.JSX.Element => {
    * handleSeek
    * Seeks to a specific position in the audio
    *
-   * @param newPosition - Position in milliseconds to seek to
-   * @returns Promise that resolves when seek is complete
+   * @param newPosition - Position in seconds to seek to
+   * @returns void
    */
-  const handleSeek = async (newPosition: number): Promise<void> => {
-    if (!sound) return
-
+  const handleSeek = (newPosition: number): void => {
     try {
-      await sound.setPositionAsync(newPosition)
+      player.seekTo(newPosition)
     } catch (err) {
       logger.error('[AudioPlayer] Error seeking:', err)
     }
   }
 
-  // Load sound on mount
   useEffect(() => {
-    loadSound()
+    logger.debug('[AudioPlayer] Status:', {
+      playing: status.playing,
+      currentTime: status.currentTime,
+      duration: status.duration,
+    })
+  }, [status.playing, status.currentTime, status.duration])
 
-    // Cleanup on unmount
-    return (): void => {
-      if (sound) {
-        logger.debug('[AudioPlayer] Unloading sound')
-        sound.unloadAsync()
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src])
-
-  if (isLoading) {
+  if (!status.duration && !error) {
     return (
       <Row
         gap="sm"
-        alignItems="center">
+        center>
         <ActivityIndicator size="small" />
-        <Text.Caption>Loading audio...</Text.Caption>
+        <Text.Label>Loading audio...</Text.Label>
       </Row>
     )
   }
@@ -166,77 +105,68 @@ export const AudioPlayer = ({src}: AudioPlayerProps): React.JSX.Element => {
   if (error) {
     return (
       <Column gap="xs">
-        <Text.Caption style={styles.errorText}>{error}</Text.Caption>
+        <Text.Label color="warning">{error}</Text.Label>
         <Button
           label="Retry"
-          onPress={loadSound}
-          size="small"
+          onPress={(): void => {
+            setError(undefined)
+            player.replace(src)
+          }}
         />
       </Column>
     )
   }
 
+  const position = status.currentTime * 1000 // Convert to milliseconds for formatTime
+  const duration = status.duration * 1000 // Convert to milliseconds for formatTime
   const progress = duration > 0 ? position / duration : 0
 
   return (
     <Column gap="sm">
-      {/* Time Display */}
       <Row justifyContent="space-between">
-        <Text.Caption>{formatTime(position)}</Text.Caption>
-        <Text.Caption>{formatTime(duration)}</Text.Caption>
+        <Text.Label>{formatTime(position)}</Text.Label>
+        <Text.Label>{formatTime(duration)}</Text.Label>
       </Row>
 
-      {/* Progress Bar */}
-      <Pressable
+      <PressableBase
         onPress={e => {
           const {locationX} = e.nativeEvent
-          const {width} = e.currentTarget.measure?.(rect => rect) || {
-            width: 0,
-          }
-          if (width > 0) {
-            const seekPosition = (locationX / width) * duration
-            handleSeek(seekPosition)
-          }
-        }}
-        style={styles.progressBarContainer}>
-        <View style={styles.progressBarBackground}>
-          <View
-            style={[
-              styles.progressBarFill,
-              {width: `${progress * 100}%`},
-            ]}
-          />
-        </View>
-      </Pressable>
 
-      {/* Controls */}
+          e.currentTarget.measure((_x, _y, width) => {
+            if (width > 0) {
+              const seekPositionSeconds =
+                (locationX / width) * (duration / 1000)
+
+              handleSeek(seekPositionSeconds)
+            }
+          })
+        }}>
+        <Row
+          style={styles.progressBarBackground}
+          padding="no">
+          <Row
+            padding="sm"
+            flex={1}
+            stretch
+            style={[styles.progressBarFill, {width: `${progress * 100}%`}]}
+          />
+        </Row>
+      </PressableBase>
+
       <Button
-        label={isPlaying ? '⏸ Pause' : '▶ Play'}
+        label={status.playing ? '⏸ Pause' : '▶ Play'}
         onPress={togglePlayback}
-        disabled={!sound}
-        size="small"
       />
     </Column>
   )
 }
 
 const styles = StyleSheet.create(theme => ({
-  progressBarContainer: {
-    width: '100%',
-    paddingVertical: theme.spacing.xs,
-  },
   progressBarBackground: {
-    width: '100%',
-    height: 4,
-    backgroundColor: theme.colors.surface.secondary,
-    borderRadius: 2,
+    backgroundColor: theme.color.pressable.secondary.default.background,
     overflow: 'hidden',
   },
   progressBarFill: {
-    height: '100%',
-    backgroundColor: theme.colors.border.accent,
-  },
-  errorText: {
-    color: theme.colors.text.error,
+    backgroundColor: theme.color.border.default,
   },
 }))

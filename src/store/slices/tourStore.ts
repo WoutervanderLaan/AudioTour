@@ -103,23 +103,23 @@ type TourState = {
    */
   feedLoading: boolean
   /**
-   * lastPhotoUri (legacy, kept for backward compatibility)
+   * @deprecated URI of the last photo taken by the user during the tour, used for object recognition
    */
   lastPhotoUri?: string
   /**
-   * currentObjectId (legacy, kept for backward compatibility)
+   * @deprecated Unique identifier of the currently recognized museum object from the photo
    */
   currentObjectId?: string
   /**
-   * recognitionConfidence (legacy, kept for backward compatibility)
+   * @deprecated Confidence score (0-1) indicating the accuracy of the object recognition result
    */
   recognitionConfidence?: number
   /**
-   * narrativeText (legacy, kept for backward compatibility)
+   * @deprecated Generated narrative text describing the museum object and its context
    */
   narrativeText?: string
   /**
-   * audioUrl (legacy, kept for backward compatibility)
+   * @deprecated URL to the generated audio file containing the spoken narrative
    */
   audioUrl?: string
   /**
@@ -139,11 +139,11 @@ type TourState = {
    */
   getFeedItem: (id: string) => FeedItem | undefined
   /**
-   * setLastPhoto (legacy)
+   * @deprecated Updates the URI of the last captured photo
    */
   setLastPhoto: (uri?: string) => void
   /**
-   * setLastPhotoData (legacy)
+   * @deprecated setLastPhotoData (legacy)
    */
   setLastPhotoData: (
     uri: string,
@@ -151,15 +151,15 @@ type TourState = {
     recognitionConfidence: number,
   ) => void
   /**
-   * setNarrativeText (legacy)
+   * @deprecated Updates the narrative text for the current tour object
    */
   setNarrativeText: (narrativeText: string) => void
   /**
-   * setAudioUrl (legacy)
+   * @deprecated Updates the audio URL for the current narrative
    */
   setAudioUrl: (audioUrl: string) => void
   /**
-   * reset
+   * Resets all tour state to initial values, clearing photo, object, narrative, and audio data
    */
   reset: () => void
 }

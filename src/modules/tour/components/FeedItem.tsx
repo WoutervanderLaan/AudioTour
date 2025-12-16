@@ -1,13 +1,16 @@
 import React from 'react'
-import {ActivityIndicator, Image, Pressable, View} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
+import {ActivityIndicator} from 'react-native'
 
-import type {FeedItem as FeedItemType} from '@/store/slices/tourStore'
+import {getFeedItemStatusText} from '../utils/getFeedItemStatusText'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
+import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
+import {Thumbnail} from '@/shared/components/ui/thumbnail/Thumbnail'
 import {Text} from '@/shared/components/ui/typography'
+import type {FeedItem as FeedItemType} from '@/store/slices/tourStore'
 
 /**
  * FeedItemProps
@@ -24,31 +27,7 @@ type FeedItemProps = {
   onPress: () => void
 }
 
-/**
- * getStatusText
- * Returns human-readable status text for a feed item status
- *
- * @param status - Feed item status
- * @returns Status text to display
- */
-const getStatusText = (status: FeedItemType['status']): string => {
-  switch (status) {
-    case 'uploading':
-      return 'Uploading photos...'
-    case 'processing':
-      return 'Processing...'
-    case 'generating_narrative':
-      return 'Generating narrative...'
-    case 'generating_audio':
-      return 'Generating audio...'
-    case 'ready':
-      return 'Ready'
-    case 'error':
-      return 'Error occurred'
-    default:
-      return 'Processing...'
-  }
-}
+const MAX_PHOTOS = 4
 
 /**
  * FeedItem
@@ -63,108 +42,64 @@ export const FeedItem = ({item, onPress}: FeedItemProps): React.JSX.Element => {
   const showAudio = item.status === 'ready' && item.audioUrl
 
   return (
-    <Pressable
-      onPress={onPress}
-      style={styles.container}>
-      <Column gap="sm">
-        {/* Photo Grid */}
+    <PressableBase onPress={onPress}>
+      <Column
+        gap="sm"
+        padding="md">
         {item.photos.length > 0 && (
           <Row
             gap="xs"
-            flexWrap="wrap">
-            {item.photos.slice(0, 4).map((photo, index) => (
-              <Image
-                key={index}
+            wrap="wrap">
+            {item.photos.slice(0, MAX_PHOTOS).map((photo, index) => (
+              <Thumbnail
+                key={`photo-${index + 1}`}
                 source={{uri: photo}}
-                style={styles.photo}
                 resizeMode="cover"
               />
             ))}
             {item.photos.length > 4 && (
-              <View style={styles.morePhotos}>
-                <Text.Label style={styles.morePhotosText}>
+              <Box>
+                <Text.Label color="secondary">
                   +{item.photos.length - 4}
                 </Text.Label>
-              </View>
+              </Box>
             )}
           </Row>
         )}
 
-        {/* Metadata if available */}
-        {item.metadata?.title && (
-          <Text.Body
-            weight="semibold"
-            numberOfLines={2}>
+        {!!item.metadata?.title && (
+          <Text.Paragraph numberOfLines={2}>
             {item.metadata.title}
-          </Text.Body>
+          </Text.Paragraph>
         )}
 
-        {item.metadata?.artist && (
-          <Text.Caption numberOfLines={1}>{item.metadata.artist}</Text.Caption>
+        {!!item.metadata?.artist && (
+          <Text.Label numberOfLines={1}>{item.metadata.artist}</Text.Label>
         )}
 
-        {/* Loading State */}
-        {isLoading && (
+        {!!isLoading && (
           <Row
             gap="sm"
-            alignItems="center">
+            center>
             <ActivityIndicator size="small" />
-            <Text.Caption>{getStatusText(item.status)}</Text.Caption>
+            <Text.Label>{getFeedItemStatusText(item.status)}</Text.Label>
           </Row>
         )}
 
-        {/* Error State */}
         {item.status === 'error' && (
-          <Text.Caption style={styles.errorText}>
+          <Text.Label color="warning">
             {item.error || 'An error occurred'}
-          </Text.Caption>
+          </Text.Label>
         )}
 
-        {/* Narrative Preview */}
-        {item.narrativeText && (
-          <Text.Body
-            numberOfLines={3}
-            style={styles.narrative}>
+        {!!item.narrativeText && (
+          <Text.Paragraph numberOfLines={3}>
             {item.narrativeText}
-          </Text.Body>
+          </Text.Paragraph>
         )}
 
-        {/* Audio Player */}
-        {showAudio && <AudioPlayer src={item.audioUrl!} />}
+        {Boolean(showAudio) && <AudioPlayer src={item.audioUrl!} />}
       </Column>
-    </Pressable>
+    </PressableBase>
   )
 }
-
-const styles = StyleSheet.create(theme => ({
-  container: {
-    backgroundColor: theme.colors.surface.primary,
-    borderRadius: theme.borderRadius.md,
-    padding: theme.spacing.md,
-    borderWidth: 1,
-    borderColor: theme.colors.border.primary,
-  },
-  photo: {
-    width: 80,
-    height: 80,
-    borderRadius: theme.borderRadius.sm,
-  },
-  morePhotos: {
-    width: 80,
-    height: 80,
-    borderRadius: theme.borderRadius.sm,
-    backgroundColor: theme.colors.surface.secondary,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  morePhotosText: {
-    color: theme.colors.text.secondary,
-  },
-  errorText: {
-    color: theme.colors.text.error,
-  },
-  narrative: {
-    color: theme.colors.text.secondary,
-    fontStyle: 'italic',
-  },
-}))

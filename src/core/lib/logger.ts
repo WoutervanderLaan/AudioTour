@@ -15,11 +15,11 @@ export enum LogLevel {
  */
 type LoggerConfig = {
   /**
-   * enabled
+   * Whether logging is enabled (typically true in development, false in production)
    */
   enabled: boolean
   /**
-   * minLevel
+   * Minimum log level required for messages to be output
    */
   minLevel: LogLevel
 }

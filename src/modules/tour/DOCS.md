@@ -17,12 +17,15 @@ The Tour module handles the complete audio tour experience, from initialization 
 ## Screens
 
 ### TourHomeScreen
+
 Landing screen for starting a new tour. Displays app title and call-to-action to begin a new tour session.
 
 **Route**: `TourRouteName.home`
 
 ### TourFeedScreen
+
 Main tour interface showing a feed of captured objects. Features:
+
 - Feed items with photos and audio
 - Camera button for capturing new objects
 - Loading states during audio generation
@@ -31,12 +34,15 @@ Main tour interface showing a feed of captured objects. Features:
 **Route**: `TourRouteName.feed`
 
 ### TourCameraScreen
+
 Camera interface for capturing photos of museum objects. Handles camera permissions and photo capture.
 
 **Route**: `TourRouteName.camera`
 
 ### TourPhotoSubmitScreen (Modal)
+
 Modal screen for submitting captured photos with optional metadata. Features:
+
 - Multi-photo support (add/delete)
 - Form fields: title, artist, year, material, description
 - Submit and cancel actions
@@ -44,7 +50,9 @@ Modal screen for submitting captured photos with optional metadata. Features:
 **Route**: `TourRouteName.photoSubmit` (modal)
 
 ### TourObjectDetailScreen
+
 Detailed view of a captured object showing:
+
 - Photo gallery (swipeable for multiple photos)
 - All metadata fields
 - Generated narrative text
@@ -66,6 +74,7 @@ See `src/modules/tour/api/` for mutation hooks.
 ## State Management
 
 Tour state is managed through:
+
 - `src/store/slices/tourStore.ts` - Tour session and feed items
 - `src/store/slices/museumStore.ts` - Museum location and context
 - `src/store/slices/userSessionStore.ts` - User session tracking
@@ -73,26 +82,31 @@ Tour state is managed through:
 ## Hooks
 
 ### useTourInitialization
+
 Initializes a new tour session with location services and museum detection.
 
 **Location**: `src/modules/tour/hooks/useTourInitialization.ts`
 
 **Usage**:
+
 ```typescript
-const { initialize, isLoading, error, nearestMuseum } = useTourInitialization()
+const {initialize, isLoading, error, nearestMuseum} = useTourInitialization()
 ```
 
 ### useProcessArtwork
+
 Mutation hook for uploading photos and getting object recognition.
 
 **Location**: `src/modules/tour/api/useTourMutations.ts`
 
 ### useGenerateNarrative
+
 Mutation hook for generating narrative text from object data.
 
 **Location**: `src/modules/tour/api/useTourMutations.ts`
 
 ### useGenerateAudio
+
 Mutation hook for generating audio from narrative text.
 
 **Location**: `src/modules/tour/api/useTourMutations.ts`
@@ -100,6 +114,7 @@ Mutation hook for generating audio from narrative text.
 ## Components
 
 ### FeedItem
+
 Displays a single tour item in the feed with photos, loading state, and audio player.
 
 **Location**: `src/modules/tour/components/FeedItem.tsx`

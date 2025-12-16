@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import {FlatList, View} from 'react-native'
+import React from 'react'
+import {FlatList} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {useTourInitialization} from '../hooks/useTourInitialization'
@@ -8,6 +8,7 @@ import {TourRouteName} from '../routes.types'
 import {FeedItem} from '@/modules/tour/components/FeedItem'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
+import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
@@ -24,135 +25,65 @@ import {useTourStore} from '@/store/slices/tourStore'
  */
 export const TourFeedScreen = (): React.JSX.Element => {
   const {navigate} = useNavigation()
-  const {isLoading: initLoading, nearestMuseum} = useTourInitialization()
+  const {isLoading: isLoadingTour} = useTourInitialization()
 
   const feedItems = useTourStore(state => state.feedItems)
   const feedLoading = useTourStore(state => state.feedLoading)
 
-  /**
-   * handleCameraPress
-   * Navigates to the camera screen to capture photos
-   *
-   * @returns void
-   */
-  const handleCameraPress = (): void => {
-    navigate(TourRouteName.camera, {existingPhotos: []})
-  }
-
-  /**
-   * handleItemPress
-   * Navigates to the detail screen for a feed item
-   *
-   * @param feedItemId - ID of the feed item to view
-   * @returns void
-   */
-  const handleItemPress = (feedItemId: string): void => {
-    navigate(TourRouteName.objectDetail, {feedItemId})
-  }
-
-  /**
-   * renderEmptyState
-   * Renders the empty state when no feed items exist
-   *
-   * @returns Empty state component
-   */
-  const renderEmptyState = (): React.JSX.Element => {
-    return (
-      <Box
-        flex={1}
-        center
-        paddingH="lg">
-        <Column
-          gap="md"
-          center>
-          {initLoading ? (
-            <Text.Body>Initializing tour...</Text.Body>
-          ) : (
-            <>
-              {nearestMuseum ? (
-                <>
-                  <Text.H3 style={styles.emptyTitle}>
-                    Welcome to {nearestMuseum.name}!
-                  </Text.H3>
-                  <Text.Body style={styles.emptyText}>
-                    Start capturing museum objects to begin your audio tour
-                  </Text.Body>
-                </>
-              ) : (
-                <>
-                  <Text.H3 style={styles.emptyTitle}>Start Your Tour</Text.H3>
-                  <Text.Body style={styles.emptyText}>
-                    Capture museum objects to create your personalized audio
-                    tour
-                  </Text.Body>
-                </>
-              )}
-            </>
+  return (
+    <Screen.Static>
+      <Box flex={1}>
+        <FlatList
+          ListEmptyComponent={
+            <Box
+              flex={1}
+              center
+              paddingH="lg">
+              <Column
+                gap="md"
+                justifyContent="flex-end"
+                center>
+                {isLoadingTour ? (
+                  <Text.Paragraph>Initializing tour...</Text.Paragraph>
+                ) : (
+                  <Text.Paragraph>
+                    Add a first Artwork to start the tour
+                  </Text.Paragraph>
+                )}
+              </Column>
+            </Box>
+          }
+          data={feedItems}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <FeedItem
+              item={item}
+              onPress={() =>
+                navigate(TourRouteName.objectDetail, {feedItemId: item.id})
+              }
+            />
           )}
+          contentContainerStyle={styles.listContent}
+          ItemSeparatorComponent={() => <Spacer size="md" />}
+        />
+
+        <Column
+          padding="md"
+          paddingBottom="xl">
+          <Button
+            label="New Artwork"
+            onPress={() => navigate(TourRouteName.camera, {existingPhotos: []})}
+            disabled={feedLoading}
+          />
         </Column>
       </Box>
-    )
-  }
-
-  return (
-    <Screen.Default>
-      <View style={styles.container}>
-        {feedItems.length === 0 ? (
-          renderEmptyState()
-        ) : (
-          <FlatList
-            data={feedItems}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <FeedItem
-                item={item}
-                onPress={() => handleItemPress(item.id)}
-              />
-            )}
-            contentContainerStyle={styles.listContent}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
-        )}
-
-        {/* Camera Button */}
-        <Box
-          paddingH="md"
-          paddingV="md"
-          style={styles.cameraButtonContainer}>
-          <Button
-            label="📷 Capture Object"
-            onPress={handleCameraPress}
-            disabled={feedLoading}
-            size="large"
-          />
-        </Box>
-      </View>
-    </Screen.Default>
+    </Screen.Static>
   )
 }
 
 const styles = StyleSheet.create(theme => ({
-  container: {
-    flex: 1,
-  },
   listContent: {
-    padding: theme.spacing.md,
-  },
-  separator: {
-    height: theme.spacing.md,
-  },
-  emptyTitle: {
-    textAlign: 'center',
-    color: theme.colors.text.primary,
-  },
-  emptyText: {
-    textAlign: 'center',
-    color: theme.colors.text.secondary,
-    maxWidth: 300,
-  },
-  cameraButtonContainer: {
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.border.primary,
-    backgroundColor: theme.colors.surface.primary,
+    padding: theme.size.md,
+    flex: 1,
   },
 }))

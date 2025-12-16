@@ -1,7 +1,9 @@
 # User Story Task Breakdown: Audio Tour Feature
 
 ## User Story Summary
+
 Create a complete audio tour flow where users can:
+
 1. Start a new tour from a landing screen
 2. Capture photos of museum objects
 3. Submit photos with optional metadata
@@ -11,6 +13,7 @@ Create a complete audio tour flow where users can:
 ## Current State Analysis
 
 ### Already Implemented ✅
+
 - **State Management**: `tourStore`, `museumStore`, `userSessionStore`
 - **Location Services**: `useUserLocation` hook with museum proximity detection
 - **API Schema**: All endpoint types defined (`/process-artwork`, `/generate-narrative`, `/generate-audio`)
@@ -19,6 +22,7 @@ Create a complete audio tour flow where users can:
 - **Old Screens**: Legacy Capture, ObjectDetail, Narrative screens in `src/modules/old/`
 
 ### Needs Implementation 🔨
+
 - New tour module with proper architecture
 - Complete user flow from landing to detail view
 - Multi-photo support
@@ -33,7 +37,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 1: Module Structure & Foundation**
 
 #### Task 1.1: Create Tour Module Structure
+
 **Complexity**: Low | **Estimated time**: 15 min
+
 - Create `src/modules/tour/` directory
 - Add subdirectories: `api/`, `hooks/`, `screens/`, `components/`, `types/`
 - Create `routes.types.ts` with route definitions
@@ -42,6 +48,7 @@ Create a complete audio tour flow where users can:
 - Add `tour` to `src/modules/slugs.ts` enum
 
 **Acceptance Criteria**:
+
 - Module folder structure follows existing patterns (auth, profile)
 - All required files created
 - Module slug added to enum
@@ -49,13 +56,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 1.2: Define Tour Navigation Types
+
 **Complexity**: Low | **Estimated time**: 15 min
+
 - Define route names enum in `routes.types.ts`
 - Define stack params types for all tour screens
 - Define modal params types
 - Create route type exports
 
 **Routes needed**:
+
 - `TourHome` - Landing screen
 - `TourFeed` - Main tour feed
 - `TourCamera` - Camera capture screen
@@ -63,6 +73,7 @@ Create a complete audio tour flow where users can:
 - `TourObjectDetail` - Object detail view
 
 **Acceptance Criteria**:
+
 - All route types defined with TypeScript
 - Params properly typed for navigation safety
 
@@ -71,7 +82,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 2: Landing/Home Screen**
 
 #### Task 2.1: Create Tour Home Screen
+
 **Complexity**: Low | **Estimated time**: 30 min
+
 - Create `src/modules/tour/screens/TourHomeScreen.tsx`
 - Add app title display
 - Add call-to-action text
@@ -80,6 +93,7 @@ Create a complete audio tour flow where users can:
 - Style according to design system
 
 **Acceptance Criteria**:
+
 - Screen displays title and CTA
 - Button navigates to tour feed on press
 - Uses theme tokens for styling
@@ -88,7 +102,9 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 2.2: Implement Tour Initialization Logic
+
 **Complexity**: Medium | **Estimated time**: 45 min
+
 - Create `src/modules/tour/hooks/useTourInitialization.ts`
 - Trigger location permission request
 - Get user's current location
@@ -98,6 +114,7 @@ Create a complete audio tour flow where users can:
 - Initialize new tour session
 
 **Acceptance Criteria**:
+
 - Location permissions requested on initialization
 - Nearest museum detected (within reasonable radius)
 - Museum set in museumStore
@@ -109,7 +126,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 3: Feed Screen Interface**
 
 #### Task 3.1: Create Basic Feed Screen
+
 **Complexity**: Medium | **Estimated time**: 45 min
+
 - Create `src/modules/tour/screens/TourFeedScreen.tsx`
 - Add FlatList or ScrollView for feed items
 - Add empty state (no items yet)
@@ -118,6 +137,7 @@ Create a complete audio tour flow where users can:
 - Style feed container
 
 **Acceptance Criteria**:
+
 - Feed displays empty state initially
 - Camera button prominently displayed
 - Button navigates to camera screen
@@ -126,7 +146,9 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 3.2: Create Feed Item Component
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - Create `src/modules/tour/components/FeedItem.tsx`
 - Display photo thumbnail(s)
 - Show loading indicator during audio generation
@@ -135,6 +157,7 @@ Create a complete audio tour flow where users can:
 - Handle multiple photos in single item
 
 **Acceptance Criteria**:
+
 - Component displays photos in feed
 - Shows loading state appropriately
 - Navigates to detail on press
@@ -143,13 +166,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 3.3: Implement Feed State Management
+
 **Complexity**: Medium | **Estimated time**: 30 min
+
 - Enhance `src/store/slices/tourStore.ts`
 - Add feed items array to state
 - Add actions: `addFeedItem`, `updateFeedItem`, `setFeedLoading`
 - Define FeedItem type with photos, metadata, audio, status
 
 **Acceptance Criteria**:
+
 - Feed items stored in tour store
 - Actions work correctly
 - Type-safe with TypeScript
@@ -159,7 +185,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 4: Camera Functionality**
 
 #### Task 4.1: Create Camera Screen
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - Create `src/modules/tour/screens/TourCameraScreen.tsx`
 - Request camera permissions on mount
 - Integrate expo-image-picker camera launch
@@ -169,6 +197,7 @@ Create a complete audio tour flow where users can:
 - Add cancel/back button
 
 **Acceptance Criteria**:
+
 - Camera permissions requested on mount
 - Camera interface launches
 - Photo captured and URI obtained
@@ -180,7 +209,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 5: Photo Submission Modal**
 
 #### Task 5.1: Create Photo Submission Modal Screen
+
 **Complexity**: High | **Estimated time**: 2 hours
+
 - Create `src/modules/tour/screens/TourPhotoSubmitScreen.tsx`
 - Display photo thumbnail with delete option
 - Show "add more photos" box (empty bordered with plus icon)
@@ -191,6 +222,7 @@ Create a complete audio tour flow where users can:
 - Use react-hook-form for form handling
 
 **Form Fields**:
+
 ```typescript
 {
   photos: string[] // URIs
@@ -203,6 +235,7 @@ Create a complete audio tour flow where users can:
 ```
 
 **Acceptance Criteria**:
+
 - Photos displayed as thumbnails
 - Can delete individual photos
 - Can add multiple photos (up to limit)
@@ -213,7 +246,9 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 5.2: Implement Photo Management in Modal
+
 **Complexity**: Medium | **Estimated time**: 45 min
+
 - Add state for multiple photos in modal
 - Implement add photo functionality (reopens camera/picker)
 - Implement delete photo functionality
@@ -221,6 +256,7 @@ Create a complete audio tour flow where users can:
 - Reorder photos (optional enhancement)
 
 **Acceptance Criteria**:
+
 - Multiple photos can be added
 - Photos can be deleted individually
 - Photo count displayed
@@ -231,7 +267,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 6: API Integration**
 
 #### Task 6.1: Create Tour API Hooks
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - Create `src/modules/tour/api/useTourMutations.ts`
 - Implement `useProcessArtwork` mutation (upload photos)
 - Implement `useGenerateNarrative` mutation
@@ -240,6 +278,7 @@ Create a complete audio tour flow where users can:
 - Handle loading and error states
 
 **Acceptance Criteria**:
+
 - All mutations implemented with TanStack Query
 - Proper error handling
 - Loading states exposed
@@ -248,7 +287,9 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 6.2: Integrate Photo Submission API
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - On modal submit, convert photos to FormData
 - Call process-artwork endpoint with photos + metadata
 - Store object ID from response
@@ -258,6 +299,7 @@ Create a complete audio tour flow where users can:
 - Navigate back to feed
 
 **Acceptance Criteria**:
+
 - Photos uploaded successfully
 - Metadata included in request
 - Object ID returned and stored
@@ -268,7 +310,9 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 6.3: Handle API Responses and Update Feed
+
 **Complexity**: Medium | **Estimated time**: 45 min
+
 - Update feed item when narrative returns
 - Update feed item when audio returns
 - Handle API errors (show error in feed item)
@@ -276,6 +320,7 @@ Create a complete audio tour flow where users can:
 - Update feed item status
 
 **Acceptance Criteria**:
+
 - Feed item updates as API responses arrive
 - Errors displayed appropriately
 - Retry works for failures
@@ -286,7 +331,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 7: Audio Playback**
 
 #### Task 7.1: Implement Real Audio Player
+
 **Complexity**: Medium | **Estimated time**: 1.5 hours
+
 - Install `expo-av` dependency
 - Enhance `src/shared/components/features/audio-player/AudioPlayer.tsx`
 - Load audio from URL
@@ -297,6 +344,7 @@ Create a complete audio tour flow where users can:
 - Cleanup on unmount
 
 **Acceptance Criteria**:
+
 - Audio loads from URL
 - Play/pause works correctly
 - Progress bar shows playback position
@@ -307,13 +355,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 7.2: Integrate Audio Player in Feed
+
 **Complexity**: Low | **Estimated time**: 30 min
+
 - Add AudioPlayer component to FeedItem
 - Show only when audio URL available
 - Handle audio loading state
 - Auto-play option (optional)
 
 **Acceptance Criteria**:
+
 - Audio player appears when audio ready
 - Player works within feed item
 - Multiple players managed correctly (pause others)
@@ -321,13 +372,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 7.3: Implement Feed Disabling During Generation
+
 **Complexity**: Low | **Estimated time**: 20 min
+
 - Add loading state to feed
 - Disable camera button while processing
 - Show global loading indicator
 - Prevent new submissions during processing
 
 **Acceptance Criteria**:
+
 - Camera button disabled during processing
 - Visual feedback for disabled state
 - Loading indicator visible
@@ -338,7 +392,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 8: Object Detail Screen**
 
 #### Task 8.1: Create Object Detail Screen
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - Create `src/modules/tour/screens/TourObjectDetailScreen.tsx`
 - Display photo gallery (swipeable for multiple photos)
 - Show all metadata fields
@@ -348,6 +404,7 @@ Create a complete audio tour flow where users can:
 - Add back navigation
 
 **Acceptance Criteria**:
+
 - All photos displayed (swipeable if multiple)
 - Metadata shown in structured format
 - Narrative text displayed
@@ -357,13 +414,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 8.2: Implement Navigation from Feed to Detail
+
 **Complexity**: Low | **Estimated time**: 15 min
+
 - Make feed item pressable
 - Navigate to detail screen with object data
 - Pass necessary params (object ID or full data)
 - Handle back navigation
 
 **Acceptance Criteria**:
+
 - Tapping feed item navigates to detail
 - Detail screen receives correct data
 - Back navigation works
@@ -373,13 +433,16 @@ Create a complete audio tour flow where users can:
 ### **Phase 9: Module Registration & Navigation**
 
 #### Task 9.1: Create Module Screen Configuration
+
 **Complexity**: Low | **Estimated time**: 30 min
+
 - Create `src/modules/tour/screenConfig.ts`
 - Register all tour screens (stacks and modals)
 - Configure navigation options (headers, etc.)
 - Export screen configurations
 
 **Acceptance Criteria**:
+
 - All screens registered
 - Navigation options configured
 - Follows existing pattern (auth module)
@@ -387,13 +450,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 9.2: Register Tour Module with App
+
 **Complexity**: Low | **Estimated time**: 20 min
+
 - Complete `src/modules/tour/index.ts` module config
 - Add module to app registry
 - Set up module lifecycle hooks (onRegister, onAppStart)
 - Define module dependencies
 
 **Acceptance Criteria**:
+
 - Module registered with app
 - Lifecycle hooks implemented
 - Module loads on app start
@@ -402,13 +468,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 9.3: Update App Navigation Structure
+
 **Complexity**: Low | **Estimated time**: 30 min
+
 - Add tour home to tab navigator (or main stack)
 - Set as initial route (if desired)
 - Update deep linking configuration
 - Test navigation flows
 
 **Acceptance Criteria**:
+
 - Tour home accessible from main navigation
 - Deep links work
 - All navigation flows tested
@@ -418,13 +487,16 @@ Create a complete audio tour flow where users can:
 ### **Phase 10: State Management Enhancement**
 
 #### Task 10.1: Enhance Tour Store for Multi-Photo Support
+
 **Complexity**: Low | **Estimated time**: 30 min
+
 - Update tour store types to support arrays of photos
 - Update actions to handle multiple photos
 - Add current tour session state
 - Add tour history (optional)
 
 **Acceptance Criteria**:
+
 - Store handles multiple photos per object
 - Tour session tracked
 - Type-safe
@@ -432,13 +504,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 10.2: Implement Tour Session Persistence (Optional)
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - Add zustand persist middleware
 - Save tour history to async storage
 - Restore tour on app restart
 - Clear old tours
 
 **Acceptance Criteria**:
+
 - Tours persist across app restarts
 - Old tours cleared appropriately
 - Performance acceptable
@@ -448,7 +523,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 11: Polish & Error Handling**
 
 #### Task 11.1: Add Error Handling Throughout Flow
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - Add error boundaries
 - Handle API errors with user-friendly messages
 - Handle permission denials
@@ -457,6 +534,7 @@ Create a complete audio tour flow where users can:
 - Show error states in UI
 
 **Acceptance Criteria**:
+
 - All error cases handled
 - User sees helpful error messages
 - Can recover from errors
@@ -465,13 +543,16 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 11.2: Add Loading States and User Feedback
+
 **Complexity**: Low | **Estimated time**: 45 min
+
 - Add loading indicators throughout
 - Add success messages (toast/alert)
 - Add confirmation dialogs where needed
 - Improve button states (loading, disabled)
 
 **Acceptance Criteria**:
+
 - Loading states clear to user
 - Success feedback provided
 - Destructive actions confirmed
@@ -480,7 +561,9 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 11.3: Test Complete User Flow
+
 **Complexity**: Medium | **Estimated time**: 1.5 hours
+
 - Test entire flow end-to-end
 - Test edge cases (no permissions, no network, etc.)
 - Test with multiple photos
@@ -489,6 +572,7 @@ Create a complete audio tour flow where users can:
 - Test on iOS and Android
 
 **Acceptance Criteria**:
+
 - Complete flow works end-to-end
 - Edge cases handled
 - Works on both platforms
@@ -499,7 +583,9 @@ Create a complete audio tour flow where users can:
 ### **Phase 12: Cleanup & Migration**
 
 #### Task 12.1: Remove Deprecated Code from Old Module
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - Identify screens in `src/modules/old/` that are now replaced by tour module
 - Remove or deprecate `Capture.tsx` (replaced by TourCamera + TourPhotoSubmit)
 - Remove or deprecate `ObjectDetail.tsx` (replaced by TourObjectDetail)
@@ -508,6 +594,7 @@ Create a complete audio tour flow where users can:
 - Update old module's route types
 
 **Acceptance Criteria**:
+
 - Deprecated screens removed or marked as deprecated
 - No broken imports or references
 - Old module still functional for any remaining screens
@@ -516,7 +603,9 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 12.2: Move Tour-Specific Global Code to Tour Module
+
 **Complexity**: Medium | **Estimated time**: 1 hour
+
 - Move tour-specific logic from global stores to tour module
 - Review `src/store/slices/tourStore.ts` - keep or move to module
 - Review `src/store/slices/museumStore.ts` - keep or move to module
@@ -525,11 +614,13 @@ Create a complete audio tour flow where users can:
 - Ensure proper module boundaries maintained
 
 **Files to Review**:
+
 - `src/store/slices/tourStore.ts` (might stay global or move)
 - `src/store/slices/museumStore.ts` (might stay global or move)
 - `src/shared/schema.ts` (objectSchema might belong in tour module)
 
 **Acceptance Criteria**:
+
 - Tour-specific code lives in tour module where appropriate
 - Global code is truly app-wide and not tour-specific
 - Module boundaries respected (ESLint passing)
@@ -538,7 +629,9 @@ Create a complete audio tour flow where users can:
 ---
 
 #### Task 12.3: Clean Up Unused Dependencies and Imports
+
 **Complexity**: Low | **Estimated time**: 30 min
+
 - Remove any unused imports from refactored files
 - Run linter and fix any issues
 - Run typecheck and ensure no errors
@@ -546,6 +639,7 @@ Create a complete audio tour flow where users can:
 - Update any outdated comments or documentation
 
 **Acceptance Criteria**:
+
 - Linter passes with no errors
 - TypeScript compilation successful
 - No unused imports
@@ -560,6 +654,7 @@ Create a complete audio tour flow where users can:
 **Estimated Total Time**: ~24.5-27.5 hours
 
 ### Tasks by Phase:
+
 1. **Module Structure**: 2 tasks (~30 min)
 2. **Landing Screen**: 2 tasks (~1.25 hours)
 3. **Feed Screen**: 3 tasks (~2.25 hours)
@@ -574,6 +669,7 @@ Create a complete audio tour flow where users can:
 12. **Cleanup & Migration**: 3 tasks (~2.5 hours)
 
 ### Priority Order:
+
 1. Phase 1 (Foundation) - **Must do first**
 2. Phase 2 (Landing) - **Core flow**
 3. Phase 3 (Feed) - **Core flow**
@@ -612,6 +708,7 @@ Create a complete audio tour flow where users can:
 ## Migration from Old Module
 
 Several screens in `src/modules/old/` have similar functionality:
+
 - `Capture.tsx` - Photo upload logic (can be referenced)
 - `ObjectDetail.tsx` - Detail view pattern (can be referenced)
 - `Narrative.tsx` - Audio narrative pattern (can be referenced)

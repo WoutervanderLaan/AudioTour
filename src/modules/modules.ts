@@ -1,4 +1,5 @@
 import {authModule} from './auth'
+import {notificationsModule} from './notifications'
 import {oldModule} from './old'
 import {onboardingModule} from './onboarding'
 import {profileModule} from './profile'
@@ -17,6 +18,7 @@ export const registerModules = (): void => {
   moduleRegistry.register(oldModule)
   moduleRegistry.register(authModule)
   moduleRegistry.register(onboardingModule)
+  moduleRegistry.register(notificationsModule)
   moduleRegistry.register(profileModule)
   moduleRegistry.register(tourModule)
 }

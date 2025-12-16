@@ -2,11 +2,7 @@ import type React from 'react'
 
 import {AuthRouteName} from '../routes.types'
 
-import {
-  OldModalName,
-  OldRouteName,
-  OldTabName,
-} from '@/modules/old/routes.types'
+import {OldModalName, OldRouteName} from '@/modules/old/routes.types'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
@@ -14,6 +10,7 @@ import {useBanner} from '@/shared/hooks/useBanner'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
+ * @deprecated
  * SocialsScreen - A tab screen for social features with navigation test buttons.
  * Demonstrates navigation to stack screens, modals, and other tabs.
  *
@@ -30,25 +27,12 @@ export const SocialsScreen = (): React.JSX.Element => {
           label="Not Found"
           onPress={() => navigate(OldRouteName.notFound)}
         />
-        <Button
-          label="Narrative"
-          onPress={() => navigate(OldRouteName.narrative)}
-        />
-        <Button
-          label="ObjectDetail"
-          onPress={() =>
-            navigate(OldRouteName.objectDetail, {objectId: '1234'})
-          }
-        />
 
         <Button
           label="Settings"
           onPress={() => navigate(OldModalName.settings)}
         />
-        <Button
-          label="Capture Tab"
-          onPress={() => navigate(OldTabName.capture)}
-        />
+
         <Button
           label="Login"
           onPress={() => navigate(AuthRouteName.login)}

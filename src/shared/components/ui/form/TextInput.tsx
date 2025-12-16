@@ -253,7 +253,7 @@ const styles = StyleSheet.create(theme => ({
     borderRadius: theme.size.sm,
     paddingVertical: theme.size.smd,
     paddingHorizontal: theme.size.md,
-    fontSize: theme.text.fontSize.body,
+    fontSize: theme.text.fontSize.small,
     fontFamily: theme.text.fontFamily.regular,
     color: theme.color.text.default,
     includeFontPadding: false,

@@ -1,5 +1,4 @@
 import React from 'react'
-import {StyleSheet} from 'react-native-unistyles'
 
 import {TourRouteName} from '../routes.types'
 
@@ -20,54 +19,30 @@ import {useNavigation} from '@/shared/hooks/useNavigation'
 export const TourHomeScreen = (): React.JSX.Element => {
   const {navigate} = useNavigation()
 
-  /**
-   * handleStartTour
-   * Navigates to the tour feed screen to begin a new tour session.
-   *
-   * @returns void
-   */
-  const handleStartTour = (): void => {
-    navigate(TourRouteName.feed)
-  }
-
   return (
-    <Screen.Default>
+    <Screen.Static>
       <Box
         flex={1}
         center
-        paddingH="lg"
-        paddingV="xl">
+        paddingH="lg">
         <Column
           gap="xl"
           center>
           <Column
             gap="md"
             center>
-            <Text.H1 style={styles.title}>AudioTour</Text.H1>
-            <Text.Body style={styles.callToAction}>
-              Discover museum treasures with AI-powered audio narratives
-            </Text.Body>
+            <Text.Title>AudioTour</Text.Title>
+            <Text.Paragraph align="center">
+              Discover museum treasures with personalized audio narratives
+            </Text.Paragraph>
           </Column>
 
           <Button
             label="Start new tour"
-            onPress={handleStartTour}
-            size="large"
+            onPress={() => navigate(TourRouteName.feed, {})}
           />
         </Column>
       </Box>
-    </Screen.Default>
+    </Screen.Static>
   )
 }
-
-const styles = StyleSheet.create(theme => ({
-  title: {
-    textAlign: 'center',
-    color: theme.colors.text.primary,
-  },
-  callToAction: {
-    textAlign: 'center',
-    color: theme.colors.text.secondary,
-    maxWidth: 300,
-  },
-}))

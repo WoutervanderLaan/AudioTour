@@ -6,6 +6,10 @@ import type {
   AuthTabParams,
 } from './auth/routes.types'
 import type {
+  NotificationModalParams,
+  NotificationStackParams,
+} from './notifications/routes.types'
+import type {
   OldModalParams,
   OldStackParams,
   OldTabParams,
@@ -20,6 +24,11 @@ import type {
   ProfileTabParams,
 } from './profile/routes.types'
 import type {ModuleSlug} from './slugs'
+import type {
+  TourModalParams,
+  TourStackParams,
+  TourTabParams,
+} from './tour/routes.types'
 
 import type {
   RootStackParams,
@@ -110,8 +119,10 @@ export type ModuleConfig = {
  * ModuleStackParams - Combined type of all module stack screen parameters
  */
 export type ModuleStackParams = AuthStackParams &
+  NotificationStackParams &
   OldStackParams &
   OnboardingStackParams &
+  TourStackParams &
   ProfileStackParams
 
 /**
@@ -119,11 +130,16 @@ export type ModuleStackParams = AuthStackParams &
  */
 export type ModalParams =
   | AuthModalParams
+  | NotificationModalParams
   | OldModalParams
   | OnboardingModalParams
   | ProfileModalParams
+  | TourModalParams
 
 /**
  * TabParams - Combined type of all module tab screen parameters
  */
-export type TabParams = AuthTabParams & OldTabParams & ProfileTabParams
+export type TabParams = AuthTabParams &
+  OldTabParams &
+  ProfileTabParams &
+  TourTabParams

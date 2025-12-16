@@ -1,22 +1,20 @@
+/* eslint-disable max-lines-per-function */
 import React, {useState} from 'react'
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  useWindowDimensions,
-  View,
-} from 'react-native'
+// eslint-disable-next-line no-restricted-imports
+import {Image, ScrollView, useWindowDimensions, View} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import type {TourStackParams} from '../routes.types'
+import type {RouteProp} from '@react-navigation/native'
+
+import type {TourRouteName, TourStackParams} from '../routes.types'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
-import type {RouteProp} from '@/shared/types/navigation'
 import {useTourStore} from '@/store/slices/tourStore'
 
 /**
@@ -27,7 +25,7 @@ type TourObjectDetailScreenProps = {
   /**
    * Navigation route prop
    */
-  route: RouteProp<TourStackParams, 'TourObjectDetail'>
+  route: RouteProp<TourStackParams, TourRouteName.objectDetail>
 }
 
 /**
@@ -40,6 +38,7 @@ type TourObjectDetailScreenProps = {
  */
 export const TourObjectDetailScreen = ({
   route,
+  // eslint-disable-next-line complexity
 }: TourObjectDetailScreenProps): React.JSX.Element => {
   const {feedItemId} = route.params
   const {width} = useWindowDimensions()
@@ -50,34 +49,31 @@ export const TourObjectDetailScreen = ({
 
   if (!feedItem) {
     return (
-      <Screen.Default>
+      <Screen.Static>
         <Box
           flex={1}
           center>
-          <Text.Body>Object not found</Text.Body>
+          <Text.Paragraph>Object not found</Text.Paragraph>
         </Box>
-      </Screen.Default>
+      </Screen.Static>
     )
   }
 
   const hasMultiplePhotos = feedItem.photos.length > 1
 
   return (
-    <Screen.Default>
+    <Screen.Static>
       <ScrollView>
         <Column gap="lg">
-          {/* Photo Gallery */}
           {feedItem.photos.length > 0 && (
             <View>
-              {/* Main Photo */}
               <Image
                 source={{uri: feedItem.photos[activePhotoIndex]}}
                 style={[styles.mainPhoto, {width, height: width}]}
                 resizeMode="cover"
               />
 
-              {/* Photo Indicators */}
-              {hasMultiplePhotos && (
+              {!!hasMultiplePhotos && (
                 <Row
                   gap="xs"
                   center
@@ -95,133 +91,120 @@ export const TourObjectDetailScreen = ({
               )}
 
               {/* Thumbnail Strip */}
-              {hasMultiplePhotos && (
+              {!!hasMultiplePhotos && (
                 <ScrollView
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   contentContainerStyle={styles.thumbnailStrip}>
                   {feedItem.photos.map((photo, index) => (
-                    <Image
+                    <PressableBase
                       key={index}
-                      source={{uri: photo}}
-                      style={[
-                        styles.thumbnail,
-                        index === activePhotoIndex &&
-                          styles.activeThumbnail,
-                      ]}
-                      resizeMode="cover"
-                      onTouchEnd={() => setActivePhotoIndex(index)}
-                    />
+                      onTouchEnd={() => setActivePhotoIndex(index)}>
+                      <Image
+                        source={{uri: photo}}
+                        style={[
+                          styles.thumbnail,
+                          index === activePhotoIndex && styles.activeThumbnail,
+                        ]}
+                        resizeMode="cover"
+                      />
+                    </PressableBase>
                   ))}
                 </ScrollView>
               )}
             </View>
           )}
 
-          {/* Content */}
           <Box
             paddingH="md"
             paddingV="lg">
             <Column gap="lg">
-              {/* Title and Artist */}
-              {feedItem.metadata?.title && (
-                <Text.H2>{feedItem.metadata.title}</Text.H2>
+              {!!feedItem.metadata?.title && (
+                <Text.Title>{feedItem.metadata.title}</Text.Title>
               )}
 
-              {feedItem.metadata?.artist && (
-                <Text.Body
-                  weight="semibold"
-                  style={styles.artist}>
-                  {feedItem.metadata.artist}
-                </Text.Body>
+              {!!feedItem.metadata?.artist && (
+                <Text.Paragraph>{feedItem.metadata.artist}</Text.Paragraph>
               )}
 
-              {/* Year and Material */}
-              {(feedItem.metadata?.year || feedItem.metadata?.material) && (
+              {!!(feedItem.metadata?.year || feedItem.metadata?.material) && (
                 <Row
                   gap="md"
-                  flexWrap="wrap">
-                  {feedItem.metadata?.year && (
-                    <Text.Caption>{feedItem.metadata.year}</Text.Caption>
+                  wrap="wrap">
+                  {!!feedItem.metadata?.year && (
+                    <Text.Label>{feedItem.metadata.year}</Text.Label>
                   )}
-                  {feedItem.metadata?.material && (
-                    <Text.Caption>{feedItem.metadata.material}</Text.Caption>
+                  {!!feedItem.metadata?.material && (
+                    <Text.Label>{feedItem.metadata.material}</Text.Label>
                   )}
                 </Row>
               )}
 
-              {/* Description */}
-              {feedItem.metadata?.description && (
+              {!!feedItem.metadata?.description && (
                 <Column gap="xs">
-                  <Text.Label weight="semibold">Description</Text.Label>
-                  <Text.Body style={styles.description}>
+                  <Text.Label>Description</Text.Label>
+                  <Text.Paragraph>
                     {feedItem.metadata.description}
-                  </Text.Body>
+                  </Text.Paragraph>
                 </Column>
               )}
 
-              {/* Recognition Info */}
               {feedItem.recognitionConfidence !== undefined && (
                 <Column gap="xs">
-                  <Text.Label weight="semibold">Recognition</Text.Label>
-                  <Text.Caption>
+                  <Text.Label>Recognition</Text.Label>
+                  <Text.Label>
                     Confidence: {feedItem.recognitionConfidence.toFixed(1)}%
-                  </Text.Caption>
-                  {feedItem.objectId && (
-                    <Text.Caption>Object ID: {feedItem.objectId}</Text.Caption>
+                  </Text.Label>
+                  {!!feedItem.objectId && (
+                    <Text.Label>Object ID: {feedItem.objectId}</Text.Label>
                   )}
                 </Column>
               )}
 
-              {/* Narrative */}
-              {feedItem.narrativeText && (
+              {!!feedItem.narrativeText && (
                 <Column gap="xs">
-                  <Text.Label weight="semibold">Narrative</Text.Label>
-                  <Text.Body style={styles.narrative}>
-                    {feedItem.narrativeText}
-                  </Text.Body>
+                  <Text.Label>Narrative</Text.Label>
+                  <Text.Paragraph>{feedItem.narrativeText}</Text.Paragraph>
                 </Column>
               )}
 
-              {/* Audio Player */}
-              {feedItem.audioUrl && (
+              {!!feedItem.audioUrl && (
                 <Column gap="xs">
-                  <Text.Label weight="semibold">Audio Tour</Text.Label>
+                  <Text.Label>Audio Tour</Text.Label>
                   <AudioPlayer src={feedItem.audioUrl} />
                 </Column>
               )}
 
-              {/* Status Info */}
               {feedItem.status !== 'ready' && (
-                <Box style={styles.statusBox}>
-                  <Text.Caption>
-                    Status: {feedItem.status.replace(/_/g, ' ')}
-                  </Text.Caption>
+                <Box>
+                  <Text.Label>
+                    Status: {feedItem.status.replaceAll('_', ' ')}
+                  </Text.Label>
                 </Box>
               )}
 
-              {feedItem.error && (
-                <Box style={styles.errorBox}>
-                  <Text.Caption style={styles.errorText}>
+              {!!feedItem.error && (
+                <Box>
+                  <Text.Label color="warning">
                     Error: {feedItem.error}
-                  </Text.Caption>
+                  </Text.Label>
                 </Box>
               )}
             </Column>
           </Box>
         </Column>
       </ScrollView>
-    </Screen.Default>
+    </Screen.Static>
   )
 }
 
 const styles = StyleSheet.create(theme => ({
   mainPhoto: {
-    backgroundColor: theme.colors.surface.secondary,
+    backgroundColor: theme.color.screen.background.default,
   },
   photoIndicators: {
     position: 'absolute',
-    bottom: theme.spacing.md,
+    bottom: theme.size.md,
     left: 0,
     right: 0,
   },
@@ -229,49 +212,26 @@ const styles = StyleSheet.create(theme => ({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: theme.colors.surface.secondary,
+    backgroundColor: theme.color.text.default,
     opacity: 0.6,
   },
   activeIndicator: {
-    backgroundColor: theme.colors.surface.primary,
+    backgroundColor: theme.color.text.default,
     opacity: 1,
   },
   thumbnailStrip: {
-    paddingHorizontal: theme.spacing.sm,
-    paddingVertical: theme.spacing.sm,
-    gap: theme.spacing.sm,
+    paddingHorizontal: theme.size.sm,
+    paddingVertical: theme.size.sm,
+    gap: theme.size.sm,
   },
   thumbnail: {
     width: 60,
     height: 60,
-    borderRadius: theme.borderRadius.sm,
+    borderRadius: theme.size.sm,
     borderWidth: 2,
     borderColor: 'transparent',
   },
   activeThumbnail: {
-    borderColor: theme.colors.border.accent,
-  },
-  artist: {
-    color: theme.colors.text.secondary,
-  },
-  description: {
-    color: theme.colors.text.secondary,
-  },
-  narrative: {
-    color: theme.colors.text.secondary,
-    fontStyle: 'italic',
-  },
-  statusBox: {
-    padding: theme.spacing.sm,
-    backgroundColor: theme.colors.surface.secondary,
-    borderRadius: theme.borderRadius.sm,
-  },
-  errorBox: {
-    padding: theme.spacing.sm,
-    backgroundColor: theme.colors.surface.error,
-    borderRadius: theme.borderRadius.sm,
-  },
-  errorText: {
-    color: theme.colors.text.error,
+    borderColor: theme.color.text.link,
   },
 }))
