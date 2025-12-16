@@ -1,0 +1,23 @@
+import z from 'zod'
+
+/**
+ * photoSubmitSchema
+ * Validation schema for photo submission form
+ */
+export const photoSubmitSchema = z.object({
+  photos: z
+    .array(z.string())
+    .max(5, 'Only five photos can be used at once')
+    .min(1, 'Add at least one photo'),
+  title: z.string().optional(),
+  artist: z.string().optional(),
+  year: z.string().optional(),
+  material: z.string().optional(),
+  description: z.string().optional(),
+})
+
+/**
+ * PhotoSubmitForm
+ * Form data type for photo submission
+ */
+export type PhotoSubmitForm = z.infer<typeof photoSubmitSchema>

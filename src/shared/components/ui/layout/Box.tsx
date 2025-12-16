@@ -84,6 +84,10 @@ export type BoxPropsBase = {
    * When true, stretches the Box to fill available width (sets alignSelf: 'stretch')
    */
   stretch?: boolean
+  /**
+   * wrap
+   */
+  wrap?: ViewStyle['flexWrap']
 } & ViewProps
 
 /**
@@ -131,11 +135,13 @@ export const Box = ({
   paddingBottom,
   paddingLeft,
   stretch,
+  wrap,
 }: BoxProps): React.JSX.Element => {
   const {theme} = useUnistyles()
 
   const dynamic: ViewStyle = {
     flex,
+    flexWrap: wrap,
     flexShrink: flex === undefined ? 0 : undefined,
     flexDirection: row ? 'row' : column ? 'column' : undefined,
     justifyContent: center || centerY ? 'center' : justifyContent,
