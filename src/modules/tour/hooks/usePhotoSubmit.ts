@@ -2,11 +2,11 @@ import {
   useGenerateAudio,
   useGenerateNarrative,
   useProcessArtwork,
-} from '../api/useTourMutations'
+} from '../api/mutations'
+import type {FeedItemMetadata} from '../types'
 
+import {logger} from '@/core/lib/logger'
 import {useTourActions} from '@/modules/tour/store/selectors'
-import type {FeedItemMetadata} from '@/modules/tour/store/useTourStore'
-import {useLogger} from '@/shared/hooks/useLogger'
 
 /**
  * SubmitReturn
@@ -38,8 +38,6 @@ export const usePhotoSubmit = (): {
   isLoading: boolean
 } => {
   const {addFeedItem, updateFeedItem, setFeedLoading} = useTourActions()
-
-  const logger = useLogger()
 
   const processArtwork = useProcessArtwork()
   const generateNarrative = useGenerateNarrative()

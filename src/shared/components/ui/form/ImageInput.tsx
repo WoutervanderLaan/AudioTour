@@ -5,9 +5,9 @@ import * as ImagePicker from 'expo-image-picker'
 
 import {logger} from '@/core/lib/logger'
 import {AddPhoto} from '@/shared/components/features/add-photo/AddPhoto'
+import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {Thumbnail} from '@/shared/components/ui/thumbnail/Thumbnail'
 import {Text} from '@/shared/components/ui/typography'
 
 /**

@@ -22,7 +22,7 @@ export const authModule: ModuleConfig = {
   modals: authModals,
   tabs: authTabs,
 
-  dependencies: [ModuleSlug.old],
+  dependencies: [],
 
   onRegister: () => {
     logger.debug('Auth Module registered')

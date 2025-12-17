@@ -1,7 +1,7 @@
 import type {Meta} from '@storybook/react-native-web-vite'
 
 import {Thumbnail} from './Thumbnail'
-import {Box} from '../layout/Box'
+import {Box} from '@/shared/components/ui/layout/Box'
 
 const meta = {
   title: 'UI/Thumbnail',

@@ -1,4 +1,4 @@
-import type {FeedItem} from '@/modules/tour/store/useTourStore'
+import type {FeedItem} from '@/modules/tour/types'
 
 /**
  * getStatusText

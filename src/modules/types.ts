@@ -10,11 +10,6 @@ import type {
   NotificationStackParams,
 } from './notifications/routes.types'
 import type {
-  OldModalParams,
-  OldStackParams,
-  OldTabParams,
-} from './old/routes.types'
-import type {
   OnboardingModalParams,
   OnboardingStackParams,
 } from './onboarding/routes.types'
@@ -120,7 +115,6 @@ export type ModuleConfig = {
  */
 export type ModuleStackParams = AuthStackParams &
   NotificationStackParams &
-  OldStackParams &
   OnboardingStackParams &
   TourStackParams &
   ProfileStackParams
@@ -131,15 +125,11 @@ export type ModuleStackParams = AuthStackParams &
 export type ModalParams =
   | AuthModalParams
   | NotificationModalParams
-  | OldModalParams
   | OnboardingModalParams
-  | ProfileModalParams
   | TourModalParams
+  | ProfileModalParams
 
 /**
  * TabParams - Combined type of all module tab screen parameters
  */
-export type TabParams = AuthTabParams &
-  OldTabParams &
-  ProfileTabParams &
-  TourTabParams
+export type TabParams = AuthTabParams & TourTabParams & ProfileTabParams

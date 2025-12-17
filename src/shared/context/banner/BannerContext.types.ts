@@ -1,4 +1,4 @@
-import type {StickyBannerProps} from '@/shared/components/ui/banner/StickyBanner'
+import type {StickyBannerProps} from '@/shared/components/features/banner/StickyBanner'
 
 /**
  * BannerProps

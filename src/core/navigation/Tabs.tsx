@@ -45,7 +45,9 @@ export const Tabs = (): React.JSX.Element => {
   )
 
   return (
-    <Tab.Navigator screenOptions={getTabNavigatorOptions(navTheme)}>
+    <Tab.Navigator
+      initialRouteName="Tour"
+      screenOptions={getTabNavigatorOptions(navTheme)}>
       {bottomTabs}
     </Tab.Navigator>
   )

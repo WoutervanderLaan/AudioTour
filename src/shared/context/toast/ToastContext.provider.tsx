@@ -5,7 +5,7 @@ import * as Crypto from 'expo-crypto'
 import {ToastContext} from './ToastContext'
 import type {ToastProps} from './ToastContext.types'
 
-import {Toast} from '@/shared/components/ui/toast/Toast'
+import {Toast} from '@/shared/components/features/toast/Toast'
 import {DURATION} from '@/shared/constants/ui'
 
 /**

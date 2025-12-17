@@ -1,6 +1,6 @@
 import {useShallow} from 'zustand/shallow'
 
-import type {FeedItem, FeedItemMetadata} from './useTourStore'
+import type {FeedItem, FeedItemMetadata} from '../types'
 import {useTourStore} from './useTourStore'
 
 // Value selectors

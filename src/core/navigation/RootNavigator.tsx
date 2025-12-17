@@ -6,7 +6,6 @@ import {
 } from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
-import {linking} from './linking'
 import {moduleRegistry} from './ModuleRegistry'
 import {Tabs} from './Tabs'
 import {type RootStackParams} from './types'
@@ -69,12 +68,10 @@ export const RootNavigator: React.FC<
   return (
     <NavigationContainer
       {...props}
-      linking={linking}>
-      <Stack.Navigator
-        initialRouteName="Tabs"
-        screenOptions={{headerShown: false}}>
+      linking={undefined /*TODO: add proper linking */}>
+      <Stack.Navigator>
         <Stack.Screen
-          name="Tabs"
+          name="Home"
           component={Tabs}
           options={{headerShown: false}}
         />

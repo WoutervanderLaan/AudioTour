@@ -22,9 +22,8 @@ export const notificationsModule: ModuleConfig = {
 
   stacks: notificationStacks,
   modals: notificationModals,
-  tabs: {},
 
-  dependencies: [ModuleSlug.auth],
+  dependencies: [],
 
   onRegister: () => {
     logger.debug('Notifications Module registered')

@@ -1,6 +1,6 @@
 import {http, HttpResponse} from 'msw'
 
-import {createHandler} from '@/core/api/mocks/createHandler'
+import {createHandler} from '@/core/api/mock-config/createHandler'
 import {wait} from '@/shared/utils/wait'
 
 const TIMEOUT = 2000

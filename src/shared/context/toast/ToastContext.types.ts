@@ -1,4 +1,4 @@
-import type {ToastType} from '@/shared/components/ui/toast/Toast'
+import type {ToastType} from '@/shared/components/features/toast/Toast'
 
 /**
  * ToastProps

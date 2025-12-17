@@ -1,4 +1,5 @@
 import type React from 'react'
+import {useUnistyles} from 'react-native-unistyles'
 
 import {AuthRouteName} from '@/modules/auth/routes.types'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
@@ -15,6 +16,7 @@ import {useNavigation} from '@/shared/hooks/useNavigation'
  * @returns {React.JSX.Element} The profile header button component
  */
 export const ProfileHeaderButton = (): React.JSX.Element => {
+  const {theme} = useUnistyles()
   const {navigate} = useNavigation()
   const isAuthenticated = useAuthStore(state => state.isAuthenticated)
 
@@ -35,6 +37,10 @@ export const ProfileHeaderButton = (): React.JSX.Element => {
       size="md"
       onPress={handlePress}
       accessibilityLabel="Profile"
+      color={
+        // eslint-disable-next-line react/jsx-no-leaked-render
+        isAuthenticated ? theme.color.text.confirm : theme.color.text.default
+      }
       accessibilityHint={
         isAuthenticated ? 'Opens your profile' : 'Opens the login screen'
       }

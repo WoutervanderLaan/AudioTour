@@ -19,7 +19,7 @@ export const onboardingModule: ModuleConfig = {
   stacks: onboardingStacks,
   modals: onboardingModals,
 
-  dependencies: [],
+  dependencies: [ModuleSlug.profile],
 
   onRegister: () => {
     logger.debug('Onboarding Module registered')

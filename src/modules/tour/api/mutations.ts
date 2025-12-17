@@ -1,58 +1,16 @@
 import {useMutation, type UseMutationResult} from '@tanstack/react-query'
 
-import {apiClient} from '@/core/api/client'
 import type {
+  GenerateAudioParams,
   GenerateAudioResponse,
+  GenerateNarrativeParams,
   GenerateNarrativeResponse,
+  ProcessArtworkParams,
   ProcessArtworkResponse,
-} from '@/core/api/schema'
+} from '../types'
+
+import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger'
-import type {FeedItemMetadata} from '@/modules/tour/store/useTourStore'
-
-/**
- * ProcessArtworkParams
- * Parameters for processing artwork photos
- */
-type ProcessArtworkParams = {
-  /**
-   * Array of photo URIs to upload
-   */
-  photos: string[]
-  /**
-   * Optional metadata about the object
-   */
-  metadata?: FeedItemMetadata
-}
-
-/**
- * GenerateNarrativeParams
- * Parameters for generating narrative text
- */
-type GenerateNarrativeParams = {
-  /**
-   * Object ID from recognition
-   */
-  objectId: string
-  /**
-   * Optional context or user preferences
-   */
-  context?: string
-}
-
-/**
- * GenerateAudioParams
- * Parameters for generating audio
- */
-type GenerateAudioParams = {
-  /**
-   * Narrative text to convert to audio
-   */
-  text: string
-  /**
-   * Optional voice/style preferences
-   */
-  voice?: string
-}
 
 /**
  * useProcessArtwork

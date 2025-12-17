@@ -9,8 +9,7 @@ import {
 } from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {StickyBanner} from '../banner/StickyBanner'
-
+import {StickyBanner} from '@/shared/components/features/banner/StickyBanner'
 import {useBanner} from '@/shared/hooks/useBanner'
 import {useKeyboard} from '@/shared/hooks/useKeyboard'
 import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'

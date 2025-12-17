@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import {useMemo} from 'react'
 import {UnistylesRuntime, useUnistyles} from 'react-native-unistyles'
 
 import type {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs'
@@ -104,7 +104,8 @@ export const getStackNavigatorOptions = (
     color: navTheme.header.titleColor,
   },
   headerBackground: BlurBackground,
-  headerRight: () => React.createElement(ProfileHeaderButton),
+  headerRight: ProfileHeaderButton,
+  headerBackButtonDisplayMode: 'minimal',
 })
 
 /**
@@ -142,5 +143,6 @@ export const getTabNavigatorOptions = (
   tabBarInactiveTintColor: navTheme.tabBar.inactiveTintColor,
   headerBackground: BlurBackground,
   tabBarBackground: BlurBackground,
-  headerRight: () => React.createElement(ProfileHeaderButton),
+  headerRight: ProfileHeaderButton,
+  headerBackButtonDisplayMode: 'minimal',
 })

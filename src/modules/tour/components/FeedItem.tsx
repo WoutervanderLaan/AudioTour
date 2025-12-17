@@ -1,15 +1,16 @@
 import React from 'react'
 import {ActivityIndicator} from 'react-native'
 
+import {MAX_PHOTOS} from '../constants'
 import {getFeedItemStatusText} from '../utils/getFeedItemStatusText'
 
-import type {FeedItem as FeedItemType} from '@/modules/tour/store/useTourStore'
+import type {FeedItem as FeedItemType} from '@/modules/tour/types'
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
+import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
-import {Thumbnail} from '@/shared/components/ui/thumbnail/Thumbnail'
 import {Text} from '@/shared/components/ui/typography'
 
 /**
@@ -26,8 +27,6 @@ type FeedItemProps = {
    */
   onPress: () => void
 }
-
-const MAX_PHOTOS = 4
 
 /**
  * FeedItem

@@ -7,8 +7,8 @@ import {StyleSheet} from 'react-native-unistyles'
 import type {RouteProp} from '@react-navigation/native'
 
 import type {TourRouteName, TourStackParams} from '../routes.types'
+import {useFeedItem} from '../store/selectors'
 
-import {useFeedItem} from '@/modules/tour/store/selectors'
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'

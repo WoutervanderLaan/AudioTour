@@ -4,11 +4,11 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
-import {Column} from '../layout/Column'
-import {Row} from '../layout/Row'
-import {IconButton} from '../pressable/IconButton'
-import {PressableBase} from '../pressable/PressableBase'
-import {Text} from '../typography'
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Row} from '@/shared/components/ui/layout/Row'
+import {IconButton} from '@/shared/components/ui/pressable'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * StickyBannerProps

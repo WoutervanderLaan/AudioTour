@@ -1,6 +1,7 @@
 import type React from 'react'
 import {useFormContext} from 'react-hook-form'
 
+import {MAX_PHOTOS} from '../constants'
 import type {PhotoSubmitForm} from '../schema'
 
 import {
@@ -11,8 +12,6 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
-
-const MAX_PHOTOS = 5
 
 /**
  * TourPhotoSubmitForm

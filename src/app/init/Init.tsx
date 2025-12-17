@@ -6,7 +6,7 @@ import * as NavigationElements from '@react-navigation/elements'
 import {Asset} from 'expo-asset'
 
 import {useAuthStateListener} from '@/modules/auth/hooks/useAuthStateListener'
-import {ThemedStatusBar} from '@/shared/components/ui/ThemedStatusBar'
+import {ThemedStatusBar} from '@/shared/components/ThemedStatusBar'
 
 Asset.loadAsync([...NavigationElements.Assets])
 
@@ -17,8 +17,8 @@ Asset.loadAsync([...NavigationElements.Assets])
  * @returns Promise that resolves when mocking is enabled
  */
 async function enableMocking(): Promise<void> {
-  await import('@/core/api/mocks/msw.polyfills')
-  const {server} = await import('@/core/api/mocks/server.native')
+  await import('@/core/api/mock-config/msw.polyfills')
+  const {server} = await import('@/core/api/mock-config/server.native')
   server.listen()
 }
 
