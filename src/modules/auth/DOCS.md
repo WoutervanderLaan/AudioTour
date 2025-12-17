@@ -8,6 +8,7 @@ Authentication module handling user login, registration, and auth state manageme
 - **hooks/** - Auth-specific hooks (useAuth)
 - **screens/** - Login and register screens
 - **store/** - Auth state management with Zustand (selectors and store)
+- **schema.ts** - Auth form validation schemas using Zod
 - **types.ts** - Auth-related TypeScript types
 - **routes.types.ts** - Auth route type definitions
 - **screenConfig.ts** - Auth navigation stack and routes configuration

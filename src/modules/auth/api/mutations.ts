@@ -176,7 +176,28 @@ export const useRegisterMutation = (
 }
 
 /**
- * Manual token refresh mutation (optional - mostly handled automatically)
+ * React Query mutation hook for manually refreshing authentication tokens.
+ *
+ * This mutation allows you to manually trigger a token refresh using the stored
+ * refresh token. Note that token refresh is typically handled automatically by
+ * the API client's interceptors, so this hook is mainly for advanced use cases
+ * or manual token management.
+ *
+ * @param options - Optional TanStack Query mutation options (onSuccess, onError, etc.)
+ * @returns Mutation result with mutate function and status
+ *
+ * @example
+ * ```tsx
+ * const refreshMutation = useRefreshTokenMutation()
+ *
+ * const handleManualRefresh = () => {
+ *   refreshMutation.mutate()
+ * }
+ *
+ * if (refreshMutation.isError) {
+ *   console.error('Token refresh failed')
+ * }
+ * ```
  */
 export const useRefreshTokenMutation = (
   options?: Omit<

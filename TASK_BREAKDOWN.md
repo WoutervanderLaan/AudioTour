@@ -334,7 +334,7 @@ Create a complete audio tour flow where users can:
 
 **Complexity**: Medium | **Estimated time**: 1.5 hours
 
-- Install `expo-av` dependency
+- Install `expo-audio` dependency
 - Enhance `src/shared/components/features/audio-player/AudioPlayer.tsx`
 - Load audio from URL
 - Implement play/pause

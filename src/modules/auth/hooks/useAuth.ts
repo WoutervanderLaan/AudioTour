@@ -16,7 +16,49 @@ import type {
 } from '@/modules/auth/types'
 
 /**
- * Main auth hook that combines store and queries
+ * Main authentication hook that provides a unified interface for auth operations.
+ *
+ * This hook combines the auth store (Zustand) with authentication queries and
+ * mutations (TanStack Query) to provide a complete authentication interface.
+ * It exposes user state, authentication status, loading states, and action
+ * functions for login, logout, and registration.
+ *
+ * @returns Object containing auth state, loading states, actions, and errors
+ * @returns user - The currently authenticated user or null
+ * @returns tokens - The current authentication tokens or null
+ * @returns isAuthenticated - Whether the user is currently authenticated
+ * @returns isInitialized - Whether the auth state has been initialized
+ * @returns session - The current session data from the server
+ * @returns isLoading - Whether the session query is loading
+ * @returns isLoggingIn - Whether a login operation is in progress
+ * @returns isLoggingOut - Whether a logout operation is in progress
+ * @returns isRegistering - Whether a registration operation is in progress
+ * @returns login - Function to authenticate with email and password
+ * @returns logout - Function to log out the current user
+ * @returns register - Function to register a new user account
+ * @returns loginError - Error from the most recent login attempt
+ * @returns logoutError - Error from the most recent logout attempt
+ * @returns registerError - Error from the most recent registration attempt
+ *
+ * @example
+ * ```tsx
+ * const {
+ *   user,
+ *   isAuthenticated,
+ *   isLoggingIn,
+ *   login,
+ *   logout,
+ *   loginError
+ * } = useAuth()
+ *
+ * const handleLogin = async () => {
+ *   await login({ email: 'user@example.com', password: 'password123' })
+ * }
+ *
+ * if (isLoggingIn) return <Text>Logging in...</Text>
+ * if (loginError) return <Text>Error: {loginError.message}</Text>
+ * if (isAuthenticated) return <Text>Welcome, {user?.name}</Text>
+ * ```
  */
 export const useAuth = (): {
   user: User | null
