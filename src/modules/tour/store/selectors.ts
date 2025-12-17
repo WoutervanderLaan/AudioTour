@@ -1,3 +1,5 @@
+import {shallow} from 'zustand/shallow'
+
 import {useTourStore} from './useTourStore'
 
 import type {FeedItem, FeedItemMetadata} from './useTourStore'
@@ -67,6 +69,7 @@ export const useHasPendingItems = (): boolean =>
 /**
  * useTourActions
  * React hook that returns all tour-related actions for managing tour state.
+ * Uses shallow equality to prevent unnecessary re-renders.
  *
  * @returns Object containing addFeedItem, updateFeedItem, setFeedLoading, and reset action functions
  */
@@ -76,9 +79,12 @@ export const useTourActions = (): {
   setFeedLoading: (loading: boolean) => void
   reset: () => void
 } =>
-  useTourStore(state => ({
-    addFeedItem: state.addFeedItem,
-    updateFeedItem: state.updateFeedItem,
-    setFeedLoading: state.setFeedLoading,
-    reset: state.reset,
-  }))
+  useTourStore(
+    state => ({
+      addFeedItem: state.addFeedItem,
+      updateFeedItem: state.updateFeedItem,
+      setFeedLoading: state.setFeedLoading,
+      reset: state.reset,
+    }),
+    shallow,
+  )
