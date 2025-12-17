@@ -1,6 +1,8 @@
-import {shallow} from 'zustand/shallow'
+import {useShallow} from 'zustand/shallow'
 
 import {useMuseumStore} from './museumStore'
+
+import type {ObjectItem} from '@/shared/types/types'
 
 /**
  * useCurrentMuseumId
@@ -17,7 +19,8 @@ export const useCurrentMuseumId = (): string | undefined =>
  *
  * @returns Array of museum objects for the current museum
  */
-export const useMuseumObjects = () => useMuseumStore(state => state.objects)
+export const useMuseumObjects = (): ObjectItem[] =>
+  useMuseumStore(useShallow(state => state.objects))
 
 /**
  * useMuseumActions
@@ -26,12 +29,15 @@ export const useMuseumObjects = () => useMuseumStore(state => state.objects)
  *
  * @returns Object containing museum store action methods
  */
-export const useMuseumActions = () =>
+export const useMuseumActions = (): {
+  setMuseum: (id?: string) => void
+  setObjects: (objects: ObjectItem[]) => void
+  reset: () => void
+} =>
   useMuseumStore(
-    state => ({
+    useShallow(state => ({
       setMuseum: state.setMuseum,
       setObjects: state.setObjects,
       reset: state.reset,
-    }),
-    shallow,
+    })),
   )

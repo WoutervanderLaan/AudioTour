@@ -1,8 +1,7 @@
-import {shallow} from 'zustand/shallow'
-
-import {useTourStore} from './useTourStore'
+import {useShallow} from 'zustand/shallow'
 
 import type {FeedItem, FeedItemMetadata} from './useTourStore'
+import {useTourStore} from './useTourStore'
 
 // Value selectors
 /**
@@ -12,7 +11,7 @@ import type {FeedItem, FeedItemMetadata} from './useTourStore'
  * @returns Array of feed items
  */
 export const useFeedItems = (): FeedItem[] =>
-  useTourStore(state => state.feedItems)
+  useTourStore(useShallow(state => state.feedItems))
 
 /**
  * useFeedLoading
@@ -31,7 +30,7 @@ export const useFeedLoading = (): boolean =>
  * @returns Feed item or undefined if not found
  */
 export const useFeedItem = (id: string): FeedItem | undefined =>
-  useTourStore(state => state.getFeedItem(id))
+  useTourStore(useShallow(state => state.getFeedItem(id)))
 
 // Derived selectors
 /**
@@ -60,9 +59,7 @@ export const useFeedItemCount = (): number =>
  */
 export const useHasPendingItems = (): boolean =>
   useTourStore(state =>
-    state.feedItems.some(
-      item => !['ready', 'error'].includes(item.status),
-    ),
+    state.feedItems.some(item => !['ready', 'error'].includes(item.status)),
   )
 
 // Action selectors
@@ -80,11 +77,10 @@ export const useTourActions = (): {
   reset: () => void
 } =>
   useTourStore(
-    state => ({
+    useShallow(state => ({
       addFeedItem: state.addFeedItem,
       updateFeedItem: state.updateFeedItem,
       setFeedLoading: state.setFeedLoading,
       reset: state.reset,
-    }),
-    shallow,
+    })),
   )

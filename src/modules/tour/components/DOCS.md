@@ -9,10 +9,12 @@ This folder contains tour-specific UI components used across tour screens.
 Displays a single tour item in the feed with photos, loading state, and audio player.
 
 **Props**:
+
 - `feedItem`: Feed item data containing photos, metadata, status, audio URL
 - `onPress`: Callback when item is pressed (for navigation to detail view)
 
 **Features**:
+
 - Photo thumbnail display
 - Status-based UI updates (uploading, generating narrative, generating audio, ready)
 - Integrated audio player when ready
@@ -26,6 +28,7 @@ Displays a single tour item in the feed with photos, loading state, and audio pl
 Button component for adding/capturing new photos to the tour.
 
 **Props**:
+
 - `onPress`: Callback when button is pressed
 - Standard button props (styling, disabled, etc.)
 
@@ -38,6 +41,7 @@ Button component for adding/capturing new photos to the tour.
 Form input components for the photo submission modal.
 
 **Purpose**: Provides form fields for entering optional metadata about captured objects:
+
 - Title
 - Artist
 - Year

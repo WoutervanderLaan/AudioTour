@@ -72,7 +72,6 @@ export type StackNavigationRoutes<
 > = Record<
   Route,
   {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component: ComponentType<any>
     name: keyof R
     options?: NativeStackNavigationOptions
@@ -91,7 +90,6 @@ export type TabNavigationRoutes<
 > = Record<
   Route,
   {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component: ComponentType<any>
     name: keyof R
     options?: BottomTabNavigationOptions

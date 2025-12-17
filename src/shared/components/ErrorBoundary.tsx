@@ -1,8 +1,8 @@
 import React, {Component, type ErrorInfo, type ReactNode} from 'react'
-import {View} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
 
+import {Column} from './ui/layout/Column'
 import {Button} from './ui/pressable'
+import {Screen} from './ui/screen'
 import {Text} from './ui/typography'
 
 import {logger} from '@/core/lib/logger'
@@ -122,76 +122,42 @@ export class ErrorBoundary extends Component<
       }
 
       return (
-        <View style={styles.container}>
-          <View style={styles.content}>
-            <Text.Title style={styles.title}>Something went wrong</Text.Title>
-            <Text.Paragraph style={styles.message}>
+        <Screen.Static>
+          <Column
+            center
+            padding="md"
+            gap="md">
+            <Text.Title align="center">Something went wrong</Text.Title>
+            <Text.Paragraph align="center">
               We encountered an unexpected error. Please try restarting the app.
             </Text.Paragraph>
-            {__DEV__ && this.state.error && (
-              <View style={styles.errorDetails}>
-                <Text.Label style={styles.errorMessage}>
+            {!!__DEV__ && !!this.state.error && (
+              <Column
+                padding="lg"
+                gap="sm">
+                <Text.Label
+                  color="warning"
+                  fontFamily="bold">
                   {this.state.error.message}
                 </Text.Label>
-                {this.state.error.stack && (
-                  <Text.Label
-                    style={styles.errorStack}
-                    numberOfLines={10}>
+                {!!this.state.error.stack && (
+                  <Text.Paragraph
+                    numberOfLines={10}
+                    variant="extraSmall">
                     {this.state.error.stack}
-                  </Text.Label>
+                  </Text.Paragraph>
                 )}
-              </View>
+              </Column>
             )}
             <Button
               label="Try Again"
               onPress={this.handleReset}
             />
-          </View>
-        </View>
+          </Column>
+        </Screen.Static>
       )
     }
 
     return this.props.children
   }
 }
-
-const styles = StyleSheet.create(theme => ({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.color.screen.background,
-    padding: theme.size.lg,
-  },
-  content: {
-    maxWidth: 400,
-    alignItems: 'center',
-    gap: theme.size.md,
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: theme.size.sm,
-  },
-  message: {
-    textAlign: 'center',
-    color: theme.color.text.secondary,
-    marginBottom: theme.size.md,
-  },
-  errorDetails: {
-    width: '100%',
-    backgroundColor: theme.color.textInput.container.background,
-    padding: theme.size.md,
-    borderRadius: theme.size.sm,
-    marginBottom: theme.size.md,
-  },
-  errorMessage: {
-    color: theme.color.destructive,
-    marginBottom: theme.size.sm,
-    fontWeight: 'bold',
-  },
-  errorStack: {
-    color: theme.color.text.secondary,
-    fontSize: 12,
-    fontFamily: 'monospace',
-  },
-}))

@@ -1,6 +1,6 @@
 // src/modules/auth/store/selectors.ts
 
-import {shallow} from 'zustand/shallow'
+import {useShallow} from 'zustand/shallow'
 
 import {useAuthStore} from './useAuthStore'
 
@@ -13,7 +13,8 @@ import type {AuthTokens, User} from '@/modules/auth/types'
  *
  * @returns Current user object or null if not authenticated
  */
-export const useUser = (): User | null => useAuthStore(state => state.user)
+export const useUser = (): User | null =>
+  useAuthStore(useShallow(state => state.user))
 /**
  * useTokens
  * React hook that returns the current authentication tokens from the auth store.
@@ -21,7 +22,7 @@ export const useUser = (): User | null => useAuthStore(state => state.user)
  * @returns Authentication tokens object or null if not authenticated
  */
 export const useTokens = (): AuthTokens | null =>
-  useAuthStore(state => state.tokens)
+  useAuthStore(useShallow(state => state.tokens))
 /**
  * useIsAuthenticated
  * React hook that returns whether the user is currently authenticated.
@@ -47,12 +48,11 @@ export const useAuthActions = (): {
   reset: () => void
 } =>
   useAuthStore(
-    state => ({
+    useShallow(state => ({
       setUser: state.setUser,
       setAuth: state.setAuth,
       updateTokens: state.updateTokens,
       logout: state.logout,
       reset: state.reset,
-    }),
-    shallow,
+    })),
   )
