@@ -80,7 +80,23 @@ export const useProfileQuery = (
 }
 
 /**
- * Verify token validity
+ * React Query hook to verify the validity of the current authentication token.
+ *
+ * Checks whether the current access token is still valid by making a request
+ * to the verify endpoint. This hook is automatically enabled when an access
+ * token is present. Stale time is set to 1 minute.
+ *
+ * @param options - Optional TanStack Query options (enabled, refetchInterval, etc.)
+ * @returns Query result with a boolean indicating token validity
+ *
+ * @example
+ * ```tsx
+ * const { data: isValid, isLoading } = useVerifyTokenQuery()
+ *
+ * if (isLoading) return <Text>Verifying...</Text>
+ * if (!isValid) return <Text>Session expired</Text>
+ * return <Text>Session is valid</Text>
+ * ```
  */
 export const useVerifyTokenQuery = (
   options?: Omit<UseQueryOptions<boolean>, 'queryKey' | 'queryFn'>,

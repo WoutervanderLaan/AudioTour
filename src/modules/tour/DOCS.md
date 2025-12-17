@@ -90,7 +90,7 @@ Initializes a new tour session with location services and museum detection.
 **Usage**:
 
 ```typescript
-const {initialize, isLoading, error, nearestMuseum} = useTourInitialization()
+const {isInitialized, isLoading, error, nearestMuseum} = useTourInitialization()
 ```
 
 ### useProcessArtwork

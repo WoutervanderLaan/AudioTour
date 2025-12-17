@@ -4,6 +4,17 @@ import {createHandler} from './createHandler'
 
 import {wait} from '@/shared/utils/wait'
 
+/**
+ * Global MSW (Mock Service Worker) handlers for core API endpoints.
+ *
+ * Provides mock responses for:
+ * - POST /process-artwork - Returns mock object recognition result
+ * - POST /generate-narrative - Returns mock narrative text
+ * - POST /generate-audio - Returns mock audio URL
+ * - GET /museum-objects/:museumId - Returns empty array of museum objects
+ * - GET /recommendations - Returns mock recommendation scores
+ * - ALL /symbolicate - Passes through to allow React Native symbolication
+ */
 export const globalHandlers = [
   http.post(createHandler('/process-artwork'), () => {
     return HttpResponse.json({
