@@ -17,6 +17,7 @@ import {logger} from '@/core/lib/logger'
 import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 import {RootNavigator} from '@/core/navigation/RootNavigator'
 import {registerModules} from '@/modules/modules'
+import {ErrorBoundary} from '@/shared/components/ErrorBoundary'
 import {BannerProvider} from '@/shared/context/banner/BannerContext.provider'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
@@ -66,22 +67,24 @@ export const App = (): React.JSX.Element => {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-        <KeyboardProvider>
-          <ToastProvider>
-            <BannerProvider>
-              <Init />
-              <RootNavigator
-                onReady={() => {
-                  SplashScreen.hideAsync()
-                }}
-              />
-            </BannerProvider>
-          </ToastProvider>
-        </KeyboardProvider>
-      </SafeAreaProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+          <KeyboardProvider>
+            <ToastProvider>
+              <BannerProvider>
+                <Init />
+                <RootNavigator
+                  onReady={() => {
+                    SplashScreen.hideAsync()
+                  }}
+                />
+              </BannerProvider>
+            </ToastProvider>
+          </KeyboardProvider>
+        </SafeAreaProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   )
 }
 

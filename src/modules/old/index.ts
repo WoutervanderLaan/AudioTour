@@ -3,6 +3,7 @@ import type {ModuleConfig} from '../types'
 import {oldModals, oldStacks, oldTabs} from './screenConfig'
 
 import {logger} from '@/core/lib/logger'
+import {TIMING} from '@/shared/constants/timing'
 
 /**
  * Old module configuration - contains the legacy app screens.
@@ -39,6 +40,6 @@ export const oldModule: ModuleConfig = {
   queries: {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5, //TODO: enum
+    staleTime: TIMING.QUERY_STALE_TIME,
   },
 }

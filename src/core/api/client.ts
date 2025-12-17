@@ -437,7 +437,8 @@ export class ApiClient implements IApiClient {
       if (contentType?.includes('application/json')) {
         data = await response.json()
       } else {
-        data = (await response.text()) as any
+        // For non-JSON responses, return text as T (caller must ensure T is string-compatible)
+        data = (await response.text()) as T
       }
 
       // Log successful request with timing
@@ -453,7 +454,7 @@ export class ApiClient implements IApiClient {
         status: response.status,
         headers: response.headers,
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Log failed request with timing
       if (__DEV__) {
         const duration = Date.now() - startTime

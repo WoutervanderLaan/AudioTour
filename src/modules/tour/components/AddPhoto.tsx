@@ -10,17 +10,24 @@ import {Text} from '@/shared/components/ui/typography'
 
 /**
  * AddPhotoProps
- * TODO: describe what this type represents.
+ * Props for the AddPhoto component.
+ * Extends PressableBaseProps with size options, excluding style prop.
  */
 type AddPhotoProps = {
+  /**
+   * Size variant for the add photo button (default: 'md')
+   */
   size?: 'sm' | 'md' | 'lg'
 } & Omit<PressableBaseProps, 'style'>
 
 /**
  * AddPhoto
- * TODO: describe what it does.
+ * Pressable button component for adding new photos.
+ * Displays a dashed border square with a '+' symbol.
+ * Supports three size variants (sm: 60px, md: 100px, lg: 140px).
  *
- * @returns {*} describe return value
+ * @param props - Component props including onPress handler and size
+ * @returns Pressable add photo button component
  */
 export const AddPhoto = ({
   onPress,

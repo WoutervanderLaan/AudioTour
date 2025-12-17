@@ -7,24 +7,27 @@ import {Text} from '@/shared/components/ui/typography'
 
 /**
  * ProgressIndicatorProps
- * TODO: describe what this type represents.
+ * Props for the ProgressIndicator component.
+ * Defines the total number of steps and which step is currently active.
  */
 type ProgressIndicatorProps = {
   /**
-   * totalSteps
+   * Total number of steps in the process
    */
   totalSteps: number
   /**
-   * currentStep
+   * The current active step (1-based index)
    */
   currentStep: number
 }
 /**
  * ProgressIndicator
- * TODO: describe what it does.
+ * Displays a progress bar showing completion status through multiple steps.
+ * Shows both a text label ("Step X of Y") and a visual progress bar.
+ * Progress is calculated as (currentStep - 1) / totalSteps * 100%.
  *
- * @param {*} options
- * @returns {*} describe return value
+ * @param props - Component props containing step information
+ * @returns Progress indicator component with label and bar
  */
 export const ProgressIndicator = ({
   totalSteps,
