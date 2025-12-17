@@ -1,6 +1,7 @@
 import type React from 'react'
 import {Alert} from 'react-native'
 
+import * as Device from 'expo-device'
 import * as ImagePicker from 'expo-image-picker'
 
 import {logger} from '@/core/lib/logger'
@@ -259,7 +260,9 @@ export const ImageInput = ({
 
         {!!canAddMore && (
           <AddPhoto
-            onPress={() => handleAddImage('library')}
+            onPress={() =>
+              handleAddImage(Device.isDevice ? 'camera' : 'library')
+            }
             size={thumbnailSize}
             accessibilityLabel={`Add image, ${value.length} of ${maxImages} selected`}
           />
