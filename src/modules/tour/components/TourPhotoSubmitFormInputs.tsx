@@ -1,11 +1,18 @@
 import type React from 'react'
 import {useFormContext} from 'react-hook-form'
 
-import {TextInputControlled} from '@/shared/components/ui/form'
+import type {PhotoSubmitForm} from '../schema'
+
+import {
+  ImageInputControlled,
+  TextInputControlled,
+} from '@/shared/components/ui/form'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+
+const MAX_PHOTOS = 5
 
 /**
  * TourPhotoSubmitForm
@@ -14,10 +21,19 @@ import {Text} from '@/shared/components/ui/typography'
  * @returns {*} describe return value
  */
 export const TourPhotoSubmitFormInputs = (): React.JSX.Element => {
-  const {control} = useFormContext()
+  const {control} = useFormContext<PhotoSubmitForm>()
 
   return (
     <Column gap="md">
+      <ImageInputControlled
+        control={control}
+        name="photos"
+        label="Photos"
+        maxImages={MAX_PHOTOS}
+        required={true}
+        hint="Upload 1-5 photos of the museum object"
+      />
+
       <Text.Title>Object Details (Optional)</Text.Title>
 
       <TextInputControlled

@@ -1,13 +1,12 @@
 import type React from 'react'
 import {Alert} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
 
 import * as ImagePicker from 'expo-image-picker'
 
 import {logger} from '@/core/lib/logger'
+import {AddPhoto} from '@/shared/components/features/add-photo/AddPhoto'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Thumbnail} from '@/shared/components/ui/thumbnail/Thumbnail'
 import {Text} from '@/shared/components/ui/typography'
 
@@ -153,49 +152,6 @@ const HelpText = ({text, hasError}: HelpTextProps): React.JSX.Element => (
 )
 
 /**
- * AddPhotoButtonProps
- * Props for the AddPhotoButton component
- */
-type AddPhotoButtonProps = {
-  /**
-   * onPress - Callback when button is pressed
-   */
-  onPress: () => void
-  /**
-   * size - Size of the button (default: 'md')
-   */
-  size: 'sm' | 'md' | 'lg'
-  /**
-   * accessibilityLabel - Accessibility label for the button
-   */
-  accessibilityLabel?: string
-}
-
-/**
- * AddPhotoButton
- * Pressable button component for adding new photos.
- * Displays a dashed border square with a '+' symbol.
- *
- * @param props - Component props
- * @returns Pressable add photo button component
- */
-const AddPhotoButton = ({
-  onPress,
-  size,
-  accessibilityLabel,
-}: AddPhotoButtonProps): React.JSX.Element => (
-  <PressableBase
-    onPress={onPress}
-    accessibilityLabel={accessibilityLabel}>
-    <Column
-      center
-      style={[styles.addPhotoContainer, styles[size]]}>
-      <Text.Title>+</Text.Title>
-    </Column>
-  </PressableBase>
-)
-
-/**
  * ImageInput
  * Accessible image input component with theme integration and form validation support.
  * Allows users to select and manage multiple images with configurable max limit.
@@ -236,9 +192,13 @@ export const ImageInput = ({
    *
    * @returns Promise that resolves when image is added or picker is cancelled
    */
-  const handleAddImage = async (): Promise<void> => {
+  const handleAddImage = async (type?: 'camera' | 'library'): Promise<void> => {
+    //TODO: allow select library or camera
+
     try {
-      const result = await ImagePicker.launchImageLibraryAsync({
+      const result = await ImagePicker[
+        type === 'camera' ? 'launchCameraAsync' : 'launchImageLibraryAsync'
+      ]({
         mediaTypes: ['images'],
         quality: 0.8,
         allowsEditing: false,
@@ -298,8 +258,8 @@ export const ImageInput = ({
         ))}
 
         {!!canAddMore && (
-          <AddPhotoButton
-            onPress={handleAddImage}
+          <AddPhoto
+            onPress={() => handleAddImage('library')}
             size={thumbnailSize}
             accessibilityLabel={`Add image, ${value.length} of ${maxImages} selected`}
           />
@@ -315,26 +275,3 @@ export const ImageInput = ({
     </Column>
   )
 }
-
-const styles = StyleSheet.create(theme => ({
-  sm: {
-    width: 60,
-    height: 60,
-    borderRadius: theme.size.sm,
-  },
-  md: {
-    width: 100,
-    height: 100,
-    borderRadius: theme.size.md,
-  },
-  lg: {
-    width: 140,
-    height: 140,
-    borderRadius: theme.size.lg,
-  },
-  addPhotoContainer: {
-    borderWidth: 2,
-    borderColor: theme.color.text.secondary,
-    borderStyle: 'dashed',
-  },
-}))

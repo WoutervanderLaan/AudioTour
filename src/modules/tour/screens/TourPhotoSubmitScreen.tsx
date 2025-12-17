@@ -10,7 +10,6 @@ import {usePhotoSubmit} from '../hooks/usePhotoSubmit'
 import type {TourModalName, TourModalParams} from '../routes.types'
 import {type PhotoSubmitForm, photoSubmitSchema} from '../schema'
 
-import {ImageInputControlled} from '@/shared/components/ui/form'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
@@ -18,8 +17,6 @@ import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
-
-const MAX_PHOTOS = 5
 
 /**
  * TourPhotoSubmitScreenProps
@@ -56,7 +53,7 @@ export const TourPhotoSubmitScreen = ({
     },
   })
 
-  const {handleSubmit, control} = form
+  const {handleSubmit} = form
 
   /**
    * onSubmit
@@ -83,49 +80,40 @@ export const TourPhotoSubmitScreen = ({
   }
 
   return (
-    <Screen.Scrollable keyboardAvoiding>
-      <Box
-        paddingH="md"
-        paddingBottom="xl">
-        <Column gap="lg">
-          <ImageInputControlled
-            control={control}
-            name="photos"
-            label="Photos"
-            maxImages={MAX_PHOTOS}
-            required={true}
-            hint="Upload 1-5 photos of the museum object"
-          />
-
-          <FormProvider {...form}>
+    <FormProvider {...form}>
+      <Screen.Scrollable keyboardAvoiding>
+        <Box
+          paddingH="md"
+          paddingBottom="xl">
+          <Column gap="lg">
             <TourPhotoSubmitFormInputs />
-          </FormProvider>
 
-          {!!submitError && <Text.Paragraph>{submitError}</Text.Paragraph>}
+            {!!submitError && <Text.Paragraph>{submitError}</Text.Paragraph>}
 
-          <Column gap="sm">
-            <Button
-              label={isLoading ? 'Submitting...' : 'Submit'}
-              onPress={handleSubmit(onSubmit)}
-              disabled={isLoading}
-            />
-            {!!isLoading && (
-              <Row
-                gap="sm"
-                center>
-                <ActivityIndicator size="small" />
-                <Text.Label>Processing photos...</Text.Label>
-              </Row>
-            )}
-            <Button
-              label="Cancel"
-              onPress={goBack}
-              variant="secondary"
-              disabled={isLoading}
-            />
+            <Column gap="sm">
+              <Button
+                label={isLoading ? 'Submitting...' : 'Submit'}
+                onPress={handleSubmit(onSubmit)}
+                disabled={isLoading}
+              />
+              {!!isLoading && (
+                <Row
+                  gap="sm"
+                  center>
+                  <ActivityIndicator size="small" />
+                  <Text.Label>Processing photos...</Text.Label>
+                </Row>
+              )}
+              <Button
+                label="Cancel"
+                onPress={goBack}
+                variant="secondary"
+                disabled={isLoading}
+              />
+            </Column>
           </Column>
-        </Column>
-      </Box>
-    </Screen.Scrollable>
+        </Box>
+      </Screen.Scrollable>
+    </FormProvider>
   )
 }

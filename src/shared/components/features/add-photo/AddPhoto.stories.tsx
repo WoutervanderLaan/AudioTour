@@ -1,7 +1,7 @@
 import type {Meta} from '@storybook/react-native-web-vite'
 
-import {AddPhoto} from './AddPhoto'
 import {Box} from '@/shared/components/ui/layout/Box'
+import {AddPhoto} from './AddPhoto'
 
 const meta = {
   title: 'UI/AddPhoto',
