@@ -103,26 +103,6 @@ type TourState = {
    */
   feedLoading: boolean
   /**
-   * @deprecated URI of the last photo taken by the user during the tour, used for object recognition
-   */
-  lastPhotoUri?: string
-  /**
-   * @deprecated Unique identifier of the currently recognized museum object from the photo
-   */
-  currentObjectId?: string
-  /**
-   * @deprecated Confidence score (0-1) indicating the accuracy of the object recognition result
-   */
-  recognitionConfidence?: number
-  /**
-   * @deprecated Generated narrative text describing the museum object and its context
-   */
-  narrativeText?: string
-  /**
-   * @deprecated URL to the generated audio file containing the spoken narrative
-   */
-  audioUrl?: string
-  /**
    * addFeedItem - Add a new feed item
    */
   addFeedItem: (photos: string[], metadata?: FeedItemMetadata) => string
@@ -139,27 +119,7 @@ type TourState = {
    */
   getFeedItem: (id: string) => FeedItem | undefined
   /**
-   * @deprecated Updates the URI of the last captured photo
-   */
-  setLastPhoto: (uri?: string) => void
-  /**
-   * @deprecated setLastPhotoData (legacy)
-   */
-  setLastPhotoData: (
-    uri: string,
-    objectId: string,
-    recognitionConfidence: number,
-  ) => void
-  /**
-   * @deprecated Updates the narrative text for the current tour object
-   */
-  setNarrativeText: (narrativeText: string) => void
-  /**
-   * @deprecated Updates the audio URL for the current narrative
-   */
-  setAudioUrl: (audioUrl: string) => void
-  /**
-   * Resets all tour state to initial values, clearing photo, object, narrative, and audio data
+   * Resets all tour state to initial values
    */
   reset: () => void
 }
@@ -168,11 +128,6 @@ export const useTourStore = create<TourState>()(
   immer((set, get) => ({
     feedItems: [],
     feedLoading: false,
-    lastPhotoUri: undefined,
-    currentObjectId: undefined,
-    recognitionConfidence: undefined,
-    narrativeText: undefined,
-    audioUrl: undefined,
 
     addFeedItem: (photos: string[], metadata?: FeedItemMetadata): string => {
       const id = Crypto.randomUUID()
@@ -207,44 +162,10 @@ export const useTourStore = create<TourState>()(
       return get().feedItems.find(i => i.id === id)
     },
 
-    setLastPhoto: uri =>
-      set(state => {
-        state.lastPhotoUri = uri
-      }),
-
     reset: () =>
       set(state => {
         state.feedItems = []
         state.feedLoading = false
-        state.lastPhotoUri = undefined
-        state.currentObjectId = undefined
-        state.recognitionConfidence = undefined
-        state.narrativeText = undefined
-        state.audioUrl = undefined
       }),
-
-    setLastPhotoData: (
-      uri: string,
-      objectId: string,
-      recognitionConfidence: number,
-    ) => {
-      set(state => {
-        state.lastPhotoUri = uri
-        state.currentObjectId = objectId
-        state.recognitionConfidence = recognitionConfidence
-      })
-    },
-
-    setNarrativeText: (narrativeText: string) => {
-      set(state => {
-        state.narrativeText = narrativeText
-      })
-    },
-
-    setAudioUrl: (audioUrl: string) => {
-      set(state => {
-        state.audioUrl = audioUrl
-      })
-    },
   })),
 )

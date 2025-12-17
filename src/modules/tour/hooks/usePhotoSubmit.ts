@@ -5,7 +5,7 @@ import {
 } from '../api/useTourMutations'
 
 import {useLogger} from '@/shared/hooks/useLogger'
-import {type FeedItemMetadata, useTourStore} from '@/store/slices/tourStore'
+import {type FeedItemMetadata, useTourStore} from '@/modules/tour/store/useTourStore'
 
 /**
  * SubmitReturn

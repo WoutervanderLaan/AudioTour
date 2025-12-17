@@ -10,7 +10,7 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Thumbnail} from '@/shared/components/ui/thumbnail/Thumbnail'
 import {Text} from '@/shared/components/ui/typography'
-import type {FeedItem as FeedItemType} from '@/store/slices/tourStore'
+import type {FeedItem as FeedItemType} from '@/modules/tour/store/useTourStore'
 
 /**
  * FeedItemProps

@@ -13,7 +13,7 @@ import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
-import {useTourStore} from '@/store/slices/tourStore'
+import {useTourStore} from '@/modules/tour/store/useTourStore'
 
 /**
  * TourFeedScreen
