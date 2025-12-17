@@ -1,5 +1,6 @@
-import {shallow} from 'zustand/shallow'
+import {useShallow} from 'zustand/shallow'
 
+import type {NotificationPayload, NotificationPreferences} from '../types'
 import {useNotificationStore} from './useNotificationStore'
 
 /**
@@ -8,7 +9,7 @@ import {useNotificationStore} from './useNotificationStore'
  *
  * @returns The device token for push notifications, or null if not registered
  */
-export const useDeviceToken = () =>
+export const useDeviceToken = (): string | null =>
   useNotificationStore(state => state.deviceToken)
 
 /**
@@ -26,13 +27,15 @@ export const useNotificationRegistrationStatus = (): boolean =>
  *
  * @returns Object containing permission request status and granted status
  */
-export const useNotificationPermission = () =>
+export const useNotificationPermission = (): {
+  hasRequestedPermission: boolean
+  permissionGranted: boolean
+} =>
   useNotificationStore(
-    state => ({
+    useShallow(state => ({
       hasRequestedPermission: state.hasRequestedPermission,
       permissionGranted: state.permissionGranted,
-    }),
-    shallow,
+    })),
   )
 
 /**
@@ -41,8 +44,8 @@ export const useNotificationPermission = () =>
  *
  * @returns Object containing all notification preference settings
  */
-export const useNotificationPreferences = () =>
-  useNotificationStore(state => state.preferences)
+export const useNotificationPreferences = (): NotificationPreferences =>
+  useNotificationStore(useShallow(state => state.preferences))
 
 /**
  * useLastNotification
@@ -50,8 +53,8 @@ export const useNotificationPreferences = () =>
  *
  * @returns The last notification object, or null if none received
  */
-export const useLastNotification = () =>
-  useNotificationStore(state => state.lastNotification)
+export const useLastNotification = (): NotificationPayload | null =>
+  useNotificationStore(useShallow(state => state.lastNotification))
 
 /**
  * useNotificationActions
@@ -60,9 +63,18 @@ export const useLastNotification = () =>
  *
  * @returns Object containing notification store action methods
  */
-export const useNotificationActions = () =>
+export const useNotificationActions = (): {
+  setDeviceToken: (token: string | null) => void
+  setIsRegistered: (isRegistered: boolean) => void
+  setHasRequestedPermission: (hasRequested: boolean) => void
+  setPermissionGranted: (granted: boolean) => void
+  setPreferences: (preferences: Partial<NotificationPreferences>) => void
+  setLastNotification: (notification: NotificationPayload | null) => void
+  reset: () => void
+  initialize: () => void
+} =>
   useNotificationStore(
-    state => ({
+    useShallow(state => ({
       setDeviceToken: state.setDeviceToken,
       setIsRegistered: state.setIsRegistered,
       setHasRequestedPermission: state.setHasRequestedPermission,
@@ -71,6 +83,5 @@ export const useNotificationActions = () =>
       setLastNotification: state.setLastNotification,
       reset: state.reset,
       initialize: state.initialize,
-    }),
-    shallow,
+    })),
   )

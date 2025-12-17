@@ -1,6 +1,7 @@
 import type React from 'react'
 import {Alert} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
 import * as ImagePicker from 'expo-image-picker'
 
 import {logger} from '@/core/lib/logger'
@@ -100,7 +101,7 @@ const ImageInputLabel = ({
 }: ImageInputLabelProps): React.JSX.Element => (
   <Row
     gap="xs"
-    alignItems="center">
+    center>
     <Text.Label
       color={disabled ? 'secondary' : 'default'}
       accessibilityRole="text">

@@ -11,6 +11,7 @@ Landing screen for starting a new tour.
 **Route**: `TourRouteName.home`
 
 **Features**:
+
 - App title display
 - Call-to-action button to begin tour
 - Tour initialization using `useTourInitialization` hook
@@ -26,6 +27,7 @@ Main tour interface showing a feed of captured objects.
 **Route**: `TourRouteName.feed`
 
 **Features**:
+
 - Feed list displaying captured tour items
 - Camera button for capturing new objects
 - Loading states during audio generation
@@ -42,6 +44,7 @@ Camera interface for capturing photos of museum objects.
 **Route**: `TourRouteName.camera`
 
 **Features**:
+
 - Camera permission handling
 - Live camera preview
 - Photo capture functionality
@@ -57,6 +60,7 @@ Modal screen for submitting captured photos with optional metadata.
 **Route**: `TourRouteName.photoSubmit` (modal presentation)
 
 **Features**:
+
 - Multi-photo support (add/delete)
 - Form fields: title, artist, year, material, description
 - Photo submission using `usePhotoSubmit` hook
@@ -73,6 +77,7 @@ Detailed view of a captured museum object.
 **Route**: `TourRouteName.objectDetail`
 
 **Features**:
+
 - Photo gallery (swipeable for multiple photos)
 - All metadata fields display
 - Generated narrative text

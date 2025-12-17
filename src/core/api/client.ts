@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable complexity */
 /* eslint-disable max-lines */
 import {logger} from '../lib/logger'
@@ -462,7 +461,12 @@ export class ApiClient implements IApiClient {
       }
 
       // Handle network errors
-      if (error.name === 'AbortError') {
+      if (
+        typeof error === 'object' &&
+        !!error &&
+        'name' in error &&
+        error?.name === 'AbortError'
+      ) {
         throw {
           message: 'Request timeout',
           code: 'TIMEOUT',
@@ -573,7 +577,7 @@ apiClient.addRequestInterceptor((url, config) => {
 })
 
 // Response interceptor with detailed logging
-apiClient.addResponseInterceptor(async response => {
+apiClient.addResponseInterceptor(response => {
   if (__DEV__) {
     logger.group(`API ${response.status} Response`)
     logger.info('URL:', response.url)

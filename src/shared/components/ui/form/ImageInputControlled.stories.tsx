@@ -94,7 +94,7 @@ const SimpleFormExample = (): React.JSX.Element => {
   )
 }
 
-export const SimpleForm: Story = {
+export const SimpleForm = {
   render: (): React.JSX.Element => <SimpleFormExample />,
 }
 
@@ -152,7 +152,7 @@ const SingleImageFormExample = (): React.JSX.Element => {
   )
 }
 
-export const SingleImageForm: Story = {
+export const SingleImageForm = {
   render: (): React.JSX.Element => <SingleImageFormExample />,
 }
 
@@ -251,7 +251,7 @@ const ComplexFormExample = (): React.JSX.Element => {
   )
 }
 
-export const ComplexForm: Story = {
+export const ComplexForm = {
   render: (): React.JSX.Element => <ComplexFormExample />,
 }
 
@@ -310,7 +310,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   )
 }
 
-export const WithDefaultValues: Story = {
+export const WithDefaultValues = {
   render: (): React.JSX.Element => <DefaultValuesFormExample />,
 }
 
@@ -362,6 +362,6 @@ const SmallThumbnailsFormExample = (): React.JSX.Element => {
   )
 }
 
-export const SmallThumbnails: Story = {
+export const SmallThumbnails = {
   render: (): React.JSX.Element => <SmallThumbnailsFormExample />,
 }

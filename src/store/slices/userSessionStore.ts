@@ -8,7 +8,7 @@ import {immer} from 'zustand/middleware/immer'
  *
  * Represents a user's profile information including identification and display preferences.
  */
-type UserProfile = {
+export type UserProfile = {
   /**
    * Unique identifier for the user
    */

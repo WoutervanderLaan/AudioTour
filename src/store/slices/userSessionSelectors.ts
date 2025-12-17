@@ -1,6 +1,6 @@
-import {shallow} from 'zustand/shallow'
+import {useShallow} from 'zustand/shallow'
 
-import {useUserSessionStore} from './userSessionStore'
+import {type UserProfile, useUserSessionStore} from './userSessionStore'
 
 /**
  * useSessionId
@@ -17,7 +17,8 @@ export const useSessionId = (): string =>
  *
  * @returns The current user profile, or undefined if not logged in
  */
-export const useCurrentUser = () => useUserSessionStore(state => state.user)
+export const useCurrentUser = (): UserProfile | undefined =>
+  useUserSessionStore(useShallow(state => state.user))
 
 /**
  * useUserSessionActions
@@ -26,11 +27,13 @@ export const useCurrentUser = () => useUserSessionStore(state => state.user)
  *
  * @returns Object containing user session store action methods
  */
-export const useUserSessionActions = () =>
+export const useUserSessionActions = (): {
+  setUser: (user?: UserProfile) => void
+  regenerateSession: () => void
+} =>
   useUserSessionStore(
-    state => ({
+    useShallow(state => ({
       setUser: state.setUser,
       regenerateSession: state.regenerateSession,
-    }),
-    shallow,
+    })),
   )

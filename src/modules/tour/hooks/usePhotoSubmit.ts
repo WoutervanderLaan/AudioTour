@@ -4,9 +4,9 @@ import {
   useProcessArtwork,
 } from '../api/useTourMutations'
 
-import {useLogger} from '@/shared/hooks/useLogger'
-import type {FeedItemMetadata} from '@/modules/tour/store/useTourStore'
 import {useTourActions} from '@/modules/tour/store/selectors'
+import type {FeedItemMetadata} from '@/modules/tour/store/useTourStore'
+import {useLogger} from '@/shared/hooks/useLogger'
 
 /**
  * SubmitReturn

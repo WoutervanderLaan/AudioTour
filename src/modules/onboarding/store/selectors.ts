@@ -1,5 +1,6 @@
-import {shallow} from 'zustand/shallow'
+import {useShallow} from 'zustand/shallow'
 
+import type {OnboardingAnswers} from '../types'
 import {useOnboardingStore} from './useOnboardingStore'
 
 /**
@@ -8,8 +9,8 @@ import {useOnboardingStore} from './useOnboardingStore'
  *
  * @returns Object containing user's answers to onboarding questions
  */
-export const useOnboardingAnswers = () =>
-  useOnboardingStore(state => state.answers)
+export const useOnboardingAnswers = (): OnboardingAnswers =>
+  useOnboardingStore(useShallow(state => state.answers))
 
 /**
  * useOnboardingCompleted
@@ -36,13 +37,17 @@ export const useOnboardingDismissed = (): boolean =>
  *
  * @returns Object containing onboarding store action methods
  */
-export const useOnboardingActions = () =>
+export const useOnboardingActions = (): {
+  setAnswer: (questionId: string, answer: string | boolean) => void
+  completeOnboarding: () => void
+  dismissBanner: () => void
+  reset: () => void
+} =>
   useOnboardingStore(
-    state => ({
+    useShallow(state => ({
       setAnswer: state.setAnswer,
       completeOnboarding: state.completeOnboarding,
       dismissBanner: state.dismissBanner,
       reset: state.reset,
-    }),
-    shallow,
+    })),
   )

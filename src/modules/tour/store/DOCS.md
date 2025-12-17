@@ -5,6 +5,7 @@ State management for the tour module using Zustand.
 ## Overview
 
 The tour store manages the state for active audio tour sessions, including:
+
 - Feed items collection
 - Loading states
 - Tour session management
@@ -14,7 +15,9 @@ The tour store manages the state for active audio tour sessions, including:
 ### Types
 
 #### FeedItemStatus
+
 Status progression for a tour feed item:
+
 - `uploading` - Photos being uploaded
 - `processing` - Artwork recognition in progress
 - `generating_narrative` - Narrative text being generated
@@ -23,7 +26,9 @@ Status progression for a tour feed item:
 - `error` - Processing failed
 
 #### FeedItemMetadata
+
 Optional metadata about a museum object:
+
 - `title` - Object title
 - `artist` - Artist name
 - `year` - Year of creation
@@ -31,7 +36,9 @@ Optional metadata about a museum object:
 - `description` - Object description
 
 #### FeedItem
+
 Represents a single item in the tour feed with:
+
 - `id` - Unique identifier
 - `photos` - Array of photo URIs
 - `metadata` - Optional object metadata
@@ -68,7 +75,7 @@ import {
   useFeedLoading,
   useFeedItem,
   useHasActiveTour,
-  useTourActions
+  useTourActions,
 } from '@/modules/tour/store/selectors'
 
 // Get state values
@@ -78,34 +85,37 @@ const feedItem = useFeedItem(itemId)
 const hasActiveTour = useHasActiveTour()
 
 // Get actions
-const { addFeedItem, updateFeedItem, setFeedLoading, reset } = useTourActions()
+const {addFeedItem, updateFeedItem, setFeedLoading, reset} = useTourActions()
 
 // Use actions
 const feedItemId = addFeedItem([photoUri1, photoUri2], {
   title: 'The Starry Night',
-  artist: 'Vincent van Gogh'
+  artist: 'Vincent van Gogh',
 })
 
 updateFeedItem(feedItemId, {
   status: 'ready',
   narrativeText: 'Generated narrative...',
-  audioUrl: 'https://...'
+  audioUrl: 'https://...',
 })
 ```
 
 ### Available Selectors
 
 #### Value Selectors
+
 - `useFeedItems()` - Returns all feed items
 - `useFeedLoading()` - Returns feed loading state
 - `useFeedItem(id)` - Returns a specific feed item by ID
 
 #### Derived Selectors
+
 - `useHasActiveTour()` - Returns true if there are any feed items
 - `useFeedItemCount()` - Returns the total number of feed items
 - `useHasPendingItems()` - Returns true if any items are still processing
 
 #### Action Selectors
+
 - `useTourActions()` - Returns all action functions (addFeedItem, updateFeedItem, setFeedLoading, reset)
 
 ### Direct Store Access (Not Recommended)
@@ -113,7 +123,7 @@ updateFeedItem(feedItemId, {
 Only use direct store access when absolutely necessary:
 
 ```typescript
-import { useTourStore } from '@/modules/tour/store/useTourStore'
+import {useTourStore} from '@/modules/tour/store/useTourStore'
 
 const feedItems = useTourStore(state => state.feedItems)
 ```

@@ -8,6 +8,7 @@ import type {RouteProp} from '@react-navigation/native'
 
 import type {TourRouteName, TourStackParams} from '../routes.types'
 
+import {useFeedItem} from '@/modules/tour/store/selectors'
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
@@ -15,7 +16,6 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
-import {useFeedItem} from '@/modules/tour/store/selectors'
 
 /**
  * TourObjectDetailScreenProps
