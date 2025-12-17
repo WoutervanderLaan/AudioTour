@@ -15,7 +15,7 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
-import {useTourStore} from '@/modules/tour/store/useTourStore'
+import {useFeedItem} from '@/modules/tour/store/selectors'
 
 /**
  * TourObjectDetailScreenProps
@@ -45,7 +45,7 @@ export const TourObjectDetailScreen = ({
 
   const [activePhotoIndex, setActivePhotoIndex] = useState(0)
 
-  const feedItem = useTourStore(state => state.getFeedItem(feedItemId))
+  const feedItem = useFeedItem(feedItemId)
 
   if (!feedItem) {
     return (

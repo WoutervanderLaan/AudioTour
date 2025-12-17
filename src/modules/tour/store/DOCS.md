@@ -58,35 +58,77 @@ Represents a single item in the tour feed with:
 
 ## Usage
 
-```typescript
-import { useTourStore } from '@/modules/tour/store/useTourStore'
+### Recommended: Use Selector Hooks
 
-// Add a feed item
-const addFeedItem = useTourStore(state => state.addFeedItem)
+The tour store provides dedicated selector hooks for cleaner, more maintainable code. Always prefer these over direct store access.
+
+```typescript
+import {
+  useFeedItems,
+  useFeedLoading,
+  useFeedItem,
+  useHasActiveTour,
+  useTourActions
+} from '@/modules/tour/store/selectors'
+
+// Get state values
+const feedItems = useFeedItems()
+const feedLoading = useFeedLoading()
+const feedItem = useFeedItem(itemId)
+const hasActiveTour = useHasActiveTour()
+
+// Get actions
+const { addFeedItem, updateFeedItem, setFeedLoading, reset } = useTourActions()
+
+// Use actions
 const feedItemId = addFeedItem([photoUri1, photoUri2], {
   title: 'The Starry Night',
   artist: 'Vincent van Gogh'
 })
 
-// Get feed items
-const feedItems = useTourStore(state => state.feedItems)
-
-// Update a feed item
-const updateFeedItem = useTourStore(state => state.updateFeedItem)
 updateFeedItem(feedItemId, {
   status: 'ready',
   narrativeText: 'Generated narrative...',
   audioUrl: 'https://...'
 })
-
-// Get specific feed item
-const getFeedItem = useTourStore(state => state.getFeedItem)
-const item = getFeedItem(feedItemId)
 ```
+
+### Available Selectors
+
+#### Value Selectors
+- `useFeedItems()` - Returns all feed items
+- `useFeedLoading()` - Returns feed loading state
+- `useFeedItem(id)` - Returns a specific feed item by ID
+
+#### Derived Selectors
+- `useHasActiveTour()` - Returns true if there are any feed items
+- `useFeedItemCount()` - Returns the total number of feed items
+- `useHasPendingItems()` - Returns true if any items are still processing
+
+#### Action Selectors
+- `useTourActions()` - Returns all action functions (addFeedItem, updateFeedItem, setFeedLoading, reset)
+
+### Direct Store Access (Not Recommended)
+
+Only use direct store access when absolutely necessary:
+
+```typescript
+import { useTourStore } from '@/modules/tour/store/useTourStore'
+
+const feedItems = useTourStore(state => state.feedItems)
+```
+
+## Best Practices
+
+1. **Always use selector hooks** instead of direct store access for better performance and maintainability
+2. **Use `useTourActions()`** to get action functions rather than individual selectors
+3. **Use derived selectors** like `useHasActiveTour()` for computed state values
+4. **Keep store updates atomic** - update feed items in single operations when possible
 
 ## Related Files
 
 - `useTourStore.ts` - Main store implementation
+- `selectors.ts` - Selector hooks for accessing store state
 - `../hooks/usePhotoSubmit.ts` - Uses store to manage photo submission workflow
 - `../screens/TourFeedScreen.tsx` - Displays feed items from store
 - `../screens/TourObjectDetailScreen.tsx` - Shows individual feed item details
