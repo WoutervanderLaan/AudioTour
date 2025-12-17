@@ -7,7 +7,7 @@ import type {
   ProcessArtworkResponse,
 } from '@/core/api/schema'
 import {logger} from '@/core/lib/logger'
-import type {FeedItemMetadata} from '@/store/slices/tourStore'
+import type {FeedItemMetadata} from '@/modules/tour/store/useTourStore'
 
 /**
  * ProcessArtworkParams

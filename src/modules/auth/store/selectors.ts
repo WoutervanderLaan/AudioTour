@@ -1,5 +1,7 @@
 // src/modules/auth/store/selectors.ts
 
+import {shallow} from 'zustand/shallow'
+
 import {useAuthStore} from './useAuthStore'
 
 import type {AuthTokens, User} from '@/modules/auth/types'
@@ -33,6 +35,7 @@ export const useIsAuthenticated = (): boolean =>
 /**
  * useAuthActions
  * React hook that returns all auth-related actions for managing authentication state.
+ * Uses shallow equality to prevent unnecessary re-renders.
  *
  * @returns Object containing setUser, setAuth, updateTokens, logout, and reset action functions
  */
@@ -43,10 +46,13 @@ export const useAuthActions = (): {
   logout: () => void
   reset: () => void
 } =>
-  useAuthStore(state => ({
-    setUser: state.setUser,
-    setAuth: state.setAuth,
-    updateTokens: state.updateTokens,
-    logout: state.logout,
-    reset: state.reset,
-  }))
+  useAuthStore(
+    state => ({
+      setUser: state.setUser,
+      setAuth: state.setAuth,
+      updateTokens: state.updateTokens,
+      logout: state.logout,
+      reset: state.reset,
+    }),
+    shallow,
+  )

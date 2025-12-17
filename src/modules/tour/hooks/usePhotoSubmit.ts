@@ -5,7 +5,8 @@ import {
 } from '../api/useTourMutations'
 
 import {useLogger} from '@/shared/hooks/useLogger'
-import {type FeedItemMetadata, useTourStore} from '@/store/slices/tourStore'
+import type {FeedItemMetadata} from '@/modules/tour/store/useTourStore'
+import {useTourActions} from '@/modules/tour/store/selectors'
 
 /**
  * SubmitReturn
@@ -36,9 +37,7 @@ export const usePhotoSubmit = (): {
   submit: (photos: string[], metadata?: FeedItemMetadata) => SubmitReturn
   isLoading: boolean
 } => {
-  const addFeedItem = useTourStore(state => state.addFeedItem)
-  const updateFeedItem = useTourStore(state => state.updateFeedItem)
-  const setFeedLoading = useTourStore(state => state.setFeedLoading)
+  const {addFeedItem, updateFeedItem, setFeedLoading} = useTourActions()
 
   const logger = useLogger()
 

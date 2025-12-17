@@ -3,7 +3,7 @@ import {View} from 'react-native'
 
 import {FeedItem} from './FeedItem'
 
-import type {FeedItem as FeedItemType} from '@/store/slices/tourStore'
+import type {FeedItem as FeedItemType} from '@/modules/tour/store/useTourStore'
 
 const meta = {
   title: 'Tour/FeedItem',

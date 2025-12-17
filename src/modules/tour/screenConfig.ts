@@ -61,11 +61,12 @@ export const tourStacks: StackNavigationRoutes<TourStackParams, TourRouteName> =
  */
 export const tourTabs: TabNavigationRoutes<TourTabParams, TourTabName> = {
   [TourTabName.tour]: {
-    component: TourHomeScreen,
+    component: TourFeedScreen,
     name: TourTabName.tour,
     icon: 'music-note',
     options: {
-      headerShown: false,
+      headerShown: true,
+      headerTitle: 'Tour',
     },
   },
 }

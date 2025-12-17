@@ -13,7 +13,7 @@ import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
-import {useTourStore} from '@/store/slices/tourStore'
+import {useFeedItems, useFeedLoading} from '@/modules/tour/store/selectors'
 
 /**
  * TourFeedScreen
@@ -27,8 +27,8 @@ export const TourFeedScreen = (): React.JSX.Element => {
   const {navigate} = useNavigation()
   const {isLoading: isLoadingTour} = useTourInitialization()
 
-  const feedItems = useTourStore(state => state.feedItems)
-  const feedLoading = useTourStore(state => state.feedLoading)
+  const feedItems = useFeedItems()
+  const feedLoading = useFeedLoading()
 
   return (
     <Screen.Static>
