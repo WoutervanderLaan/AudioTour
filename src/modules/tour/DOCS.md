@@ -27,17 +27,17 @@ Landing screen for starting a new tour. Displays app title and call-to-action to
 Main tour interface showing a feed of captured objects. Features:
 
 - Feed items with photos and audio
-- Camera button for capturing new objects
+- Add artwork button for capturing new objects (camera or photo library)
 - Loading states during audio generation
 - Navigation to object details
 
 **Route**: `TourRouteName.feed`
 
-### TourCameraScreen
+### TourCameraPermissionScreen (Modal)
 
-Camera interface for capturing photos of museum objects. Handles camera permissions and photo capture.
+Permission request modal for camera or photo library access. Displays benefits and handles permission flow.
 
-**Route**: `TourRouteName.camera`
+**Route**: `TourModalName.cameraPermission` (modal)
 
 ### TourPhotoSubmitScreen (Modal)
 
@@ -60,6 +60,24 @@ Detailed view of a captured object showing:
 - Recognition confidence
 
 **Route**: `TourRouteName.objectDetail`
+
+## Services
+
+### cameraService
+
+Singleton service for managing camera and photo library permissions.
+
+**Location**: `src/modules/tour/services/cameraService.ts`
+
+**Methods**:
+
+- `requestCameraPermission()` - Request camera permission
+- `requestLibraryPermission()` - Request photo library permission
+- `checkCameraPermission()` - Check current camera permission status
+- `checkLibraryPermission()` - Check current library permission status
+- `launchCamera()` - Launch camera to capture photo
+- `launchLibrary()` - Launch photo library picker
+- `openSettings()` - Open device settings
 
 ## API Endpoints
 
@@ -93,6 +111,18 @@ Initializes a new tour session with location services and museum detection.
 const {isInitialized, isLoading, error, nearestMuseum} = useTourInitialization()
 ```
 
+### useAddArtwork
+
+Hook that manages the flow for adding artwork via camera or photo library. Handles permission checks, requests, and launching the appropriate picker.
+
+**Location**: `src/modules/tour/hooks/useAddArtwork.ts`
+
+**Usage**:
+
+```typescript
+const {isLaunching, handleAddArtwork} = useAddArtwork()
+```
+
 ### useProcessArtwork
 
 Mutation hook for uploading photos and getting object recognition.
@@ -118,6 +148,12 @@ Mutation hook for generating audio from narrative text.
 Displays a single tour item in the feed with photos, loading state, and audio player.
 
 **Location**: `src/modules/tour/components/FeedItem.tsx`
+
+### AddArtworkButton
+
+Self-contained button component that handles adding artwork via camera or photo library. Manages permission checks, requests, and launching the appropriate picker.
+
+**Location**: `src/modules/tour/components/AddArtworkButton.tsx`
 
 ## Architecture Notes
 
