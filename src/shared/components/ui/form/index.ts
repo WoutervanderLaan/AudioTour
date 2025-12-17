@@ -3,6 +3,11 @@ export {
   CheckboxControlled,
   type CheckboxControlledProps,
 } from './CheckboxControlled'
+export {ImageInput, type ImageInputProps} from './ImageInput'
+export {
+  ImageInputControlled,
+  type ImageInputControlledProps,
+} from './ImageInputControlled'
 export {RadioGroup, type RadioGroupProps, type RadioOption} from './RadioGroup'
 export {
   RadioGroupControlled,

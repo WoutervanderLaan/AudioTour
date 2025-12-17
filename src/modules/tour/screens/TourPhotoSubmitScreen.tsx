@@ -1,26 +1,23 @@
 import React, {useState} from 'react'
 import {FormProvider, useForm} from 'react-hook-form'
-import {ActivityIndicator, Alert} from 'react-native'
+import {ActivityIndicator} from 'react-native'
 
 import {zodResolver} from '@hookform/resolvers/zod'
 import type {RouteProp} from '@react-navigation/native'
-import * as ImagePicker from 'expo-image-picker'
 
-import {AddPhoto} from '../components/AddPhoto'
 import {TourPhotoSubmitFormInputs} from '../components/TourPhotoSubmitFormInputs'
 import {usePhotoSubmit} from '../hooks/usePhotoSubmit'
 import type {TourModalName, TourModalParams} from '../routes.types'
 import {type PhotoSubmitForm, photoSubmitSchema} from '../schema'
 
-import {logger} from '@/core/lib/logger'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
-import {Thumbnail} from '@/shared/components/ui/thumbnail/Thumbnail'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
+import {ImageInputControlled} from '@/shared/components/ui/form'
 
 const MAX_PHOTOS = 5
 
@@ -54,55 +51,12 @@ export const TourPhotoSubmitScreen = ({
 
   const form = useForm<PhotoSubmitForm>({
     resolver: zodResolver(photoSubmitSchema),
+    defaultValues: {
+      photos: initialPhotos,
+    },
   })
 
-  const {
-    handleSubmit,
-    setValue,
-    watch,
-    formState: {errors},
-  } = form
-
-  const photos = watch('photos', initialPhotos)
-
-  /**
-   * handleAddPhoto
-   * Opens camera/picker to add another photo
-   *
-   * @returns Promise that resolves when photo is added
-   */
-  const handleAddPhoto = async (): Promise<void> => {
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        //TODO: for sim only
-        mediaTypes: ['images'],
-        quality: 0.8,
-        allowsEditing: false,
-      })
-
-      if (!result.canceled && result.assets?.[0]?.uri) {
-        setValue('photos', [...photos, result.assets[0].uri])
-      }
-    } catch (err) {
-      Alert.alert('Something went wrong', JSON.stringify(err))
-
-      logger.error('[TourPhotoSubmit] Error adding photo:', err)
-    }
-  }
-
-  /**
-   * handleDeletePhoto
-   * Removes a photo from the list
-   *
-   * @param index - Index of photo to remove
-   * @returns void
-   */
-  const handleDeletePhoto = (index: number): void => {
-    setValue(
-      'photos',
-      photos.filter((_, i) => i !== index),
-    )
-  }
+  const {handleSubmit, control} = form
 
   /**
    * onSubmit
@@ -134,36 +88,14 @@ export const TourPhotoSubmitScreen = ({
         paddingH="md"
         paddingBottom="xl">
         <Column gap="lg">
-          <Text.Label>
-            {/*
-            - TODO: Add image form component 
-            - TODO: Move all image related code to own component
-            */}
-            {photos.length} / {MAX_PHOTOS} photos
-          </Text.Label>
-
-          <Row
-            gap="sm"
-            justifyContent="space-evenly"
-            wrap="wrap">
-            {photos.map((photo, index) => (
-              <Thumbnail
-                key={`photo-${index + 1}`}
-                source={{uri: photo}}
-                deletable
-                size="md"
-                resizeMode="cover"
-                onDelete={() => handleDeletePhoto(index)}
-              />
-            ))}
-
-            {photos.length < MAX_PHOTOS && (
-              <AddPhoto onPress={handleAddPhoto} />
-            )}
-          </Row>
-          {!!errors.photos && (
-            <Text.Label color="warning">{errors.photos?.message}</Text.Label>
-          )}
+          <ImageInputControlled
+            control={control}
+            name="photos"
+            label="Photos"
+            maxImages={MAX_PHOTOS}
+            required={true}
+            hint="Upload 1-5 photos of the museum object"
+          />
 
           <FormProvider {...form}>
             <TourPhotoSubmitFormInputs />
