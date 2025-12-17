@@ -75,7 +75,7 @@ See `src/modules/tour/api/` for mutation hooks.
 
 Tour state is managed through:
 
-- `src/store/slices/tourStore.ts` - Tour session and feed items
+- `src/modules/tour/store/useTourStore.ts` - Tour session and feed items
 - `src/store/slices/museumStore.ts` - Museum location and context
 - `src/store/slices/userSessionStore.ts` - User session tracking
 

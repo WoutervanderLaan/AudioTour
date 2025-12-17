@@ -48,6 +48,16 @@
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – profile route type definitions
       - index.ts – module configuration export
+    - **tour/** – audio tour module (photo capture, object recognition, narrative generation)
+      - api/ – tour API endpoints (process artwork, generate narrative, generate audio)
+      - hooks/ – tour hooks (useTourInitialization, usePhotoSubmit)
+      - screens/ – tour screens (home, feed, camera, photo submit, object detail)
+      - store/ – tour state management (useTourStore)
+      - components/ – tour-specific UI components (FeedItem, AddPhoto)
+      - utils/ – tour utility functions (getFeedItemStatusText)
+      - screenConfig.ts – navigation stack configuration
+      - routes.types.ts – tour route type definitions
+      - index.ts – module configuration export
     - **old/** – legacy screens awaiting migration to proper modules
       - screens/ – old screens (Museum, Settings, Capture, etc.)
       - index.ts
