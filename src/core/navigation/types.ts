@@ -67,11 +67,12 @@ export type RootStackParams = ModuleParams<ModuleStackParams> &
  * Maps route names to their component, name, and options.
  */
 export type StackNavigationRoutes<
-  R extends Record<string, any>,
+  R extends Record<string, unknown>,
   Route extends string = string,
 > = Record<
   Route,
   {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component: ComponentType<any>
     name: keyof R
     options?: NativeStackNavigationOptions
@@ -85,11 +86,12 @@ export type StackNavigationRoutes<
  * Maps route names to their component, name, and options for the bottom tab navigator.
  */
 export type TabNavigationRoutes<
-  R extends Record<string, any>,
+  R extends Record<string, unknown>,
   Route extends string = string,
 > = Record<
   Route,
   {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component: ComponentType<any>
     name: keyof R
     options?: BottomTabNavigationOptions

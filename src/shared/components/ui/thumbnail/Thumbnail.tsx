@@ -7,32 +7,40 @@ import {IconButton} from '../pressable'
 
 /**
  * WithDelete
- * TODO: describe what this type represents.
+ * Type definition for thumbnail components that support deletion.
+ * Requires both deletable flag and onDelete callback to be provided together.
  */
 type WithDelete = {
   /**
-   * deleteable
+   * Flag indicating that the thumbnail can be deleted
    */
   deletable: true
   /**
-   * onDelete
+   * Callback function invoked when the delete button is pressed
    */
   onDelete: () => void
 }
 
 /**
  * ThumbnailProps
- * TODO: describe what this type represents.
+ * Props for the Thumbnail component.
+ * Extends ImageProps with size options and optional deletion functionality.
  */
 export type ThumbnailProps = ImageProps & {
+  /**
+   * Size variant for the thumbnail (default: 'md')
+   */
   size?: 'sm' | 'md' | 'lg'
 } & ({deletable?: false; onDelete?: never} | WithDelete)
 
 /**
  * Thumbnail
- * TODO: describe what it does.
+ * Displays an image as a thumbnail with optional delete functionality.
+ * Supports three size variants (sm: 60px, md: 100px, lg: 140px).
+ * When deletable is true, shows a cancel icon button overlay.
  *
- * @returns {*} describe return value
+ * @param props - Thumbnail component props
+ * @returns Thumbnail component with optional delete button
  */
 export const Thumbnail = ({
   deletable,

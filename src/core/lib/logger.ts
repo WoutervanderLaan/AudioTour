@@ -139,10 +139,11 @@ const formatTable = (
   // Create table border
   /**
    * createBorder
-   * TODO: describe what it does.
+   * Creates a table border string by repeating a character for each column.
+   * The border length for each column matches its calculated width plus padding.
    *
-   * @param {*} char
-   * @returns {*} describe return value
+   * @param char - The character to repeat for the border (e.g., '-' or '=')
+   * @returns A formatted border string with '+' separators between columns
    */
   const createBorder = (char: string): string => {
     return keys.map(key => char.repeat(columnWidths[key] + 2)).join('+')

@@ -57,10 +57,10 @@ export const FeedItem = ({item, onPress}: FeedItemProps): React.JSX.Element => {
                 resizeMode="cover"
               />
             ))}
-            {item.photos.length > 4 && (
+            {item.photos.length > MAX_PHOTOS && (
               <Box>
                 <Text.Label color="secondary">
-                  +{item.photos.length - 4}
+                  +{item.photos.length - MAX_PHOTOS}
                 </Text.Label>
               </Box>
             )}

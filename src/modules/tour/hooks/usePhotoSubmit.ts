@@ -59,12 +59,14 @@ export const usePhotoSubmit = (): {
     photos: string[],
     metadata?: FeedItemMetadata,
   ): SubmitReturn => {
+    let feedItemId: string | undefined
+
     try {
       setFeedLoading(true)
 
       //TODO: The main call should generate audio. This is prio. It should arrive streamed. The text can be transcribed after.
 
-      const feedItemId = addFeedItem(photos, metadata)
+      feedItemId = addFeedItem(photos, metadata)
       logger.debug('[TourPhotoSubmit] Created feed item:', feedItemId)
 
       // Step 1: Upload photos and process artwork
@@ -108,6 +110,15 @@ export const usePhotoSubmit = (): {
       logger.error('[TourPhotoSubmit] Submission error:', error)
       const errorMessage =
         error instanceof Error ? error.message : 'Failed to process object'
+
+      // Update feed item to error state if it was created
+      if (feedItemId) {
+        updateFeedItem(feedItemId, {
+          status: 'error',
+          error: errorMessage,
+        })
+      }
+
       return [undefined, {error: errorMessage}]
     } finally {
       setFeedLoading(false)

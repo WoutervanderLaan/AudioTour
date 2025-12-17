@@ -6,6 +6,7 @@ import {useAuthStore} from '../store/useAuthStore'
 
 import {ApiError} from '@/core/api/types'
 import {logger} from '@/core/lib/logger'
+import {TIMING} from '@/shared/constants/timing'
 
 /**
  * Listens to auth state changes and handles token expiration
@@ -50,7 +51,10 @@ export const useAuthStateListener = (): void => {
       checkTokenExpiration()
 
       // Check every minute
-      const interval = setInterval(checkTokenExpiration, 60000)
+      const interval = setInterval(
+        checkTokenExpiration,
+        TIMING.TOKEN_CHECK_INTERVAL,
+      )
       return (): void => clearInterval(interval)
     }
   }, [tokens, isAuthenticated, logout, queryClient])

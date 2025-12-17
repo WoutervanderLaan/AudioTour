@@ -4,6 +4,7 @@ import {authModals, authStacks, authTabs} from './screenConfig'
 
 import {logger} from '@/core/lib/logger'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
+import {TIMING} from '@/shared/constants/timing'
 
 /**
  * Authentication module configuration.
@@ -50,6 +51,6 @@ export const authModule: ModuleConfig = {
   queries: {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5, //TODO: enum
+    staleTime: TIMING.QUERY_STALE_TIME,
   },
 }
