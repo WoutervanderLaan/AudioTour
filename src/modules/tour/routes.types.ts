@@ -5,7 +5,6 @@
 export enum TourRouteName {
   home = 'TourHome',
   feed = 'TourFeed',
-  camera = 'TourCamera',
   objectDetail = 'TourObjectDetail',
 }
 
@@ -28,15 +27,6 @@ export type TourStackParams = {
     sessionId?: string
   }
   /**
-   * Tour camera screen - capture photos of objects
-   */
-  [TourRouteName.camera]: {
-    /**
-     * Optional existing photos to add to
-     */
-    existingPhotos?: string[]
-  }
-  /**
    * Tour object detail screen - detailed view of captured object
    */
   [TourRouteName.objectDetail]: {
@@ -53,6 +43,7 @@ export type TourStackParams = {
  */
 export enum TourModalName {
   photoSubmit = 'TourPhotoSubmit',
+  cameraPermission = 'TourCameraPermission',
 }
 
 /**
@@ -68,6 +59,23 @@ export type TourModalParams = {
      * Array of photo URIs to submit
      */
     photos: string[]
+  }
+  /**
+   * Camera permission modal - request camera or library access
+   */
+  [TourModalName.cameraPermission]: {
+    /**
+     * Type of media source to request permission for
+     */
+    sourceType: 'camera' | 'library'
+    /**
+     * Callback to execute when permission is granted
+     */
+    onPermissionGranted: () => void | Promise<void>
+    /**
+     * Callback to execute when modal is dismissed without granting
+     */
+    onModalDismissed: () => void | Promise<void>
   }
 }
 

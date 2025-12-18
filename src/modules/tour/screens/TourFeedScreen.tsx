@@ -5,13 +5,13 @@ import {StyleSheet} from 'react-native-unistyles'
 import {useTourInitialization} from '../hooks/useTourInitialization'
 import {TourRouteName} from '../routes.types'
 
+import {AddArtworkButton} from '@/modules/tour/components/AddArtworkButton'
 import {FeedItem} from '@/modules/tour/components/FeedItem'
 import {useFeedItems, useFeedLoading} from '@/modules/tour/store/selectors'
 import type {FeedItem as FeedItemType} from '@/modules/tour/types'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
-import {Button} from '@/shared/components/ui/pressable'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
@@ -106,11 +106,7 @@ export const TourFeedScreen = (): React.JSX.Element => {
         <Column
           padding="md"
           paddingBottom="xl">
-          <Button
-            label="New Artwork"
-            onPress={() => navigate(TourRouteName.camera, {existingPhotos: []})}
-            disabled={feedLoading}
-          />
+          <AddArtworkButton disabled={feedLoading} />
         </Column>
       </Box>
     </Screen.Static>

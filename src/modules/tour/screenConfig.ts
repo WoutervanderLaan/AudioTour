@@ -1,4 +1,4 @@
-import {TourCameraScreen} from './screens/TourCameraScreen'
+import {TourCameraPermissionScreen} from './screens/TourCameraPermissionScreen'
 import {TourFeedScreen} from './screens/TourFeedScreen'
 import {TourHomeScreen} from './screens/TourHomeScreen'
 import {TourObjectDetailScreen} from './screens/TourObjectDetailScreen'
@@ -38,14 +38,6 @@ export const tourStacks: StackNavigationRoutes<TourStackParams, TourRouteName> =
         headerTitle: 'Tour',
       },
     },
-    [TourRouteName.camera]: {
-      component: TourCameraScreen,
-      name: TourRouteName.camera,
-      options: {
-        headerShown: true,
-        headerTitle: 'Capture',
-      },
-    },
     [TourRouteName.objectDetail]: {
       component: TourObjectDetailScreen,
       name: TourRouteName.objectDetail,
@@ -82,6 +74,15 @@ export const tourModals: StackNavigationRoutes<TourModalParams, TourModalName> =
       options: {
         headerShown: true,
         headerTitle: 'Submit Photos',
+        presentation: 'modal',
+      },
+    },
+    [TourModalName.cameraPermission]: {
+      component: TourCameraPermissionScreen,
+      name: TourModalName.cameraPermission,
+      options: {
+        headerShown: true,
+        headerTitle: 'Permission Required',
         presentation: 'modal',
       },
     },

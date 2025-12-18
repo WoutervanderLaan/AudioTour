@@ -29,29 +29,30 @@ Main tour interface showing a feed of captured objects.
 **Features**:
 
 - Feed list displaying captured tour items
-- Camera button for capturing new objects
+- Add artwork button for capturing new objects (camera or photo library)
 - Loading states during audio generation
-- Pull-to-refresh functionality
-- Navigation to camera and object detail screens
+- Navigation to object detail screen
 - Empty state when no items captured
+- Uses `AddArtworkButton` component for photo capture flow
 
 **Location**: `src/modules/tour/screens/TourFeedScreen.tsx`
 
-### TourCameraScreen.tsx
+### TourCameraPermissionScreen.tsx
 
-Camera interface for capturing photos of museum objects.
+Modal screen that requests camera or photo library permission from the user.
 
-**Route**: `TourRouteName.camera`
+**Route**: `TourModalName.cameraPermission` (modal presentation)
 
 **Features**:
 
-- Camera permission handling
-- Live camera preview
-- Photo capture functionality
-- Navigation to photo submit modal after capture
-- Cancel navigation back to feed
+- Permission request for camera or photo library
+- User-friendly explanation of benefits
+- Request permission button
+- Skip/Not Now option
+- Open Settings option
+- Dynamic content based on source type (camera vs library)
 
-**Location**: `src/modules/tour/screens/TourCameraScreen.tsx`
+**Location**: `src/modules/tour/screens/TourCameraPermissionScreen.tsx`
 
 ### TourPhotoSubmitScreen.tsx
 
@@ -90,10 +91,11 @@ Detailed view of a captured museum object.
 ## Navigation Flow
 
 1. **TourHomeScreen** → Initialize tour → Navigate to TourFeedScreen
-2. **TourFeedScreen** → Press camera → Navigate to TourCameraScreen
-3. **TourCameraScreen** → Capture photo → Navigate to TourPhotoSubmitScreen (modal)
-4. **TourPhotoSubmitScreen** → Submit → Navigate back to TourFeedScreen
-5. **TourFeedScreen** → Press feed item → Navigate to TourObjectDetailScreen
+2. **TourFeedScreen** → Press "Add Artwork" → Show action sheet (camera or library)
+3. **Action Sheet** → Select source → Check permission → Show TourCameraPermissionScreen (modal) if needed
+4. **TourCameraPermissionScreen** → Grant permission → Launch camera/library → Navigate to TourPhotoSubmitScreen (modal)
+5. **TourPhotoSubmitScreen** → Submit → Navigate back to TourFeedScreen
+6. **TourFeedScreen** → Press feed item → Navigate to TourObjectDetailScreen
 
 ## Integration
 
