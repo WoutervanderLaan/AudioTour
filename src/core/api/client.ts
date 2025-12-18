@@ -559,6 +559,206 @@ export class ApiClient implements IApiClient {
   ): Promise<ApiResponse<T>> {
     return this.request<T>('DELETE', endpoint, undefined, config)
   }
+
+  /**
+   * Stream POST request with chunked response handling.
+   * Handles Server-Sent Events (SSE) or newline-delimited JSON streams.
+   * Invokes onChunk callback for each data chunk received.
+   *
+   * @param endpoint - API endpoint path
+   * @param body - Request body (JSON object or FormData)
+   * @param onChunk - Callback invoked for each chunk of data received
+   * @param config - Optional request configuration
+   * @returns Promise resolving when stream completes
+   * @throws ApiError for network errors or non-2xx status codes
+   */
+  async streamPost<TChunk = unknown>(
+    endpoint: string,
+    body?: unknown,
+    onChunk?: (chunk: TChunk) => void,
+    config?: RequestConfig,
+  ): Promise<void> {
+    const startTime = Date.now()
+    try {
+      const url = this.buildUrl(endpoint, config?.params)
+      const isFormData = body instanceof FormData
+
+      const requestConfig: RequestInit = {
+        method: 'POST',
+        headers: this.buildHeaders(
+          isFormData
+            ? {...config?.headers, 'Content-Type': undefined}
+            : config?.headers,
+        ),
+        signal: config?.signal,
+      }
+
+      if (body != null) {
+        requestConfig.body = isFormData ? body : JSON.stringify(body)
+      }
+
+      // Apply request interceptors
+      const {url: interceptedUrl, config: interceptedConfig} =
+        await this.applyRequestInterceptors(url, requestConfig)
+
+      // Make request
+      const response = await fetch(interceptedUrl, interceptedConfig)
+
+      // Handle 401 with token refresh (similar to regular request)
+      if (
+        response.status === 401 &&
+        !config?.skipAuthRefresh &&
+        this.refreshToken
+      ) {
+        try {
+          await this.handleTokenRefresh()
+          requestConfig.headers = this.buildHeaders(config?.headers)
+          const {url: retryUrl, config: retryConfig} =
+            await this.applyRequestInterceptors(interceptedUrl, requestConfig)
+          const retryResponse = await fetch(retryUrl, retryConfig)
+
+          if (!retryResponse.ok) {
+            throw {
+              message: retryResponse.statusText || 'Request failed',
+              status: retryResponse.status,
+            } as ApiError
+          }
+
+          return this.processStream(retryResponse, onChunk)
+        } catch (refreshError) {
+          logger.error('[API] Token refresh failed:', refreshError)
+          throw refreshError
+        }
+      }
+
+      // Handle errors
+      if (!response.ok) {
+        const error: ApiError = {
+          message: response.statusText || 'Request failed',
+          status: response.status,
+        }
+
+        try {
+          const errorData = await response.json()
+          error.message = errorData.message || error.message
+          error.code = errorData.code
+          error.details = errorData
+        } catch {
+          // Response is not JSON
+        }
+
+        throw error
+      }
+
+      // Process the stream
+      await this.processStream(response, onChunk)
+
+      // Log successful request
+      if (__DEV__) {
+        const duration = Date.now() - startTime
+        logger.success(`STREAM POST ${endpoint} - Complete (${duration}ms)`)
+      }
+    } catch (error: unknown) {
+      // Log failed request
+      if (__DEV__) {
+        const duration = Date.now() - startTime
+        logger.error(`STREAM POST ${endpoint} - Failed (${duration}ms)`, error)
+      }
+
+      if (
+        typeof error === 'object' &&
+        !!error &&
+        'name' in error &&
+        error?.name === 'AbortError'
+      ) {
+        throw {
+          message: 'Request timeout',
+          code: 'TIMEOUT',
+        } as ApiError
+      }
+
+      if (error instanceof TypeError) {
+        throw {
+          message: 'Network request failed',
+          code: 'NETWORK_ERROR',
+        } as ApiError
+      }
+
+      throw error
+    }
+  }
+
+  /**
+   * Process streaming response body.
+   * Reads response as a stream and parses newline-delimited JSON chunks.
+   *
+   * @param response - Fetch Response object with readable body
+   * @param onChunk - Callback invoked for each parsed chunk
+   */
+  private async processStream<TChunk>(
+    response: Response,
+    onChunk?: (chunk: TChunk) => void,
+  ): Promise<void> {
+    if (!response.body) {
+      throw new Error('Response body is not readable')
+    }
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let buffer = ''
+
+    try {
+      while (true) {
+        const {done, value} = await reader.read()
+
+        if (done) {
+          // Process any remaining data in buffer
+          if (buffer.trim() && onChunk) {
+            try {
+              const chunk = JSON.parse(buffer) as TChunk
+              onChunk(chunk)
+            } catch (parseError) {
+              logger.warn('[API] Failed to parse final chunk:', parseError)
+            }
+          }
+          break
+        }
+
+        // Decode chunk and add to buffer
+        buffer += decoder.decode(value, {stream: true})
+
+        // Process complete lines (newline-delimited JSON)
+        const lines = buffer.split('\n')
+        buffer = lines.pop() || '' // Keep incomplete line in buffer
+
+        for (const line of lines) {
+          const trimmedLine = line.trim()
+          if (!trimmedLine || trimmedLine.startsWith(':')) {
+            // Skip empty lines and SSE comments
+            continue
+          }
+
+          // Handle SSE format (data: {...})
+          const dataMatch = trimmedLine.match(/^data:\s*(.+)$/)
+          const jsonStr = dataMatch ? dataMatch[1] : trimmedLine
+
+          try {
+            const chunk = JSON.parse(jsonStr) as TChunk
+            if (onChunk) {
+              onChunk(chunk)
+            }
+          } catch (parseError) {
+            logger.warn('[API] Failed to parse chunk:', {
+              line: trimmedLine,
+              error: parseError,
+            })
+          }
+        }
+      }
+    } finally {
+      reader.releaseLock()
+    }
+  }
 }
 
 export const apiClient = new ApiClient()

@@ -1,12 +1,15 @@
 import {useMutation, type UseMutationResult} from '@tanstack/react-query'
+import {useRef, useCallback} from 'react'
 
 import type {
+  AudioChunk,
   GenerateAudioParams,
   GenerateAudioResponse,
   GenerateNarrativeParams,
   GenerateNarrativeResponse,
   ProcessArtworkParams,
   ProcessArtworkResponse,
+  StreamAudioParams,
 } from '../types'
 
 import {apiClient} from '@/core/api/client'
@@ -120,6 +123,144 @@ export function useGenerateAudio(): UseMutationResult<
     },
     onError: error => {
       logger.error('[TourAPI] Error generating audio:', error)
+    },
+  })
+}
+
+/**
+ * StreamAudioResult
+ * Result object returned by useStreamAudio mutation
+ */
+export type StreamAudioResult = {
+  /**
+   * Final audio URL (available after streaming completes)
+   */
+  audioUrl?: string
+  /**
+   * Narrative text (available after generation or during streaming)
+   */
+  narrativeText?: string
+  /**
+   * Total audio duration in seconds
+   */
+  duration?: number
+}
+
+/**
+ * StreamAudioOptions
+ * Configuration options for audio streaming
+ */
+export type StreamAudioOptions = {
+  /**
+   * Callback invoked for each audio chunk received
+   */
+  onChunk?: (chunk: AudioChunk) => void
+  /**
+   * Callback invoked when audio metadata is received
+   */
+  onMetadata?: (format: string, duration?: number) => void
+  /**
+   * Callback invoked when narrative text is received
+   */
+  onNarrative?: (text: string) => void
+  /**
+   * Callback invoked with streaming progress (0-100)
+   */
+  onProgress?: (progress: number) => void
+}
+
+/**
+ * useStreamAudio
+ * Hook for streaming audio generation directly from object ID.
+ * Streams audio chunks in real-time as they are generated, minimizing latency.
+ * Narrative text is provided after audio streaming completes.
+ *
+ * @param options - Streaming callbacks for handling chunks, metadata, and progress
+ * @returns Mutation object with streaming mutation function
+ */
+export function useStreamAudio(
+  options?: StreamAudioOptions,
+): UseMutationResult<StreamAudioResult, Error, StreamAudioParams> {
+  const audioChunksRef = useRef<string[]>([])
+  const resultRef = useRef<StreamAudioResult>({})
+
+  const handleChunk = useCallback(
+    (chunk: AudioChunk): void => {
+      logger.debug('[TourAPI] Received audio chunk:', chunk.type)
+
+      // Invoke user's onChunk callback
+      if (options?.onChunk) {
+        options.onChunk(chunk)
+      }
+
+      // Handle different chunk types
+      switch (chunk.type) {
+        case 'metadata':
+          if (chunk.format && options?.onMetadata) {
+            options.onMetadata(chunk.format, chunk.duration)
+          }
+          break
+
+        case 'audio':
+          if (chunk.audioData) {
+            audioChunksRef.current.push(chunk.audioData)
+            // Calculate approximate progress if sequence is available
+            if (chunk.sequence !== undefined && options?.onProgress) {
+              // This is a rough estimate - backend should provide better progress
+              const progress = Math.min(chunk.sequence * 5, 95)
+              options.onProgress(progress)
+            }
+          }
+          break
+
+        case 'narrative':
+          if (chunk.narrativeText) {
+            resultRef.current.narrativeText = chunk.narrativeText
+            if (options?.onNarrative) {
+              options.onNarrative(chunk.narrativeText)
+            }
+          }
+          break
+
+        case 'complete':
+          if (chunk.audioUrl) {
+            resultRef.current.audioUrl = chunk.audioUrl
+          }
+          if (chunk.duration !== undefined) {
+            resultRef.current.duration = chunk.duration
+          }
+          if (options?.onProgress) {
+            options.onProgress(100)
+          }
+          break
+      }
+    },
+    [options],
+  )
+
+  return useMutation({
+    mutationFn: async (params: StreamAudioParams) => {
+      // Reset state for new request
+      audioChunksRef.current = []
+      resultRef.current = {}
+
+      logger.debug('[TourAPI] Starting audio stream for object:', params.objectId)
+
+      await apiClient.streamPost<AudioChunk>(
+        '/stream-audio',
+        {
+          object_id: params.objectId,
+          voice: params.voice,
+          metadata: params.metadata,
+        },
+        handleChunk,
+      )
+
+      logger.debug('[TourAPI] Audio stream complete')
+      return resultRef.current
+    },
+    onError: error => {
+      logger.error('[TourAPI] Error streaming audio:', error)
     },
   })
 }

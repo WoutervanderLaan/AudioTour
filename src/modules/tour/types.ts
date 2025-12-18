@@ -44,6 +44,60 @@ export type GenerateAudioParams = {
 }
 
 /**
+ * StreamAudioParams
+ * Parameters for streaming audio generation directly from object ID
+ */
+export type StreamAudioParams = {
+  /**
+   * Object ID from recognition to generate audio for
+   */
+  objectId: string
+  /**
+   * Optional voice/style preferences
+   */
+  voice?: string
+  /**
+   * Optional metadata for context
+   */
+  metadata?: FeedItemMetadata
+}
+
+/**
+ * AudioChunk
+ * Represents a chunk of streamed audio data
+ */
+export type AudioChunk = {
+  /**
+   * Type of chunk: audio data or metadata
+   */
+  type: 'audio' | 'metadata' | 'narrative' | 'complete'
+  /**
+   * Base64-encoded audio data (for type: 'audio')
+   */
+  audioData?: string
+  /**
+   * Narrative text (for type: 'narrative')
+   */
+  narrativeText?: string
+  /**
+   * Audio format/encoding info (for type: 'metadata')
+   */
+  format?: string
+  /**
+   * Total duration in seconds (for type: 'metadata' or 'complete')
+   */
+  duration?: number
+  /**
+   * Final audio URL (for type: 'complete')
+   */
+  audioUrl?: string
+  /**
+   * Chunk sequence number for ordering
+   */
+  sequence?: number
+}
+
+/**
  * Centralized API response type definitions.
  *
  * This file contains all API endpoint response types to ensure type safety
@@ -96,6 +150,7 @@ export type FeedItemStatus =
   | 'processing'
   | 'generating_narrative'
   | 'generating_audio'
+  | 'streaming_audio'
   | 'ready'
   | 'error'
 
@@ -171,4 +226,12 @@ export type FeedItem = {
    * Timestamp when item was created
    */
   createdAt: number
+  /**
+   * Audio streaming progress (0-100)
+   */
+  audioStreamProgress?: number
+  /**
+   * Accumulated audio chunks for streaming playback
+   */
+  audioChunks?: string[]
 }
