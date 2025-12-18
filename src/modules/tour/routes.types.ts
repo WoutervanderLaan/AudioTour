@@ -71,7 +71,11 @@ export type TourModalParams = {
     /**
      * Callback to execute when permission is granted
      */
-    onPermissionGranted: () => void
+    onPermissionGranted: () => void | Promise<void>
+    /**
+     * Callback to execute when modal is dismissed without granting
+     */
+    onModalDismissed: () => void | Promise<void>
   }
 }
 

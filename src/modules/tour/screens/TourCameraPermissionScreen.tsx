@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -43,8 +43,9 @@ export const TourCameraPermissionScreen = ({
   route,
 }: TourCameraPermissionScreenProps): React.JSX.Element => {
   const navigation = useNavigation()
-  const {sourceType, onPermissionGranted} = route.params
+  const {sourceType, onPermissionGranted, onModalDismissed} = route.params
   const [isRequesting, setIsRequesting] = useState(false)
+  const [permissionGranted, setPermissionGranted] = useState(false)
 
   const isCamera = sourceType === MediaSourceType.camera
   const title = isCamera ? 'Camera Access Required' : 'Photo Library Access Required'
@@ -69,11 +70,8 @@ export const TourCameraPermissionScreen = ({
 
       if (status === 'granted') {
         logger.success('[TourCameraPermission] Permission granted')
+        setPermissionGranted(true)
         navigation.goBack()
-        // Call the callback after modal is dismissed
-        setTimeout(() => {
-          onPermissionGranted()
-        }, 100)
       } else {
         logger.debug('[TourCameraPermission] Permission denied by user')
         navigation.goBack()
@@ -101,8 +99,31 @@ export const TourCameraPermissionScreen = ({
    * Useful if the user previously denied permission.
    */
   const handleOpenSettings = async (): Promise<void> => {
-    await cameraService.openSettings()
+    try {
+      await cameraService.openSettings()
+    } catch (error) {
+      logger.error('[TourCameraPermission] Failed to open settings:', error)
+    }
   }
+
+  // Handle modal unmount - call appropriate callback
+  useEffect(() => {
+    return () => {
+      // When component unmounts, call appropriate callback
+      if (permissionGranted) {
+        // Permission was granted, call success callback
+        Promise.resolve(onPermissionGranted()).catch(err =>
+          logger.error('[TourCameraPermission] onPermissionGranted error:', err),
+        )
+      } else {
+        // Modal was dismissed without granting permission
+        Promise.resolve(onModalDismissed()).catch(err =>
+          logger.error('[TourCameraPermission] onModalDismissed error:', err),
+        )
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [permissionGranted])
 
   return (
     <Screen.Static>
