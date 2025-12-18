@@ -2,8 +2,10 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {useState} from 'react'
 import {View} from 'react-native'
 
+import {FormField} from './FormField'
 import {ImageInput} from './ImageInput'
 
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable'
 import {Text} from '@/shared/components/ui/typography'
 
@@ -28,124 +30,282 @@ export default meta
  */
 type Story = StoryObj<typeof meta>
 
+/**
+ * renderImageLabel
+ * Helper function to render label with image count
+ *
+ * @param label - Label text
+ * @param currentCount - Current number of images
+ * @param maxImages - Maximum number of images
+ * @param labelId - Native ID for label
+ * @param disabled - Whether the input is disabled
+ * @param required - Whether the field is required
+ * @returns Rendered label with count
+ */
+const renderImageLabel = (
+  label: string,
+  currentCount: number,
+  maxImages: number,
+) => {
+  return ({
+    label,
+    labelId,
+    disabled,
+    required,
+  }: {
+    label: string
+    labelId?: string
+    disabled: boolean
+    required: boolean
+  }): React.JSX.Element => (
+    <Row
+      gap="xs"
+      center>
+      <Text.Label
+        nativeID={labelId}
+        color={disabled ? 'secondary' : 'default'}
+        accessibilityRole="text">
+        {label}
+        {!!required && (
+          <Text.Label
+            color="warning"
+            accessibilityLabel="required">
+            {' '}
+            *
+          </Text.Label>
+        )}
+      </Text.Label>
+      <Text.Label color="secondary">
+        {currentCount} / {maxImages}
+      </Text.Label>
+    </Row>
+  )
+}
+
 export const Default: Story = {
-  args: {
-    label: 'Upload Photos',
-    maxImages: 5,
-    value: [],
+  render: () => {
+    const maxImages = 5
+    const images: string[] = []
+    return (
+      <FormField
+        label="Upload Photos"
+        renderLabel={renderImageLabel('Upload Photos', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+        />
+      </FormField>
+    )
   },
 }
 
 export const WithImages: Story = {
-  args: {
-    label: 'Upload Photos',
-    maxImages: 5,
-    value: [
+  render: () => {
+    const maxImages = 5
+    const images = [
       'https://picsum.photos/200/200?random=1',
       'https://picsum.photos/200/200?random=2',
       'https://picsum.photos/200/200?random=3',
-    ],
+    ]
+    return (
+      <FormField
+        label="Upload Photos"
+        renderLabel={renderImageLabel('Upload Photos', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+        />
+      </FormField>
+    )
   },
 }
 
 export const MaxImagesReached: Story = {
-  args: {
-    label: 'Upload Photos',
-    maxImages: 3,
-    value: [
+  render: () => {
+    const maxImages = 3
+    const images = [
       'https://picsum.photos/200/200?random=1',
       'https://picsum.photos/200/200?random=2',
       'https://picsum.photos/200/200?random=3',
-    ],
+    ]
+    return (
+      <FormField
+        label="Upload Photos"
+        renderLabel={renderImageLabel('Upload Photos', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+        />
+      </FormField>
+    )
   },
 }
 
 export const Required: Story = {
-  args: {
-    label: 'Upload Photos',
-    maxImages: 5,
-    required: true,
-    value: [],
-    hint: 'At least one photo is required',
+  render: () => {
+    const maxImages = 5
+    const images: string[] = []
+    return (
+      <FormField
+        label="Upload Photos"
+        required={true}
+        hint="At least one photo is required"
+        renderLabel={renderImageLabel('Upload Photos', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+        />
+      </FormField>
+    )
   },
 }
 
 export const WithHint: Story = {
-  args: {
-    label: 'Museum Object Photos',
-    maxImages: 5,
-    value: [],
-    hint: 'Upload up to 5 photos of the museum object',
+  render: () => {
+    const maxImages = 5
+    const images: string[] = []
+    return (
+      <FormField
+        label="Museum Object Photos"
+        hint="Upload up to 5 photos of the museum object"
+        renderLabel={renderImageLabel(
+          'Museum Object Photos',
+          images.length,
+          maxImages,
+        )}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+        />
+      </FormField>
+    )
   },
 }
 
 export const WithError: Story = {
-  args: {
-    label: 'Upload Photos',
-    maxImages: 5,
-    value: [],
-    error: 'At least one photo is required',
+  render: () => {
+    const maxImages = 5
+    const images: string[] = []
+    return (
+      <FormField
+        label="Upload Photos"
+        error="At least one photo is required"
+        renderLabel={renderImageLabel('Upload Photos', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+        />
+      </FormField>
+    )
   },
 }
 
 export const Disabled: Story = {
-  args: {
-    label: 'Upload Photos',
-    maxImages: 5,
-    disabled: true,
-    value: [
+  render: () => {
+    const maxImages = 5
+    const images = [
       'https://picsum.photos/200/200?random=1',
       'https://picsum.photos/200/200?random=2',
-    ],
+    ]
+    return (
+      <FormField
+        label="Upload Photos"
+        disabled={true}
+        renderLabel={renderImageLabel('Upload Photos', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+          disabled={true}
+        />
+      </FormField>
+    )
   },
 }
 
 export const SingleImageMode: Story = {
-  args: {
-    label: 'Profile Photo',
-    maxImages: 1,
-    value: [],
-    hint: 'Upload a single profile photo',
+  render: () => {
+    const maxImages = 1
+    const images: string[] = []
+    return (
+      <FormField
+        label="Profile Photo"
+        hint="Upload a single profile photo"
+        renderLabel={renderImageLabel('Profile Photo', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+        />
+      </FormField>
+    )
   },
 }
 
 export const SingleImageWithValue: Story = {
-  args: {
-    label: 'Profile Photo',
-    maxImages: 1,
-    value: ['https://picsum.photos/200/200?random=1'],
+  render: () => {
+    const maxImages = 1
+    const images = ['https://picsum.photos/200/200?random=1']
+    return (
+      <FormField
+        label="Profile Photo"
+        renderLabel={renderImageLabel('Profile Photo', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+        />
+      </FormField>
+    )
   },
 }
 
 export const SmallThumbnails: Story = {
-  args: {
-    label: 'Upload Photos',
-    maxImages: 5,
-    thumbnailSize: 'sm',
-    value: [
+  render: () => {
+    const maxImages = 5
+    const images = [
       'https://picsum.photos/200/200?random=1',
       'https://picsum.photos/200/200?random=2',
-    ],
+    ]
+    return (
+      <FormField
+        label="Upload Photos"
+        renderLabel={renderImageLabel('Upload Photos', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+          thumbnailSize="sm"
+        />
+      </FormField>
+    )
   },
 }
 
 export const LargeThumbnails: Story = {
-  args: {
-    label: 'Upload Photos',
-    maxImages: 5,
-    thumbnailSize: 'lg',
-    value: [
+  render: () => {
+    const maxImages = 5
+    const images = [
       'https://picsum.photos/200/200?random=1',
       'https://picsum.photos/200/200?random=2',
-    ],
+    ]
+    return (
+      <FormField
+        label="Upload Photos"
+        renderLabel={renderImageLabel('Upload Photos', images.length, maxImages)}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+          thumbnailSize="lg"
+        />
+      </FormField>
+    )
   },
 }
 
 export const NoLabel: Story = {
-  args: {
-    maxImages: 5,
-    value: [],
-  },
+  render: () => (
+    <ImageInput
+      maxImages={5}
+      value={[]}
+    />
+  ),
 }
 
 /**
@@ -157,6 +317,7 @@ export const NoLabel: Story = {
 const InteractiveExample = (): React.JSX.Element => {
   const [images, setImages] = useState<string[]>([])
   const [error, setError] = useState<string>()
+  const maxImages = 3
 
   const handleChange = (newImages: string[]): void => {
     setImages(newImages)
@@ -164,8 +325,8 @@ const InteractiveExample = (): React.JSX.Element => {
     // Validation
     if (newImages.length === 0) {
       setError('At least one photo is required')
-    } else if (newImages.length > 3) {
-      setError('Maximum 3 photos allowed')
+    } else if (newImages.length > maxImages) {
+      setError(`Maximum ${maxImages} photos allowed`)
     } else {
       setError(undefined)
     }
@@ -178,15 +339,22 @@ const InteractiveExample = (): React.JSX.Element => {
 
   return (
     <View style={{gap: 16}}>
-      <ImageInput
+      <FormField
         label="Upload Museum Object Photos"
-        maxImages={3}
-        value={images}
-        onChange={handleChange}
         error={error}
         hint={!error ? 'Select 1-3 photos of the museum object' : undefined}
         required={true}
-      />
+        renderLabel={renderImageLabel(
+          'Upload Museum Object Photos',
+          images.length,
+          maxImages,
+        )}>
+        <ImageInput
+          maxImages={maxImages}
+          value={images}
+          onChange={handleChange}
+        />
+      </FormField>
 
       <View style={{gap: 8}}>
         <Text.Label>Selected: {images.length} photos</Text.Label>
@@ -229,46 +397,65 @@ const AllStatesExample = (): React.JSX.Element => {
 
   return (
     <View style={{gap: 24}}>
-      <ImageInput
+      <FormField
         label="Empty"
-        maxImages={5}
-        value={images1}
-        onChange={setImages1}
-      />
+        renderLabel={renderImageLabel('Empty', images1.length, 5)}>
+        <ImageInput
+          maxImages={5}
+          value={images1}
+          onChange={setImages1}
+        />
+      </FormField>
 
-      <ImageInput
+      <FormField
         label="With Images"
-        maxImages={5}
-        value={images2}
-      />
+        renderLabel={renderImageLabel('With Images', images2.length, 5)}>
+        <ImageInput
+          maxImages={5}
+          value={images2}
+        />
+      </FormField>
 
-      <ImageInput
+      <FormField
         label="Max Reached"
-        maxImages={3}
-        value={images3}
-      />
+        renderLabel={renderImageLabel('Max Reached', images3.length, 3)}>
+        <ImageInput
+          maxImages={3}
+          value={images3}
+        />
+      </FormField>
 
-      <ImageInput
+      <FormField
         label="Required with Error"
-        maxImages={5}
-        value={[]}
         error="At least one photo is required"
         required={true}
-      />
+        renderLabel={renderImageLabel('Required with Error', 0, 5)}>
+        <ImageInput
+          maxImages={5}
+          value={[]}
+        />
+      </FormField>
 
-      <ImageInput
+      <FormField
         label="With Hint"
-        maxImages={5}
-        value={[]}
         hint="Upload up to 5 photos"
-      />
+        renderLabel={renderImageLabel('With Hint', 0, 5)}>
+        <ImageInput
+          maxImages={5}
+          value={[]}
+        />
+      </FormField>
 
-      <ImageInput
+      <FormField
         label="Disabled"
-        maxImages={5}
-        value={images2}
         disabled={true}
-      />
+        renderLabel={renderImageLabel('Disabled', images2.length, 5)}>
+        <ImageInput
+          maxImages={5}
+          value={images2}
+          disabled={true}
+        />
+      </FormField>
     </View>
   )
 }
