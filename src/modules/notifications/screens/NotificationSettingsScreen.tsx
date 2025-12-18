@@ -63,11 +63,11 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
             label="Enable Push Notifications"
             value={preferences.pushEnabled}
             onChange={handleToggleNotifications}
-            hint={
-              preferences.pushEnabled
-                ? 'You will receive push notifications'
-                : 'Push notifications are disabled'
-            }
+            // hint={
+            //   preferences.pushEnabled
+            //     ? 'You will receive push notifications'
+            //     : 'Push notifications are disabled'
+            // }
             disabled={toggleMutation.isPending}
             testID="push-notifications-toggle"
           />
@@ -83,7 +83,7 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
               label="Tour Notifications"
               value={preferences.tourNotifications}
               disabled
-              hint="Get notified about tour completions and achievements"
+              // hint="Get notified about tour completions and achievements"
               testID="tour-notifications-toggle"
             />
 
@@ -91,7 +91,7 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
               label="Narrative Notifications"
               value={preferences.narrativeNotifications}
               disabled
-              hint="Discover new stories about captured objects"
+              // hint="Discover new stories about captured objects"
               testID="narrative-notifications-toggle"
             />
 
@@ -99,7 +99,7 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
               label="Recommendation Notifications"
               value={preferences.recommendationNotifications}
               disabled
-              hint="Receive personalized suggestions"
+              // hint="Receive personalized suggestions"
               testID="recommendation-notifications-toggle"
             />
 
@@ -107,7 +107,7 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
               label="Social Notifications"
               value={preferences.socialNotifications}
               disabled
-              hint="Updates about friends and community"
+              // hint="Updates about friends and community"
               testID="social-notifications-toggle"
             />
 

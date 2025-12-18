@@ -3,6 +3,7 @@ export {
   CheckboxControlled,
   type CheckboxControlledProps,
 } from './CheckboxControlled'
+export {FormField, type FormFieldProps} from './FormField'
 export {ImageInput, type ImageInputProps} from './ImageInput'
 export {
   ImageInputControlled,

@@ -7,6 +7,7 @@ import {
 } from 'react-hook-form'
 
 import {Checkbox, type CheckboxProps} from './Checkbox'
+import {FormField} from './FormField'
 
 /**
  * CheckboxControlledProps
@@ -14,7 +15,7 @@ import {Checkbox, type CheckboxProps} from './Checkbox'
  */
 export type CheckboxControlledProps<T extends FieldValues> = Omit<
   CheckboxProps,
-  'checked' | 'onChange' | 'error'
+  'checked' | 'onChange' | 'hasError'
 > & {
   /**
    * control - React Hook Form control object
@@ -28,12 +29,17 @@ export type CheckboxControlledProps<T extends FieldValues> = Omit<
    * defaultValue - Default value for the field
    */
   defaultValue?: boolean
+  /**
+   * hint - Helper text to display when no error
+   */
+  hint?: string
 }
 
 /**
  * CheckboxControlled
  * Checkbox component integrated with React Hook Form and Zod validation.
  * Automatically handles form state, validation errors, and accessibility.
+ * Uses FormField for error and help text rendering.
  *
  * Features:
  * - Seamless react-hook-form integration
@@ -41,6 +47,7 @@ export type CheckboxControlledProps<T extends FieldValues> = Omit<
  * - Type-safe field names with Path<T>
  * - All accessibility features from base Checkbox
  * - Zod validation support through react-hook-form
+ * - Consistent form field styling with FormField
  *
  * Usage:
  * ```tsx
@@ -68,12 +75,14 @@ export type CheckboxControlledProps<T extends FieldValues> = Omit<
  *         control={control}
  *         name="acceptTerms"
  *         label="I accept the terms and conditions"
+ *         hint="Please read our terms carefully"
  *         required={true}
  *       />
  *       <CheckboxControlled
  *         control={control}
  *         name="subscribeNewsletter"
  *         label="Subscribe to newsletter"
+ *         hint="Get updates about new features"
  *       />
  *     </>
  *   )
@@ -87,6 +96,9 @@ export const CheckboxControlled = <T extends FieldValues>({
   control,
   name,
   defaultValue,
+  hint,
+  disabled,
+  testID,
   ...rest
 }: CheckboxControlledProps<T>): React.JSX.Element => {
   return (
@@ -98,12 +110,20 @@ export const CheckboxControlled = <T extends FieldValues>({
         field: {onChange, value},
         fieldState: {error},
       }): React.JSX.Element => (
-        <Checkbox
-          checked={value as boolean}
-          onChange={onChange}
+        <FormField
           error={error?.message}
-          {...rest}
-        />
+          hint={hint}
+          disabled={disabled}
+          testID={testID}>
+          <Checkbox
+            checked={value as boolean}
+            onChange={onChange}
+            hasError={!!error}
+            disabled={disabled}
+            testID={testID}
+            {...rest}
+          />
+        </FormField>
       )}
     />
   )

@@ -48,14 +48,14 @@ export const Required: Story = {
 export const WithHint: Story = {
   args: {
     label: 'Enable notifications',
-    hint: 'You will receive updates about your orders',
+    // hint: 'You will receive updates about your orders',
   },
 }
 
 export const WithError: Story = {
   args: {
     label: 'Accept terms and conditions',
-    error: 'You must accept the terms to continue',
+    // error: 'You must accept the terms to continue',
   },
 }
 
@@ -112,8 +112,8 @@ const InteractiveExample = (): React.JSX.Element => {
       label="I accept the terms and conditions"
       checked={checked}
       onChange={handleChange}
-      error={error}
-      hint={!error ? 'Please read the terms carefully' : undefined}
+      // error={error}
+      // hint={!error ? 'Please read the terms carefully' : undefined}
       required={true}
     />
   )
@@ -143,11 +143,11 @@ const AllStatesExample = (): React.JSX.Element => {
       />
       <Checkbox
         label="With Hint"
-        hint="This is a helpful hint"
+        // hint="This is a helpful hint"
       />
       <Checkbox
         label="With Error"
-        error="This field has an error"
+        // error="This field has an error"
       />
       <Checkbox
         label="Disabled (unchecked)"
@@ -187,7 +187,7 @@ const MultipleCheckboxesExample = (): React.JSX.Element => {
         onChange={(checked): void =>
           setPreferences(prev => ({...prev, email: checked}))
         }
-        hint="Receive updates via email"
+        // hint="Receive updates via email"
       />
       <Checkbox
         label="SMS notifications"
@@ -195,7 +195,7 @@ const MultipleCheckboxesExample = (): React.JSX.Element => {
         onChange={(checked): void =>
           setPreferences(prev => ({...prev, sms: checked}))
         }
-        hint="Receive updates via SMS"
+        // hint="Receive updates via SMS"
       />
       <Checkbox
         label="Push notifications"
@@ -203,7 +203,7 @@ const MultipleCheckboxesExample = (): React.JSX.Element => {
         onChange={(checked): void =>
           setPreferences(prev => ({...prev, push: checked}))
         }
-        hint="Receive updates via push notifications"
+        // hint="Receive updates via push notifications"
       />
     </View>
   )

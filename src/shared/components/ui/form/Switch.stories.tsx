@@ -52,14 +52,14 @@ export const Required: Story = {
 export const WithHint: Story = {
   args: {
     label: 'Auto-save',
-    hint: 'Automatically save your changes',
+    // hint: 'Automatically save your changes',
   },
 }
 
 export const WithError: Story = {
   args: {
     label: 'Enable location services',
-    error: 'Location services are required for this feature',
+    // error: 'Location services are required for this feature',
   },
 }
 
@@ -116,8 +116,8 @@ const InteractiveExample = (): React.JSX.Element => {
       label="Enable two-factor authentication"
       value={isEnabled}
       onChange={handleChange}
-      error={error}
-      hint={!error ? 'Recommended for account security' : undefined}
+      // error={error}
+      // hint={!error ? 'Recommended for account security' : undefined}
       required={true}
     />
   )
@@ -147,11 +147,11 @@ const AllStatesExample = (): React.JSX.Element => {
       />
       <Switch
         label="With Hint"
-        hint="This is a helpful hint"
+        // hint="This is a helpful hint"
       />
       <Switch
         label="With Error"
-        error="This field has an error"
+        // error="This field has an error"
       />
       <Switch
         label="Disabled (off)"
@@ -192,7 +192,7 @@ const MultipleSwitchesExample = (): React.JSX.Element => {
         onChange={(value): void =>
           setSettings(prev => ({...prev, notifications: value}))
         }
-        hint="Receive updates and alerts"
+        // hint="Receive updates and alerts"
       />
       <Switch
         label="Dark mode"
@@ -200,7 +200,7 @@ const MultipleSwitchesExample = (): React.JSX.Element => {
         onChange={(value): void =>
           setSettings(prev => ({...prev, darkMode: value}))
         }
-        hint="Use dark theme throughout the app"
+        // hint="Use dark theme throughout the app"
       />
       <Switch
         label="Auto-save"
@@ -208,7 +208,7 @@ const MultipleSwitchesExample = (): React.JSX.Element => {
         onChange={(value): void =>
           setSettings(prev => ({...prev, autoSave: value}))
         }
-        hint="Automatically save your changes"
+        // hint="Automatically save your changes"
       />
       <Switch
         label="Analytics"
@@ -216,7 +216,7 @@ const MultipleSwitchesExample = (): React.JSX.Element => {
         onChange={(value): void =>
           setSettings(prev => ({...prev, analytics: value}))
         }
-        hint="Help us improve by sharing usage data"
+        // hint="Help us improve by sharing usage data"
       />
     </View>
   )

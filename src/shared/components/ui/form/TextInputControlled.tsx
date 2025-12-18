@@ -6,6 +6,7 @@ import {
   type Path,
 } from 'react-hook-form'
 
+import {FormField} from './FormField'
 import {TextInput, type TextInputProps} from './TextInput'
 
 /**
@@ -14,7 +15,7 @@ import {TextInput, type TextInputProps} from './TextInput'
  */
 export type TextInputControlledProps<T extends FieldValues> = Omit<
   TextInputProps,
-  'value' | 'onChangeText' | 'onBlur' | 'error'
+  'value' | 'onChangeText' | 'onBlur' | 'hasError' | 'inputId' | 'labelId'
 > & {
   /**
    * control - React Hook Form control object
@@ -28,12 +29,25 @@ export type TextInputControlledProps<T extends FieldValues> = Omit<
    * defaultValue - Default value for the field
    */
   defaultValue?: string
+  /**
+   * label - Label text for the input field
+   */
+  label?: string
+  /**
+   * hint - Helper text to display when no error
+   */
+  hint?: string
+  /**
+   * required - Whether the field is required (adds asterisk to label)
+   */
+  required?: boolean
 }
 
 /**
  * TextInputControlled
  * Text input component integrated with React Hook Form and Zod validation.
  * Automatically handles form state, validation errors, and accessibility.
+ * Uses FormField for consistent label, error, and help text rendering.
  *
  * Features:
  * - Seamless react-hook-form integration
@@ -41,6 +55,7 @@ export type TextInputControlledProps<T extends FieldValues> = Omit<
  * - Type-safe field names with Path<T>
  * - All accessibility features from base TextInput
  * - Zod validation support through react-hook-form
+ * - Consistent form field styling with FormField
  *
  * Usage:
  * ```tsx
@@ -67,12 +82,14 @@ export type TextInputControlledProps<T extends FieldValues> = Omit<
  *         name="email"
  *         label="Email"
  *         placeholder="you@example.com"
+ *         hint="We'll never share your email"
  *       />
  *       <TextInputControlled
  *         control={control}
  *         name="password"
  *         label="Password"
  *         secureTextEntry
+ *         required
  *       />
  *     </>
  *   )
@@ -86,8 +103,17 @@ export const TextInputControlled = <T extends FieldValues>({
   control,
   name,
   defaultValue,
+  label,
+  hint,
+  required,
+  disabled,
+  testID,
   ...rest
 }: TextInputControlledProps<T>): React.JSX.Element => {
+  const inputId = testID || `input-${name}`
+  const labelId = `${inputId}-label`
+  const helpTextId = `${inputId}-help`
+
   return (
     <Controller
       control={control}
@@ -97,13 +123,27 @@ export const TextInputControlled = <T extends FieldValues>({
         field: {onChange, onBlur, value},
         fieldState: {error},
       }): React.JSX.Element => (
-        <TextInput
-          value={value as string}
-          onChangeText={onChange}
-          onBlur={onBlur}
+        <FormField
+          label={label}
           error={error?.message}
-          {...rest}
-        />
+          hint={hint}
+          disabled={disabled}
+          required={required}
+          labelId={labelId}
+          helpTextId={helpTextId}
+          testID={testID}>
+          <TextInput
+            value={value as string}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            hasError={!!error}
+            disabled={disabled}
+            inputId={inputId}
+            labelId={labelId}
+            testID={testID}
+            {...rest}
+          />
+        </FormField>
       )}
     />
   )

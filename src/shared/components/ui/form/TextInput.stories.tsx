@@ -2,6 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {useState} from 'react'
 import {View} from 'react-native'
 
+import {FormField} from './FormField'
 import {TextInput} from './TextInput'
 
 const meta = {
@@ -26,70 +27,97 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    label: 'Email',
-    placeholder: 'Enter your email',
-  },
+  render: () => (
+    <FormField
+      label="Email"
+      hint="Enter your email address">
+      <TextInput placeholder="Enter your email" />
+    </FormField>
+  ),
 }
 
 export const WithValue: Story = {
-  args: {
-    label: 'Username',
-    placeholder: 'Enter username',
-    value: 'john.doe',
-  },
+  render: () => (
+    <FormField label="Username">
+      <TextInput
+        placeholder="Enter username"
+        value="john.doe"
+      />
+    </FormField>
+  ),
 }
 
 export const Required: Story = {
-  args: {
-    label: 'Password',
-    placeholder: 'Enter password',
-    required: true,
-    secureTextEntry: true,
-  },
+  render: () => (
+    <FormField
+      label="Password"
+      required={true}>
+      <TextInput
+        placeholder="Enter password"
+        secureTextEntry={true}
+      />
+    </FormField>
+  ),
 }
 
 export const WithHint: Story = {
-  args: {
-    label: 'Phone Number',
-    placeholder: '+1 (555) 123-4567',
-    hint: 'Enter your phone number with country code',
-  },
+  render: () => (
+    <FormField
+      label="Phone Number"
+      hint="Enter your phone number with country code">
+      <TextInput placeholder="+1 (555) 123-4567" />
+    </FormField>
+  ),
 }
 
 export const WithError: Story = {
-  args: {
-    label: 'Email',
-    placeholder: 'Enter your email',
-    value: 'invalid-email',
-    error: 'Please enter a valid email address',
-  },
+  render: () => (
+    <FormField
+      label="Email"
+      error="Please enter a valid email address">
+      <TextInput
+        placeholder="Enter your email"
+        value="invalid-email"
+        hasError={true}
+      />
+    </FormField>
+  ),
 }
 
 export const Disabled: Story = {
-  args: {
-    label: 'Disabled Field',
-    placeholder: 'Cannot edit this',
-    value: 'Read-only value',
-    disabled: true,
-  },
+  render: () => (
+    <FormField
+      label="Disabled Field"
+      disabled={true}>
+      <TextInput
+        placeholder="Cannot edit this"
+        value="Read-only value"
+        disabled={true}
+      />
+    </FormField>
+  ),
 }
 
 export const Multiline: Story = {
-  args: {
-    label: 'Description',
-    placeholder: 'Enter a description',
-    multiline: true,
-    numberOfLines: 4,
-    textAlignVertical: 'top',
-  },
+  render: () => (
+    <FormField label="Description">
+      <TextInput
+        placeholder="Enter a description"
+        multiline={true}
+        numberOfLines={4}
+        textAlignVertical="top"
+      />
+    </FormField>
+  ),
 }
 
 export const NoLabel: Story = {
-  args: {
-    placeholder: 'Search...',
-    accessibilityLabel: 'Search input',
-  },
+  render: () => (
+    <TextInput
+      placeholder="Search..."
+      accessibilityLabel="Search input"
+    />
+  ),
 }
 
 /**
@@ -113,18 +141,21 @@ const InteractiveExample = (): React.JSX.Element => {
   }
 
   return (
-    <TextInput
+    <FormField
       label="Email Address"
-      placeholder="you@example.com"
-      value={value}
-      onChangeText={handleChange}
       error={error}
       hint={!error ? 'We will never share your email' : undefined}
-      required={true}
-      keyboardType="email-address"
-      autoCapitalize="none"
-      autoComplete="email"
-    />
+      required={true}>
+      <TextInput
+        placeholder="you@example.com"
+        value={value}
+        onChangeText={handleChange}
+        hasError={!!error}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        autoComplete="email"
+      />
+    </FormField>
   )
 }
 
@@ -141,34 +172,40 @@ export const Interactive: Story = {
 const AllStatesExample = (): React.JSX.Element => {
   return (
     <View style={{gap: 24}}>
-      <TextInput
+      <FormField
         label="Default"
-        placeholder="Default state"
-      />
-      <TextInput
-        label="With Value"
-        value="Sample text"
-      />
-      <TextInput
+        hint="Default state">
+        <TextInput placeholder="Default state" />
+      </FormField>
+      <FormField label="With Value">
+        <TextInput value="Sample text" />
+      </FormField>
+      <FormField
         label="Required"
-        placeholder="Required field"
-        required={true}
-      />
-      <TextInput
+        required={true}>
+        <TextInput placeholder="Required field" />
+      </FormField>
+      <FormField
         label="With Hint"
-        placeholder="Helpful input"
-        hint="This is a helpful hint"
-      />
-      <TextInput
+        hint="This is a helpful hint">
+        <TextInput placeholder="Helpful input" />
+      </FormField>
+      <FormField
         label="With Error"
-        value="invalid"
-        error="This field has an error"
-      />
-      <TextInput
+        error="This field has an error">
+        <TextInput
+          value="invalid"
+          hasError={true}
+        />
+      </FormField>
+      <FormField
         label="Disabled"
-        value="Cannot edit"
-        disabled={true}
-      />
+        disabled={true}>
+        <TextInput
+          value="Cannot edit"
+          disabled={true}
+        />
+      </FormField>
     </View>
   )
 }

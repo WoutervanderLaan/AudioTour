@@ -54,45 +54,45 @@ const notificationOptions: RadioOption[] = [
 export const Default: Story = {
   args: {
     options: themeOptions,
-    label: 'Theme Preference',
+    // label: 'Theme Preference',
   },
 }
 
 export const WithDescriptions: Story = {
   args: {
     options: notificationOptions,
-    label: 'Notification Settings',
+    // label: 'Notification Settings',
   },
 }
 
 export const WithHint: Story = {
   args: {
     options: themeOptions,
-    label: 'Theme',
-    hint: 'Choose your preferred color scheme',
+    // label: 'Theme',
+    // hint: 'Choose your preferred color scheme',
   },
 }
 
 export const WithError: Story = {
   args: {
     options: themeOptions,
-    label: 'Theme',
-    error: 'Please select a theme',
+    // label: 'Theme',
+    // error: 'Please select a theme',
   },
 }
 
 export const Required: Story = {
   args: {
     options: themeOptions,
-    label: 'Theme',
-    required: true,
+    // label: 'Theme',
+    // required: true,
   },
 }
 
 export const Disabled: Story = {
   args: {
     options: themeOptions,
-    label: 'Theme',
+    // label: 'Theme',
     disabled: true,
     value: 'dark',
   },
@@ -105,7 +105,7 @@ export const WithDisabledOption: Story = {
       {value: 'dark', label: 'Dark', disabled: true},
       {value: 'auto', label: 'Auto'},
     ],
-    label: 'Theme',
+    // label: 'Theme',
   },
 }
 
@@ -122,10 +122,10 @@ const InteractiveWrapper = (): React.JSX.Element => {
     <View style={{gap: 16}}>
       <RadioGroup
         options={themeOptions}
-        label="Theme Preference"
+        // label="Theme Preference"
         value={value}
         onChange={setValue}
-        hint="Your selection will be displayed below"
+        // hint="Your selection will be displayed below"
       />
       {!!value && <Text.Paragraph>Selected: {value}</Text.Paragraph>}
     </View>

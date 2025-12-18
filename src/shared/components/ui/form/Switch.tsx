@@ -5,7 +5,6 @@ import {
 } from 'react-native'
 import {useUnistyles} from 'react-native-unistyles'
 
-import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
 
@@ -19,14 +18,12 @@ export type SwitchProps = Omit<
 > & {
   /** Accessible label for the switch */
   label?: string
-  /** Error message to display below the switch */
-  error?: string
-  /** Helper text to display below the switch */
-  hint?: string
   /** Whether the switch is disabled */
   disabled?: boolean
   /** Whether the switch is required (adds asterisk to label) */
   required?: boolean
+  /** Whether the switch has an error (for styling) */
+  hasError?: boolean
   /** Whether the switch is on (controlled) */
   value?: boolean
   /** Callback when switch state changes */
@@ -86,63 +83,42 @@ const SwitchLabel = ({
 )
 
 /**
- * HelpTextProps
- * Props for the HelpText component
- */
-type HelpTextProps = {
-  /** The help text or error message to display */
-  text: string
-  /** Native ID for the help text element */
-  helpTextId: string
-  /** Whether this is an error message */
-  hasError: boolean
-}
-
-/**
- * HelpText
- * Renders the help text or error message for the switch
- *
- * @param {HelpTextProps} props - Component props
- * @returns {React.JSX.Element} Rendered help text element
- */
-const HelpText = ({
-  text,
-  helpTextId,
-  hasError,
-}: HelpTextProps): React.JSX.Element => (
-  <Text.Label
-    nativeID={helpTextId}
-    color={hasError ? 'warning' : 'secondary'}
-    accessibilityRole="text"
-    accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
-    {text}
-  </Text.Label>
-)
-
-/**
  * Switch
- * Accessible switch/toggle component with theme integration and form validation support.
+ * Pure accessible switch/toggle component with theme integration.
  * Follows WCAG 2.1 AA standards for accessibility.
+ * This component renders a switch with an inline label. Wrap with FormField for error/help text.
  *
  * Features:
- * - Accessible labels and error messages
+ * - Accessible inline label
  * - Theme-based styling with platform-specific colors
  * - Error state visualization
- * - Helper text support
  * - Required field indicator
  * - Keyboard accessible
  * - 44x44pt minimum touch target
  * - Both controlled and uncontrolled modes
+ *
+ * Usage with FormField:
+ * ```tsx
+ * <FormField
+ *   error={errors.notifications}
+ *   hint="Get notified when someone mentions you"
+ * >
+ *   <Switch
+ *     label="Enable notifications"
+ *     value={notificationsEnabled}
+ *     onChange={setNotificationsEnabled}
+ *   />
+ * </FormField>
+ * ```
  *
  * @param {SwitchProps} props - Component props
  * @returns {React.JSX.Element} Rendered switch element
  */
 export const Switch = ({
   label,
-  error,
-  hint,
   disabled = false,
   required = false,
+  hasError = false,
   value = false,
   onChange,
   testID,
@@ -166,56 +142,43 @@ export const Switch = ({
     onChange?.(newValue)
   }
 
-  const hasError = !!error
-  const helpText = error || hint
   const switchId = testID || 'switch'
   const labelId = `${switchId}-label`
-  const helpTextId = `${switchId}-${hasError ? 'error' : 'hint'}`
   const a11yLabel = accessibilityLabel || label
-  const a11yHint = accessibilityHint || hint
 
   return (
-    <Column>
-      <Row>
-        <RNSwitch
-          testID={testID}
-          nativeID={switchId}
-          value={value}
-          onValueChange={handleValueChange}
+    <Row>
+      <RNSwitch
+        testID={testID}
+        nativeID={switchId}
+        value={value}
+        onValueChange={handleValueChange}
+        disabled={disabled}
+        trackColor={{
+          false: hasError
+            ? theme.color.text.warning
+            : theme.color.text.tertiary,
+          true: theme.color.pressable.primary.default.background,
+        }}
+        thumbColor={theme.color.pressable.primary.default.label}
+        // eslint-disable-next-line react/jsx-no-leaked-render
+        ios_backgroundColor={hasError ? theme.color.text.warning : undefined}
+        accessible={true}
+        accessibilityLabel={a11yLabel}
+        accessibilityHint={accessibilityHint}
+        accessibilityRole="switch"
+        accessibilityState={{checked: value, disabled}}
+        accessibilityLabelledBy={labelId}
+        {...rest}
+      />
+      {!!label && (
+        <SwitchLabel
+          label={label}
+          labelId={labelId}
           disabled={disabled}
-          trackColor={{
-            false: hasError
-              ? theme.color.text.warning
-              : theme.color.text.tertiary,
-            true: theme.color.pressable.primary.default.background,
-          }}
-          thumbColor={theme.color.pressable.primary.default.label}
-          // eslint-disable-next-line react/jsx-no-leaked-render
-          ios_backgroundColor={hasError ? theme.color.text.warning : undefined}
-          accessible={true}
-          accessibilityLabel={a11yLabel}
-          accessibilityHint={a11yHint}
-          accessibilityRole="switch"
-          accessibilityState={{checked: value, disabled}}
-          accessibilityLabelledBy={labelId}
-          {...rest}
-        />
-        {!!label && (
-          <SwitchLabel
-            label={label}
-            labelId={labelId}
-            disabled={disabled}
-            required={required}
-          />
-        )}
-      </Row>
-      {!!helpText && (
-        <HelpText
-          text={helpText}
-          helpTextId={helpTextId}
-          hasError={hasError}
+          required={required}
         />
       )}
-    </Column>
+    </Row>
   )
 }
