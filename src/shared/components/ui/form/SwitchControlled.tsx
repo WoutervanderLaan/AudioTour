@@ -6,6 +6,7 @@ import {
   type Path,
 } from 'react-hook-form'
 
+import {FormField} from './FormField'
 import {Switch, type SwitchProps} from './Switch'
 
 /**
@@ -14,7 +15,7 @@ import {Switch, type SwitchProps} from './Switch'
  */
 export type SwitchControlledProps<T extends FieldValues> = Omit<
   SwitchProps,
-  'value' | 'onChange' | 'error'
+  'value' | 'onChange' | 'hasError'
 > & {
   /**
    * control - React Hook Form control object
@@ -28,12 +29,17 @@ export type SwitchControlledProps<T extends FieldValues> = Omit<
    * defaultValue - Default value for the field
    */
   defaultValue?: boolean
+  /**
+   * hint - Helper text to display when no error
+   */
+  hint?: string
 }
 
 /**
  * SwitchControlled
  * Switch component integrated with React Hook Form and Zod validation.
  * Automatically handles form state, validation errors, and accessibility.
+ * Uses FormField for error and help text rendering.
  *
  * Features:
  * - Seamless react-hook-form integration
@@ -41,6 +47,7 @@ export type SwitchControlledProps<T extends FieldValues> = Omit<
  * - Type-safe field names with Path<T>
  * - All accessibility features from base Switch
  * - Zod validation support through react-hook-form
+ * - Consistent form field styling with FormField
  *
  * Usage:
  * ```tsx
@@ -74,6 +81,7 @@ export type SwitchControlledProps<T extends FieldValues> = Omit<
  *         control={control}
  *         name="darkMode"
  *         label="Dark mode"
+ *         hint="Dark mode must be enabled"
  *         required={true}
  *       />
  *     </>
@@ -88,6 +96,9 @@ export const SwitchControlled = <T extends FieldValues>({
   control,
   name,
   defaultValue,
+  hint,
+  disabled,
+  testID,
   ...rest
 }: SwitchControlledProps<T>): React.JSX.Element => {
   return (
@@ -99,12 +110,20 @@ export const SwitchControlled = <T extends FieldValues>({
         field: {onChange, value},
         fieldState: {error},
       }): React.JSX.Element => (
-        <Switch
-          value={value as boolean}
-          onChange={onChange}
+        <FormField
           error={error?.message}
-          {...rest}
-        />
+          hint={hint}
+          disabled={disabled}
+          testID={testID}>
+          <Switch
+            value={value as boolean}
+            onChange={onChange}
+            hasError={!!error}
+            disabled={disabled}
+            testID={testID}
+            {...rest}
+          />
+        </FormField>
       )}
     />
   )
