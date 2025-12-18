@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
@@ -45,7 +45,8 @@ export const TourCameraPermissionScreen = ({
   const navigation = useNavigation()
   const {sourceType, onPermissionGranted, onModalDismissed} = route.params
   const [isRequesting, setIsRequesting] = useState(false)
-  const [permissionGranted, setPermissionGranted] = useState(false)
+  const permissionGrantedRef = useRef(false)
+  const callbackCalledRef = useRef(false)
 
   const isCamera = sourceType === MediaSourceType.camera
   const title = isCamera ? 'Camera Access Required' : 'Photo Library Access Required'
@@ -70,7 +71,7 @@ export const TourCameraPermissionScreen = ({
 
       if (status === 'granted') {
         logger.success('[TourCameraPermission] Permission granted')
-        setPermissionGranted(true)
+        permissionGrantedRef.current = true
         navigation.goBack()
       } else {
         logger.debug('[TourCameraPermission] Permission denied by user')
@@ -106,11 +107,17 @@ export const TourCameraPermissionScreen = ({
     }
   }
 
-  // Handle modal unmount - call appropriate callback
+  // Handle modal unmount - call appropriate callback exactly once
   useEffect(() => {
     return () => {
+      // Prevent double-calls
+      if (callbackCalledRef.current) {
+        return
+      }
+      callbackCalledRef.current = true
+
       // When component unmounts, call appropriate callback
-      if (permissionGranted) {
+      if (permissionGrantedRef.current) {
         // Permission was granted, call success callback
         Promise.resolve(onPermissionGranted()).catch(err =>
           logger.error('[TourCameraPermission] onPermissionGranted error:', err),
@@ -122,8 +129,9 @@ export const TourCameraPermissionScreen = ({
         )
       }
     }
+    // Only run on unmount - stable dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [permissionGranted])
+  }, [])
 
   return (
     <Screen.Static>

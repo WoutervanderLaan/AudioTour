@@ -75,28 +75,38 @@ export const useAddArtwork = (): {
         navigate(TourModalName.cameraPermission, {
           sourceType,
           onPermissionGranted: async () => {
-            // Check if resolver is still valid (not already resolved)
-            if (permissionResolverRef.current) {
-              const newStatus = isCamera
-                ? await cameraService.checkCameraPermission()
-                : await cameraService.checkLibraryPermission()
-
-              // Resolve and clear ref
-              permissionResolverRef.current(newStatus)
-              permissionResolverRef.current = null
+            // Check if resolver is still valid and capture it atomically
+            const resolver = permissionResolverRef.current
+            if (!resolver) {
+              return
             }
+
+            // Clear ref immediately to prevent double-resolution
+            permissionResolverRef.current = null
+
+            // Check permission status and resolve
+            const newStatus = isCamera
+              ? await cameraService.checkCameraPermission()
+              : await cameraService.checkLibraryPermission()
+
+            resolver(newStatus)
           },
           onModalDismissed: async () => {
-            // Called when modal is dismissed without granting
-            if (permissionResolverRef.current) {
-              const status = isCamera
-                ? await cameraService.checkCameraPermission()
-                : await cameraService.checkLibraryPermission()
-
-              // Resolve and clear ref
-              permissionResolverRef.current(status)
-              permissionResolverRef.current = null
+            // Check if resolver is still valid and capture it atomically
+            const resolver = permissionResolverRef.current
+            if (!resolver) {
+              return
             }
+
+            // Clear ref immediately to prevent double-resolution
+            permissionResolverRef.current = null
+
+            // Check permission status and resolve
+            const status = isCamera
+              ? await cameraService.checkCameraPermission()
+              : await cameraService.checkLibraryPermission()
+
+            resolver(status)
           },
         })
       })
