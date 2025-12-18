@@ -4,14 +4,12 @@ Generic UI building blocks.
 
 ## Components
 
-- **[banner/](./banner)** - Banner notification components
 - **[form/](./form)** - Form components (inputs, labels, validation display)
 - **[gradient/](./gradient)** - Gradient background components
 - **[layout/](./layout)** - Layout components (containers, grids, stacks)
 - **[navigation/](./navigation)** - Navigation UI components (NavItem)
 - **[pressable/](./pressable)** - Touchable/pressable components (buttons, links)
 - **[screen/](./screen)** - Screen wrapper components
-- **[toast/](./toast)** - Toast notification components
 - **[typography/](./typography)** - Text components (headings, body text, labels)
 
 ## Purpose

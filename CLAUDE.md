@@ -76,7 +76,7 @@ src/
 │   ├── onboarding/  # User onboarding module
 │   ├── notifications/  # Push notification module
 │   ├── profile/     # User profile module
-│   └── old/         # Legacy screens (to be migrated)
+│   └── tour/        # Tour and artwork management module
 ├── store/            # Global Zustand state management
 │   └── slices/      # Store slices
 └── themes/          # Theme configuration and tokens

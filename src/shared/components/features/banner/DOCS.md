@@ -1,6 +1,6 @@
-# src/shared/components/ui/banner
+# src/shared/components/features/banner
 
-This folder contains banner UI components for displaying sticky notifications and alerts at the top of the screen.
+This folder contains banner feature components for displaying sticky notifications and alerts at the top of the screen.
 
 ## Purpose
 

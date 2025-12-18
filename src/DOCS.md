@@ -6,7 +6,7 @@ This directory contains the core source files for the project. It follows a stri
 
 - **[app](./app)**: Application-level configuration, initialization, and navigation setup. Includes providers, navigation config, and app entry points.
 - **[core](./core)**: Core infrastructure including API client, navigation system, and shared utilities.
-- **[modules](./modules)**: Self-contained feature modules (auth, old). Each module has its own navigation, screens, hooks, store, and types.
+- **[modules](./modules)**: Self-contained feature modules (auth, notifications, onboarding, profile, tour). Each module has its own navigation, screens, hooks, store, and types.
 - **[shared](./shared)**: Reusable components, utilities, hooks, and resources shared across the application. Includes UI components, context providers, and library utilities.
 - **[store](./store)**: Global Zustand state management with slices and middleware.
 - **[themes](./themes)**: Theme configuration, styling tokens, and unistyles setup.

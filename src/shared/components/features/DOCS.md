@@ -4,8 +4,12 @@ Complex reusable feature components.
 
 ## Features
 
+- **[add-photo/](./add-photo)** - Photo selection and upload component
 - **[audio-player/](./audio-player)** - Audio playback component with controls
+- **[banner/](./banner)** - Banner notification components
 - **[progress-indicator/](./progress-indicator)** - Progress indicator component for multi-step flows
+- **[thumbnail/](./thumbnail)** - Image thumbnail display component
+- **[toast/](./toast)** - Toast notification components
 
 ## Purpose
 
