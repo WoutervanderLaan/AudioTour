@@ -6,6 +6,7 @@ import {
   type Path,
 } from 'react-hook-form'
 
+import {FormField} from './FormField'
 import {RadioGroup, type RadioGroupProps} from './RadioGroup'
 
 /**
@@ -15,7 +16,7 @@ import {RadioGroup, type RadioGroupProps} from './RadioGroup'
 export type RadioGroupControlledProps<
   TFieldValues extends FieldValues,
   TValue extends string = string,
-> = Omit<RadioGroupProps<TValue>, 'value' | 'onChange' | 'error'> & {
+> = Omit<RadioGroupProps<TValue>, 'value' | 'onChange' | 'hasError'> & {
   /**
    * control - React Hook Form control object
    */
@@ -28,12 +29,25 @@ export type RadioGroupControlledProps<
    * defaultValue - Default value for the field
    */
   defaultValue?: TValue
+  /**
+   * label - Label text for the radio group
+   */
+  label?: string
+  /**
+   * hint - Helper text to display when no error
+   */
+  hint?: string
+  /**
+   * required - Whether the field is required (adds asterisk to label)
+   */
+  required?: boolean
 }
 
 /**
  * RadioGroupControlled
  * Radio group component integrated with React Hook Form and Zod validation.
  * Automatically handles form state, validation errors, and accessibility.
+ * Uses FormField for consistent label, error, and help text rendering.
  *
  * Features:
  * - Seamless react-hook-form integration
@@ -41,6 +55,7 @@ export type RadioGroupControlledProps<
  * - Type-safe field names with Path<T>
  * - All accessibility features from base RadioGroup
  * - Zod validation support through react-hook-form
+ * - Consistent form field styling with FormField
  *
  * Usage:
  * ```tsx
@@ -66,6 +81,8 @@ export type RadioGroupControlledProps<
  *       control={control}
  *       name="theme"
  *       label="Theme Preference"
+ *       hint="Select your preferred theme"
+ *       required
  *       options={[
  *         { value: 'light', label: 'Light', description: 'Light color scheme' },
  *         { value: 'dark', label: 'Dark', description: 'Dark color scheme' },
@@ -86,6 +103,11 @@ export const RadioGroupControlled = <
   control,
   name,
   defaultValue,
+  label,
+  hint,
+  required,
+  disabled,
+  testID,
   ...rest
 }: RadioGroupControlledProps<TFieldValues, TValue>): React.JSX.Element => {
   return (
@@ -97,12 +119,22 @@ export const RadioGroupControlled = <
         field: {onChange, value},
         fieldState: {error},
       }): React.JSX.Element => (
-        <RadioGroup
-          value={value as TValue}
-          onChange={onChange as (value: TValue) => void}
+        <FormField
+          label={label}
           error={error?.message}
-          {...rest}
-        />
+          hint={hint}
+          disabled={disabled}
+          required={required}
+          testID={testID}>
+          <RadioGroup
+            value={value as TValue}
+            onChange={onChange as (value: TValue) => void}
+            hasError={!!error}
+            disabled={disabled}
+            testID={testID}
+            {...rest}
+          />
+        </FormField>
       )}
     />
   )

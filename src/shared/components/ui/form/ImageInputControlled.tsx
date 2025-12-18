@@ -6,7 +6,10 @@ import {
   type Path,
 } from 'react-hook-form'
 
+import {FormField} from './FormField'
 import {ImageInput, type ImageInputProps} from './ImageInput'
+import {Row} from '@/shared/components/ui/layout/Row'
+import {Text} from '@/shared/components/ui/typography'
 
 /**
  * ImageInputControlledProps
@@ -14,7 +17,7 @@ import {ImageInput, type ImageInputProps} from './ImageInput'
  */
 export type ImageInputControlledProps<T extends FieldValues> = Omit<
   ImageInputProps,
-  'value' | 'onChange' | 'error'
+  'value' | 'onChange'
 > & {
   /**
    * control - React Hook Form control object
@@ -28,12 +31,25 @@ export type ImageInputControlledProps<T extends FieldValues> = Omit<
    * defaultValue - Default value for the field
    */
   defaultValue?: string[]
+  /**
+   * label - Label text for the input field
+   */
+  label?: string
+  /**
+   * hint - Helper text to display when no error
+   */
+  hint?: string
+  /**
+   * required - Whether the field is required (adds asterisk to label)
+   */
+  required?: boolean
 }
 
 /**
  * ImageInputControlled
  * Image input component integrated with React Hook Form and Zod validation.
  * Automatically handles form state, validation errors, and accessibility.
+ * Uses FormField for consistent label, error, and help text rendering.
  *
  * Features:
  * - Seamless react-hook-form integration
@@ -42,6 +58,7 @@ export type ImageInputControlledProps<T extends FieldValues> = Omit<
  * - All accessibility features from base ImageInput
  * - Zod validation support through react-hook-form
  * - Multiple image selection with configurable max limit
+ * - Custom label with image count display
  *
  * Usage:
  * ```tsx
@@ -70,6 +87,7 @@ export type ImageInputControlledProps<T extends FieldValues> = Omit<
  *       label="Upload Photos"
  *       maxImages={5}
  *       required
+ *       hint="Select up to 5 photos"
  *     />
  *   )
  * }
@@ -82,6 +100,12 @@ export const ImageInputControlled = <T extends FieldValues>({
   control,
   name,
   defaultValue,
+  label,
+  hint,
+  required,
+  disabled,
+  maxImages = 5,
+  testID,
   ...rest
 }: ImageInputControlledProps<T>): React.JSX.Element => {
   return (
@@ -92,14 +116,55 @@ export const ImageInputControlled = <T extends FieldValues>({
       render={({
         field: {onChange, value},
         fieldState: {error},
-      }): React.JSX.Element => (
-        <ImageInput
-          value={value as string[]}
-          onChange={onChange}
-          error={error?.message}
-          {...rest}
-        />
-      )}
+      }): React.JSX.Element => {
+        const images = (value as string[]) || []
+
+        return (
+          <FormField
+            label={label}
+            error={error?.message}
+            hint={hint}
+            disabled={disabled}
+            required={required}
+            testID={testID}
+            renderLabel={
+              label
+                ? ({label, labelId, disabled, required}) => (
+                    <Row
+                      gap="xs"
+                      center>
+                      <Text.Label
+                        nativeID={labelId}
+                        color={disabled ? 'secondary' : 'default'}
+                        accessibilityRole="text">
+                        {label}
+                        {!!required && (
+                          <Text.Label
+                            color="warning"
+                            accessibilityLabel="required">
+                            {' '}
+                            *
+                          </Text.Label>
+                        )}
+                      </Text.Label>
+                      <Text.Label color="secondary">
+                        {images.length} / {maxImages}
+                      </Text.Label>
+                    </Row>
+                  )
+                : undefined
+            }>
+            <ImageInput
+              value={images}
+              onChange={onChange}
+              maxImages={maxImages}
+              disabled={disabled}
+              testID={testID}
+              {...rest}
+            />
+          </FormField>
+        )
+      }}
     />
   )
 }

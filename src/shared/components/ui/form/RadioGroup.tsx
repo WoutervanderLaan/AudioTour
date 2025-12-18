@@ -48,86 +48,18 @@ export type RadioGroupProps<T extends string = string> = {
    */
   onChange?: (value: T) => void
   /**
-   * label - Label for the entire radio group
-   */
-  label?: string
-  /**
-   * error - Error message to display
-   */
-  error?: string
-  /**
-   * hint - Helper text to display
-   */
-  hint?: string
-  /**
    * disabled - Whether the entire group is disabled
    */
   disabled?: boolean
   /**
-   * required - Whether selection is required
+   * hasError - Whether there is an error (for styling)
    */
-  required?: boolean
+  hasError?: boolean
   /**
    * testID - Test identifier for automated testing
    */
   testID?: string
 }
-
-/**
- * RadioGroupLabel
- * Renders the label for the radio group
- *
- * @param {object} props - Component props
- * @param {string} props.label - Label text
- * @param {boolean} props.required - Whether field is required
- * @param {boolean} props.disabled - Whether field is disabled
- * @returns {React.JSX.Element} Rendered label element
- */
-const RadioGroupLabel = ({
-  label,
-  required,
-  disabled,
-}: {
-  label: string
-  required: boolean
-  disabled: boolean
-}): React.JSX.Element => (
-  <Text.Label color={disabled ? 'secondary' : 'default'}>
-    {label}
-    {!!required && (
-      <Text.Label
-        color="warning"
-        accessibilityLabel="required">
-        {' '}
-        *
-      </Text.Label>
-    )}
-  </Text.Label>
-)
-
-/**
- * HelpText
- * Renders help text or error message
- *
- * @param {object} props - Component props
- * @param {string} props.text - Text to display
- * @param {boolean} props.hasError - Whether this is an error
- * @returns {React.JSX.Element} Rendered help text element
- */
-const HelpText = ({
-  text,
-  hasError,
-}: {
-  text: string
-  hasError: boolean
-}): React.JSX.Element => (
-  <Text.Label
-    color={hasError ? 'warning' : 'secondary'}
-    accessibilityRole="text"
-    accessibilityLiveRegion={hasError ? 'polite' : 'none'}>
-    {text}
-  </Text.Label>
-)
 
 /**
  * RadioIndicator
@@ -160,18 +92,30 @@ const RadioIndicator = ({
 
 /**
  * RadioGroup
- * A group of radio button options where only one can be selected.
- * Typically used for mutually exclusive choices.
+ * Pure radio button group component for selecting one option from multiple choices.
+ * This is a pure component that should be wrapped with FormField for label, error, and help text functionality.
  *
  * Features:
  * - Single selection from multiple options
- * - Accessible labels and error messages
  * - Theme-based styling
  * - Error state visualization
- * - Helper text and descriptions
- * - Required field indicator
  * - Individual option descriptions
  * - Keyboard accessible
+ *
+ * Usage with FormField:
+ * ```tsx
+ * <FormField
+ *   label="Select an option"
+ *   error={errors.option}
+ *   hint="Choose your preferred option"
+ * >
+ *   <RadioGroup
+ *     options={options}
+ *     value={selectedValue}
+ *     onChange={setSelectedValue}
+ *   />
+ * </FormField>
+ * ```
  *
  * @param {RadioGroupProps<T>} props - Component props
  * @returns {React.JSX.Element} Rendered radio group
@@ -180,11 +124,8 @@ export const RadioGroup = <T extends string = string>({
   options,
   value,
   onChange,
-  label,
-  error,
-  hint,
   disabled = false,
-  required = false,
+  hasError = false,
   testID,
 }: RadioGroupProps<T>): React.JSX.Element => {
   /**
@@ -200,72 +141,54 @@ export const RadioGroup = <T extends string = string>({
     onChange?.(optionValue)
   }
 
-  const hasError = !!error
-  const helpText = error || hint
-
   return (
     <Column
-      gap="sm"
+      gap="xs"
       testID={testID}>
-      {!!label && (
-        <RadioGroupLabel
-          label={label}
-          required={required}
-          disabled={disabled}
-        />
-      )}
-      <Column gap="xs">
-        {options.map(option => {
-          const isSelected = value === option.value
-          const isDisabled = disabled || option.disabled
+      {options.map(option => {
+        const isSelected = value === option.value
+        const isDisabled = disabled || option.disabled
 
-          return (
-            <PressableBase
-              key={option.value}
-              onPress={() => handleSelect(option.value)}
-              disabled={isDisabled}
-              style={({pressed}) => [
-                styles.optionContainer({pressed, disabled: !!isDisabled}),
-              ]}
-              accessibilityRole="radio"
-              accessibilityState={{
-                selected: isSelected,
-                disabled: isDisabled,
-              }}>
-              <Row
-                gap="sm"
-                centerY
+        return (
+          <PressableBase
+            key={option.value}
+            onPress={() => handleSelect(option.value)}
+            disabled={isDisabled}
+            style={({pressed}) => [
+              styles.optionContainer({pressed, disabled: !!isDisabled}),
+            ]}
+            accessibilityRole="radio"
+            accessibilityState={{
+              selected: isSelected,
+              disabled: isDisabled,
+            }}>
+            <Row
+              gap="sm"
+              centerY
+              flex={1}>
+              <RadioIndicator
+                selected={isSelected}
+                disabled={!!isDisabled}
+                hasError={hasError}
+              />
+              <Column
+                gap="xxs"
                 flex={1}>
-                <RadioIndicator
-                  selected={isSelected}
-                  disabled={!!isDisabled}
-                  hasError={hasError}
-                />
-                <Column
-                  gap="xxs"
-                  flex={1}>
-                  <Text.Label color={isDisabled ? 'secondary' : 'default'}>
-                    {option.label}
-                  </Text.Label>
-                  {!!option.description && (
-                    <Text.Paragraph
-                      variant="small"
-                      color="secondary">
-                      {option.description}
-                    </Text.Paragraph>
-                  )}
-                </Column>
-              </Row>
-            </PressableBase>
-          )
-        })}
-      </Column>
-      {!!helpText && (
-        <HelpText
-          text={helpText}
-          hasError={hasError}
-        />
-      )}
+                <Text.Label color={isDisabled ? 'secondary' : 'default'}>
+                  {option.label}
+                </Text.Label>
+                {!!option.description && (
+                  <Text.Paragraph
+                    variant="small"
+                    color="secondary">
+                    {option.description}
+                  </Text.Paragraph>
+                )}
+              </Column>
+            </Row>
+          </PressableBase>
+        )
+      })}
     </Column>
   )
 }
