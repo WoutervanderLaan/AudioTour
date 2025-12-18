@@ -2,6 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {View} from 'react-native'
 
 import {StickyBanner} from './StickyBanner'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Banner/StickyBanner',
@@ -30,12 +31,10 @@ export const Info: Story = {
     message: 'Answer a few questions to personalize your experience',
     ctaLabel: 'Get Started',
     onCtaPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('CTA pressed')
+      logger.debug('CTA pressed')
     },
     onDismiss: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Banner dismissed')
+      logger.debug('Banner dismissed')
     },
     variant: 'info',
   },
@@ -48,8 +47,7 @@ export const Warning: Story = {
     ctaLabel: 'Verify Now',
     variant: 'warning',
     onCtaPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('CTA pressed')
+      logger.debug('CTA pressed')
     },
   },
 }
@@ -60,8 +58,7 @@ export const Success: Story = {
     message: 'Your changes have been saved successfully',
     variant: 'success',
     onDismiss: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Banner dismissed')
+      logger.debug('Banner dismissed')
     },
   },
 }
@@ -71,8 +68,7 @@ export const WithoutMessage: Story = {
     title: 'New feature available!',
     ctaLabel: 'Learn More',
     onCtaPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('CTA pressed')
+      logger.debug('CTA pressed')
     },
   },
 }
@@ -82,8 +78,7 @@ export const WithoutCTA: Story = {
     title: 'System Maintenance',
     message: 'We will be performing maintenance tonight from 2-4 AM',
     onDismiss: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Banner dismissed')
+      logger.debug('Banner dismissed')
     },
   },
 }

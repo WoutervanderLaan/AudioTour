@@ -8,6 +8,7 @@ import {CheckboxControlled} from './CheckboxControlled'
 
 import {Button} from '@/shared/components/ui/pressable'
 import {Text} from '@/shared/components/ui/typography'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Form/CheckboxControlled',
@@ -57,8 +58,7 @@ const SimpleFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SimpleFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -140,8 +140,7 @@ const ComplexFormExample = (): React.JSX.Element => {
   const enableNotifications = watch('enableNotifications')
 
   const onSubmit = (data: ComplexFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -250,8 +249,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: DefaultValuesFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -326,8 +324,7 @@ const ConditionalValidationExample = (): React.JSX.Element => {
   const hasPromoCode = watch('hasPromoCode')
 
   const onSubmit = (data: ConditionalFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (

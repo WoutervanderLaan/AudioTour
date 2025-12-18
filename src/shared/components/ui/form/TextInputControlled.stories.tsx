@@ -8,6 +8,7 @@ import {TextInputControlled} from './TextInputControlled'
 
 import {Button} from '@/shared/components/ui/pressable'
 import {Text} from '@/shared/components/ui/typography'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Form/TextInputControlled',
@@ -52,8 +53,7 @@ const SimpleFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SimpleFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -131,8 +131,7 @@ const ComplexFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: ComplexFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -244,8 +243,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: DefaultValuesFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (

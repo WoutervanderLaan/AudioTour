@@ -2,6 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {View} from 'react-native'
 
 import {LinkButton} from './LinkButton'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Pressable/LinkButton',
@@ -41,8 +42,7 @@ export const WithOnPress: Story = {
   args: {
     label: 'Forgot password?',
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('LinkButton pressed!')
+      logger.debug('LinkButton pressed!')
     },
   },
 }

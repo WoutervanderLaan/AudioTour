@@ -12,11 +12,12 @@ import 'react-native-url-polyfill/auto'
  * @param {string} name - The name of the global class to mock (e.g., 'MessageEvent', 'Event')
  * @returns {void}
  */
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function defineMockGlobal(name) {
-  if (typeof global[name] === 'undefined') {
-    global[name] = class {
-      constructor(type, eventInitDict) {
+function defineMockGlobal(name: string): void {
+  if ((global as any)[name] === undefined) {
+    ;(global as any)[name] = class {
+      type: string
+
+      constructor(type: string, eventInitDict: Record<string, unknown>) {
         this.type = type
         Object.assign(this, eventInitDict)
       }

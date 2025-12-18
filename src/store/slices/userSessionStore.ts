@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as Crypto from 'expo-crypto'
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
@@ -48,11 +47,11 @@ export const useUserSessionStore = create<UserSessionState>()(
   immer(set => ({
     sessionId: Crypto.randomUUID(),
     user: undefined,
-    setUser: user =>
+    setUser: (user?: UserProfile): void =>
       set(state => {
         state.user = user
       }),
-    regenerateSession: () =>
+    regenerateSession: (): void =>
       set(state => {
         state.sessionId = Crypto.randomUUID()
       }),

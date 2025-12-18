@@ -1,4 +1,5 @@
 import type React from 'react'
+import {useMemo} from 'react'
 import {useUnistyles} from 'react-native-unistyles'
 
 import {AuthRouteName} from '@/modules/auth/routes.types'
@@ -31,16 +32,19 @@ export const ProfileHeaderButton = (): React.JSX.Element => {
     }
   }
 
+  const color = useMemo(
+    () =>
+      isAuthenticated ? theme.color.text.confirm : theme.color.text.default,
+    [isAuthenticated, theme],
+  )
+
   return (
     <IconButton
       name="person"
       size="md"
       onPress={handlePress}
       accessibilityLabel="Profile"
-      color={
-        // eslint-disable-next-line react/jsx-no-leaked-render
-        isAuthenticated ? theme.color.text.confirm : theme.color.text.default
-      }
+      color={color}
       accessibilityHint={
         isAuthenticated ? 'Opens your profile' : 'Opens the login screen'
       }

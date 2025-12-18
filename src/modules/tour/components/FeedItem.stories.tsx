@@ -4,6 +4,7 @@ import {View} from 'react-native'
 import {FeedItem} from './FeedItem'
 
 import type {FeedItem as FeedItemType} from '@/modules/tour/types'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Tour/FeedItem',
@@ -49,8 +50,7 @@ export const Uploading: Story = {
       status: 'uploading',
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -62,8 +62,7 @@ export const Processing: Story = {
       status: 'processing',
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -79,8 +78,7 @@ export const GeneratingNarrative: Story = {
       },
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -98,8 +96,7 @@ export const GeneratingAudio: Story = {
         "The Starry Night is an iconic painting created by Vincent van Gogh in 1889. It depicts a swirling night sky over a quiet village, showcasing the artist's unique post-impressionist style.",
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -119,8 +116,7 @@ export const Ready: Story = {
       audioUrl: mockAudioUrl,
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -133,8 +129,7 @@ export const Error: Story = {
       error: 'Failed to process image',
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -153,8 +148,7 @@ export const MultiplePhotos: Story = {
         'This collection features three remarkable sculptures from different periods and styles.',
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -173,8 +167,7 @@ export const MoreThanFourPhotos: Story = {
         'This gallery features an extensive collection of artworks from various periods.',
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -188,8 +181,7 @@ export const WithoutMetadata: Story = {
         "This artwork displays fascinating characteristics that showcase the artist's skill and vision.",
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }
@@ -207,8 +199,7 @@ export const ReadyWithoutAudio: Story = {
         'The Persistence of Memory is a surrealist painting by Salvador Dalí, featuring melting pocket watches in a dreamlike landscape.',
     },
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Feed item pressed')
+      logger.debug('Feed item pressed')
     },
   },
 }

@@ -4,6 +4,7 @@ import {View} from 'react-native'
 import {PressableBase} from './PressableBase'
 
 import {Text} from '@/shared/components/ui/typography'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Pressable/PressableBase',
@@ -36,8 +37,7 @@ export const WithOnPress: Story = {
   args: {
     children: <Text.Label>Tap to log</Text.Label>,
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Pressed!')
+      logger.debug('Pressed!')
     },
   },
 }

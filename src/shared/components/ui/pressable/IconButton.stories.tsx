@@ -2,6 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {View} from 'react-native'
 
 import {IconButton} from './IconButton'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Pressable/IconButton',
@@ -58,8 +59,7 @@ export const WithOnPress: Story = {
     name: 'favorite',
     size: 'md',
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('IconButton pressed!')
+      logger.debug('IconButton pressed!')
     },
   },
 }

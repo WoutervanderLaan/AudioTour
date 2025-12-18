@@ -194,8 +194,6 @@ export const ImageInput = ({
    * @returns Promise that resolves when image is added or picker is cancelled
    */
   const handleAddImage = async (type?: 'camera' | 'library'): Promise<void> => {
-    //TODO: allow select library or camera
-
     try {
       const result = await ImagePicker[
         type === 'camera' ? 'launchCameraAsync' : 'launchImageLibraryAsync'

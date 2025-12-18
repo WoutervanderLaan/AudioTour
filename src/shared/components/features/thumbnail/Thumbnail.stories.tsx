@@ -2,6 +2,7 @@ import type {Meta} from '@storybook/react-native-web-vite'
 
 import {Thumbnail} from './Thumbnail'
 import {Box} from '@/shared/components/ui/layout/Box'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'UI/Thumbnail',
@@ -63,8 +64,7 @@ export const WithDelete = {
       source={{uri: 'https://picsum.photos/200/200'}}
       deletable
       onDelete={(): void => {
-        // eslint-disable-next-line no-console
-        console.log('Thumbnail delete pressed!')
+        logger.debug('Thumbnail delete pressed!')
       }}
     />
   ),

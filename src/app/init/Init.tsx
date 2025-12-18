@@ -1,14 +1,8 @@
 import type React from 'react'
 import {useEffect} from 'react'
 
-// eslint-disable-next-line no-restricted-imports
-import * as NavigationElements from '@react-navigation/elements'
-import {Asset} from 'expo-asset'
-
 import {useAuthStateListener} from '@/modules/auth/hooks/useAuthStateListener'
 import {ThemedStatusBar} from '@/shared/components/ThemedStatusBar'
-
-Asset.loadAsync([...NavigationElements.Assets])
 
 /**
  * enableMocking

@@ -3,8 +3,7 @@
  * Creates an object type where the specified keys K are made optional
  * and their value is set to 'never', effectively disallowing them.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type DisallowKeys<T, K extends PropertyKey> = {
+type DisallowKeys<K extends PropertyKey> = {
   [P in K]?: never
 }
 
@@ -20,11 +19,11 @@ type ExclusivePair<Base, A extends keyof Base, B extends keyof Base> = Omit<
   A | B
 > &
   // Case 1: Has A, Disallows B
-  (| (Partial<Pick<Base, A>> & DisallowKeys<Base, B>)
+  (| (Partial<Pick<Base, A>> & DisallowKeys<B>)
     // Case 2: Has B, Disallows A
-    | (Partial<Pick<Base, B>> & DisallowKeys<Base, A>)
+    | (Partial<Pick<Base, B>> & DisallowKeys<A>)
     // Case 3: Has neither (Both are disallowed)
-    | DisallowKeys<Base, A | B>
+    | DisallowKeys<A | B>
   )
 /**
  * GetKeys (New Helper)

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type {ComponentType} from 'react'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'

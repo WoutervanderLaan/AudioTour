@@ -1,12 +1,13 @@
+/* eslint-disable max-lines-per-function */
 import {useCallback, useRef, useState} from 'react'
 import {Alert} from 'react-native'
 
+import {TourModalName} from '../routes.types'
 import {
   cameraService,
   MediaSourceType,
   type PermissionStatus,
 } from '../services/cameraService'
-import {TourModalName} from '../routes.types'
 
 import {logger} from '@/core/lib/logger'
 import {useNavigation} from '@/shared/hooks/useNavigation'
@@ -24,7 +25,9 @@ export const useAddArtwork = (): {
 } => {
   const {navigate} = useNavigation()
   const [isLaunching, setIsLaunching] = useState(false)
-  const permissionResolverRef = useRef<((status: PermissionStatus) => void) | null>(null)
+  const permissionResolverRef = useRef<
+    ((status: PermissionStatus) => void) | null
+  >(null)
 
   /**
    * checkAndRequestPermission
@@ -56,10 +59,15 @@ export const useAddArtwork = (): {
             {text: 'Cancel', style: 'cancel'},
             {
               text: 'Open Settings',
-              onPress: () => {
-                cameraService.openSettings().catch(err =>
-                  logger.error('[useAddArtwork] Failed to open settings:', err),
-                )
+              onPress: (): void => {
+                cameraService
+                  .openSettings()
+                  .catch(err =>
+                    logger.error(
+                      '[useAddArtwork] Failed to open settings:',
+                      err,
+                    ),
+                  )
               },
             },
           ],
@@ -171,7 +179,7 @@ export const useAddArtwork = (): {
       [
         {
           text: 'Take Photo',
-          onPress: () => {
+          onPress: (): void => {
             launchPicker(MediaSourceType.camera).catch(err =>
               logger.error('[useAddArtwork] Camera launch failed:', err),
             )
@@ -179,7 +187,7 @@ export const useAddArtwork = (): {
         },
         {
           text: 'Choose from Library',
-          onPress: () => {
+          onPress: (): void => {
             launchPicker(MediaSourceType.library).catch(err =>
               logger.error('[useAddArtwork] Library launch failed:', err),
             )

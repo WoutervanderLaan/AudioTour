@@ -9,6 +9,7 @@ import type {RadioOption} from './RadioGroup'
 
 import {Button} from '@/shared/components/ui/pressable'
 import {Text} from '@/shared/components/ui/typography'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Form/RadioGroupControlled',
@@ -63,10 +64,7 @@ const FormWrapper = (): React.JSX.Element => {
    * @param {FormData} data - Form data
    */
   const onSubmit = (data: FormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Selected theme: ${data.theme}`)
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -125,10 +123,7 @@ const PreferencesFormWrapper = (): React.JSX.Element => {
    * @param {PreferencesData} data - Form data
    */
   const onSubmit = (data: PreferencesData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Preferences saved:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Notifications: ${data.notifications}`)
+    logger.debug('Preferences saved:', data)
   }
 
   return (

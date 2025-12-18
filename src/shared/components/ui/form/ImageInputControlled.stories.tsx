@@ -8,6 +8,7 @@ import {ImageInputControlled} from './ImageInputControlled'
 
 import {Button} from '@/shared/components/ui/pressable'
 import {Text} from '@/shared/components/ui/typography'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Form/ImageInputControlled',
@@ -58,10 +59,7 @@ const SimpleFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SimpleFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Submitted ${data.photos.length} photos`)
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -126,10 +124,7 @@ const SingleImageFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SingleImageFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert('Profile photo uploaded!')
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -196,10 +191,7 @@ const ComplexFormExample = (): React.JSX.Element => {
   const coverPhoto = watch('coverPhoto')
 
   const onSubmit = (data: ComplexFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Submitted: ${data.title}\n${data.photos.length} photos`)
+    logger.debug('Form submitted:', data)
   }
 
   return (
@@ -285,9 +277,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: DefaultValuesFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
+    logger.debug('Form submitted:', data)
     alert(`Updated with ${data.photos.length} photos`)
   }
 
@@ -338,8 +328,7 @@ const SmallThumbnailsFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SmallThumbnailsFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (

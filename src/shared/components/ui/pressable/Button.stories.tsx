@@ -2,6 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {View} from 'react-native'
 
 import {Button} from './Button'
+import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Pressable/Button',
@@ -51,8 +52,7 @@ export const WithOnPress: Story = {
     variant: 'primary',
     label: 'Tap to log',
     onPress: (): void => {
-      // eslint-disable-next-line no-console
-      console.log('Button pressed!')
+      logger.debug('Button pressed!')
     },
   },
 }
