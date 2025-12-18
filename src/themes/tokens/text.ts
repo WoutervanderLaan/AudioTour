@@ -72,9 +72,25 @@ export enum Emphasis {
   strong = 'strong',
 }
 
+/**
+ * FontFamily
+ * Enum defining all available font families in the application.
+ * Uses Playfair Display for titles/headings and Lora for body text.
+ */
 export enum FontFamily {
-  bold = 'Courier-ExtraBold',
-  regular = 'Courier-Regular',
+  // Title/Heading fonts (Playfair Display)
+  headingRegular = 'PlayfairDisplay-Regular',
+  headingMedium = 'PlayfairDisplay-Medium',
+  headingSemiBold = 'PlayfairDisplay-SemiBold',
+  headingBold = 'PlayfairDisplay-Bold',
+  headingExtraBold = 'PlayfairDisplay-ExtraBold',
+  headingBlack = 'PlayfairDisplay-Black',
+
+  // Body text fonts (Lora)
+  regular = 'Lora-Regular',
+  medium = 'Lora-Medium',
+  semiBold = 'Lora-SemiBold',
+  bold = 'Lora-Bold',
 }
 
 /**
@@ -125,8 +141,16 @@ export const textTokens: TextTokens = {
     extraSmall: FontSize.extraSmall,
   },
   fontFamily: {
-    bold: FontFamily.bold,
+    headingRegular: FontFamily.headingRegular,
+    headingMedium: FontFamily.headingMedium,
+    headingSemiBold: FontFamily.headingSemiBold,
+    headingBold: FontFamily.headingBold,
+    headingExtraBold: FontFamily.headingExtraBold,
+    headingBlack: FontFamily.headingBlack,
     regular: FontFamily.regular,
+    medium: FontFamily.medium,
+    semiBold: FontFamily.semiBold,
+    bold: FontFamily.bold,
   },
   lineHeight: {
     body: Math.round(1.6 * FontSize.body),
