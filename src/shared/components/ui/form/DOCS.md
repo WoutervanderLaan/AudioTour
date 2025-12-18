@@ -6,10 +6,11 @@ Form components and input elements.
 
 Contains form-related UI components including:
 
+- **FormField** - Wrapper component for consistent label, error, and help text rendering across all form inputs
 - **TextInput** / **TextInputControlled** - Text input fields with controlled variants
 - **Checkbox** / **CheckboxControlled** - Checkbox inputs with controlled variants
 - **RadioGroup** / **RadioGroupControlled** - Radio button groups with controlled variants
 - **Switch** / **SwitchControlled** - Toggle switch inputs with controlled variants
 - **ImageInput** / **ImageInputControlled** - Image picker inputs with controlled variants
 
-All components have both uncontrolled and controlled (react-hook-form) variants. Designed to work seamlessly with react-hook-form and Zod validation.
+All input components have both uncontrolled and controlled (react-hook-form) variants and use **FormField** internally for consistent presentation. Designed to work seamlessly with react-hook-form and Zod validation.
