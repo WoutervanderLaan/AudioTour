@@ -58,9 +58,6 @@
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – tour route type definitions
       - index.ts – module configuration export
-    - **old/** – legacy screens awaiting migration to proper modules
-      - screens/ – old screens (Museum, Settings, Capture, etc.)
-      - index.ts
   - **store/** – global Zustand state management
     - slices/ – store slices
   - **themes/** – theme configuration and tokens

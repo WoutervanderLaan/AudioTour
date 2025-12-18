@@ -23,18 +23,18 @@ Displays a single tour item in the feed with photos, loading state, and audio pl
 
 **Location**: `src/modules/tour/components/FeedItem.tsx`
 
-### AddPhoto.tsx
+### AddArtworkButton.tsx
 
-Button component for adding/capturing new photos to the tour.
+Button component for adding/capturing new artwork photos to the tour.
 
 **Props**:
 
 - `onPress`: Callback when button is pressed
 - Standard button props (styling, disabled, etc.)
 
-**Purpose**: Provides consistent UI for triggering photo capture across tour screens.
+**Purpose**: Provides consistent UI for triggering artwork photo capture across tour screens.
 
-**Location**: `src/modules/tour/components/AddPhoto.tsx`
+**Location**: `src/modules/tour/components/AddArtworkButton.tsx`
 
 ### TourPhotoSubmitFormInputs.tsx
 

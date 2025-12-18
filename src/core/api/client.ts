@@ -65,6 +65,7 @@ export class ApiClient implements IApiClient {
    *
    * @param accessToken - JWT access token for authenticating API requests
    * @param refreshToken - JWT refresh token for obtaining new access tokens
+   * @returns void
    */
   setTokens(accessToken: string, refreshToken: string): void {
     this.accessToken = accessToken
@@ -73,8 +74,6 @@ export class ApiClient implements IApiClient {
 
   /**
    * Clear authentication tokens from the client
-   *
-   * @returns void
    */
   clearTokens(): void {
     this.accessToken = null
