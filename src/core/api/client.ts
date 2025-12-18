@@ -691,9 +691,11 @@ export class ApiClient implements IApiClient {
   /**
    * Process streaming response body.
    * Reads response as a stream and parses newline-delimited JSON chunks.
+   * Properly handles errors by attempting to flush remaining buffer content.
    *
    * @param response - Fetch Response object with readable body
    * @param onChunk - Callback invoked for each parsed chunk
+   * @throws Error if response body is not readable or if stream reading fails
    */
   private async processStream<TChunk>(
     response: Response,
@@ -713,14 +715,7 @@ export class ApiClient implements IApiClient {
 
         if (done) {
           // Process any remaining data in buffer
-          if (buffer.trim() && onChunk) {
-            try {
-              const chunk = JSON.parse(buffer) as TChunk
-              onChunk(chunk)
-            } catch (parseError) {
-              logger.warn('[API] Failed to parse final chunk:', parseError)
-            }
-          }
+          this.flushBuffer(buffer, onChunk)
           break
         }
 
@@ -732,31 +727,79 @@ export class ApiClient implements IApiClient {
         buffer = lines.pop() || '' // Keep incomplete line in buffer
 
         for (const line of lines) {
-          const trimmedLine = line.trim()
-          if (!trimmedLine || trimmedLine.startsWith(':')) {
-            // Skip empty lines and SSE comments
-            continue
-          }
-
-          // Handle SSE format (data: {...})
-          const dataMatch = trimmedLine.match(/^data:\s*(.+)$/)
-          const jsonStr = dataMatch ? dataMatch[1] : trimmedLine
-
-          try {
-            const chunk = JSON.parse(jsonStr) as TChunk
-            if (onChunk) {
-              onChunk(chunk)
-            }
-          } catch (parseError) {
-            logger.warn('[API] Failed to parse chunk:', {
-              line: trimmedLine,
-              error: parseError,
-            })
-          }
+          this.processStreamLine(line, onChunk)
         }
       }
+    } catch (error) {
+      // Attempt to process any remaining buffer content before throwing
+      if (buffer.trim()) {
+        logger.warn('[API] Stream error - attempting to flush buffer')
+        this.flushBuffer(buffer, onChunk)
+      }
+      throw error
     } finally {
       reader.releaseLock()
+    }
+  }
+
+  /**
+   * Process a single line from the stream.
+   * Handles SSE format and plain newline-delimited JSON.
+   *
+   * @param line - Line to process
+   * @param onChunk - Callback invoked with parsed chunk
+   */
+  private processStreamLine<TChunk>(
+    line: string,
+    onChunk?: (chunk: TChunk) => void,
+  ): void {
+    const trimmedLine = line.trim()
+    if (!trimmedLine || trimmedLine.startsWith(':')) {
+      // Skip empty lines and SSE comments
+      return
+    }
+
+    // Handle SSE format (data: {...})
+    const dataMatch = trimmedLine.match(/^data:\s*(.+)$/)
+    const jsonStr = dataMatch ? dataMatch[1] : trimmedLine
+
+    try {
+      const chunk = JSON.parse(jsonStr) as TChunk
+      if (onChunk) {
+        onChunk(chunk)
+      }
+    } catch (parseError) {
+      logger.warn('[API] Failed to parse chunk:', {
+        line: trimmedLine,
+        error: parseError,
+      })
+    }
+  }
+
+  /**
+   * Flush remaining buffer content.
+   * Attempts to parse any remaining data as a complete chunk.
+   *
+   * @param buffer - Buffer content to flush
+   * @param onChunk - Callback invoked with parsed chunk
+   */
+  private flushBuffer<TChunk>(
+    buffer: string,
+    onChunk?: (chunk: TChunk) => void,
+  ): void {
+    const trimmed = buffer.trim()
+    if (!trimmed || !onChunk) {
+      return
+    }
+
+    try {
+      const chunk = JSON.parse(trimmed) as TChunk
+      onChunk(chunk)
+    } catch (parseError) {
+      logger.warn('[API] Failed to parse final buffer content:', {
+        buffer: trimmed.substring(0, 100), // Log first 100 chars
+        error: parseError,
+      })
     }
   }
 }

@@ -1,3 +1,5 @@
+import {useCallback, useRef} from 'react'
+
 import {useProcessArtwork, useStreamAudio} from '../api/mutations'
 import type {AudioChunk, FeedItemMetadata} from '../types'
 
@@ -38,38 +40,57 @@ export const usePhotoSubmit = (): {
 
   const processArtwork = useProcessArtwork()
 
-  // Initialize streaming audio hook with callbacks
-  // Callbacks will reference the current feedItemId via closure
-  let currentFeedItemId: string | undefined
+  // Use ref to track current feed item ID to avoid closure issues
+  // This prevents race conditions when multiple submissions happen concurrently
+  const currentFeedItemIdRef = useRef<string | undefined>(undefined)
 
-  const streamAudio = useStreamAudio({
-    onChunk: (chunk: AudioChunk) => {
-      if (!currentFeedItemId) return
+  // Memoize callbacks to prevent unnecessary hook recreation
+  const onChunk = useCallback(
+    (chunk: AudioChunk) => {
+      const currentId = currentFeedItemIdRef.current
+      if (!currentId) return
 
       if (chunk.type === 'audio' && chunk.audioData) {
         // Accumulate audio chunks for progressive playback
-        const currentItem = getFeedItem(currentFeedItemId)
+        const currentItem = getFeedItem(currentId)
         if (currentItem) {
-          updateFeedItem(currentFeedItemId, {
+          updateFeedItem(currentId, {
             audioChunks: [...(currentItem.audioChunks || []), chunk.audioData],
           })
         }
       }
     },
-    onProgress: (progress: number) => {
-      if (!currentFeedItemId) return
+    [getFeedItem, updateFeedItem],
+  )
+
+  const onProgress = useCallback(
+    (progress: number) => {
+      const currentId = currentFeedItemIdRef.current
+      if (!currentId) return
       // Update streaming progress in real-time
-      updateFeedItem(currentFeedItemId, {
+      updateFeedItem(currentId, {
         audioStreamProgress: progress,
       })
     },
-    onNarrative: (text: string) => {
-      if (!currentFeedItemId) return
+    [updateFeedItem],
+  )
+
+  const onNarrative = useCallback(
+    (text: string) => {
+      const currentId = currentFeedItemIdRef.current
+      if (!currentId) return
       // Update narrative text when it arrives (may be during or after audio streaming)
-      updateFeedItem(currentFeedItemId, {
+      updateFeedItem(currentId, {
         narrativeText: text,
       })
     },
+    [updateFeedItem],
+  )
+
+  const streamAudio = useStreamAudio({
+    onChunk,
+    onProgress,
+    onNarrative,
   })
 
   /**
@@ -93,7 +114,7 @@ export const usePhotoSubmit = (): {
       setFeedLoading(true)
 
       feedItemId = addFeedItem(photos, metadata)
-      currentFeedItemId = feedItemId
+      currentFeedItemIdRef.current = feedItemId
       logger.debug('[TourPhotoSubmit] Created feed item:', feedItemId)
 
       // Step 1: Upload photos and process artwork
@@ -145,7 +166,7 @@ export const usePhotoSubmit = (): {
 
       return [undefined, {error: errorMessage}]
     } finally {
-      currentFeedItemId = undefined
+      currentFeedItemIdRef.current = undefined
       setFeedLoading(false)
     }
   }
