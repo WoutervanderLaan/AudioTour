@@ -1,4 +1,4 @@
-import {Linking, Platform} from 'react-native'
+import {Linking} from 'react-native'
 
 import * as ImagePicker from 'expo-image-picker'
 
@@ -77,10 +77,7 @@ class CameraService {
 
       return permissionStatus
     } catch (error) {
-      logger.error(
-        '[CameraService] Library permission request failed:',
-        error,
-      )
+      logger.error('[CameraService] Library permission request failed:', error)
       return 'denied'
     }
   }

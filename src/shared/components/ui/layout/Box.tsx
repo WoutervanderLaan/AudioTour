@@ -49,6 +49,10 @@ export type BoxPropsBase = {
    */
   justifyContent?: ViewStyle['justifyContent']
   /**
+   *
+   */
+  alignItems?: ViewStyle['alignItems']
+  /**
    * Spacing between child elements using theme size tokens
    */
   gap?: keyof Theme['size']
@@ -127,6 +131,7 @@ export const Box = ({
   centerY,
   gap,
   justifyContent,
+  alignItems,
   padding,
   paddingH,
   paddingV,
@@ -145,7 +150,7 @@ export const Box = ({
     flexShrink: flex === undefined ? 0 : undefined,
     flexDirection: row ? 'row' : column ? 'column' : undefined,
     justifyContent: center || centerY ? 'center' : justifyContent,
-    alignItems: center || centerX ? 'center' : undefined,
+    alignItems: center || centerX ? 'center' : alignItems,
     alignSelf: stretch ? 'stretch' : undefined,
     gap: gap ? theme.size[gap] : undefined,
     padding: padding ? theme.size[padding] : undefined,

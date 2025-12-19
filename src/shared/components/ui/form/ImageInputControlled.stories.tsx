@@ -1,34 +1,23 @@
 import {zodResolver} from '@hookform/resolvers/zod'
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 import {useForm} from 'react-hook-form'
-import {View} from 'react-native'
 import {z} from 'zod'
 
 import {ImageInputControlled} from './ImageInputControlled'
 
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
+import {logger} from '@/core/lib/logger'
+import {Column} from '../layout/Column'
+import React from 'react'
 
 const meta = {
   title: 'Form/ImageInputControlled',
   component: ImageInputControlled,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof ImageInputControlled>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for ImageInputControlled component
- */
-type Story = StoryObj<typeof meta>
 
 /**
  * Simple form schema for validation
@@ -58,14 +47,11 @@ const SimpleFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SimpleFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Submitted ${data.photos.length} photos`)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="lg">
       <ImageInputControlled
         control={control}
         name="photos"
@@ -79,18 +65,17 @@ const SimpleFormExample = (): React.JSX.Element => {
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
       />
-      <View style={{marginTop: 8}}>
-        <Text.Label color="secondary">
-          Form Valid: {formState.isValid ? 'Yes' : 'No'}
-        </Text.Label>
-        <Text.Label color="secondary">
-          Errors:{' '}
-          {Object.keys(formState.errors).length > 0
-            ? Object.keys(formState.errors).join(', ')
-            : 'None'}
-        </Text.Label>
-      </View>
-    </View>
+
+      <Text.Label color="secondary">
+        Form Valid: {formState.isValid ? 'Yes' : 'No'}
+      </Text.Label>
+      <Text.Label color="secondary">
+        Errors:{' '}
+        {Object.keys(formState.errors).length > 0
+          ? Object.keys(formState.errors).join(', ')
+          : 'None'}
+      </Text.Label>
+    </Column>
   )
 }
 
@@ -126,14 +111,11 @@ const SingleImageFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SingleImageFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert('Profile photo uploaded!')
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <ImageInputControlled
         control={control}
         name="profilePhoto"
@@ -148,7 +130,7 @@ const SingleImageFormExample = (): React.JSX.Element => {
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
       />
-    </View>
+    </Column>
   )
 }
 
@@ -196,14 +178,11 @@ const ComplexFormExample = (): React.JSX.Element => {
   const coverPhoto = watch('coverPhoto')
 
   const onSubmit = (data: ComplexFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Submitted: ${data.title}\n${data.photos.length} photos`)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <Text.Title>Create Gallery</Text.Title>
 
       <ImageInputControlled
@@ -225,10 +204,8 @@ const ComplexFormExample = (): React.JSX.Element => {
         required={true}
       />
 
-      <View style={{marginTop: 8}}>
-        <Text.Label>Cover Photo: {coverPhoto.length} selected</Text.Label>
-        <Text.Label>Gallery Photos: {photos.length} selected</Text.Label>
-      </View>
+      <Text.Label>Cover Photo: {coverPhoto.length} selected</Text.Label>
+      <Text.Label>Gallery Photos: {photos.length} selected</Text.Label>
 
       <Button
         label={formState.isSubmitting ? 'Creating...' : 'Create Gallery'}
@@ -236,18 +213,16 @@ const ComplexFormExample = (): React.JSX.Element => {
         disabled={!formState.isValid || formState.isSubmitting}
       />
 
-      <View style={{marginTop: 8}}>
-        <Text.Label color="secondary">
-          Form Valid: {formState.isValid ? 'Yes' : 'No'}
-        </Text.Label>
-        <Text.Label color="secondary">
-          Errors:{' '}
-          {Object.keys(formState.errors).length > 0
-            ? Object.keys(formState.errors).join(', ')
-            : 'None'}
-        </Text.Label>
-      </View>
-    </View>
+      <Text.Label color="secondary">
+        Form Valid: {formState.isValid ? 'Yes' : 'No'}
+      </Text.Label>
+      <Text.Label color="secondary">
+        Errors:{' '}
+        {Object.keys(formState.errors).length > 0
+          ? Object.keys(formState.errors).join(', ')
+          : 'None'}
+      </Text.Label>
+    </Column>
   )
 }
 
@@ -285,14 +260,11 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: DefaultValuesFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Updated with ${data.photos.length} photos`)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <ImageInputControlled
         control={control}
         name="photos"
@@ -306,7 +278,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
         label="Update"
         onPress={handleSubmit(onSubmit)}
       />
-    </View>
+    </Column>
   )
 }
 
@@ -338,12 +310,11 @@ const SmallThumbnailsFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SmallThumbnailsFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <ImageInputControlled
         control={control}
         name="photos"
@@ -358,7 +329,7 @@ const SmallThumbnailsFormExample = (): React.JSX.Element => {
         label="Submit"
         onPress={handleSubmit(onSubmit)}
       />
-    </View>
+    </Column>
   )
 }
 

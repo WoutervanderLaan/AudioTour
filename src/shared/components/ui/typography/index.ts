@@ -7,7 +7,7 @@ import {Title} from './Title'
  * Base text components with accessibility features and theme integration
  */
 export const Text = {
-  Label: Label,
+  Label,
   Paragraph,
   Title,
 }

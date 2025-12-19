@@ -2,15 +2,12 @@ import {useEffect, useState} from 'react'
 
 import {
   Lora_400Regular,
-  Lora_500Medium,
   Lora_600SemiBold,
   Lora_700Bold,
 } from '@expo-google-fonts/lora'
 import {
   PlayfairDisplay_400Regular,
-  PlayfairDisplay_500Medium,
   PlayfairDisplay_600SemiBold,
-  PlayfairDisplay_700Bold,
   PlayfairDisplay_800ExtraBold,
   PlayfairDisplay_900Black,
 } from '@expo-google-fonts/playfair-display'
@@ -21,13 +18,10 @@ import * as Font from 'expo-font'
  */
 export const fonts = {
   'Lora-Regular': Lora_400Regular,
-  'Lora-Medium': Lora_500Medium,
   'Lora-SemiBold': Lora_600SemiBold,
   'Lora-Bold': Lora_700Bold,
   'PlayfairDisplay-Regular': PlayfairDisplay_400Regular,
-  'PlayfairDisplay-Medium': PlayfairDisplay_500Medium,
   'PlayfairDisplay-SemiBold': PlayfairDisplay_600SemiBold,
-  'PlayfairDisplay-Bold': PlayfairDisplay_700Bold,
   'PlayfairDisplay-ExtraBold': PlayfairDisplay_800ExtraBold,
   'PlayfairDisplay-Black': PlayfairDisplay_900Black,
 }

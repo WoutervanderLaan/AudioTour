@@ -6,6 +6,7 @@ import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
 
 import {BlurBackground} from '@/core/navigation/BlurBackground'
 import {ProfileHeaderButton} from '@/core/navigation/ProfileHeaderButton'
+import {FontFamily} from '@/themes/tokens/text'
 
 /**
  * NavigationThemeOptions
@@ -102,6 +103,7 @@ export const getStackNavigatorOptions = (
   headerTintColor: navTheme.header.tintColor,
   headerTitleStyle: {
     color: navTheme.header.titleColor,
+    fontFamily: FontFamily.headingSemiBold,
   },
   headerBackground: BlurBackground,
   headerRight: ProfileHeaderButton,
@@ -132,12 +134,16 @@ export const getTabNavigatorOptions = (
   headerTintColor: navTheme.header.tintColor,
   headerTitleStyle: {
     color: navTheme.header.titleColor,
+    fontFamily: FontFamily.headingSemiBold,
   },
   tabBarStyle: {
     position: 'absolute',
     backgroundColor: 'transparent',
     borderTopWidth: 0,
     elevation: 0,
+  },
+  tabBarLabelStyle: {
+    fontFamily: FontFamily.semiBold,
   },
   tabBarActiveTintColor: navTheme.tabBar.activeTintColor,
   tabBarInactiveTintColor: navTheme.tabBar.inactiveTintColor,

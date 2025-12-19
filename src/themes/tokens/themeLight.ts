@@ -7,12 +7,12 @@ export const lightColorTokens = {
   pressable: {
     primary: {
       default: {
-        background: color.secondary.lightBlue,
+        background: color.secondary.darkblue,
         border: color.transparent.full,
         label: color.primary.white,
       },
       pressed: {
-        background: color.secondary.darkblue,
+        background: color.secondary.lightBlue,
         border: color.transparent.full,
         label: color.primary.white,
       },
@@ -20,9 +20,8 @@ export const lightColorTokens = {
     secondary: {
       default: {
         background: color.primary.white,
-        border: color.primary.blue,
-        icon: color.primary.blue,
-        label: color.primary.blue,
+        border: color.secondary.darkblue,
+        label: color.secondary.darkblue,
       },
       pressed: {
         background: color.neutral.grey1,

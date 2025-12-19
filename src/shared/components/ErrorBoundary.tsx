@@ -1,11 +1,11 @@
 import React, {Component, type ErrorInfo, type ReactNode} from 'react'
 
 import {Column} from './ui/layout/Column'
-import {Button} from './ui/pressable'
 import {Screen} from './ui/screen'
 import {Text} from './ui/typography'
 
 import {logger} from '@/core/lib/logger'
+import {Button} from '@/shared/components/ui/pressable/Button'
 
 /**
  * ErrorBoundaryProps

@@ -7,7 +7,7 @@ import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio'
 import {logger} from '@/core/lib/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography'
 

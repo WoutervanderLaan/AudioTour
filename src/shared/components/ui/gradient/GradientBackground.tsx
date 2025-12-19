@@ -1,6 +1,5 @@
 import React, {ReactNode} from 'react'
 import {ViewStyle} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
 
 import {LinearGradient, type LinearGradientProps} from 'expo-linear-gradient'
 
@@ -51,16 +50,8 @@ export const GradientBackground: React.FC<GradientBackgroundProps> = ({
       colors={colors}
       start={start}
       end={end}
-      style={[styles.container, style]}>
+      style={style}>
       {children}
     </LinearGradient>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
-})

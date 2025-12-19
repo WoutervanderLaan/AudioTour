@@ -54,7 +54,7 @@ export const IconButton = ({
   ...rest
 }: IconButtonProps): React.JSX.Element => {
   const {theme} = useUnistyles()
-  const iconColor = color ?? theme.color.pressable.secondary.default.icon
+  const iconColor = color ?? theme.color.pressable.primary.default.background
 
   return (
     <PressableBase

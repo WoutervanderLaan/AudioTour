@@ -147,7 +147,9 @@ export const Switch = ({
   const a11yLabel = accessibilityLabel || label
 
   return (
-    <Row>
+    <Row
+      alignItems="center"
+      gap="sm">
       <RNSwitch
         testID={testID}
         nativeID={switchId}

@@ -55,7 +55,7 @@ export const tourTabs: TabNavigationRoutes<TourTabParams, TourTabName> = {
   [TourTabName.tour]: {
     component: TourFeedScreen,
     name: TourTabName.tour,
-    icon: 'music-note',
+    icon: 'museum',
     options: {
       headerShown: true,
       headerTitle: 'Tour',

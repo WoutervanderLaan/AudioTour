@@ -1,21 +1,14 @@
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {useState} from 'react'
-import {View} from 'react-native'
 
 import {FormField} from './FormField'
 import {TextInput} from './TextInput'
+import {Column} from '../layout/Column'
 
 const meta = {
   title: 'Form/TextInput',
   component: TextInput,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20, gap: 16}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof TextInput>
 
 export default meta
@@ -171,7 +164,7 @@ export const Interactive: Story = {
  */
 const AllStatesExample = (): React.JSX.Element => {
   return (
-    <View style={{gap: 24}}>
+    <Column gap="md">
       <FormField
         label="Default"
         hint="Default state">
@@ -206,7 +199,7 @@ const AllStatesExample = (): React.JSX.Element => {
           disabled={true}
         />
       </FormField>
-    </View>
+    </Column>
   )
 }
 
