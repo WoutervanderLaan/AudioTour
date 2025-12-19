@@ -560,6 +560,11 @@ export class ApiClient implements IApiClient {
   }
 }
 
+/**
+ * Default singleton instance of ApiClient for use throughout the application.
+ * This instance is pre-configured with the base URL from environment variables
+ * and includes request/response interceptors for logging and error handling.
+ */
 export const apiClient = new ApiClient()
 
 // Request interceptor with detailed logging

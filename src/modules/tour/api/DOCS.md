@@ -4,7 +4,7 @@ This folder contains TanStack Query mutation hooks for tour-related API operatio
 
 ## Files
 
-### useTourMutations.ts
+### mutations.ts
 
 Exports three mutation hooks for the tour workflow:
 

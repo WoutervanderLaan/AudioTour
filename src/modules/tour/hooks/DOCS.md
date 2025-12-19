@@ -54,6 +54,6 @@ const [result, error] = await submit(photos, metadata)
 
 These hooks integrate with:
 
-- Tour API mutations (`src/modules/tour/api/useTourMutations.ts`)
+- Tour API mutations (`src/modules/tour/api/mutations.ts`)
 - Tour store actions (`src/modules/tour/store/useTourStore.ts`)
 - Global store slices (museum, user session)
