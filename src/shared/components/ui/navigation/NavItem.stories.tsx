@@ -1,11 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
-import {View} from 'react-native'
-
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import {NavItem} from './NavItem'
-
-import {Text} from '@/shared/components/ui/typography'
 
 const meta = {
   title: 'Navigation/NavItem',

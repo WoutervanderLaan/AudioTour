@@ -1,5 +1,4 @@
 import type {Meta, StoryObj} from '@storybook/react-native'
-import {View} from 'react-native'
 import {Toast, ToastType} from './Toast'
 
 const meta = {
