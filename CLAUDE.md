@@ -122,7 +122,6 @@ Modular navigation system with TypeScript safety:
 - Navigation routes are registered dynamically through the ModuleRegistry
 - Each module defines its own routes via route type files (e.g., `routes.types.ts`) and `screenConfig.ts` files
 - Modules export Stack components that are composed into the RootNavigator
-- Deep linking configured in src/core/navigation/linking.ts
 
 ### Code Quality
 
