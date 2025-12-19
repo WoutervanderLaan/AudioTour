@@ -5,9 +5,7 @@ import type {FC} from 'react'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {INITIAL_VIEWPORTS} from 'storybook/viewport'
 import {color} from '../src/themes/tokens/color'
-import {ActivityIndicator, View} from 'react-native'
 import {Box} from '../src/shared/components/ui/layout/Box'
-import {useFonts} from '../src/shared/hooks/useFonts'
 
 StyleSheet.configure({
   settings: {
@@ -17,18 +15,9 @@ StyleSheet.configure({
 })
 
 const MainDecorator = (Story: FC) => {
-  const {fontsLoaded} = useFonts()
-
-  if (!fontsLoaded) {
-    return <ActivityIndicator />
-  }
-
   return (
     <SafeAreaProvider>
-      <Box
-        flex={1}
-        padding="md"
-        center>
+      <Box padding="md">
         <Story />
       </Box>
     </SafeAreaProvider>

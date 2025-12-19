@@ -8,13 +8,6 @@ const meta = {
   title: 'Pressable/IconButton',
   component: IconButton,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20, gap: 16}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof IconButton>
 
 export default meta

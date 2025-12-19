@@ -11,13 +11,6 @@ const meta = {
   title: 'Navigation/NavItem',
   component: NavItem,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20, gap: 16}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof NavItem>
 
 export default meta

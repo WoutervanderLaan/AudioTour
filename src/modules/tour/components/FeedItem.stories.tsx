@@ -1,5 +1,4 @@
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
-import {View} from 'react-native'
 
 import {FeedItem} from './FeedItem'
 
@@ -10,13 +9,6 @@ const meta = {
   title: 'Tour/FeedItem',
   component: FeedItem,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof FeedItem>
 
 export default meta

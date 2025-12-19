@@ -7,13 +7,6 @@ const meta = {
   title: 'Features/AudioPlayer',
   component: AudioPlayer,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof AudioPlayer>
 
 export default meta

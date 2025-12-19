@@ -215,7 +215,7 @@ PODS:
     - ExpoModulesCore
   - ExpoFileSystem (19.0.17):
     - ExpoModulesCore
-  - ExpoFont (14.0.9):
+  - ExpoFont (14.0.10):
     - ExpoModulesCore
   - ExpoImagePicker (17.0.8):
     - ExpoModulesCore
@@ -2693,7 +2693,7 @@ SPEC CHECKSUMS:
   ExpoCrypto: 4c50a152f5939e16a2ca10be77b002a3a391c4d3
   ExpoDevice: 0773c782b055558ca9b40b74aa4a8133a66cd0d2
   ExpoFileSystem: 56f081328f5b48a6dcc8302eee51d4f2d9d0049b
-  ExpoFont: b881d43057dceb7b31ff767b24f612609e80f60f
+  ExpoFont: 26bbea90749b8dd0b69effc9fab54248e684f290
   ExpoImagePicker: bd0a5c81d7734548f6908a480609257e85d19ea8
   ExpoKeepAwake: 3f5e3ac53627849174f3603271df8e08f174ed4a
   ExpoLinearGradient: 814a21fc4056c3cf606e4f19e31e47074c5b5a86

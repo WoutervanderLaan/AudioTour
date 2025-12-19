@@ -8,13 +8,6 @@ const meta = {
   title: 'Banner/StickyBanner',
   component: StickyBanner,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof StickyBanner>
 
 export default meta

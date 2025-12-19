@@ -17,15 +17,6 @@ const meta = {
       control: 'boolean',
     },
   },
-  decorators: [
-    Story => (
-      <Box
-        center
-        flex={1}>
-        <Story />
-      </Box>
-    ),
-  ],
 } satisfies Meta<typeof Thumbnail>
 
 export default meta

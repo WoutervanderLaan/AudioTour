@@ -65,6 +65,13 @@ const config: StorybookConfig = {
           'react-native-unistyles',
           'react-native-web',
         ],
+        exclude: [
+          ...(config.optimizeDeps?.exclude ?? []),
+          'expo-modules-core',
+          'expo-font',
+          'expo-asset',
+          'expo',
+        ],
         esbuildOptions: {
           ...config.optimizeDeps?.esbuildOptions,
           resolveExtensions: [

@@ -10,13 +10,6 @@ const meta = {
   title: 'Pressable/PressableBase',
   component: PressableBase,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof PressableBase>
 
 export default meta

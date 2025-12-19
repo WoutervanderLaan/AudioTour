@@ -13,15 +13,6 @@ const meta = {
       options: ['sm', 'md', 'lg'],
     },
   },
-  decorators: [
-    Story => (
-      <Box
-        center
-        flex={1}>
-        <Story />
-      </Box>
-    ),
-  ],
 } satisfies Meta<typeof AddPhoto>
 
 export default meta
