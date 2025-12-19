@@ -1,0 +1,92 @@
+/*
+ * Font family mappings for web
+ * Maps the app's font family names to Google Fonts with appropriate weights
+ * This CSS is needed because React Native apps use specific font family names
+ * for each weight, while web uses a single family name with font-weight.
+ */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Playfair+Display:wght@400;600;800;900&display=swap');
+
+/*
+ * Create @font-face aliases for React Native font naming convention
+ * Each weight is treated as a separate font family in RN, so we map them
+ * to the same font family with different weights for web
+ */
+
+/* Lora font variants */
+@font-face {
+  font-family: 'Lora-Regular';
+  src: local('Lora Regular'), local('Lora-Regular'), local('Lora');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lora-SemiBold';
+  src: local('Lora SemiBold'), local('Lora-SemiBold'), local('Lora');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lora-Bold';
+  src: local('Lora Bold'), local('Lora-Bold'), local('Lora');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Playfair Display font variants */
+@font-face {
+  font-family: 'PlayfairDisplay-Regular';
+  src:
+    local('Playfair Display Regular'), local('PlayfairDisplay-Regular'),
+    local('Playfair Display');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PlayfairDisplay-SemiBold';
+  src:
+    local('Playfair Display SemiBold'), local('PlayfairDisplay-SemiBold'),
+    local('Playfair Display');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PlayfairDisplay-ExtraBold';
+  src:
+    local('Playfair Display ExtraBold'), local('PlayfairDisplay-ExtraBold'),
+    local('Playfair Display');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PlayfairDisplay-Black';
+  src:
+    local('Playfair Display Black'), local('PlayfairDisplay-Black'),
+    local('Playfair Display');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback for PlayfairDisplay-Bold (not used in tokens but just in case) */
+@font-face {
+  font-family: 'PlayfairDisplay-Bold';
+  src:
+    local('Playfair Display Bold'), local('PlayfairDisplay-Bold'),
+    local('Playfair Display');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
