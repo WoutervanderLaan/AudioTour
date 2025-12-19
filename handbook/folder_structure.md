@@ -53,7 +53,7 @@
       - hooks/ – tour hooks (useTourInitialization, usePhotoSubmit)
       - screens/ – tour screens (home, feed, camera, photo submit, object detail)
       - store/ – tour state management (useTourStore)
-      - components/ – tour-specific UI components (FeedItem, AddPhoto)
+      - components/ – tour-specific UI components (FeedItem, AddArtworkButton)
       - utils/ – tour utility functions (getFeedItemStatusText)
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – tour route type definitions

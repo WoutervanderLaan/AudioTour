@@ -1,5 +1,9 @@
 import {z} from 'zod'
 
+/**
+ * Zod validation schema for login form.
+ * Validates email format and ensures password is provided.
+ */
 export const loginSchema = z.object({
   email: z.string().email('Please provide a valid email address'),
   password: z.string().min(1, 'Password is required'),
@@ -11,6 +15,11 @@ export const loginSchema = z.object({
  */
 export type LoginForm = z.infer<typeof loginSchema>
 
+/**
+ * Zod validation schema for user registration form.
+ * Enforces strong password requirements including minimum length,
+ * uppercase letter, number, and special character.
+ */
 export const registerSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please provide a valid email address'),

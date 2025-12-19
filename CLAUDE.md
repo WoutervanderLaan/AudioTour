@@ -161,7 +161,7 @@ Uses react-native-unistyles with a custom theme system:
 - Strict mode enabled
 - Base URL set to `./` with path alias `@/*` for src imports
 - Module resolution: bundler
-- Includes: src, index.tsx, config files, .storybook
+- Includes: src, index.tsx, config files
 
 ## Module Development
 
@@ -179,7 +179,6 @@ When adding new Modules:
 2. Modules must only import from src/shared/ and src/store/
 3. Each module exports a configuration object that plugs into the ModuleRegistry
 4. Follow the existing pattern in the auth/ module
-5. Screens from src/modules/old/ should be migrated to proper feature modules following this structure
 
 ## Documentation
 

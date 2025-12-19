@@ -44,8 +44,8 @@ Semantic heading component for titles (h1-h6).
 ```tsx
 import {Text} from '@/shared/components/ui/typography'
 
-<Text.Title level="h1">Main Text.Title</Text.Title>
-<Text.Title level="h2" bold={false}>Subtitle</Text.Title>
+<Text.Title level="h1">Main Title</Text.Title>
+<Text.Title level="h2">Subtitle</Text.Title>
 ```
 
 ### Text.Paragraph
@@ -81,7 +81,7 @@ Semantic label component for form labels and UI labels.
 
 ```tsx
 import {Text} from '@/shared/components/ui/typography'
-;<Text.Label color="secondary">Field Text.Label</Text.Label>
+<Text.Label color="secondary">Field Label</Text.Label>
 ```
 
 ## Design Pattern

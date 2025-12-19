@@ -176,5 +176,5 @@ This ensures the banner can be triggered from any screen in the app and will ren
 
 ## Dependencies
 
-- \`@/shared/components/ui/banner/StickyBanner\`: The UI component used to render the banner
+- \`@/shared/components/features/banner/StickyBanner\`: The UI component used to render the banner
 - React Context API for state management

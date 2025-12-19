@@ -1,8 +1,8 @@
 import z from 'zod'
 
 /**
- * photoSubmitSchema
- * Validation schema for photo submission form
+ * Zod validation schema for photo submission form.
+ * Validates photo array (1-5 photos) and optional artwork metadata fields.
  */
 export const photoSubmitSchema = z.object({
   photos: z

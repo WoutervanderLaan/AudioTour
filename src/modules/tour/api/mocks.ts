@@ -5,8 +5,16 @@ import {wait} from '@/shared/utils/wait'
 
 const TIMEOUT = 2000
 
+/**
+ * MSW GET request handlers for tour-related API endpoints.
+ * Currently empty - reserved for future GET endpoints.
+ */
 const tourGetHandlers: HttpHandler[] = []
 
+/**
+ * MSW POST request handlers for tour-related API endpoints.
+ * Includes handlers for processing artwork, generating narratives, and generating audio.
+ */
 const tourPostHandlers = [
   http.post(createHandler('/process-artwork'), async () => {
     await wait(TIMEOUT)
@@ -33,4 +41,8 @@ const tourPostHandlers = [
   }),
 ]
 
+/**
+ * Combined array of all tour-related MSW request handlers.
+ * Used by MSW server configuration for mocking tour API endpoints in development.
+ */
 export const tourHandlers = [...tourGetHandlers, ...tourPostHandlers]
