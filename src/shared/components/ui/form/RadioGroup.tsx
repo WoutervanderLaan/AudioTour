@@ -81,6 +81,7 @@ const RadioIndicator = ({
   hasError: boolean
 }): React.JSX.Element => (
   <Box
+    center
     style={[
       styles.radioCircle,
       hasError && styles.radioCircleError,
@@ -144,6 +145,7 @@ export const RadioGroup = <T extends string = string>({
   return (
     <Column
       gap="xs"
+      stretch
       testID={testID}>
       {options.map(option => {
         const isSelected = value === option.value
@@ -164,22 +166,19 @@ export const RadioGroup = <T extends string = string>({
             }}>
             <Row
               gap="sm"
-              centerY
-              flex={1}>
+              padding="sm">
               <RadioIndicator
                 selected={isSelected}
                 disabled={!!isDisabled}
                 hasError={hasError}
               />
-              <Column
-                gap="xxs"
-                flex={1}>
+              <Column>
                 <Text.Label color={isDisabled ? 'secondary' : 'default'}>
                   {option.label}
                 </Text.Label>
                 {!!option.description && (
                   <Text.Paragraph
-                    variant="small"
+                    variant="extraSmall"
                     color="secondary">
                     {option.description}
                   </Text.Paragraph>
@@ -198,25 +197,20 @@ const RADIO_INNER_SIZE = 12
 
 const styles = StyleSheet.create(theme => ({
   optionContainer: (state: {pressed: boolean; disabled: boolean}): object => ({
-    paddingVertical: theme.size.sm,
-    paddingHorizontal: theme.size.md,
     borderRadius: theme.size.sm,
     borderWidth: 1,
     borderColor: theme.color.textInput.container.background,
     backgroundColor: state.pressed
       ? theme.color.pressable.secondary.pressed.background
       : theme.color.textInput.container.background,
-    opacity: state.disabled ? 0.5 : 1,
   }),
   radioCircle: {
     width: RADIO_SIZE,
     height: RADIO_SIZE,
-    borderRadius: RADIO_SIZE / 2,
+    borderRadius: RADIO_SIZE,
     borderWidth: 2,
     borderColor: theme.color.text.tertiary,
     backgroundColor: theme.color.textInput.container.background,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   radioCircleError: {
     borderColor: theme.color.text.warning,
@@ -227,7 +221,7 @@ const styles = StyleSheet.create(theme => ({
   radioInner: {
     width: RADIO_INNER_SIZE,
     height: RADIO_INNER_SIZE,
-    borderRadius: RADIO_INNER_SIZE / 2,
+    borderRadius: RADIO_INNER_SIZE,
     backgroundColor: theme.color.pressable.primary.default.background,
   },
 }))

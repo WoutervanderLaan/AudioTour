@@ -1,35 +1,23 @@
 import {zodResolver} from '@hookform/resolvers/zod'
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 import {useForm} from 'react-hook-form'
-import {View} from 'react-native'
 import {z} from 'zod'
 
 import {RadioGroupControlled} from './RadioGroupControlled'
 import type {RadioOption} from './RadioGroup'
 
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
+import {logger} from '@/core/lib/logger'
+import {Column} from '../layout/Column'
 
 const meta = {
   title: 'Form/RadioGroupControlled',
   component: RadioGroupControlled,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof RadioGroupControlled>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for RadioGroupControlled component
- */
-type Story = StoryObj<typeof meta>
 
 const themeOptions: RadioOption[] = [
   {value: 'light', label: 'Light'},
@@ -63,14 +51,11 @@ const FormWrapper = (): React.JSX.Element => {
    * @param {FormData} data - Form data
    */
   const onSubmit = (data: FormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Selected theme: ${data.theme}`)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <RadioGroupControlled
         control={control}
         name="theme"
@@ -88,7 +73,7 @@ const FormWrapper = (): React.JSX.Element => {
           Validation triggered: {formState.errors.theme.message}
         </Text.Paragraph>
       )}
-    </View>
+    </Column>
   )
 }
 
@@ -125,14 +110,11 @@ const PreferencesFormWrapper = (): React.JSX.Element => {
    * @param {PreferencesData} data - Form data
    */
   const onSubmit = (data: PreferencesData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Preferences saved:', data)
-    // eslint-disable-next-line no-alert
-    alert(`Notifications: ${data.notifications}`)
+    logger.debug('Preferences saved:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <RadioGroupControlled
         control={control}
         name="notifications"
@@ -159,7 +141,7 @@ const PreferencesFormWrapper = (): React.JSX.Element => {
         label="Save Preferences"
         onPress={handleSubmit(onSubmit)}
       />
-    </View>
+    </Column>
   )
 }
 

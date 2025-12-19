@@ -18,7 +18,7 @@ The base pressable component with accessibility features and theme integration. 
 **Usage:**
 
 ```tsx
-import {PressableBase} from '@/shared/components/ui/pressable'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 ;<PressableBase onPress={() => console.log('Pressed')}>
   <Text.Label>Press me</Text.Label>
 </PressableBase>

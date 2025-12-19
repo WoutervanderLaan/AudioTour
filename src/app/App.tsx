@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -38,10 +38,10 @@ registerModules()
  * @returns The App root component
  */
 export const App = (): React.JSX.Element => {
-  const [isReady, setIsReady] = React.useState(false)
+  const [isReady, setIsReady] = useState(false)
   const {fontsLoaded, fontError} = useFonts()
 
-  React.useEffect(() => {
+  useEffect(() => {
     /**
      * initializeApp
      * Initializes all registered modules by calling their onAppStart hooks and handles errors gracefully.
@@ -65,14 +65,14 @@ export const App = (): React.JSX.Element => {
     }
   }, [])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (fontError) {
       logger.error('Failed to load fonts:', fontError)
     }
   }, [fontError])
 
   if (!isReady || !fontsLoaded) {
-    return <React.Fragment />
+    return <Fragment />
   }
 
   return (

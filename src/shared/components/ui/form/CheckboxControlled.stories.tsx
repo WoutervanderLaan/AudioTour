@@ -1,34 +1,22 @@
 import {zodResolver} from '@hookform/resolvers/zod'
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 import {useForm} from 'react-hook-form'
-import {View} from 'react-native'
 import {z} from 'zod'
-
 import {CheckboxControlled} from './CheckboxControlled'
-
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
+import {logger} from '@/core/lib/logger'
+import {Column} from '../layout/Column'
+import {Spacer} from '../layout/Spacer'
+import React from 'react'
 
 const meta = {
   title: 'Form/CheckboxControlled',
   component: CheckboxControlled,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof CheckboxControlled>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for CheckboxControlled component
- */
-type Story = StoryObj<typeof meta>
 
 /**
  * Simple form schema with required checkbox
@@ -57,16 +45,16 @@ const SimpleFormExample = (): React.JSX.Element => {
   })
 
   const onSubmit = (data: SimpleFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <CheckboxControlled
         control={control}
         name="acceptTerms"
-        label="I accept the terms and conditions"
+        checkboxLabel="I accept the terms and conditions"
+        label="T&C"
         hint="Please read our terms carefully"
         required={true}
       />
@@ -75,7 +63,7 @@ const SimpleFormExample = (): React.JSX.Element => {
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
       />
-    </View>
+    </Column>
   )
 }
 
@@ -103,7 +91,6 @@ const complexSchema = z
   })
   .refine(
     data => {
-      // If SMS is enabled, notifications must be enabled
       if (data.enableSms && !data.enableNotifications) {
         return false
       }
@@ -140,64 +127,63 @@ const ComplexFormExample = (): React.JSX.Element => {
   const enableNotifications = watch('enableNotifications')
 
   const onSubmit = (data: ComplexFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <Text.Label>Sign Up Form</Text.Label>
 
-      <View style={{gap: 12}}>
+      <Column gap="sm">
         <CheckboxControlled
           control={control}
           name="acceptTerms"
-          label="I accept the terms and conditions"
-          required={true}
+          checkboxLabel="I accept the terms and conditions"
+          required
         />
 
         <CheckboxControlled
           control={control}
           name="acceptPrivacy"
-          label="I accept the privacy policy"
-          required={true}
+          checkboxLabel="I accept the privacy policy"
+          required
         />
 
         <CheckboxControlled
           control={control}
           name="over18"
-          label="I am over 18 years old"
-          required={true}
+          checkboxLabel="I am over 18 years old"
+          required
         />
-      </View>
+      </Column>
 
-      <View style={{marginTop: 8}}>
-        <Text.Label>Preferences (Optional)</Text.Label>
-      </View>
+      <Spacer />
 
-      <View style={{gap: 12}}>
+      <Text.Label>Preferences (Optional)</Text.Label>
+
+      <Column gap="sm">
         <CheckboxControlled
           control={control}
           name="subscribeNewsletter"
-          label="Subscribe to our newsletter"
+          checkboxLabel="Subscribe to our newsletter"
           hint="Receive weekly updates about new features"
         />
 
         <CheckboxControlled
           control={control}
           name="enableNotifications"
-          label="Enable notifications"
+          checkboxLabel="Enable notifications"
           hint="Allow us to send you important updates"
         />
 
         <CheckboxControlled
           control={control}
           name="enableSms"
-          label="Enable SMS notifications"
+          checkboxLabel="Enable SMS notifications"
           hint="Requires notifications to be enabled"
           disabled={!enableNotifications}
         />
-      </View>
+      </Column>
 
       <Button
         label={formState.isSubmitting ? 'Submitting...' : 'Create Account'}
@@ -205,18 +191,17 @@ const ComplexFormExample = (): React.JSX.Element => {
         disabled={!formState.isValid || formState.isSubmitting}
       />
 
-      <View style={{marginTop: 8}}>
-        <Text.Label color="secondary">
-          Form Valid: {formState.isValid ? 'Yes' : 'No'}
-        </Text.Label>
-        <Text.Label color="secondary">
-          Errors:{' '}
-          {Object.keys(formState.errors).length > 0
-            ? Object.keys(formState.errors).join(', ')
-            : 'None'}
-        </Text.Label>
-      </View>
-    </View>
+      <Spacer />
+      <Text.Label color="secondary">
+        Form Valid: {formState.isValid ? 'Yes' : 'No'}
+      </Text.Label>
+      <Text.Label color="secondary">
+        Errors:{' '}
+        {Object.keys(formState.errors).length > 0
+          ? Object.keys(formState.errors).join(', ')
+          : 'None'}
+      </Text.Label>
+    </Column>
   )
 }
 
@@ -251,22 +236,22 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
 
   const onSubmit = (data: DefaultValuesFormData): void => {
     // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <CheckboxControlled
         control={control}
         name="subscribeNewsletter"
-        label="Subscribe to newsletter"
+        checkboxLabel="Subscribe to newsletter"
         hint="Receive weekly updates"
       />
 
       <CheckboxControlled
         control={control}
         name="enableNotifications"
-        label="Enable notifications"
+        checkboxLabel="Enable notifications"
         hint="Get notified about important updates"
       />
 
@@ -274,7 +259,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
         label="Update Preferences"
         onPress={handleSubmit(onSubmit)}
       />
-    </View>
+    </Column>
   )
 }
 
@@ -326,25 +311,24 @@ const ConditionalValidationExample = (): React.JSX.Element => {
   const hasPromoCode = watch('hasPromoCode')
 
   const onSubmit = (data: ConditionalFormData): void => {
-    // eslint-disable-next-line no-console
-    console.log('Form submitted:', data)
+    logger.debug('Form submitted:', data)
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <Text.Label>Checkout</Text.Label>
 
       <CheckboxControlled
         control={control}
         name="hasPromoCode"
-        label="I have a promo code"
+        checkboxLabel="I have a promo code"
       />
 
       {hasPromoCode && (
         <CheckboxControlled
           control={control}
           name="promoCodeAccepted"
-          label="I accept the promo code terms and conditions"
+          checkboxLabel="I accept the promo code terms and conditions"
           required={true}
         />
       )}
@@ -355,12 +339,12 @@ const ConditionalValidationExample = (): React.JSX.Element => {
         disabled={!formState.isValid}
       />
 
-      <View style={{marginTop: 8}}>
-        <Text.Label color="secondary">
-          Form Valid: {formState.isValid ? 'Yes' : 'No'}
-        </Text.Label>
-      </View>
-    </View>
+      <Spacer />
+
+      <Text.Label color="secondary">
+        Form Valid: {formState.isValid ? 'Yes' : 'No'}
+      </Text.Label>
+    </Column>
   )
 }
 

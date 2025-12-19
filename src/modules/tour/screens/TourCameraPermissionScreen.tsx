@@ -1,20 +1,21 @@
+/* eslint-disable max-lines-per-function */
 import React, {useEffect, useRef, useState} from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import type {RouteProp} from '@react-navigation/native'
 
-import type {TourModalName, TourStackParams} from '../routes.types'
+import type {TourModalName, TourModalParams} from '../routes.types'
 import {
   cameraService,
-  type PermissionStatus,
   MediaSourceType,
+  type PermissionStatus,
 } from '../services/cameraService'
 
 import {logger} from '@/core/lib/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
@@ -27,7 +28,7 @@ type TourCameraPermissionScreenProps = {
   /**
    * Navigation route prop
    */
-  route: RouteProp<TourStackParams, TourModalName.cameraPermission>
+  route: RouteProp<TourModalParams, TourModalName.cameraPermission>
 }
 
 /**
@@ -49,7 +50,9 @@ export const TourCameraPermissionScreen = ({
   const callbackCalledRef = useRef(false)
 
   const isCamera = sourceType === MediaSourceType.camera
-  const title = isCamera ? 'Camera Access Required' : 'Photo Library Access Required'
+  const title = isCamera
+    ? 'Camera Access Required'
+    : 'Photo Library Access Required'
   const icon = isCamera ? 'photo-camera' : 'photo-library'
 
   /**
@@ -109,7 +112,7 @@ export const TourCameraPermissionScreen = ({
 
   // Handle modal unmount - call appropriate callback exactly once
   useEffect(() => {
-    return () => {
+    return (): void => {
       // Prevent double-calls
       if (callbackCalledRef.current) {
         return
@@ -120,7 +123,10 @@ export const TourCameraPermissionScreen = ({
       if (permissionGrantedRef.current) {
         // Permission was granted, call success callback
         Promise.resolve(onPermissionGranted()).catch(err =>
-          logger.error('[TourCameraPermission] onPermissionGranted error:', err),
+          logger.error(
+            '[TourCameraPermission] onPermissionGranted error:',
+            err,
+          ),
         )
       } else {
         // Modal was dismissed without granting permission

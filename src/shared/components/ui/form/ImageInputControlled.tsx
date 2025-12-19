@@ -8,6 +8,7 @@ import {
 
 import {FormField} from './FormField'
 import {ImageInput, type ImageInputProps} from './ImageInput'
+
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
 
@@ -117,7 +118,7 @@ export const ImageInputControlled = <T extends FieldValues>({
         field: {onChange, value},
         fieldState: {error},
       }): React.JSX.Element => {
-        const images = (value as string[]) || []
+        const images: string[] = value || []
 
         return (
           <FormField
@@ -128,8 +129,9 @@ export const ImageInputControlled = <T extends FieldValues>({
             required={required}
             testID={testID}
             renderLabel={
+              // eslint-disable-next-line react/jsx-no-leaked-render
               label
-                ? ({label, labelId, disabled, required}) => (
+                ? ({label, labelId, disabled, required}): React.JSX.Element => (
                     <Row
                       gap="xs"
                       center>

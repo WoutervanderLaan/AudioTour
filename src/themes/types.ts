@@ -27,7 +27,6 @@ export type ColorTokens = {
       default: {
         background: string
         border: string
-        icon: string
         label: string
       }
       pressed: {

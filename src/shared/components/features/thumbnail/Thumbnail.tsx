@@ -3,7 +3,7 @@ import {Image, type ImageProps} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Column} from '@/shared/components/ui/layout/Column'
-import {IconButton} from '@/shared/components/ui/pressable'
+import {IconButton} from '@/shared/components/ui/pressable/IconButton'
 
 /**
  * WithDelete

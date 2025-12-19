@@ -17,10 +17,6 @@ export type TitleProps = Omit<TextProps, 'fontSize' | 'lineHeight'> & {
    * level - Heading level (h1-h6)
    */
   level?: TitleLevel
-  /**
-   * bold - Use bold font family (defaults to true for headings)
-   */
-  bold?: boolean
 }
 
 /**
@@ -34,8 +30,7 @@ export type TitleProps = Omit<TextProps, 'fontSize' | 'lineHeight'> & {
  */
 export const Title = ({
   level = 'h1',
-  bold = true,
-  fontFamily,
+  fontFamily = 'headingBold',
   children,
   ...rest
 }: TitleProps): React.JSX.Element => {
@@ -43,7 +38,7 @@ export const Title = ({
     <TextBase
       fontSize={level}
       lineHeight={level}
-      fontFamily={fontFamily || (bold ? 'headingBold' : 'headingRegular')}
+      fontFamily={fontFamily}
       accessibilityRole="header"
       {...rest}>
       {children}

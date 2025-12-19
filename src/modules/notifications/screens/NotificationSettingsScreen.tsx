@@ -4,7 +4,7 @@ import {useToggleNotificationsMutation} from '../api/mutations'
 import {NotificationModalName} from '../routes.types'
 import {useNotificationStore} from '../store/useNotificationStore'
 
-import {Switch} from '@/shared/components/ui/form'
+import {FormField, Switch} from '@/shared/components/ui/form'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
@@ -58,67 +58,20 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
           </Text.Paragraph>
         </Column>
 
-        <Column gap="md">
+        <FormField
+          hint={
+            preferences.pushEnabled
+              ? 'You will receive push notifications'
+              : 'Push notifications are disabled'
+          }>
           <Switch
             label="Enable Push Notifications"
             value={preferences.pushEnabled}
             onChange={handleToggleNotifications}
-            hint={
-              preferences.pushEnabled
-                ? 'You will receive push notifications'
-                : 'Push notifications are disabled'
-            }
             disabled={toggleMutation.isPending}
             testID="push-notifications-toggle"
           />
-        </Column>
-
-        {!!preferences.pushEnabled && (
-          <Column gap="md">
-            <Text.Label color="secondary">
-              Notification Types (Coming Soon)
-            </Text.Label>
-
-            <Switch
-              label="Tour Notifications"
-              value={preferences.tourNotifications}
-              disabled
-              hint="Get notified about tour completions and achievements"
-              testID="tour-notifications-toggle"
-            />
-
-            <Switch
-              label="Narrative Notifications"
-              value={preferences.narrativeNotifications}
-              disabled
-              hint="Discover new stories about captured objects"
-              testID="narrative-notifications-toggle"
-            />
-
-            <Switch
-              label="Recommendation Notifications"
-              value={preferences.recommendationNotifications}
-              disabled
-              hint="Receive personalized suggestions"
-              testID="recommendation-notifications-toggle"
-            />
-
-            <Switch
-              label="Social Notifications"
-              value={preferences.socialNotifications}
-              disabled
-              hint="Updates about friends and community"
-              testID="social-notifications-toggle"
-            />
-
-            <Text.Paragraph
-              variant="small"
-              color="secondary">
-              Individual notification preferences will be available in a future
-              update.
-            </Text.Paragraph>
-          </Column>
-        )}
+        </FormField>
       </Column>
     </Screen.Scrollable>
   )
