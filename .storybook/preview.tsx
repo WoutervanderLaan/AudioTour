@@ -5,8 +5,9 @@ import type {FC} from 'react'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {INITIAL_VIEWPORTS} from 'storybook/viewport'
 import {color} from '../src/themes/tokens/color'
-import {View} from 'react-native'
-import './fonts.css'
+import {ActivityIndicator, View} from 'react-native'
+import {Box} from '../src/shared/components/ui/layout/Box'
+import {useFonts} from '../src/shared/hooks/useFonts'
 
 StyleSheet.configure({
   settings: {
@@ -16,19 +17,20 @@ StyleSheet.configure({
 })
 
 const MainDecorator = (Story: FC) => {
+  const {fontsLoaded} = useFonts()
+
+  if (!fontsLoaded) {
+    return <ActivityIndicator />
+  }
+
   return (
     <SafeAreaProvider>
-      <View
-        style={{
-          flex: 1,
-          padding: 16,
-          minHeight: 200,
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'relative',
-        }}>
+      <Box
+        flex={1}
+        padding="md"
+        center>
         <Story />
-      </View>
+      </Box>
     </SafeAreaProvider>
   )
 }
@@ -56,7 +58,7 @@ const preview: Preview = {
         },
         {
           name: 'secondary-yellow',
-          value: color.secondary.yellow,
+          value: color.primary.yellow,
         },
         {
           name: 'secondary-purple',
