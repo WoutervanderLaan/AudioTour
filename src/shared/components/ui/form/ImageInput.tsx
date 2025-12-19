@@ -148,7 +148,9 @@ export const ImageInput = ({
           },
         ],
       )
+      return
     }
+    handleAddImage('library')
   }
 
   return (

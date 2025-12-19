@@ -22,6 +22,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    colors: ['#ff0000', '#5eff00'],
     children: (
       <Box padding="xl">
         <Text.Title
@@ -29,7 +30,6 @@ export const Default: Story = {
           color="inverse">
           Gradient Background
         </Text.Title>
-        ,
       </Box>
     ),
   },

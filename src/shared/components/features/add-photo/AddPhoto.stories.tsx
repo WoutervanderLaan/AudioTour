@@ -1,10 +1,9 @@
 import type {Meta} from '@storybook/react-native-web-vite'
 
-import {Box} from '@/shared/components/ui/layout/Box'
 import {AddPhoto} from './AddPhoto'
 
 const meta = {
-  title: 'UI/AddPhoto',
+  title: 'Features/AddPhoto',
   component: AddPhoto,
   tags: ['autodocs'],
   argTypes: {

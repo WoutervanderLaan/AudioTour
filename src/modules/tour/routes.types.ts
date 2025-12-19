@@ -1,3 +1,5 @@
+import type {MediaSourceType} from './services/cameraService'
+
 /**
  * TourRouteName
  * Route identifiers for tour stack screens
@@ -67,7 +69,7 @@ export type TourModalParams = {
     /**
      * Type of media source to request permission for
      */
-    sourceType: 'camera' | 'library'
+    sourceType: MediaSourceType
     /**
      * Callback to execute when permission is granted
      */

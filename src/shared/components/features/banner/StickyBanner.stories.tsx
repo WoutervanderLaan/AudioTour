@@ -4,7 +4,7 @@ import {StickyBanner} from './StickyBanner'
 import {logger} from '@/core/lib/logger'
 
 const meta = {
-  title: 'Banner/StickyBanner',
+  title: 'Features/StickyBanner',
   component: StickyBanner,
   tags: ['autodocs'],
 } satisfies Meta<typeof StickyBanner>

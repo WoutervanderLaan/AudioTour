@@ -1,11 +1,10 @@
 import type {Meta} from '@storybook/react-native-web-vite'
 
 import {Thumbnail} from './Thumbnail'
-import {Box} from '@/shared/components/ui/layout/Box'
 import {logger} from '@/core/lib/logger'
 
 const meta = {
-  title: 'UI/Thumbnail',
+  title: 'Features/Thumbnail',
   component: Thumbnail,
   tags: ['autodocs'],
   argTypes: {

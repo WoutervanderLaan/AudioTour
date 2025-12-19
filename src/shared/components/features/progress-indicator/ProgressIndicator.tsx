@@ -33,7 +33,7 @@ export const ProgressIndicator = ({
   totalSteps,
   currentStep,
 }: ProgressIndicatorProps): React.JSX.Element => {
-  const progress = ((currentStep - 1) / totalSteps) * 100
+  const progress = (currentStep / totalSteps) * 100
 
   return (
     <Column gap="xs">
