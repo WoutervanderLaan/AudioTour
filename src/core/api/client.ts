@@ -31,7 +31,7 @@ import {
  *
  * @example With authentication
  * ```typescript
- * client.setAuthToken('your-jwt-token')
+ * client.setTokens('access-token', 'refresh-token')
  * const response = await client.post('/protected-route', { data: 'value' })
  * ```
  *
