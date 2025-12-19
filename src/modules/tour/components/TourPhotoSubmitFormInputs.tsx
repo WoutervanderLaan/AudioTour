@@ -14,10 +14,14 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
 
 /**
- * TourPhotoSubmitForm
- * TODO: describe what it does.
+ * TourPhotoSubmitFormInputs
+ * Renders form inputs for submitting museum object photos and metadata.
+ * Provides image upload with multiple photo support (1-5 photos) and optional
+ * metadata fields including title, artist, year, material, and description.
  *
- * @returns {*} describe return value
+ * Must be used within a FormProvider context with PhotoSubmitForm schema.
+ *
+ * @returns React element containing the complete photo submission form inputs
  */
 export const TourPhotoSubmitFormInputs = (): React.JSX.Element => {
   const {control} = useFormContext<PhotoSubmitForm>()
