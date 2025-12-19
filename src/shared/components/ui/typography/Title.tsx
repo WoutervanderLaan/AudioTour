@@ -12,31 +12,25 @@ export type TitleLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
  * TitleProps
  * Props for the Title component
  */
-export type TitleProps = Omit<
-  TextProps,
-  'fontSize' | 'lineHeight' | 'fontFamily'
-> & {
+export type TitleProps = Omit<TextProps, 'fontSize' | 'lineHeight'> & {
   /**
    * level - Heading level (h1-h6)
    */
   level?: TitleLevel
-  /**
-   * bold - Use bold font family
-   */
-  bold?: boolean
 }
 
 /**
  * Title
  * Semantic heading component for titles.
  * Uses the base TextBase component with predefined typography settings.
+ * Automatically uses Playfair Display font for titles/headings.
  *
  * @param {TitleProps} props - Component props
  * @returns {React.JSX.Element} Rendered title element
  */
 export const Title = ({
   level = 'h1',
-  bold = true,
+  fontFamily = 'headingBold',
   children,
   ...rest
 }: TitleProps): React.JSX.Element => {
@@ -44,7 +38,7 @@ export const Title = ({
     <TextBase
       fontSize={level}
       lineHeight={level}
-      fontFamily={bold ? 'bold' : 'regular'}
+      fontFamily={fontFamily}
       accessibilityRole="header"
       {...rest}>
       {children}

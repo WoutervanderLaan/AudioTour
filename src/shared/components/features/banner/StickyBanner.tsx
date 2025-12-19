@@ -6,7 +6,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {IconButton} from '@/shared/components/ui/pressable'
+import {IconButton} from '@/shared/components/ui/pressable/IconButton'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography'
 

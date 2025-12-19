@@ -3,7 +3,7 @@ import type React from 'react'
 import {AuthRouteName} from '../routes.types'
 
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {Screen} from '@/shared/components/ui/screen'
 import {useBanner} from '@/shared/hooks/useBanner'
 import {useNavigation} from '@/shared/hooks/useNavigation'

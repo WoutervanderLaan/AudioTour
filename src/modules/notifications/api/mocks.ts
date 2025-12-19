@@ -5,6 +5,10 @@ import {wait} from '@/shared/utils/wait'
 
 const TIMEOUT = 500
 
+/**
+ * MSW POST request handlers for notification-related API endpoints.
+ * Includes handlers for device registration, unregistration, and toggling notification preferences.
+ */
 const notificationPostHandlers = [
   http.post(createHandler('/notifications/register-device'), async () => {
     await wait(TIMEOUT)
@@ -43,6 +47,10 @@ const notificationPostHandlers = [
   }),
 ]
 
+/**
+ * MSW GET request handlers for notification-related API endpoints.
+ * Includes handler for fetching user notification preferences.
+ */
 const notificationGetHandlers = [
   http.get(createHandler('/notifications/preferences'), async () => {
     await wait(TIMEOUT)
@@ -57,6 +65,10 @@ const notificationGetHandlers = [
   }),
 ]
 
+/**
+ * Combined array of all notification-related MSW request handlers.
+ * Used by MSW server configuration for mocking notification API endpoints in development.
+ */
 export const notificationHandlers = [
   ...notificationPostHandlers,
   ...notificationGetHandlers,

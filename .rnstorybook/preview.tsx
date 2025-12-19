@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 import {themes} from '../src/themes/themes'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {color} from '../src/themes/tokens/color'
+import {Box} from '../src/shared/components/ui/layout/Box'
 
 StyleSheet.configure({
   settings: {
@@ -14,7 +15,9 @@ StyleSheet.configure({
 
 const MainDecorator = (Story: FC) => (
   <SafeAreaProvider style={{flex: 1}}>
-    <Story />
+    <Box padding="md">
+      <Story />
+    </Box>
   </SafeAreaProvider>
 )
 
@@ -41,7 +44,7 @@ const preview: Preview = {
         },
         {
           name: 'secondary-yellow',
-          value: color.secondary.yellow,
+          value: color.primary.yellow,
         },
         {
           name: 'secondary-purple',

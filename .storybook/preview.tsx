@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {INITIAL_VIEWPORTS} from 'storybook/viewport'
 import {color} from '../src/themes/tokens/color'
 import {View} from 'react-native'
+import './fonts.css'
 
 StyleSheet.configure({
   settings: {

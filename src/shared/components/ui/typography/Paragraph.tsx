@@ -25,12 +25,14 @@ export type ParagraphProps = Omit<TextProps, 'fontSize' | 'lineHeight'> & {
  */
 export const Paragraph = ({
   variant = 'body',
+  fontFamily = 'regular',
   children,
   ...rest
 }: ParagraphProps): React.JSX.Element => {
   return (
     <TextBase
       fontSize={variant}
+      fontFamily={fontFamily}
       lineHeight={variant}
       {...rest}>
       {children}

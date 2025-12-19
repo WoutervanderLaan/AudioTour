@@ -13,4 +13,4 @@ Contains form-related UI components including:
 - **Switch** / **SwitchControlled** - Toggle switch inputs with controlled variants
 - **ImageInput** / **ImageInputControlled** - Image picker inputs with controlled variants
 
-All input components have both uncontrolled and controlled (react-hook-form) variants and use **FormField** internally for consistent presentation. Designed to work seamlessly with react-hook-form and Zod validation.
+All input components have both uncontrolled and controlled (react-hook-form) variants. The **Controlled** variants (e.g., TextInputControlled) use **FormField** internally for consistent presentation, while uncontrolled variants are pure components that should be wrapped with FormField when needed. Designed to work seamlessly with react-hook-form and Zod validation.

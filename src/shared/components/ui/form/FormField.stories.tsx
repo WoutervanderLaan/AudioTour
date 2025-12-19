@@ -1,21 +1,17 @@
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {useState} from 'react'
-import {TextInput as RNTextInput, View} from 'react-native'
-import {useUnistyles} from 'react-native-unistyles'
 
 import {FormField} from './FormField'
+import {Column} from '../layout/Column'
+import {TextInput} from './TextInput'
+import {GradientBackground} from '../gradient/GradientBackground'
+import {Text} from '../typography'
+import {Row} from '../layout/Row'
 
 const meta = {
   title: 'Form/FormField',
   component: FormField,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20, gap: 16}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof FormField>
 
 export default meta
@@ -32,24 +28,9 @@ type Story = StoryObj<typeof meta>
  *
  * @returns {React.JSX.Element} Simple input component
  */
-const SimpleInput = (): React.JSX.Element => {
-  const {theme} = useUnistyles()
-  return (
-    <RNTextInput
-      style={{
-        backgroundColor: theme.color.textInput.container.background,
-        borderRadius: theme.size.sm,
-        paddingVertical: theme.size.smd,
-        paddingHorizontal: theme.size.md,
-        fontSize: theme.text.fontSize.small,
-        fontFamily: theme.text.fontFamily.regular,
-        color: theme.color.text.default,
-      }}
-      placeholder="Enter text..."
-      placeholderTextColor={theme.color.text.tertiary}
-    />
-  )
-}
+const SimpleInput = (): React.JSX.Element => (
+  <TextInput placeholder="Enter text..." />
+)
 
 export const Default: Story = {
   args: {
@@ -117,11 +98,9 @@ export const CustomGap: Story = {
 const InteractiveExample = (): React.JSX.Element => {
   const [value, setValue] = useState('')
   const [error, setError] = useState<string>()
-  const {theme} = useUnistyles()
 
   const handleChange = (text: string): void => {
     setValue(text)
-    // Simple email validation
     if (text && !text.includes('@')) {
       setError('Email must contain @')
     } else {
@@ -135,22 +114,8 @@ const InteractiveExample = (): React.JSX.Element => {
       error={error}
       hint={!error ? 'We will never share your email' : undefined}
       required={true}>
-      <RNTextInput
-        style={{
-          backgroundColor: theme.color.textInput.container.background,
-          borderWidth: 2,
-          borderColor: error
-            ? theme.color.text.warning
-            : theme.color.transparent.full,
-          borderRadius: theme.size.sm,
-          paddingVertical: theme.size.smd,
-          paddingHorizontal: theme.size.md,
-          fontSize: theme.text.fontSize.small,
-          fontFamily: theme.text.fontFamily.regular,
-          color: theme.color.text.default,
-        }}
+      <TextInput
         placeholder="you@example.com"
-        placeholderTextColor={theme.color.text.tertiary}
         value={value}
         onChangeText={handleChange}
         keyboardType="email-address"
@@ -170,47 +135,22 @@ export const Interactive = {
  *
  * @returns {React.JSX.Element} Custom label example component
  */
-const CustomLabelExample = (): React.JSX.Element => {
-  const {theme} = useUnistyles()
-
-  return (
-    <FormField
-      label="Custom Label"
-      required={true}
-      hint="This field has a custom label with extra styling"
-      renderLabel={({label, required}) => (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: theme.size.xs,
-          }}>
-          <RNTextInput
-            style={{
-              fontSize: theme.text.fontSize.small,
-              fontFamily: theme.text.fontFamily.bold,
-              color: theme.color.pressable.primary.default.background,
-            }}
-            editable={false}
-            value={label}
-          />
-          {required && (
-            <RNTextInput
-              style={{
-                fontSize: theme.text.fontSize.small,
-                fontFamily: theme.text.fontFamily.bold,
-                color: theme.color.text.warning,
-              }}
-              editable={false}
-              value="*"
-            />
-          )}
-        </View>
-      )}>
-      <SimpleInput />
-    </FormField>
-  )
-}
+const CustomLabelExample = (): React.JSX.Element => (
+  <FormField
+    label="Custom Label"
+    required
+    hint="This field has a custom label with extra styling"
+    renderLabel={({label, required}) => (
+      <GradientBackground>
+        <Row padding="md">
+          <Text.Title color="inverse">{label}</Text.Title>
+          {required && <Text.Title color="warning">*</Text.Title>}
+        </Row>
+      </GradientBackground>
+    )}>
+    <SimpleInput />
+  </FormField>
+)
 
 export const CustomLabel = {
   render: (): React.JSX.Element => <CustomLabelExample />,
@@ -224,38 +164,36 @@ export const CustomLabel = {
  */
 const AllStatesExample = (): React.JSX.Element => {
   return (
-    <View style={{gap: 24}}>
-      <FormField
-        label="Default"
-        children={<SimpleInput />}
-      />
+    <Column gap="lg">
+      <FormField label="Default">
+        <SimpleInput />
+      </FormField>
       <FormField
         label="With Hint"
-        hint="This is a helpful hint"
-        children={<SimpleInput />}
-      />
+        hint="This is a helpful hint">
+        <SimpleInput />
+      </FormField>
       <FormField
         label="With Error"
-        error="This field has an error"
-        children={<SimpleInput />}
-      />
+        error="This field has an error">
+        <SimpleInput />
+      </FormField>
       <FormField
         label="Required"
-        required={true}
-        hint="This field is required"
-        children={<SimpleInput />}
-      />
+        required
+        hint="This field is required">
+        <SimpleInput />
+      </FormField>
       <FormField
         label="Disabled"
-        disabled={true}
-        hint="This field is disabled"
-        children={<SimpleInput />}
-      />
-      <FormField
-        hint="Without label"
-        children={<SimpleInput />}
-      />
-    </View>
+        disabled
+        hint="This field is disabled">
+        <SimpleInput />
+      </FormField>
+      <FormField hint="Without label">
+        <SimpleInput />
+      </FormField>
+    </Column>
   )
 }
 

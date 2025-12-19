@@ -118,7 +118,7 @@ export const ImageInputControlled = <T extends FieldValues>({
         field: {onChange, value},
         fieldState: {error},
       }): React.JSX.Element => {
-        const images = (value as string[]) || []
+        const images: string[] = value || []
 
         return (
           <FormField
@@ -128,29 +128,34 @@ export const ImageInputControlled = <T extends FieldValues>({
             disabled={disabled}
             required={required}
             testID={testID}
-            renderLabel={({label, labelId, disabled, required}) => (
-              <Row
-                gap="xs"
-                center>
-                <Text.Label
-                  nativeID={labelId}
-                  color={disabled ? 'secondary' : 'default'}
-                  accessibilityRole="text">
-                  {label}
-                  {!!required && (
-                    <Text.Label
-                      color="warning"
-                      accessibilityLabel="required">
-                      {' '}
-                      *
-                    </Text.Label>
-                  )}
-                </Text.Label>
-                <Text.Label color="secondary">
-                  {images.length} / {maxImages}
-                </Text.Label>
-              </Row>
-            )}>
+            renderLabel={
+              // eslint-disable-next-line react/jsx-no-leaked-render
+              label
+                ? ({label, labelId, disabled, required}): React.JSX.Element => (
+                    <Row
+                      gap="xs"
+                      center>
+                      <Text.Label
+                        nativeID={labelId}
+                        color={disabled ? 'secondary' : 'default'}
+                        accessibilityRole="text">
+                        {label}
+                        {!!required && (
+                          <Text.Label
+                            color="warning"
+                            accessibilityLabel="required">
+                            {' '}
+                            *
+                          </Text.Label>
+                        )}
+                      </Text.Label>
+                      <Text.Label color="secondary">
+                        {images.length} / {maxImages}
+                      </Text.Label>
+                    </Row>
+                  )
+                : undefined
+            }>
             <ImageInput
               value={images}
               onChange={onChange}

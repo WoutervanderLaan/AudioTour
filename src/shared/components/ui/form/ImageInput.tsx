@@ -123,6 +123,34 @@ export const ImageInput = ({
     onChange?.(newImages)
   }
 
+  /**
+   * handleInitImageAdd
+   * Prompts user to choose between camera or library for adding a new image.
+   * Shows an alert dialog on physical devices with options for camera or library.
+   *
+   * @returns void
+   */
+  const handleInitImageAdd = (): void => {
+    if (Device.isDevice) {
+      Alert.alert(
+        'Do you want to upload an image from the photo library or take a new image with your camera?',
+        undefined,
+        [
+          {
+            text: 'Camera',
+            isPreferred: true,
+            onPress: async (): Promise<void> => handleAddImage('camera'),
+          },
+          {
+            text: 'Library',
+            isPreferred: false,
+            onPress: async (): Promise<void> => handleAddImage('library'),
+          },
+        ],
+      )
+    }
+  }
+
   return (
     <Row
       gap="sm"
@@ -143,7 +171,7 @@ export const ImageInput = ({
 
       {!!canAddMore && (
         <AddPhoto
-          onPress={() => handleAddImage(Device.isDevice ? 'camera' : 'library')}
+          onPress={handleInitImageAdd}
           size={thumbnailSize}
           accessibilityLabel={`Add image, ${value.length} of ${maxImages} selected`}
         />

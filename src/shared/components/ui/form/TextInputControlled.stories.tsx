@@ -1,35 +1,22 @@
 import {zodResolver} from '@hookform/resolvers/zod'
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 import {useForm} from 'react-hook-form'
-import {View} from 'react-native'
 import {z} from 'zod'
 
 import {TextInputControlled} from './TextInputControlled'
 
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
+import {Column} from '../layout/Column'
 import {logger} from '@/core/lib/logger'
 
 const meta = {
   title: 'Form/TextInputControlled',
   component: TextInputControlled,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof TextInputControlled>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for TextInputControlled component
- */
-type Story = StoryObj<typeof meta>
 
 /**
  * Simple form schema for validation
@@ -57,7 +44,7 @@ const SimpleFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <TextInputControlled
         control={control}
         name="email"
@@ -73,7 +60,7 @@ const SimpleFormExample = (): React.JSX.Element => {
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
       />
-    </View>
+    </Column>
   )
 }
 
@@ -135,7 +122,7 @@ const ComplexFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <Text.Label>Sign Up Form</Text.Label>
 
       <TextInputControlled
@@ -198,18 +185,16 @@ const ComplexFormExample = (): React.JSX.Element => {
         disabled={!formState.isValid || formState.isSubmitting}
       />
 
-      <View style={{marginTop: 8}}>
-        <Text.Label color="secondary">
-          Form Valid: {formState.isValid ? 'Yes' : 'No'}
-        </Text.Label>
-        <Text.Label color="secondary">
-          Errors:{' '}
-          {Object.keys(formState.errors).length > 0
-            ? Object.keys(formState.errors).join(', ')
-            : 'None'}
-        </Text.Label>
-      </View>
-    </View>
+      <Text.Label color="secondary">
+        Form Valid: {formState.isValid ? 'Yes' : 'No'}
+      </Text.Label>
+      <Text.Label color="secondary">
+        Errors:{' '}
+        {Object.keys(formState.errors).length > 0
+          ? Object.keys(formState.errors).join(', ')
+          : 'None'}
+      </Text.Label>
+    </Column>
   )
 }
 
@@ -247,7 +232,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <TextInputControlled
         control={control}
         name="name"
@@ -267,7 +252,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
         label="Update Profile"
         onPress={handleSubmit(onSubmit)}
       />
-    </View>
+    </Column>
   )
 }
 

@@ -47,7 +47,11 @@ export const Button = ({
       styles[variant]({pressed, disabled: !!disabled}),
     ]}
     {...rest}>
-    <Text.Label color="link">{label}</Text.Label>
+    <Text.Paragraph
+      variant="small"
+      style={styles.label(variant)}>
+      {label}
+    </Text.Paragraph>
   </PressableBase>
 )
 
@@ -56,10 +60,12 @@ const styles = StyleSheet.create(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
-    borderRadius: theme.size.xxl,
     paddingVertical: theme.size.sm,
     paddingHorizontal: theme.size.lg,
     opacity: state.disabled ? 0.5 : 1,
+  }),
+  label: (variant: ButtonVariant): object => ({
+    color: theme.color.pressable[variant].default.label,
   }),
   primary: (state: {pressed: boolean; disabled?: boolean}): object => ({
     backgroundColor: state.pressed

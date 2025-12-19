@@ -72,9 +72,22 @@ export enum Emphasis {
   strong = 'strong',
 }
 
+/**
+ * FontFamily
+ * Enum defining all available font families in the application.
+ * Uses Lexend for titles/headings and Lora for body text.
+ */
 export enum FontFamily {
-  bold = 'Courier-ExtraBold',
-  regular = 'Courier-Regular',
+  // Title/Heading fonts (Lexend)
+  headingRegular = 'PlayfairDisplay-Regular',
+  headingSemiBold = 'PlayfairDisplay-SemiBold',
+  headingBold = 'PlayfairDisplay-Bold',
+  headingBlack = 'PlayfairDisplay-Black',
+
+  // Body text fonts (Atkinson)
+  regular = 'Lora-Regular',
+  semiBold = 'Lora-SemiBold',
+  bold = 'Lora-Bold',
 }
 
 /**
@@ -125,8 +138,13 @@ export const textTokens: TextTokens = {
     extraSmall: FontSize.extraSmall,
   },
   fontFamily: {
-    bold: FontFamily.bold,
+    headingRegular: FontFamily.headingRegular,
+    headingSemiBold: FontFamily.headingSemiBold,
+    headingBold: FontFamily.headingBold,
+    headingBlack: FontFamily.headingBlack,
     regular: FontFamily.regular,
+    semiBold: FontFamily.semiBold,
+    bold: FontFamily.bold,
   },
   lineHeight: {
     body: Math.round(1.6 * FontSize.body),

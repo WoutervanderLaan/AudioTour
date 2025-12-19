@@ -2,7 +2,7 @@ import React from 'react'
 
 import {useAddArtwork} from '../hooks/useAddArtwork'
 
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 
 /**
  * AddArtworkButtonProps

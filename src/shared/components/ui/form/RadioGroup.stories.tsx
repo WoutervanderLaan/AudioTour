@@ -5,18 +5,12 @@ import {View} from 'react-native'
 import {RadioGroup, type RadioOption} from './RadioGroup'
 
 import {Text} from '@/shared/components/ui/typography'
+import {Column} from '../layout/Column'
 
 const meta = {
   title: 'Form/RadioGroup',
   component: RadioGroup,
   tags: ['autodocs'],
-  decorators: [
-    (Story): React.JSX.Element => (
-      <View style={{padding: 20}}>
-        <Story />
-      </View>
-    ),
-  ],
 } satisfies Meta<typeof RadioGroup>
 
 export default meta
@@ -54,45 +48,36 @@ const notificationOptions: RadioOption[] = [
 export const Default: Story = {
   args: {
     options: themeOptions,
-    // label: 'Theme Preference',
   },
 }
 
 export const WithDescriptions: Story = {
   args: {
     options: notificationOptions,
-    // label: 'Notification Settings',
   },
 }
 
 export const WithHint: Story = {
   args: {
     options: themeOptions,
-    // label: 'Theme',
-    // hint: 'Choose your preferred color scheme',
   },
 }
 
 export const WithError: Story = {
   args: {
     options: themeOptions,
-    // label: 'Theme',
-    // error: 'Please select a theme',
   },
 }
 
 export const Required: Story = {
   args: {
     options: themeOptions,
-    // label: 'Theme',
-    // required: true,
   },
 }
 
 export const Disabled: Story = {
   args: {
     options: themeOptions,
-    // label: 'Theme',
     disabled: true,
     value: 'dark',
   },
@@ -105,7 +90,6 @@ export const WithDisabledOption: Story = {
       {value: 'dark', label: 'Dark', disabled: true},
       {value: 'auto', label: 'Auto'},
     ],
-    // label: 'Theme',
   },
 }
 
@@ -119,16 +103,14 @@ const InteractiveWrapper = (): React.JSX.Element => {
   const [value, setValue] = useState<string>()
 
   return (
-    <View style={{gap: 16}}>
+    <Column gap="md">
       <RadioGroup
         options={themeOptions}
-        // label="Theme Preference"
         value={value}
         onChange={setValue}
-        // hint="Your selection will be displayed below"
       />
-      {!!value && <Text.Paragraph>Selected: {value}</Text.Paragraph>}
-    </View>
+      {!!value && <Text.Label>Selected: {value}</Text.Label>}
+    </Column>
   )
 }
 

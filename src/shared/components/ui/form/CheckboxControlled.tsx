@@ -33,6 +33,10 @@ export type CheckboxControlledProps<T extends FieldValues> = Omit<
    * hint - Helper text to display when no error
    */
   hint?: string
+  /**
+   * checkboxLabel
+   */
+  checkboxLabel?: string
 }
 
 /**
@@ -99,6 +103,8 @@ export const CheckboxControlled = <T extends FieldValues>({
   hint,
   disabled,
   testID,
+  label,
+  checkboxLabel,
   ...rest
 }: CheckboxControlledProps<T>): React.JSX.Element => {
   return (
@@ -114,6 +120,7 @@ export const CheckboxControlled = <T extends FieldValues>({
           error={error?.message}
           hint={hint}
           disabled={disabled}
+          label={label}
           testID={testID}>
           <Checkbox
             checked={value as boolean}
@@ -121,6 +128,7 @@ export const CheckboxControlled = <T extends FieldValues>({
             hasError={!!error}
             disabled={disabled}
             testID={testID}
+            label={checkboxLabel}
             {...rest}
           />
         </FormField>

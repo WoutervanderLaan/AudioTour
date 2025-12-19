@@ -16,10 +16,15 @@ export type LabelProps = Omit<TextProps, 'fontSize' | 'lineHeight'>
  * @param {LabelProps} props - Component props
  * @returns {React.JSX.Element} Rendered label element
  */
-export const Label = ({children, ...rest}: LabelProps): React.JSX.Element => {
+export const Label = ({
+  children,
+  fontFamily = 'semiBold',
+  ...rest
+}: LabelProps): React.JSX.Element => {
   return (
     <TextBase
       fontSize="extraSmall"
+      fontFamily={fontFamily}
       lineHeight="extraSmall"
       {...rest}>
       {children}

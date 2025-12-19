@@ -14,6 +14,10 @@ import {
   type AuthTabParams,
 } from '@/modules/auth/routes.types'
 
+/**
+ * Auth module stack screen configurations.
+ * Defines navigation routes for authentication flows including login and register screens.
+ */
 export const authStacks: StackNavigationRoutes<AuthStackParams, AuthRouteName> =
   {
     [AuthRouteName.login]: {
@@ -34,6 +38,10 @@ export const authStacks: StackNavigationRoutes<AuthStackParams, AuthRouteName> =
     },
   }
 
+/**
+ * Auth module tab screen configurations.
+ * Defines tab navigation routes for social features within the auth module.
+ */
 export const authTabs: TabNavigationRoutes<AuthTabParams, AuthTabName> = {
   [AuthTabName.socials]: {
     component: SocialsScreen,
@@ -46,4 +54,8 @@ export const authTabs: TabNavigationRoutes<AuthTabParams, AuthTabName> = {
   },
 }
 
+/**
+ * Auth module modal screen configurations.
+ * Currently empty - reserved for future modal dialogs in the auth module.
+ */
 export const authModals: StackNavigationRoutes<AuthModalParams> = {}

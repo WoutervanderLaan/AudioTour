@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {
   initialWindowMetrics,
   SafeAreaProvider,
@@ -21,6 +21,7 @@ import {ErrorBoundary} from '@/shared/components/ErrorBoundary'
 import {BannerProvider} from '@/shared/context/banner/BannerContext.provider'
 import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provider'
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
+import {useFonts} from '@/shared/hooks/useFonts'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -32,13 +33,15 @@ registerModules()
  * App
  * Root entry point of the application.
  * Initializes modules, providers, and navigation structure.
+ * Waits for custom fonts to load before hiding splash screen.
  *
  * @returns The App root component
  */
 export const App = (): React.JSX.Element => {
-  const [isReady, setIsReady] = React.useState(false)
+  const [isReady, setIsReady] = useState(false)
+  const {fontsLoaded, fontError} = useFonts()
 
-  React.useEffect(() => {
+  useEffect(() => {
     /**
      * initializeApp
      * Initializes all registered modules by calling their onAppStart hooks and handles errors gracefully.
@@ -62,8 +65,14 @@ export const App = (): React.JSX.Element => {
     }
   }, [])
 
-  if (!isReady) {
-    return <React.Fragment />
+  useEffect(() => {
+    if (fontError) {
+      logger.error('Failed to load fonts:', fontError)
+    }
+  }, [fontError])
+
+  if (!isReady || !fontsLoaded) {
+    return <Fragment />
   }
 
   return (

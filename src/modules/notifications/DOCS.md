@@ -40,7 +40,8 @@ notifications/
 import {useNotifications} from '@/modules/notifications/hooks/useNotifications'
 
 const MyComponent = () => {
-  const {isEnabled, toggleNotifications, requestPermission} = useNotifications()
+  const {isEnabled, toggleNotifications, requestSystemPermission} =
+    useNotifications()
 
   return (
     <Switch

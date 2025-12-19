@@ -5,6 +5,7 @@ export const color = {
   primary: {
     black: '#000000',
     blue: '#0073ffff',
+    yellow: '#ffe600',
     red: '#ec0000',
     white: '#ffffff',
   },
@@ -20,7 +21,6 @@ export const color = {
     orange: '#ff9100',
     magenta: '#e50082',
     purple: '#a00078',
-    yellow: '#ffe600',
     darkblue: '#102E62',
     lightBlue: '#bad6f8ff',
   },
