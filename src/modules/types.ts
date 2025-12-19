@@ -132,4 +132,4 @@ export type ModalParams =
 /**
  * TabParams - Combined type of all module tab screen parameters
  */
-export type TabParams = AuthTabParams & TourTabParams & ProfileTabParams
+export type TabParams = AuthTabParams & ProfileTabParams & TourTabParams

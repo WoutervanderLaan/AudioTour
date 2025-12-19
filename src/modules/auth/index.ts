@@ -1,6 +1,6 @@
 import {ModuleSlug} from '../slugs'
 import type {ModuleConfig} from '../types'
-import {authModals, authStacks, authTabs} from './screenConfig'
+import {authModals, authStacks} from './screenConfig'
 
 import {logger} from '@/core/lib/logger'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
@@ -10,7 +10,6 @@ import {TIMING} from '@/shared/constants/timing'
  * Authentication module configuration.
  * Handles user authentication flows and manages auth tokens.
  * Includes:
- * - Tab screens: Socials
  * - Stack screens: Login, Register
  */
 export const authModule: ModuleConfig = {
@@ -20,7 +19,6 @@ export const authModule: ModuleConfig = {
 
   stacks: authStacks,
   modals: authModals,
-  tabs: authTabs,
 
   dependencies: [],
 

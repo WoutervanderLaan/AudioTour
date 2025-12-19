@@ -1,6 +1,5 @@
 import {LoginScreen} from './screens/LoginScreen'
 import {RegisterScreen} from './screens/RegisterScreen'
-import {SocialsScreen} from './screens/SocialsScreen'
 
 import {
   StackNavigationRoutes,
@@ -10,7 +9,6 @@ import {
   AuthModalParams,
   AuthRouteName,
   type AuthStackParams,
-  AuthTabName,
   type AuthTabParams,
 } from '@/modules/auth/routes.types'
 
@@ -42,17 +40,7 @@ export const authStacks: StackNavigationRoutes<AuthStackParams, AuthRouteName> =
  * Auth module tab screen configurations.
  * Defines tab navigation routes for social features within the auth module.
  */
-export const authTabs: TabNavigationRoutes<AuthTabParams, AuthTabName> = {
-  [AuthTabName.socials]: {
-    component: SocialsScreen,
-    name: AuthTabName.socials,
-    icon: 'person',
-    options: {
-      headerShown: true,
-      headerTitle: 'Socials',
-    },
-  },
-}
+export const authTabs: TabNavigationRoutes<AuthTabParams> = {}
 
 /**
  * Auth module modal screen configurations.

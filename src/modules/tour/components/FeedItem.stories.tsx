@@ -6,7 +6,7 @@ import type {FeedItem as FeedItemType} from '@/modules/tour/types'
 import {logger} from '@/core/lib/logger'
 
 const meta = {
-  title: 'Tour/FeedItem',
+  title: 'Module/Tour/FeedItem',
   component: FeedItem,
   tags: ['autodocs'],
 } satisfies Meta<typeof FeedItem>

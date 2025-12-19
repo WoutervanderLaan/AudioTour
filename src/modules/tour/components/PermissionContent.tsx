@@ -55,9 +55,9 @@ export const PermissionContent = ({
       <Spacer size="lg" />
 
       <Column gap="sm">
-        {content.benefits.map((benefit, index) => (
+        {content.benefits.map(benefit => (
           <PermissionBenefit
-            key={index}
+            key={`${benefit.icon}-${benefit.title}`}
             icon={benefit.icon}
             title={benefit.title}
             description={benefit.description}

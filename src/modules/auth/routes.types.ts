@@ -17,19 +17,10 @@ export type AuthStackParams = {
   [AuthRouteName.register]: undefined
 }
 
-export enum AuthTabName {
-  socials = 'Socials',
-}
-
 /**
  * AuthTabParams - Parameters for authentication tab screens
  */
-export type AuthTabParams = {
-  /**
-   * Socials tab screen params
-   */
-  [AuthTabName.socials]: undefined
-}
+export type AuthTabParams = Record<string, never>
 
 export enum AuthModalName {}
 
