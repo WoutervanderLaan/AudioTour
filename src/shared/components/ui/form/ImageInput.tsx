@@ -124,10 +124,11 @@ export const ImageInput = ({
   }
 
   /**
-   * handleAddImage
-   * TODO: describe what it does.
+   * handleInitImageAdd
+   * Prompts user to choose between camera or library for adding a new image.
+   * Shows an alert dialog on physical devices with options for camera or library.
    *
-   * @returns {*} describe return value
+   * @returns void
    */
   const handleInitImageAdd = (): void => {
     if (Device.isDevice) {
