@@ -127,19 +127,19 @@ const {isLaunching, handleAddArtwork} = useAddArtwork()
 
 Mutation hook for uploading photos and getting object recognition.
 
-**Location**: `src/modules/tour/api/useTourMutations.ts`
+**Location**: `src/modules/tour/api/mutations.ts`
 
 ### useGenerateNarrative
 
 Mutation hook for generating narrative text from object data.
 
-**Location**: `src/modules/tour/api/useTourMutations.ts`
+**Location**: `src/modules/tour/api/mutations.ts`
 
 ### useGenerateAudio
 
 Mutation hook for generating audio from narrative text.
 
-**Location**: `src/modules/tour/api/useTourMutations.ts`
+**Location**: `src/modules/tour/api/mutations.ts`
 
 ## Components
 
