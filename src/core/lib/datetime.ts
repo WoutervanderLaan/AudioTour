@@ -1,35 +1,37 @@
 import dayjs from 'dayjs'
-import advancedFormat from 'dayjs/plugin/advancedFormat'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import duration from 'dayjs/plugin/duration'
 import isBetween from 'dayjs/plugin/isBetween'
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 
-// Extend dayjs with plugins
+// Extend dayjs with essential plugins
+// Only loading plugins that are actively used to minimize bundle size
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.extend(relativeTime)
 dayjs.extend(duration)
 dayjs.extend(customParseFormat)
-dayjs.extend(isSameOrBefore)
-dayjs.extend(isSameOrAfter)
 dayjs.extend(isBetween)
-dayjs.extend(advancedFormat)
 
 /**
  * DateTime utility configuration
+ *
+ * IMPORTANT: Configuration changes affect all subsequent datetime operations globally.
+ * Use with caution in shared/concurrent contexts. In tests, ensure proper cleanup
+ * using beforeEach/afterEach hooks to restore default configuration.
  */
 type DateTimeConfig = {
   /**
    * Default timezone for datetime operations (e.g., 'America/New_York', 'UTC')
+   * Applies to toTimezone() when no explicit timezone is provided
    */
   defaultTimezone: string
   /**
    * Default format string for displaying dates
+   * Used by format() when no explicit format is provided
+   * @example 'YYYY-MM-DD HH:mm:ss', 'DD/MM/YYYY', 'MMM DD, YYYY'
    */
   defaultFormat: string
 }
@@ -47,8 +49,7 @@ const config: DateTimeConfig = {
  * - Relative time (e.g., "2 hours ago")
  * - Duration manipulation
  * - Custom parse formats
- * - Advanced comparisons (isSameOrBefore, isSameOrAfter, isBetween)
- * - Advanced formatting options
+ * - isBetween comparisons
  *
  * @example
  * ```ts
@@ -274,7 +275,24 @@ export const datetime = Object.assign(dayjs, {
   /**
    * Configures the datetime utility
    *
-   * @param options - Configuration options
+   * WARNING: This mutates global configuration and affects all subsequent datetime operations.
+   * Changes persist until explicitly reset. In test environments, ensure proper cleanup.
+   *
+   * @param options - Configuration options to merge with current config
+   * @example
+   * ```ts
+   * // Set custom timezone
+   * datetime.configure({ defaultTimezone: 'America/New_York' })
+   *
+   * // Set custom format
+   * datetime.configure({ defaultFormat: 'DD/MM/YYYY' })
+   *
+   * // Reset to defaults
+   * datetime.configure({
+   *   defaultTimezone: 'UTC',
+   *   defaultFormat: 'YYYY-MM-DD HH:mm:ss'
+   * })
+   * ```
    */
   configure: (options: Partial<DateTimeConfig>): void => {
     Object.assign(config, options)

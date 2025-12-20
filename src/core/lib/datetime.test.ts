@@ -4,6 +4,22 @@ const TEST_DATE = '2024-01-15'
 const TEST_TIMESTAMP = 1704153600000 // 2024-01-02 00:00:00 UTC
 const TEST_DATETIME = '2024-01-15T14:30:45'
 
+// Store original config to restore after each test
+const DEFAULT_CONFIG = {
+  defaultTimezone: 'UTC',
+  defaultFormat: 'YYYY-MM-DD HH:mm:ss',
+}
+
+beforeEach(() => {
+  // Reset to default config before each test
+  datetime.configure(DEFAULT_CONFIG)
+})
+
+afterEach(() => {
+  // Ensure config is reset after each test, even if test fails
+  datetime.configure(DEFAULT_CONFIG)
+})
+
 describe('datetime - core functionality', () => {
   it('should create dayjs instance from various inputs', () => {
     expect(datetime()).toBeDefined()
