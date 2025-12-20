@@ -1,10 +1,12 @@
 import {z} from 'zod'
 
+import {datetime} from '@/core/lib/datetime'
+
 export const objectSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   artist: z.string().optional(),
   description: z.string().max(200, 'Description too long'),
-  year: z.number().max(new Date().getFullYear()),
+  year: z.number().max(datetime.currentYear()),
   category: z.enum(['painting', 'sculpture', 'photography'], {
     required_error: 'Please select a category',
   }),

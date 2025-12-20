@@ -4,6 +4,8 @@ import {immer} from 'zustand/middleware/immer'
 
 import type {FeedItem, FeedItemMetadata} from '../types'
 
+import {datetime} from '@/core/lib/datetime'
+
 /**
  * TourState
  * Represents the state for managing an active audio tour session, including photo capture, object recognition, narrative generation, and audio playback.
@@ -52,7 +54,7 @@ export const useTourStore = create<TourState>()(
           photos,
           metadata,
           status: 'uploading',
-          createdAt: Date.now(),
+          createdAt: datetime.timestamp(),
         })
       })
       return id

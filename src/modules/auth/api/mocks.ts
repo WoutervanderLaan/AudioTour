@@ -1,6 +1,7 @@
 import {http, HttpResponse} from 'msw'
 
 import {createHandler} from '@/core/api/mock-config/createHandler'
+import {datetime} from '@/core/lib/datetime'
 import {wait} from '@/shared/utils/wait'
 
 const TIMEOUT = 2000
@@ -28,7 +29,7 @@ const authGetHandlers = [
 
     return HttpResponse.json({
       user: {id: 'user-123', email: 'test@example.com', name: 'John Doe'},
-      expiresAt: (Date.now() + 1000 * 60 * 60).toLocaleString(),
+      expiresAt: datetime().add(1, 'hour').format(),
     })
   }),
   http.get(createHandler('/auth/verify'), () => {
@@ -82,7 +83,7 @@ const authPostHandlers = [
     return HttpResponse.json({
       accessToken: 'access-token-abc',
       refreshToken: 'refresh-token-xyz',
-      accessTokenExpiresAt: (Date.now() + 1000 * 60 * 60).toLocaleString(),
+      accessTokenExpiresAt: datetime().add(1, 'hour').format(),
     })
   }),
 ]

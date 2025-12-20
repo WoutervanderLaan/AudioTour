@@ -3,6 +3,8 @@ import * as Crypto from 'expo-crypto'
 import {useTourStore} from './useTourStore'
 import type {FeedItem, FeedItemMetadata} from '../types'
 
+import {datetime} from '@/core/lib/datetime'
+
 // Mock expo-crypto
 jest.mock('expo-crypto', () => ({
   randomUUID: jest.fn(() => 'test-feed-item-id'),
@@ -362,11 +364,11 @@ describe('useTourStore', () => {
 
     it('should maintain createdAt timestamp', () => {
       const {addFeedItem} = useTourStore.getState()
-      const beforeTime = Date.now()
+      const beforeTime = datetime.timestamp()
 
       addFeedItem(['photo.jpg'])
 
-      const afterTime = Date.now()
+      const afterTime = datetime.timestamp()
       const {feedItems} = useTourStore.getState()
       expect(feedItems[0].createdAt).toBeGreaterThanOrEqual(beforeTime)
       expect(feedItems[0].createdAt).toBeLessThanOrEqual(afterTime)

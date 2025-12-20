@@ -5,6 +5,7 @@ import {useQueryClient} from '@tanstack/react-query'
 import {useAuthStore} from '../store/useAuthStore'
 
 import {ApiError} from '@/core/api/types'
+import {datetime} from '@/core/lib/datetime'
 import {logger} from '@/core/lib/logger/logger'
 import {TIMING} from '@/shared/constants/timing'
 
@@ -26,19 +27,13 @@ export const useAuthStateListener = (): void => {
     const checkTokenExpiration = (): void => {
       if (!tokens?.accessTokenExpiresAt) return
 
-      const expiresAt = new Date(tokens.accessTokenExpiresAt).getTime()
-      const now = Date.now()
-
-      // Token is expired
-      if (now >= expiresAt) {
+      // Check if access token is expired
+      if (datetime.isExpired(tokens.accessTokenExpiresAt)) {
         logger.info('[Auth] Access token expired')
 
         // If refresh token is also expired, logout
         if (tokens.refreshTokenExpiresAt) {
-          const refreshExpiresAt = new Date(
-            tokens.refreshTokenExpiresAt,
-          ).getTime()
-          if (now >= refreshExpiresAt) {
+          if (datetime.isExpired(tokens.refreshTokenExpiresAt)) {
             logger.info('[Auth] Refresh token expired, logging out')
             logout()
             queryClient.clear()

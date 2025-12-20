@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable max-lines */
+import {datetime} from '../lib/datetime'
 import {logger} from '../lib/logger/logger'
 import {ApiConfig} from './config'
 import {
@@ -338,7 +339,7 @@ export class ApiClient implements IApiClient {
     body?: unknown,
     config: RequestConfig = {},
   ): Promise<ApiResponse<T>> {
-    const startTime = Date.now()
+    const startTime = datetime.timestamp()
     try {
       const url = this.buildUrl(endpoint, config.params)
 
@@ -441,7 +442,7 @@ export class ApiClient implements IApiClient {
 
       // Log successful request with timing
       if (__DEV__) {
-        const duration = Date.now() - startTime
+        const duration = datetime.timestamp() - startTime
         logger.success(
           `${method} ${endpoint} - ${response.status} (${duration}ms)`,
         )
@@ -455,7 +456,7 @@ export class ApiClient implements IApiClient {
     } catch (error: unknown) {
       // Log failed request with timing
       if (__DEV__) {
-        const duration = Date.now() - startTime
+        const duration = datetime.timestamp() - startTime
         logger.error(`${method} ${endpoint} - Failed (${duration}ms)`, error)
       }
 

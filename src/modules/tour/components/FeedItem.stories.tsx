@@ -2,8 +2,9 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
 import {FeedItem} from './FeedItem'
 
-import type {FeedItem as FeedItemType} from '@/modules/tour/types'
+import {datetime} from '@/core/lib/datetime'
 import {logger} from '@/core/lib/logger/logger'
+import type {FeedItem as FeedItemType} from '@/modules/tour/types'
 
 const meta = {
   title: 'Module/Tour/FeedItem',
@@ -32,7 +33,7 @@ const baseFeedItem: FeedItemType = {
   id: '1',
   photos: [mockPhoto1],
   status: 'ready',
-  createdAt: Date.now(),
+  createdAt: datetime.timestamp(),
 }
 
 export const Uploading: Story = {
