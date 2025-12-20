@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
 import {LinkButton} from './LinkButton'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 const meta = {
   title: 'Pressable/LinkButton',

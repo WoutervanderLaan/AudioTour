@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable/Button'

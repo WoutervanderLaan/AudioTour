@@ -4,7 +4,7 @@ import {notificationModals, notificationStacks} from './screenConfig'
 import {notificationService} from './services/notificationService'
 import {useNotificationStore} from './store/useNotificationStore'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 /**
  * Notifications module configuration.

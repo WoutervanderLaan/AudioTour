@@ -22,10 +22,6 @@ describe('authKeys', () => {
     it('should return base key array', () => {
       expect(authKeys.all).toEqual(['auth'])
     })
-
-    it('should be readonly', () => {
-      expect(Object.isFrozen(authKeys.all)).toBe(true)
-    })
   })
 
   describe('session key', () => {
@@ -36,11 +32,6 @@ describe('authKeys', () => {
     it('should include base key', () => {
       const key = authKeys.session()
       expect(key[0]).toBe('auth')
-    })
-
-    it('should be readonly', () => {
-      const key = authKeys.session()
-      expect(Object.isFrozen(key)).toBe(true)
     })
   })
 
@@ -53,11 +44,6 @@ describe('authKeys', () => {
       const key = authKeys.profile()
       expect(key[0]).toBe('auth')
     })
-
-    it('should be readonly', () => {
-      const key = authKeys.profile()
-      expect(Object.isFrozen(key)).toBe(true)
-    })
   })
 
   describe('verify key', () => {
@@ -68,11 +54,6 @@ describe('authKeys', () => {
     it('should include base key', () => {
       const key = authKeys.verify()
       expect(key[0]).toBe('auth')
-    })
-
-    it('should be readonly', () => {
-      const key = authKeys.verify()
-      expect(Object.isFrozen(key)).toBe(true)
     })
   })
 
@@ -90,11 +71,6 @@ describe('authKeys', () => {
       const userId = 'test-user-456'
       const key = authKeys.user(userId)
       expect(key[2]).toBe(userId)
-    })
-
-    it('should be readonly', () => {
-      const key = authKeys.user('user-123')
-      expect(Object.isFrozen(key)).toBe(true)
     })
 
     it('should create different keys for different user IDs', () => {

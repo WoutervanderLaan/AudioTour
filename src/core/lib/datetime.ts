@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import duration from 'dayjs/plugin/duration'
 import isBetween from 'dayjs/plugin/isBetween'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
@@ -11,7 +10,6 @@ import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.extend(relativeTime)
-dayjs.extend(duration)
 dayjs.extend(customParseFormat)
 dayjs.extend(isBetween)
 
@@ -187,10 +185,7 @@ export const datetime = Object.assign(dayjs, {
    * @param unit - Time unit ('day', 'month', 'year', 'hour', etc.)
    * @returns dayjs instance at the start of the unit
    */
-  startOf: (
-    date: dayjs.ConfigType,
-    unit: dayjs.OpUnitType,
-  ): dayjs.Dayjs => {
+  startOf: (date: dayjs.ConfigType, unit: dayjs.OpUnitType): dayjs.Dayjs => {
     return dayjs(date).startOf(unit)
   },
 
@@ -224,20 +219,6 @@ export const datetime = Object.assign(dayjs, {
   },
 
   /**
-   * Creates a duration object from a time value
-   *
-   * @param value - Duration value
-   * @param unit - Duration unit ('millisecond', 'second', 'minute', 'hour', 'day', etc.)
-   * @returns Duration instance
-   */
-  duration: (
-    value: number,
-    unit: dayjs.ManipulateType = 'millisecond',
-  ): duration.Duration => {
-    return dayjs.duration(value, unit)
-  },
-
-  /**
    * Gets the current year
    *
    * @returns Current year as number
@@ -254,11 +235,7 @@ export const datetime = Object.assign(dayjs, {
    * @param strict - If true, requires exact format match
    * @returns dayjs instance
    */
-  parse: (
-    dateString: string,
-    format: string,
-    strict = false,
-  ): dayjs.Dayjs => {
+  parse: (dateString: string, format: string, strict = false): dayjs.Dayjs => {
     return dayjs(dateString, format, strict)
   },
 
@@ -269,7 +246,7 @@ export const datetime = Object.assign(dayjs, {
    * @returns True if the value is a valid date
    */
   isValid: (date: dayjs.ConfigType): boolean => {
-    return dayjs(date).isValid()
+    return date ? dayjs(date).isValid() : Boolean(date)
   },
 
   /**

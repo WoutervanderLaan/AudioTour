@@ -10,7 +10,7 @@ import type {
 } from '../types'
 
 import {apiClient} from '@/core/api/client'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 /**
  * useProcessArtwork

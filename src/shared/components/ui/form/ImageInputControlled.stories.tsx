@@ -7,7 +7,7 @@ import {ImageInputControlled} from './ImageInputControlled'
 
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {Column} from '../layout/Column'
 import React from 'react'
 

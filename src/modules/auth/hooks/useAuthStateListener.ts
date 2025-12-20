@@ -6,7 +6,7 @@ import {useAuthStore} from '../store/useAuthStore'
 
 import {ApiError} from '@/core/api/types'
 import {datetime} from '@/core/lib/datetime'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {TIMING} from '@/shared/constants/timing'
 
 /**

@@ -8,7 +8,7 @@ import {useAuth} from '../hooks/useAuth'
 import {AuthRouteName} from '../routes.types'
 import {type LoginForm, loginSchema} from '../schema'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {TextInputControlled} from '@/shared/components/ui/form'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'

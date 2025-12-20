@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import {datetime} from './datetime'
 
 const TEST_DATE = '2024-01-15'
@@ -106,15 +107,6 @@ describe('datetime - calculations', () => {
     expect(datetime.diff(date2, date1, 'day')).toBe(14)
     expect(datetime.diff(date1, date2, 'day')).toBe(-14)
   })
-
-  it('should create durations', () => {
-    const dur = datetime.duration(5000)
-    expect(dur.asMilliseconds()).toBe(5000)
-
-    const hourDur = datetime.duration(2, 'hour')
-    expect(hourDur.asHours()).toBe(2)
-    expect(hourDur.asMinutes()).toBe(120)
-  })
 })
 
 describe('datetime - utilities', () => {
@@ -154,7 +146,10 @@ describe('datetime - advanced operations', () => {
   })
 
   it('should chain operations', () => {
-    const result = datetime(TEST_DATE).add(1, 'month').subtract(2, 'day').startOf('day')
+    const result = datetime(TEST_DATE)
+      .add(1, 'month')
+      .subtract(2, 'day')
+      .startOf('day')
     expect(result.format('YYYY-MM-DD')).toBe('2024-02-13')
   })
 })

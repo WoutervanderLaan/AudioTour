@@ -5,7 +5,7 @@ import {
 } from '../api/mutations'
 import type {FeedItemMetadata} from '../types'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {useTourActions} from '@/modules/tour/store/selectors'
 
 /**

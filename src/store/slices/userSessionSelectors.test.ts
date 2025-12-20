@@ -1,8 +1,12 @@
-import {renderHook, act} from '@testing-library/react'
+import {act, renderHook} from '@testing-library/react-native'
 import * as Crypto from 'expo-crypto'
 
-import {useUserSessionStore, type UserProfile} from './userSessionStore'
-import {useSessionId, useCurrentUser, useUserSessionActions} from './userSessionSelectors'
+import {
+  useCurrentUser,
+  useSessionId,
+  useUserSessionActions,
+} from './userSessionSelectors'
+import {type UserProfile, useUserSessionStore} from './userSessionStore'
 
 // Mock expo-crypto
 jest.mock('expo-crypto', () => ({
@@ -118,7 +122,9 @@ describe('userSessionSelectors', () => {
       const {result} = renderHook(() => useUserSessionActions())
 
       act(() => {
-        ;(Crypto.randomUUID as jest.Mock).mockReturnValueOnce('regenerated-uuid')
+        ;(Crypto.randomUUID as jest.Mock).mockReturnValueOnce(
+          'regenerated-uuid',
+        )
         result.current.regenerateSession()
       })
 
@@ -130,7 +136,7 @@ describe('userSessionSelectors', () => {
 
       const firstReference = result.current
 
-      rerender()
+      rerender(null)
 
       expect(result.current).toBe(firstReference)
     })

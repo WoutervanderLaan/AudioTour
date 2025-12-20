@@ -1,16 +1,15 @@
-import {renderHook, act} from '@testing-library/react'
+import {act, renderHook} from '@testing-library/react-native'
 
 import type {NotificationPayload, NotificationPreferences} from '../types'
-
-import {useNotificationStore} from './useNotificationStore'
 import {
   useDeviceToken,
-  useNotificationRegistrationStatus,
-  useNotificationPermission,
-  useNotificationPreferences,
   useLastNotification,
   useNotificationActions,
+  useNotificationPermission,
+  useNotificationPreferences,
+  useNotificationRegistrationStatus,
 } from './selectors'
+import {useNotificationStore} from './useNotificationStore'
 
 describe('notification selectors', () => {
   const mockNotification: NotificationPayload = {
@@ -271,7 +270,9 @@ describe('notification selectors', () => {
         result.current.setLastNotification(mockNotification)
       })
 
-      expect(useNotificationStore.getState().lastNotification).toEqual(mockNotification)
+      expect(useNotificationStore.getState().lastNotification).toEqual(
+        mockNotification,
+      )
     })
 
     it('should reset via action', () => {
@@ -308,7 +309,7 @@ describe('notification selectors', () => {
 
       const firstReference = result.current
 
-      rerender()
+      rerender(null)
 
       expect(result.current).toBe(firstReference)
     })
@@ -317,9 +318,15 @@ describe('notification selectors', () => {
   describe('integration tests', () => {
     it('should work together across selectors', () => {
       const {result: tokenResult} = renderHook(() => useDeviceToken())
-      const {result: statusResult} = renderHook(() => useNotificationRegistrationStatus())
-      const {result: permissionResult} = renderHook(() => useNotificationPermission())
-      const {result: prefsResult} = renderHook(() => useNotificationPreferences())
+      const {result: statusResult} = renderHook(() =>
+        useNotificationRegistrationStatus(),
+      )
+      const {result: permissionResult} = renderHook(() =>
+        useNotificationPermission(),
+      )
+      const {result: prefsResult} = renderHook(() =>
+        useNotificationPreferences(),
+      )
       const {result: notifResult} = renderHook(() => useLastNotification())
       const {result: actionsResult} = renderHook(() => useNotificationActions())
 

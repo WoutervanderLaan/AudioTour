@@ -13,7 +13,9 @@ describe('createStepSchema', () => {
 
       // Valid value
       expect(() => schema.parse({experience_level: 'beginner'})).not.toThrow()
-      expect(() => schema.parse({experience_level: 'intermediate'})).not.toThrow()
+      expect(() =>
+        schema.parse({experience_level: 'intermediate'}),
+      ).not.toThrow()
       expect(() => schema.parse({experience_level: 'advanced'})).not.toThrow()
 
       // Invalid value
@@ -26,9 +28,13 @@ describe('createStepSchema', () => {
     it('should create enum schema for all RADIO steps', () => {
       // Step 1: preferred_style
       const schema1 = createStepSchema(1)
-      expect(() => schema1.parse({preferred_style: 'storytelling'})).not.toThrow()
+      expect(() =>
+        schema1.parse({preferred_style: 'storytelling'}),
+      ).not.toThrow()
       expect(() => schema1.parse({preferred_style: 'factual'})).not.toThrow()
-      expect(() => schema1.parse({preferred_style: 'conversational'})).not.toThrow()
+      expect(() =>
+        schema1.parse({preferred_style: 'conversational'}),
+      ).not.toThrow()
       expect(() => schema1.parse({preferred_style: 'invalid'})).toThrow()
 
       // Step 2: interests
@@ -197,7 +203,9 @@ describe('createStepSchema', () => {
           expect(() => schema.parse({[step.id]: validValue})).not.toThrow()
 
           // Test with invalid option
-          expect(() => schema.parse({[step.id]: 'invalid-option-xyz'})).toThrow()
+          expect(() =>
+            schema.parse({[step.id]: 'invalid-option-xyz'}),
+          ).toThrow()
         } else if (step.type === OnboardingStepType.TOGGLE) {
           expect(() => schema.parse({[step.id]: true})).not.toThrow()
           expect(() => schema.parse({[step.id]: false})).not.toThrow()

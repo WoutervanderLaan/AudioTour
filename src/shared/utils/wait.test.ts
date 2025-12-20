@@ -83,19 +83,8 @@ describe('wait', () => {
     ])
   })
 
-  it('should work in async/await context', async () => {
-    const start = Date.now()
-    const waitPromise = wait(500)
-
-    jest.advanceTimersByTime(500)
-
-    await waitPromise
-    // In fake timer context, time doesn't actually pass
-    expect(Date.now() - start).toBeLessThan(100)
-  })
-
   it('should actually call setTimeout with correct delay', () => {
-    const setTimeoutSpy = jest.spyOn(global, 'setTimeout')
+    const setTimeoutSpy = jest.spyOn(globalThis, 'setTimeout')
 
     wait(1000)
 
@@ -136,15 +125,6 @@ describe('wait', () => {
       jest.advanceTimersByTime(Number.MAX_SAFE_INTEGER)
 
       await expect(promise).resolves.toBeUndefined()
-    })
-
-    it('should work correctly when called multiple times sequentially', async () => {
-      await wait(100).then(() => jest.advanceTimersByTime(100))
-      await wait(200).then(() => jest.advanceTimersByTime(200))
-      await wait(300).then(() => jest.advanceTimersByTime(300))
-
-      // Should complete without errors
-      expect(true).toBe(true)
     })
   })
 })

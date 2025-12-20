@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 /* eslint-disable max-lines */
 import {datetime} from '../lib/datetime'
-import {logger} from '../lib/logger'
+import {logger} from '../lib/logger/logger'
 import {ApiConfig} from './config'
 import {
   ApiError,

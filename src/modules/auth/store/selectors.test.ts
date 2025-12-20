@@ -1,10 +1,14 @@
-import {renderHook, act} from '@testing-library/react'
+import {act, renderHook} from '@testing-library/react-native'
 
-import {apiClient} from '@/core/api/client'
-import type {User, AuthTokens} from '@/modules/auth/types'
-
+import {
+  useAuthActions,
+  useIsAuthenticated,
+  useTokens,
+  useUser,
+} from './selectors'
 import {useAuthStore} from './useAuthStore'
-import {useUser, useTokens, useIsAuthenticated, useAuthActions} from './selectors'
+
+import type {AuthTokens, User} from '@/modules/auth/types'
 
 // Mock the API client
 jest.mock('@/core/api/client', () => ({
@@ -258,7 +262,7 @@ describe('auth selectors', () => {
 
       const firstReference = result.current
 
-      rerender()
+      rerender(null)
 
       expect(result.current).toBe(firstReference)
     })

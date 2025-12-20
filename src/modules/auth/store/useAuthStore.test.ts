@@ -60,7 +60,8 @@ describe('useAuthStore', () => {
 
       setAuth(mockUser, mockTokens)
 
-      const {user, tokens, isAuthenticated, isInitialized} = useAuthStore.getState()
+      const {user, tokens, isAuthenticated, isInitialized} =
+        useAuthStore.getState()
       expect(user).toEqual(mockUser)
       expect(tokens).toEqual(mockTokens)
       expect(isAuthenticated).toBe(true)
@@ -209,7 +210,8 @@ describe('useAuthStore', () => {
       setAuth(mockUser, mockTokens)
       logout()
 
-      const {user, tokens, isAuthenticated, isInitialized} = useAuthStore.getState()
+      const {user, tokens, isAuthenticated, isInitialized} =
+        useAuthStore.getState()
       expect(user).toBeNull()
       expect(tokens).toBeNull()
       expect(isAuthenticated).toBe(false)
@@ -245,7 +247,8 @@ describe('useAuthStore', () => {
       setAuth(mockUser, mockTokens)
       reset()
 
-      const {user, tokens, isAuthenticated, isInitialized} = useAuthStore.getState()
+      const {user, tokens, isAuthenticated, isInitialized} =
+        useAuthStore.getState()
       expect(user).toBeNull()
       expect(tokens).toBeNull()
       expect(isAuthenticated).toBe(false)

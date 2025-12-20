@@ -6,6 +6,12 @@ import {useHeaderHeight} from '@react-navigation/elements'
 import {useBottomTabBarHeight} from './useBottomTabBarHeight'
 
 /**
+ * NavigationInset
+ * TODO: describe what this type represents.
+ */
+export type NavigationInset = ['header'] | ['tab'] | ['header', 'tab']
+
+/**
  * NavigationInsets
  * Type definition for navigation-related insets (header and tab bar heights)
  */
@@ -46,17 +52,24 @@ export type NavigationInsets = {
  * )
  * ```
  */
-export const useNavigationInsets = (): NavigationInsets => {
+export const useNavigationInsets = (
+  includeNavigationPadding?: NavigationInset,
+): NavigationInsets => {
   const headerHeight = useHeaderHeight()
   const tabBarHeight = useBottomTabBarHeight()
+
+  const includeHeader = includeNavigationPadding?.some(
+    inset => inset === 'header',
+  )
+  const includeTab = includeNavigationPadding?.some(inset => inset === 'tab')
 
   return useMemo(
     () => ({
       headerHeight,
       tabBarHeight,
-      top: headerHeight,
-      bottom: tabBarHeight,
+      top: includeHeader ? headerHeight : 0,
+      bottom: includeTab ? tabBarHeight : 0,
     }),
-    [headerHeight, tabBarHeight],
+    [includeTab, includeHeader, headerHeight, tabBarHeight],
   )
 }

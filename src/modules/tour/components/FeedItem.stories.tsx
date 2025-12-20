@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {FeedItem} from './FeedItem'
 
 import {datetime} from '@/core/lib/datetime'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import type {FeedItem as FeedItemType} from '@/modules/tour/types'
 
 const meta = {

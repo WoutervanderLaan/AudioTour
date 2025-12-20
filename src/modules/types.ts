@@ -111,9 +111,9 @@ export type ModuleConfig = {
 }
 
 /**
- * ModuleStackParams - Combined type of all module stack screen parameters
+ * StackParams - Combined type of all module stack screen parameters
  */
-export type ModuleStackParams = AuthStackParams &
+export type StackParams = AuthStackParams &
   NotificationStackParams &
   OnboardingStackParams &
   TourStackParams &

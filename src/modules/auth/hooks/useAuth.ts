@@ -1,4 +1,4 @@
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {
   useLoginMutation,
   useLogoutMutation,

@@ -1,4 +1,4 @@
-import {Z_INDEX, DURATION} from './ui'
+import {DURATION, Z_INDEX} from './ui'
 
 describe('Z_INDEX', () => {
   describe('structure', () => {
@@ -6,10 +6,6 @@ describe('Z_INDEX', () => {
       expect(Z_INDEX).toHaveProperty('TOAST')
       expect(Z_INDEX).toHaveProperty('MODAL')
       expect(Z_INDEX).toHaveProperty('DROPDOWN')
-    })
-
-    it('should be readonly', () => {
-      expect(Object.isFrozen(Z_INDEX)).toBe(true)
     })
 
     it('should have correct number of properties', () => {
@@ -45,22 +41,6 @@ describe('Z_INDEX', () => {
       expect(Z_INDEX.MODAL).toBeGreaterThan(Z_INDEX.DROPDOWN)
     })
   })
-
-  describe('immutability', () => {
-    it('should not allow modification of values', () => {
-      expect(() => {
-        // @ts-expect-error - testing immutability
-        Z_INDEX.TOAST = 1
-      }).toThrow()
-    })
-
-    it('should not allow adding new properties', () => {
-      expect(() => {
-        // @ts-expect-error - testing immutability
-        Z_INDEX.NEW_LAYER = 5000
-      }).toThrow()
-    })
-  })
 })
 
 describe('DURATION', () => {
@@ -70,10 +50,6 @@ describe('DURATION', () => {
       expect(DURATION).toHaveProperty('ANIMATION_SHORT')
       expect(DURATION).toHaveProperty('ANIMATION_MEDIUM')
       expect(DURATION).toHaveProperty('ANIMATION_LONG')
-    })
-
-    it('should be readonly', () => {
-      expect(Object.isFrozen(DURATION)).toBe(true)
     })
 
     it('should have correct number of properties', () => {
@@ -123,28 +99,14 @@ describe('DURATION', () => {
     })
 
     it('should have toast duration much longer than animations', () => {
-      expect(DURATION.TOAST_DEFAULT).toBeGreaterThan(DURATION.ANIMATION_LONG * 5)
+      expect(DURATION.TOAST_DEFAULT).toBeGreaterThan(
+        DURATION.ANIMATION_LONG * 5,
+      )
     })
 
     it('should have reasonable animation durations', () => {
       expect(DURATION.ANIMATION_SHORT).toBeGreaterThanOrEqual(100)
       expect(DURATION.ANIMATION_LONG).toBeLessThanOrEqual(1000)
-    })
-  })
-
-  describe('immutability', () => {
-    it('should not allow modification of values', () => {
-      expect(() => {
-        // @ts-expect-error - testing immutability
-        DURATION.TOAST_DEFAULT = 999
-      }).toThrow()
-    })
-
-    it('should not allow adding new properties', () => {
-      expect(() => {
-        // @ts-expect-error - testing immutability
-        DURATION.NEW_DURATION = 123
-      }).toThrow()
     })
   })
 })

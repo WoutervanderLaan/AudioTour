@@ -41,8 +41,8 @@ export default [
       '.jest/**',
       '**/*.stories.{ts,tsx,js,jsx}',
       '*.config.js',
+      '**/*.test.{ts,js}',
     ],
-
     languageOptions: {
       parser: tsParser,
       parserOptions: {

@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 /**
  * UsePermissionCleanupParams

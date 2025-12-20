@@ -237,7 +237,9 @@ describe('useNotificationStore', () => {
       const {setLastNotification} = useNotificationStore.getState()
 
       setLastNotification(mockNotification)
-      expect(useNotificationStore.getState().lastNotification).toEqual(mockNotification)
+      expect(useNotificationStore.getState().lastNotification).toEqual(
+        mockNotification,
+      )
 
       setLastNotification(null)
       expect(useNotificationStore.getState().lastNotification).toBeNull()
@@ -281,7 +283,13 @@ describe('useNotificationStore', () => {
 
     it('should handle all action types', () => {
       const {setLastNotification} = useNotificationStore.getState()
-      const actionTypes = ['tour_complete', 'new_narrative', 'recommendation', 'social', 'system']
+      const actionTypes = [
+        'tour_complete',
+        'new_narrative',
+        'recommendation',
+        'social',
+        'system',
+      ]
 
       actionTypes.forEach(actionType => {
         const notification: NotificationPayload = {
@@ -366,8 +374,12 @@ describe('useNotificationStore', () => {
 
   describe('edge cases', () => {
     it('should handle permission flow', () => {
-      const {setHasRequestedPermission, setPermissionGranted, setDeviceToken, setIsRegistered} =
-        useNotificationStore.getState()
+      const {
+        setHasRequestedPermission,
+        setPermissionGranted,
+        setDeviceToken,
+        setIsRegistered,
+      } = useNotificationStore.getState()
 
       // Simulate permission request flow
       setHasRequestedPermission(true)
@@ -383,7 +395,8 @@ describe('useNotificationStore', () => {
     })
 
     it('should handle permission denied flow', () => {
-      const {setHasRequestedPermission, setPermissionGranted} = useNotificationStore.getState()
+      const {setHasRequestedPermission, setPermissionGranted} =
+        useNotificationStore.getState()
 
       setHasRequestedPermission(true)
       setPermissionGranted(false)

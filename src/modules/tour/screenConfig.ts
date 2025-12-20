@@ -22,14 +22,6 @@ import {
  */
 export const tourStacks: StackNavigationRoutes<TourStackParams, TourRouteName> =
   {
-    [TourRouteName.home]: {
-      component: TourHomeScreen,
-      name: TourRouteName.home,
-      options: {
-        headerShown: true,
-        headerTitle: 'AudioTour',
-      },
-    },
     [TourRouteName.feed]: {
       component: TourFeedScreen,
       name: TourRouteName.feed,
@@ -52,13 +44,13 @@ export const tourStacks: StackNavigationRoutes<TourStackParams, TourRouteName> =
  * Tour tab screen configurations
  */
 export const tourTabs: TabNavigationRoutes<TourTabParams, TourTabName> = {
-  [TourTabName.tour]: {
-    component: TourFeedScreen,
-    name: TourTabName.tour,
+  [TourTabName.home]: {
+    component: TourHomeScreen,
+    name: TourTabName.home,
     icon: 'museum',
     options: {
       headerShown: true,
-      headerTitle: 'Tour',
+      headerTitle: 'AudioTour',
     },
   },
 }
@@ -74,7 +66,6 @@ export const tourModals: StackNavigationRoutes<TourModalParams, TourModalName> =
       options: {
         headerShown: true,
         headerTitle: 'Submit Photos',
-        presentation: 'modal',
       },
     },
     [TourModalName.cameraPermission]: {
@@ -83,7 +74,6 @@ export const tourModals: StackNavigationRoutes<TourModalParams, TourModalName> =
       options: {
         headerShown: true,
         headerTitle: 'Permission Required',
-        presentation: 'modal',
       },
     },
   }

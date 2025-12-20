@@ -2,7 +2,7 @@ import {ModuleSlug} from '../slugs'
 import type {ModuleConfig} from '../types'
 import {tourModals, tourStacks, tourTabs} from './screenConfig'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 /**
  * Tour module configuration.

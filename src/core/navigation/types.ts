@@ -2,14 +2,12 @@ import type {ComponentType} from 'react'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import type {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs'
-import type {ParamListBase} from '@react-navigation/native'
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
 
-import type {ModuleSlug} from '@/modules/slugs'
 import type {
   ModalParams,
   ModuleConfig,
-  ModuleStackParams,
+  StackParams,
   TabParams,
 } from '@/modules/types'
 
@@ -35,31 +33,12 @@ export type ModuleRegistry = {
 }
 
 /**
- * ModuleParams - Type for nested navigation to module screens (legacy, to be removed).
- * Allows navigation like: navigate(ModuleSlug.old, { screen: OldRouteName.notFound })
- *
- * Note: With the new architecture, direct navigation is preferred: navigate(OldRouteName.notFound)
- */
-type ModuleParams<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = Extract<keyof ParamList, string>,
-> = Record<
-  ModuleSlug,
-  | undefined
-  | {screen?: RouteName}
-  | {params: ParamList[RouteName]; screen: RouteName}
->
-
-/**
  * RootStackParams - Combined parameters for all navigation screens in the app.
  * Includes stack screens, modals, tabs, and a special "Tabs" screen for the tab navigator.
  */
-export type RootStackParams = ModuleParams<ModuleStackParams> &
-  ModuleStackParams &
+export type RootStackParams = StackParams &
   ModalParams &
-  TabParams & {
-    Tabs: undefined
-  }
+  TabParams & {Home: undefined}
 
 /**
  * StackNavigationRoutes - Configuration object for stack navigation screens.

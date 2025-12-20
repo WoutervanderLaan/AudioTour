@@ -2,9 +2,9 @@ import * as Crypto from 'expo-crypto'
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
-import {datetime} from '@/core/lib/datetime'
-
 import type {FeedItem, FeedItemMetadata} from '../types'
+
+import {datetime} from '@/core/lib/datetime'
 
 /**
  * TourState

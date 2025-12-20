@@ -41,7 +41,6 @@ export const notificationModals: StackNavigationRoutes<
     options: {
       headerShown: true,
       headerTitle: 'Enable Notifications',
-      presentation: 'modal',
     },
   },
 }

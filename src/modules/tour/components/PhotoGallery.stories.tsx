@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
 import {PhotoGallery} from './PhotoGallery'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {useState} from 'react'
 
 const meta = {

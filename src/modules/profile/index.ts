@@ -2,7 +2,7 @@ import {ModuleSlug} from '../slugs'
 import type {ModuleConfig} from '../types'
 import {profileModals, profileStacks, profileTabs} from './screenConfig'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 /**
  * Profile module configuration.

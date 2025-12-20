@@ -11,7 +11,9 @@ describe('KNOWN_MUSEUMS', () => {
     })
 
     it('should contain museum objects', () => {
-      expect(KNOWN_MUSEUMS.every(museum => typeof museum === 'object')).toBe(true)
+      expect(KNOWN_MUSEUMS.every(museum => typeof museum === 'object')).toBe(
+        true,
+      )
     })
   })
 
@@ -145,17 +147,23 @@ describe('KNOWN_MUSEUMS', () => {
     })
 
     it('should include museums in Amsterdam', () => {
-      const amsterdamMuseums = KNOWN_MUSEUMS.filter(m => m.address.includes('Amsterdam'))
+      const amsterdamMuseums = KNOWN_MUSEUMS.filter(m =>
+        m.address.includes('Amsterdam'),
+      )
       expect(amsterdamMuseums.length).toBeGreaterThan(5)
     })
 
     it('should include museums in Den Haag', () => {
-      const denHaagMuseums = KNOWN_MUSEUMS.filter(m => m.address.includes('Den Haag'))
+      const denHaagMuseums = KNOWN_MUSEUMS.filter(m =>
+        m.address.includes('Den Haag'),
+      )
       expect(denHaagMuseums.length).toBeGreaterThan(3)
     })
 
     it('should include museums in Rotterdam', () => {
-      const rotterdamMuseums = KNOWN_MUSEUMS.filter(m => m.address.includes('Rotterdam'))
+      const rotterdamMuseums = KNOWN_MUSEUMS.filter(m =>
+        m.address.includes('Rotterdam'),
+      )
       expect(rotterdamMuseums.length).toBeGreaterThan(0)
     })
   })

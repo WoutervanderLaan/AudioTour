@@ -5,7 +5,6 @@ import type {MediaSourceType} from './services/cameraService'
  * Route identifiers for tour stack screens
  */
 export enum TourRouteName {
-  home = 'TourHome',
   feed = 'TourFeed',
   objectDetail = 'TourObjectDetail',
 }
@@ -15,10 +14,6 @@ export enum TourRouteName {
  * Parameter definitions for tour stack screens
  */
 export type TourStackParams = {
-  /**
-   * Tour home screen - landing page for starting tours
-   */
-  [TourRouteName.home]: undefined
   /**
    * Tour feed screen - main tour interface with feed items
    */
@@ -86,7 +81,7 @@ export type TourModalParams = {
  * Route identifiers for tour tab screens (if any)
  */
 export enum TourTabName {
-  tour = 'Tour',
+  home = 'Tour',
 }
 
 /**
@@ -97,5 +92,5 @@ export type TourTabParams = {
   /**
    * Tour tab - main entry point for tours
    */
-  [TourTabName.tour]: undefined
+  [TourTabName.home]: undefined
 }
