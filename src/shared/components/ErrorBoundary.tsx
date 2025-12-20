@@ -1,7 +1,6 @@
 import React, {Component, type ErrorInfo, type ReactNode} from 'react'
 
 import {Column} from './ui/layout/Column'
-import {Screen} from './ui/screen'
 import {Text} from './ui/typography'
 
 import {logger} from '@/core/lib/logger/logger'
@@ -122,39 +121,39 @@ export class ErrorBoundary extends Component<
       }
 
       return (
-        <Screen.Static>
-          <Column
-            center
-            padding="md"
-            gap="md">
-            <Text.Title align="center">Something went wrong</Text.Title>
-            <Text.Paragraph align="center">
-              We encountered an unexpected error. Please try restarting the app.
-            </Text.Paragraph>
-            {!!__DEV__ && !!this.state.error && (
-              <Column
-                padding="lg"
-                gap="sm">
-                <Text.Label
-                  color="warning"
-                  fontFamily="bold">
-                  {this.state.error.message}
-                </Text.Label>
-                {!!this.state.error.stack && (
-                  <Text.Paragraph
-                    numberOfLines={10}
-                    variant="extraSmall">
-                    {this.state.error.stack}
-                  </Text.Paragraph>
-                )}
-              </Column>
-            )}
-            <Button
-              label="Try Again"
-              onPress={this.handleReset}
-            />
-          </Column>
-        </Screen.Static>
+        <Column
+          paddingV="lg"
+          flex={1}
+          center
+          paddingH="md"
+          gap="md">
+          <Text.Title align="center">Something went wrong</Text.Title>
+          <Text.Paragraph align="center">
+            We encountered an unexpected error. Please try restarting the app.
+          </Text.Paragraph>
+          {!!__DEV__ && !!this.state.error && (
+            <Column
+              padding="lg"
+              gap="sm">
+              <Text.Label
+                color="warning"
+                fontFamily="bold">
+                {this.state.error.message}
+              </Text.Label>
+              {!!this.state.error.stack && (
+                <Text.Paragraph
+                  numberOfLines={10}
+                  variant="extraSmall">
+                  {this.state.error.stack}
+                </Text.Paragraph>
+              )}
+            </Column>
+          )}
+          <Button
+            label="Try Again"
+            onPress={this.handleReset}
+          />
+        </Column>
       )
     }
 

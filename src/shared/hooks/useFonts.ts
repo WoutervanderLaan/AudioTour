@@ -62,9 +62,10 @@ export const useFonts = (): UseFontsResult => {
     const loadFonts = async (): Promise<void> => {
       try {
         await Font.loadAsync(fonts)
-        setFontsLoaded(true)
       } catch (error) {
         setFontError(error as Error)
+      } finally {
+        setFontsLoaded(true)
       }
     }
 
