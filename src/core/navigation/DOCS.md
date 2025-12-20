@@ -7,7 +7,6 @@ Navigation infrastructure and module registry system.
 - **RootNavigator.tsx** - Root navigation component
 - **ModuleRegistry.ts** - Dynamic module registration system with two-phase dependency resolution
 - **types.ts** - Navigation type definitions
-- **linking.ts** - Deep linking configuration
 - **Tabs.tsx** - Bottom tab navigation component
 - **BlurBackground.tsx** - Blur overlay component for navigation stacks
 - **ProfileHeaderButton.tsx** - Profile header button component

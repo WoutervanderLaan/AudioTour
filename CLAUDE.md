@@ -85,8 +85,9 @@ src/
 
 ### Import Rules (Enforced by ESLint)
 
-- **app/** can import from: shared, module, store, themes
-- **module/** can import from: shared, store only
+- **app/** can import from: shared, modules, store, themes
+- **core/** can import from: shared only
+- **modules/** can import from: shared, store only
 - **shared/** can import from: themes only
 - **store/** can import from: shared only
 - Use absolute imports with `@/*` alias (never use `../` parent imports)
