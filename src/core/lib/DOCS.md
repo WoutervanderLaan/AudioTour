@@ -4,7 +4,8 @@ Shared utility functions and helper libraries.
 
 ## Files
 
-- **logger.ts** - Logging utility for debugging and error tracking
+- **datetime.ts** - Date and time utilities using dayjs for consistent date/time handling across the application
+- **logger/** - Logging utility for debugging and error tracking (see logger/DOCS.md for details)
 
 ## Purpose
 
