@@ -17,11 +17,13 @@ import type {ModuleConfig} from '@/modules/types'
  */
 class ModuleRegistryManager {
   private modules: ModuleRegistry = {}
+  private pendingModules: ModuleConfig[] = []
   private initialized = false
 
   /**
    * Registers a module with the registry.
-   * Checks for dependencies and calls the module's onRegister hook.
+   * Modules are collected first and dependencies are resolved later
+   * via resolveDependencies() to ensure registration order doesn't matter.
    *
    * @param config - The module configuration to register
    */
@@ -32,27 +34,68 @@ class ModuleRegistryManager {
         return
       }
 
-      if (config.dependencies) {
-        const missingDeps = config.dependencies.filter(
-          dep => !this.modules[dep]?.enabled,
-        )
-
-        if (missingDeps.length > 0) {
-          logger.warn(
-            `Module ${config.name} has missing dependencies:`,
-            missingDeps,
-          )
-          return
-        }
+      // Check for duplicate registration
+      if (this.pendingModules.some(m => m.name === config.name)) {
+        logger.warn(`Module ${config.name} is already registered`)
+        return
       }
 
-      this.modules[config.name] = config
-      config.onRegister?.()
-
-      logger.success(`Registered module: ${config.name}`)
+      // Add to pending modules (phase 1: collection)
+      this.pendingModules.push(config)
+      logger.debug(`Collected module: ${config.name}`)
     } catch (error) {
-      logger.error(`Failed to register module ${config.name}:`, error)
+      logger.error(`Failed to collect module ${config.name}:`, error)
     }
+  }
+
+  /**
+   * Resolves dependencies and finalizes module registration.
+   * This method should be called after all modules have been registered
+   * via the register() method. It performs dependency validation and
+   * only includes modules with satisfied dependencies.
+   */
+  resolveDependencies(): void {
+    logger.separator('=', 60)
+    logger.group('Module Dependency Resolution')
+
+    const enabledPending = this.pendingModules.filter(m => m.enabled)
+    const enabledNames = new Set(enabledPending.map(m => m.name))
+
+    logger.info(`Resolving dependencies for ${enabledPending.length} modules`)
+
+    // Phase 2: Validate dependencies and register modules
+    for (const config of enabledPending) {
+      try {
+        if (config.dependencies && config.dependencies.length > 0) {
+          const missingDeps = config.dependencies.filter(
+            dep => !enabledNames.has(dep),
+          )
+
+          if (missingDeps.length > 0) {
+            logger.warn(
+              `Module ${config.name} has missing dependencies: ${missingDeps.join(', ')}`,
+            )
+            continue
+          }
+        }
+
+        // Add to active modules
+        this.modules[config.name] = config
+
+        // Call onRegister hook
+        config.onRegister?.()
+
+        logger.success(`Registered module: ${config.name}`)
+      } catch (error) {
+        logger.error(`Failed to register module ${config.name}:`, error)
+      }
+    }
+
+    logger.groupEnd()
+    logger.separator('=', 60)
+
+    // Clear pending modules after resolution
+    this.pendingModules = []
   }
 
   /**
