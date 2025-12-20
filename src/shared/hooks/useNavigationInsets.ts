@@ -7,7 +7,8 @@ import {useBottomTabBarHeight} from './useBottomTabBarHeight'
 
 /**
  * NavigationInset
- * TODO: describe what this type represents.
+ * Specifies which navigation elements (header, tab bar, or both) should be included
+ * in the inset calculations. Use this to selectively add padding for visible navigation elements.
  */
 export type NavigationInset = ['header'] | ['tab'] | ['header', 'tab']
 

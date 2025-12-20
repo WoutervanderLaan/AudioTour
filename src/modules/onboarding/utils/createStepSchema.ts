@@ -7,8 +7,8 @@ import {OnboardingStepType} from '../types'
  * createStepSchema
  * Creates a Zod schema for the current step based on its configuration
  *
- * @param {number} stepIndex - Index of the current step
- * @returns {z.ZodObject} Zod schema for the step
+ * @param stepIndex - Index of the current step
+ * @returns Zod schema for the step
  */
 export const createStepSchema = (
   stepIndex: number,
