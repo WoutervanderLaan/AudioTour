@@ -76,10 +76,10 @@ export const App = (): React.JSX.Element => {
   }
 
   return (
-    <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <KeyboardProvider>
+<ErrorBoundary>
             <ToastProvider>
               <BannerProvider>
                 <Init />
@@ -90,10 +90,10 @@ export const App = (): React.JSX.Element => {
                 />
               </BannerProvider>
             </ToastProvider>
+</ErrorBoundary>
           </KeyboardProvider>
         </SafeAreaProvider>
       </QueryClientProvider>
-    </ErrorBoundary>
   )
 }
 
