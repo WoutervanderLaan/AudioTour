@@ -2,6 +2,8 @@ import * as Crypto from 'expo-crypto'
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
+import {datetime} from '@/core/lib/datetime'
+
 import type {FeedItem, FeedItemMetadata} from '../types'
 
 /**
@@ -52,7 +54,7 @@ export const useTourStore = create<TourState>()(
           photos,
           metadata,
           status: 'uploading',
-          createdAt: Date.now(),
+          createdAt: datetime.timestamp(),
         })
       })
       return id
