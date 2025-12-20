@@ -56,12 +56,9 @@ describe('createStepSchema', () => {
     it('should provide error for invalid enum value', () => {
       const schema = createStepSchema(0)
 
-      try {
+      expect(() => {
         schema.parse({experience_level: 'expert'})
-        fail('Should have thrown validation error')
-      } catch (error) {
-        expect(error).toBeInstanceOf(z.ZodError)
-      }
+      }).toThrow(z.ZodError)
     })
 
     it('should provide error for missing required field', () => {

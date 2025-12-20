@@ -1,18 +1,15 @@
 /* eslint-disable no-console */
 import {logger, LogLevel} from './logger'
 
-// Mock console methods
-const originalConsole = {...console}
-
 describe('logger', () => {
   beforeEach(() => {
-    // Mock all console methods
-    console.log = jest.fn()
-    console.warn = jest.fn()
-    console.error = jest.fn()
-    console.group = jest.fn()
-    console.groupCollapsed = jest.fn()
-    console.groupEnd = jest.fn()
+    // Mock all console methods using jest.spyOn for automatic cleanup
+    jest.spyOn(console, 'log').mockImplementation(jest.fn())
+    jest.spyOn(console, 'warn').mockImplementation(jest.fn())
+    jest.spyOn(console, 'error').mockImplementation(jest.fn())
+    jest.spyOn(console, 'group').mockImplementation(jest.fn())
+    jest.spyOn(console, 'groupCollapsed').mockImplementation(jest.fn())
+    jest.spyOn(console, 'groupEnd').mockImplementation(jest.fn())
 
     // Reset logger config to default (enabled in dev)
     logger.configure({
@@ -23,17 +20,8 @@ describe('logger', () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
-  })
-
-  afterAll(() => {
-    // Restore original console
-    console.log = originalConsole.log
-    console.warn = originalConsole.warn
-    console.error = originalConsole.error
-    console.group = originalConsole.group
-    console.groupCollapsed = originalConsole.groupCollapsed
-    console.groupEnd = originalConsole.groupEnd
+    // Restore all mocks automatically
+    jest.restoreAllMocks()
   })
 
   describe('basic logging', () => {

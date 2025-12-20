@@ -94,6 +94,17 @@ describe('wait', () => {
     expect(Date.now() - start).toBeLessThan(100)
   })
 
+  it('should actually call setTimeout with correct delay', () => {
+    const setTimeoutSpy = jest.spyOn(global, 'setTimeout')
+
+    wait(1000)
+
+    expect(setTimeoutSpy).toHaveBeenCalledTimes(1)
+    expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 1000)
+
+    setTimeoutSpy.mockRestore()
+  })
+
   it('should be chainable with other promises', async () => {
     const result = wait(100)
       .then(() => 'first')
