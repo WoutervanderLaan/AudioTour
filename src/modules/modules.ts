@@ -8,15 +8,21 @@ import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 
 /**
  * Registers all application modules with the module registry.
- * Modules are registered in order, with core modules first, followed by feature modules.
+ * Uses a two-phase registration process:
+ * 1. Collect all modules (order-independent)
+ * 2. Resolve dependencies and finalize registration
  *
  * To disable a module, either comment out its registration or set `enabled: false`
  * in the module's configuration.
  */
 export const registerModules = (): void => {
+  // Phase 1: Collect all modules (order doesn't matter)
   moduleRegistry.register(authModule)
   moduleRegistry.register(notificationsModule)
   moduleRegistry.register(profileModule)
   moduleRegistry.register(onboardingModule)
   moduleRegistry.register(tourModule)
+
+  // Phase 2: Resolve dependencies and finalize registration
+  moduleRegistry.resolveDependencies()
 }
