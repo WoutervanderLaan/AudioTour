@@ -56,23 +56,6 @@ export const PhotoGallery = ({
       />
 
       {!!hasMultiplePhotos && (
-        <Row
-          gap="xs"
-          center
-          style={styles.photoIndicators}>
-          {photos.map((photo, index) => (
-            <Box
-              key={photo}
-              style={[
-                styles.indicator,
-                index === activePhotoIndex && styles.activeIndicator,
-              ]}
-            />
-          ))}
-        </Row>
-      )}
-
-      {!!hasMultiplePhotos && (
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -93,6 +76,23 @@ export const PhotoGallery = ({
           ))}
         </ScrollView>
       )}
+
+      {!!hasMultiplePhotos && (
+        <Row
+          gap="xs"
+          paddingTop="md"
+          center>
+          {photos.map((photo, index) => (
+            <Box
+              key={photo}
+              style={[
+                styles.indicator,
+                index === activePhotoIndex && styles.activeIndicator,
+              ]}
+            />
+          ))}
+        </Row>
+      )}
     </Column>
   )
 }
@@ -100,12 +100,6 @@ export const PhotoGallery = ({
 const styles = StyleSheet.create(theme => ({
   mainPhoto: {
     backgroundColor: theme.color.screen.background.default,
-  },
-  photoIndicators: {
-    position: 'absolute',
-    bottom: theme.size.md,
-    left: 0,
-    right: 0,
   },
   indicator: {
     width: 8,
@@ -116,6 +110,7 @@ const styles = StyleSheet.create(theme => ({
   },
   activeIndicator: {
     backgroundColor: theme.color.text.default,
+    opacity: 1,
   },
   thumbnailStrip: {
     paddingHorizontal: theme.size.sm,
