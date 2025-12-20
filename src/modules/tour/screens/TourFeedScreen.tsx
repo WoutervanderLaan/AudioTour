@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react'
 import {FlatList, type ListRenderItem} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
 
 import {useTourInitialization} from '../hooks/useTourInitialization'
 import {TourRouteName} from '../routes.types'
@@ -15,6 +14,7 @@ import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Screen} from '@/shared/components/ui/screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
+import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
 
 /**
  * TourFeedScreen
@@ -28,6 +28,7 @@ export const TourFeedScreen = (): React.JSX.Element => {
   const {navigate} = useNavigation()
   const {isLoading: isLoadingTour} = useTourInitialization()
 
+  const {top, bottom} = useNavigationInsets(['header', 'tab'])
   const feedItems = useFeedItems()
   const feedLoading = useFeedLoading()
 
@@ -69,16 +70,14 @@ export const TourFeedScreen = (): React.JSX.Element => {
   const ItemSeparatorComponent = useCallback(() => <Spacer size="md" />, [])
 
   return (
-    <Screen.Static>
+    <Screen.Static includeNavigationPadding={['tab']}>
       <Box flex={1}>
         <FlatList
           ListEmptyComponent={
             <Box
-              flex={1}
               center
-              paddingH="lg">
+              paddingTop="xxl">
               <Column
-                gap="md"
                 justifyContent="flex-end"
                 center>
                 {isLoadingTour ? (
@@ -94,7 +93,10 @@ export const TourFeedScreen = (): React.JSX.Element => {
           data={feedItems}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
-          contentContainerStyle={styles.listContent}
+          contentContainerStyle={{
+            paddingTop: top,
+            paddingBottom: bottom,
+          }}
           ItemSeparatorComponent={ItemSeparatorComponent}
           removeClippedSubviews={true}
           maxToRenderPerBatch={10}
@@ -112,10 +114,3 @@ export const TourFeedScreen = (): React.JSX.Element => {
     </Screen.Static>
   )
 }
-
-const styles = StyleSheet.create(theme => ({
-  listContent: {
-    padding: theme.size.md,
-    flex: 1,
-  },
-}))

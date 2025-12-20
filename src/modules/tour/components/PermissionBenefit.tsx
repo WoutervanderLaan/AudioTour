@@ -44,23 +44,17 @@ export const PermissionBenefit = ({
       paddingV="md">
       <Row
         gap="sm"
-        alignItems="flex-start">
+        stretch
+        wrap="wrap"
+        centerX>
         <MaterialIcons
           name={icon}
           size={24}
           color={styles.benefitIcon.color}
         />
-        <Column
-          flex={1}
-          gap="xs">
-          <Text.Label>{title}</Text.Label>
-          <Text.Paragraph
-            variant="small"
-            color="secondary">
-            {description}
-          </Text.Paragraph>
-        </Column>
+        <Text.Label>{title}</Text.Label>
       </Row>
+      <Text.Label color="secondary">{description}</Text.Label>
     </Column>
   )
 }

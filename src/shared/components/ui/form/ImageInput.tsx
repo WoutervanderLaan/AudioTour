@@ -4,7 +4,7 @@ import {Alert} from 'react-native'
 import * as Device from 'expo-device'
 import * as ImagePicker from 'expo-image-picker'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {AddPhoto} from '@/shared/components/features/add-photo/AddPhoto'
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
 import {Row} from '@/shared/components/ui/layout/Row'

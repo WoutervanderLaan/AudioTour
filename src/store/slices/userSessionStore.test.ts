@@ -1,7 +1,7 @@
 import * as Crypto from 'expo-crypto'
 
-import {useUserSessionStore} from './userSessionStore'
 import type {UserProfile} from './userSessionStore'
+import {useUserSessionStore} from './userSessionStore'
 
 // Mock expo-crypto
 jest.mock('expo-crypto', () => ({
@@ -103,7 +103,8 @@ describe('userSessionStore', () => {
 
   describe('regenerateSession', () => {
     it('should generate a new session ID', () => {
-      const {regenerateSession, sessionId: initialSessionId} = useUserSessionStore.getState()
+      const {regenerateSession, sessionId: initialSessionId} =
+        useUserSessionStore.getState()
 
       // Change the mock to return a different UUID
       ;(Crypto.randomUUID as jest.Mock).mockReturnValueOnce('new-uuid-456')

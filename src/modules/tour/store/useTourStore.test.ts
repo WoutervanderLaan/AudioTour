@@ -71,7 +71,9 @@ describe('useTourStore', () => {
     it('should add multiple feed items', () => {
       const {addFeedItem} = useTourStore.getState()
       let mockIdCounter = 0
-      ;(Crypto.randomUUID as jest.Mock).mockImplementation(() => `id-${mockIdCounter++}`)
+      ;(Crypto.randomUUID as jest.Mock).mockImplementation(
+        () => `id-${mockIdCounter++}`,
+      )
 
       addFeedItem(['photo1.jpg'])
       addFeedItem(['photo2.jpg'])
@@ -87,7 +89,9 @@ describe('useTourStore', () => {
     it('should return unique ID for each item', () => {
       const {addFeedItem} = useTourStore.getState()
       let mockIdCounter = 0
-      ;(Crypto.randomUUID as jest.Mock).mockImplementation(() => `id-${mockIdCounter++}`)
+      ;(Crypto.randomUUID as jest.Mock).mockImplementation(
+        () => `id-${mockIdCounter++}`,
+      )
 
       const id1 = addFeedItem(['photo1.jpg'])
       const id2 = addFeedItem(['photo2.jpg'])
@@ -166,7 +170,9 @@ describe('useTourStore', () => {
     it('should not affect other feed items', () => {
       const {addFeedItem, updateFeedItem} = useTourStore.getState()
       let mockIdCounter = 0
-      ;(Crypto.randomUUID as jest.Mock).mockImplementation(() => `id-${mockIdCounter++}`)
+      ;(Crypto.randomUUID as jest.Mock).mockImplementation(
+        () => `id-${mockIdCounter++}`,
+      )
 
       const id1 = addFeedItem(['photo1.jpg'])
       const id2 = addFeedItem(['photo2.jpg'])
@@ -236,7 +242,9 @@ describe('useTourStore', () => {
     it('should return correct item from multiple items', () => {
       const {addFeedItem, getFeedItem} = useTourStore.getState()
       let mockIdCounter = 0
-      ;(Crypto.randomUUID as jest.Mock).mockImplementation(() => `id-${mockIdCounter++}`)
+      ;(Crypto.randomUUID as jest.Mock).mockImplementation(
+        () => `id-${mockIdCounter++}`,
+      )
 
       addFeedItem(['photo1.jpg'])
       const id2 = addFeedItem(['photo2.jpg'])
@@ -309,7 +317,9 @@ describe('useTourStore', () => {
     it('should clear all feed items', () => {
       const {addFeedItem, reset} = useTourStore.getState()
       let mockIdCounter = 0
-      ;(Crypto.randomUUID as jest.Mock).mockImplementation(() => `id-${mockIdCounter++}`)
+      ;(Crypto.randomUUID as jest.Mock).mockImplementation(
+        () => `id-${mockIdCounter++}`,
+      )
 
       addFeedItem(['photo1.jpg'])
       addFeedItem(['photo2.jpg'])
@@ -338,7 +348,9 @@ describe('useTourStore', () => {
     it('should handle large number of feed items', () => {
       const {addFeedItem} = useTourStore.getState()
       let mockIdCounter = 0
-      ;(Crypto.randomUUID as jest.Mock).mockImplementation(() => `id-${mockIdCounter++}`)
+      ;(Crypto.randomUUID as jest.Mock).mockImplementation(
+        () => `id-${mockIdCounter++}`,
+      )
 
       for (let i = 0; i < 50; i++) {
         addFeedItem([`photo${i}.jpg`])

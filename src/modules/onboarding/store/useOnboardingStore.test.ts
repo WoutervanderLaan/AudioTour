@@ -62,10 +62,14 @@ describe('useOnboardingStore', () => {
       const {setAnswer} = useOnboardingStore.getState()
 
       setAnswer('question1', 'first-answer')
-      expect(useOnboardingStore.getState().answers.question1).toBe('first-answer')
+      expect(useOnboardingStore.getState().answers.question1).toBe(
+        'first-answer',
+      )
 
       setAnswer('question1', 'second-answer')
-      expect(useOnboardingStore.getState().answers.question1).toBe('second-answer')
+      expect(useOnboardingStore.getState().answers.question1).toBe(
+        'second-answer',
+      )
     })
 
     it('should not affect other answers when updating one', () => {
@@ -208,7 +212,8 @@ describe('useOnboardingStore', () => {
 
   describe('reset', () => {
     it('should reset to initial state', () => {
-      const {setAnswer, completeOnboarding, dismissBanner, reset} = useOnboardingStore.getState()
+      const {setAnswer, completeOnboarding, dismissBanner, reset} =
+        useOnboardingStore.getState()
 
       setAnswer('question1', 'answer1')
       setAnswer('question2', true)
@@ -321,7 +326,8 @@ describe('useOnboardingStore', () => {
     })
 
     it('should handle reset and complete again', () => {
-      const {setAnswer, completeOnboarding, reset} = useOnboardingStore.getState()
+      const {setAnswer, completeOnboarding, reset} =
+        useOnboardingStore.getState()
 
       setAnswer('q1', 'a1')
       completeOnboarding()

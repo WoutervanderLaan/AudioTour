@@ -59,11 +59,11 @@ export const TourCameraPermissionScreen = ({
   }
 
   return (
-    <Screen.Static>
+    <Screen.Scrollable>
       <Column
         flex={1}
-        padding="lg"
-        paddingTop="xl"
+        paddingH="md"
+        paddingBottom="xl"
         gap="lg">
         <PermissionContent content={content} />
 
@@ -75,6 +75,6 @@ export const TourCameraPermissionScreen = ({
           onOpenSettings={openSettings}
         />
       </Column>
-    </Screen.Static>
+    </Screen.Scrollable>
   )
 }

@@ -8,7 +8,7 @@ import type {RadioOption} from './RadioGroup'
 
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {Column} from '../layout/Column'
 
 const meta = {

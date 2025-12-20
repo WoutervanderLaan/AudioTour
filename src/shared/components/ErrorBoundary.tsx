@@ -4,7 +4,7 @@ import {Column} from './ui/layout/Column'
 import {Screen} from './ui/screen'
 import {Text} from './ui/typography'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {Button} from '@/shared/components/ui/pressable/Button'
 
 /**

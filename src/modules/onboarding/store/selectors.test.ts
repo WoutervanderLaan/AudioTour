@@ -1,12 +1,12 @@
-import {renderHook, act} from '@testing-library/react'
+import {act, renderHook} from '@testing-library/react-native'
 
-import {useOnboardingStore} from './useOnboardingStore'
 import {
+  useOnboardingActions,
   useOnboardingAnswers,
   useOnboardingCompleted,
   useOnboardingDismissed,
-  useOnboardingActions,
 } from './selectors'
+import {useOnboardingStore} from './useOnboardingStore'
 
 describe('onboarding selectors', () => {
   beforeEach(() => {
@@ -220,7 +220,7 @@ describe('onboarding selectors', () => {
 
       const firstReference = result.current
 
-      rerender()
+      rerender(null)
 
       expect(result.current).toBe(firstReference)
     })
@@ -229,8 +229,12 @@ describe('onboarding selectors', () => {
   describe('integration tests', () => {
     it('should work together across selectors', () => {
       const {result: answersResult} = renderHook(() => useOnboardingAnswers())
-      const {result: completedResult} = renderHook(() => useOnboardingCompleted())
-      const {result: dismissedResult} = renderHook(() => useOnboardingDismissed())
+      const {result: completedResult} = renderHook(() =>
+        useOnboardingCompleted(),
+      )
+      const {result: dismissedResult} = renderHook(() =>
+        useOnboardingDismissed(),
+      )
       const {result: actionsResult} = renderHook(() => useOnboardingActions())
 
       // Initial state
@@ -274,8 +278,12 @@ describe('onboarding selectors', () => {
     })
 
     it('should handle dismiss then complete flow', () => {
-      const {result: completedResult} = renderHook(() => useOnboardingCompleted())
-      const {result: dismissedResult} = renderHook(() => useOnboardingDismissed())
+      const {result: completedResult} = renderHook(() =>
+        useOnboardingCompleted(),
+      )
+      const {result: dismissedResult} = renderHook(() =>
+        useOnboardingDismissed(),
+      )
       const {result: actionsResult} = renderHook(() => useOnboardingActions())
 
       // Dismiss banner

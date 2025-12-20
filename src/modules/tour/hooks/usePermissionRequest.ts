@@ -6,7 +6,7 @@ import {
   type PermissionStatus,
 } from '../services/cameraService'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**

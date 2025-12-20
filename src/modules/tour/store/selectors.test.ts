@@ -1,18 +1,17 @@
-import {renderHook, act} from '@testing-library/react'
+import {act, renderHook} from '@testing-library/react-native'
 import * as Crypto from 'expo-crypto'
 
 import type {FeedItemMetadata} from '../types'
-
-import {useTourStore} from './useTourStore'
 import {
+  useFeedItem,
+  useFeedItemCount,
   useFeedItems,
   useFeedLoading,
-  useFeedItem,
   useHasActiveTour,
-  useFeedItemCount,
   useHasPendingItems,
   useTourActions,
 } from './selectors'
+import {useTourStore} from './useTourStore'
 
 // Mock expo-crypto
 jest.mock('expo-crypto', () => ({
@@ -98,8 +97,10 @@ describe('tour selectors', () => {
       expect(result.current).toBeUndefined()
     })
 
-    it('should return feed item by ID', () => {
-      const id = act(() => useTourStore.getState().addFeedItem(['photo.jpg']))
+    it('should return feed item by ID', async () => {
+      const id = await act(() =>
+        useTourStore.getState().addFeedItem(['photo.jpg']),
+      )
 
       const {result} = renderHook(() => useFeedItem(id))
 
@@ -108,8 +109,10 @@ describe('tour selectors', () => {
       expect(result.current?.photos).toEqual(['photo.jpg'])
     })
 
-    it('should update when item changes', () => {
-      const id = act(() => useTourStore.getState().addFeedItem(['photo.jpg']))
+    it('should update when item changes', async () => {
+      const id = await act(() =>
+        useTourStore.getState().addFeedItem(['photo.jpg']),
+      )
 
       const {result} = renderHook(() => useFeedItem(id))
       expect(result.current?.status).toBe('uploading')
@@ -120,8 +123,10 @@ describe('tour selectors', () => {
       expect(result.current?.status).toBe('ready')
     })
 
-    it('should return undefined after item is removed via reset', () => {
-      const id = act(() => useTourStore.getState().addFeedItem(['photo.jpg']))
+    it('should return undefined after item is removed via reset', async () => {
+      const id = await act(() =>
+        useTourStore.getState().addFeedItem(['photo.jpg']),
+      )
 
       const {result} = renderHook(() => useFeedItem(id))
       expect(result.current).toBeDefined()
@@ -174,7 +179,9 @@ describe('tour selectors', () => {
 
     it('should return correct count', () => {
       let mockIdCounter = 0
-      ;(Crypto.randomUUID as jest.Mock).mockImplementation(() => `id-${mockIdCounter++}`)
+      ;(Crypto.randomUUID as jest.Mock).mockImplementation(
+        () => `id-${mockIdCounter++}`,
+      )
 
       const {result} = renderHook(() => useFeedItemCount())
 
@@ -222,8 +229,10 @@ describe('tour selectors', () => {
       expect(result.current).toBe(true)
     })
 
-    it('should return true when item is processing', () => {
-      const id = act(() => useTourStore.getState().addFeedItem(['photo.jpg']))
+    it('should return true when item is processing', async () => {
+      const id = await act(() =>
+        useTourStore.getState().addFeedItem(['photo.jpg']),
+      )
 
       act(() => {
         useTourStore.getState().updateFeedItem(id, {status: 'processing'})
@@ -234,8 +243,10 @@ describe('tour selectors', () => {
       expect(result.current).toBe(true)
     })
 
-    it('should return false when all items are ready', () => {
-      const id = act(() => useTourStore.getState().addFeedItem(['photo.jpg']))
+    it('should return false when all items are ready', async () => {
+      const id = await act(() =>
+        useTourStore.getState().addFeedItem(['photo.jpg']),
+      )
 
       act(() => {
         useTourStore.getState().updateFeedItem(id, {status: 'ready'})
@@ -246,8 +257,10 @@ describe('tour selectors', () => {
       expect(result.current).toBe(false)
     })
 
-    it('should return false when all items are errored', () => {
-      const id = act(() => useTourStore.getState().addFeedItem(['photo.jpg']))
+    it('should return false when all items are errored', async () => {
+      const id = await act(() =>
+        useTourStore.getState().addFeedItem(['photo.jpg']),
+      )
 
       act(() => {
         useTourStore.getState().updateFeedItem(id, {status: 'error'})
@@ -258,12 +271,18 @@ describe('tour selectors', () => {
       expect(result.current).toBe(false)
     })
 
-    it('should return true when at least one item is pending', () => {
+    it('should return true when at least one item is pending', async () => {
       let mockIdCounter = 0
-      ;(Crypto.randomUUID as jest.Mock).mockImplementation(() => `id-${mockIdCounter++}`)
+      ;(Crypto.randomUUID as jest.Mock).mockImplementation(
+        () => `id-${mockIdCounter++}`,
+      )
 
-      const id1 = act(() => useTourStore.getState().addFeedItem(['photo1.jpg']))
-      const id2 = act(() => useTourStore.getState().addFeedItem(['photo2.jpg']))
+      const id1 = await act(() =>
+        useTourStore.getState().addFeedItem(['photo1.jpg']),
+      )
+      const id2 = await act(() =>
+        useTourStore.getState().addFeedItem(['photo2.jpg']),
+      )
 
       act(() => {
         useTourStore.getState().updateFeedItem(id1, {status: 'ready'})
@@ -286,10 +305,10 @@ describe('tour selectors', () => {
       expect(result.current).toHaveProperty('reset')
     })
 
-    it('should add feed item via action', () => {
+    it('should add feed item via action', async () => {
       const {result} = renderHook(() => useTourActions())
 
-      const id = act(() => result.current.addFeedItem(['photo.jpg']))
+      const id = await act(() => result.current.addFeedItem(['photo.jpg']))
 
       const state = useTourStore.getState()
       expect(state.feedItems).toHaveLength(1)
@@ -311,13 +330,16 @@ describe('tour selectors', () => {
       expect(state.feedItems[0].metadata).toEqual(metadata)
     })
 
-    it('should update feed item via action', () => {
+    it('should update feed item via action', async () => {
       const {result} = renderHook(() => useTourActions())
 
-      const id = act(() => result.current.addFeedItem(['photo.jpg']))
+      const id = await act(() => result.current.addFeedItem(['photo.jpg']))
 
       act(() => {
-        result.current.updateFeedItem(id, {status: 'ready', objectId: 'obj-123'})
+        result.current.updateFeedItem(id, {
+          status: 'ready',
+          objectId: 'obj-123',
+        })
       })
 
       const state = useTourStore.getState()
@@ -357,14 +379,14 @@ describe('tour selectors', () => {
 
       const firstReference = result.current
 
-      rerender()
+      rerender(null)
 
       expect(result.current).toBe(firstReference)
     })
   })
 
   describe('integration tests', () => {
-    it('should work together across selectors', () => {
+    it('should work together across selectors', async () => {
       const {result: itemsResult} = renderHook(() => useFeedItems())
       const {result: loadingResult} = renderHook(() => useFeedLoading())
       const {result: hasActiveResult} = renderHook(() => useHasActiveTour())
@@ -380,7 +402,9 @@ describe('tour selectors', () => {
       expect(hasPendingResult.current).toBe(false)
 
       // Add item
-      const id = act(() => actionsResult.current.addFeedItem(['photo.jpg']))
+      const id = await act(() =>
+        actionsResult.current.addFeedItem(['photo.jpg']),
+      )
 
       expect(itemsResult.current).toHaveLength(1)
       expect(hasActiveResult.current).toBe(true)

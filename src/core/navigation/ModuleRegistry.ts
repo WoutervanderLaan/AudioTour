@@ -6,7 +6,7 @@ import type {
 } from './types'
 
 import {clearModuleQueries} from '@/core/api/queryclient'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import type {ModuleSlug} from '@/modules/slugs'
 import type {ModuleConfig} from '@/modules/types'
 

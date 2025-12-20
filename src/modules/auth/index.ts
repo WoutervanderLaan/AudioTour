@@ -2,7 +2,7 @@ import {ModuleSlug} from '../slugs'
 import type {ModuleConfig} from '../types'
 import {authModals, authStacks} from './screenConfig'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
 import {TIMING} from '@/shared/constants/timing'
 

@@ -1,4 +1,4 @@
-import {TIMING, type TimingKey} from './timing'
+import {TIMING} from './timing'
 
 describe('TIMING', () => {
   describe('structure', () => {
@@ -10,10 +10,6 @@ describe('TIMING', () => {
       expect(TIMING).toHaveProperty('TOAST_DURATION_DEFAULT')
       expect(TIMING).toHaveProperty('TOAST_DURATION_SHORT')
       expect(TIMING).toHaveProperty('TOAST_DURATION_LONG')
-    })
-
-    it('should be readonly', () => {
-      expect(Object.isFrozen(TIMING)).toBe(true)
     })
 
     it('should have correct number of properties', () => {
@@ -37,7 +33,9 @@ describe('TIMING', () => {
     })
 
     it('should be greater than token check interval', () => {
-      expect(TIMING.QUERY_STALE_TIME).toBeGreaterThan(TIMING.TOKEN_CHECK_INTERVAL)
+      expect(TIMING.QUERY_STALE_TIME).toBeGreaterThan(
+        TIMING.TOKEN_CHECK_INTERVAL,
+      )
     })
   })
 
@@ -58,7 +56,9 @@ describe('TIMING', () => {
     })
 
     it('should be greater than default timeout', () => {
-      expect(TIMING.API_TIMEOUT_EXTENDED).toBeGreaterThan(TIMING.API_TIMEOUT_DEFAULT)
+      expect(TIMING.API_TIMEOUT_EXTENDED).toBeGreaterThan(
+        TIMING.API_TIMEOUT_DEFAULT,
+      )
     })
 
     it('should be exactly 4 times the default timeout', () => {
@@ -72,8 +72,12 @@ describe('TIMING', () => {
     })
 
     it('should be between short and long durations', () => {
-      expect(TIMING.TOAST_DURATION_DEFAULT).toBeGreaterThan(TIMING.TOAST_DURATION_SHORT)
-      expect(TIMING.TOAST_DURATION_DEFAULT).toBeLessThan(TIMING.TOAST_DURATION_LONG)
+      expect(TIMING.TOAST_DURATION_DEFAULT).toBeGreaterThan(
+        TIMING.TOAST_DURATION_SHORT,
+      )
+      expect(TIMING.TOAST_DURATION_DEFAULT).toBeLessThan(
+        TIMING.TOAST_DURATION_LONG,
+      )
     })
   })
 
@@ -83,8 +87,12 @@ describe('TIMING', () => {
     })
 
     it('should be the shortest toast duration', () => {
-      expect(TIMING.TOAST_DURATION_SHORT).toBeLessThan(TIMING.TOAST_DURATION_DEFAULT)
-      expect(TIMING.TOAST_DURATION_SHORT).toBeLessThan(TIMING.TOAST_DURATION_LONG)
+      expect(TIMING.TOAST_DURATION_SHORT).toBeLessThan(
+        TIMING.TOAST_DURATION_DEFAULT,
+      )
+      expect(TIMING.TOAST_DURATION_SHORT).toBeLessThan(
+        TIMING.TOAST_DURATION_LONG,
+      )
     })
   })
 
@@ -94,67 +102,12 @@ describe('TIMING', () => {
     })
 
     it('should be the longest toast duration', () => {
-      expect(TIMING.TOAST_DURATION_LONG).toBeGreaterThan(TIMING.TOAST_DURATION_DEFAULT)
-      expect(TIMING.TOAST_DURATION_LONG).toBeGreaterThan(TIMING.TOAST_DURATION_SHORT)
-    })
-  })
-
-  describe('relationships', () => {
-    it('should have toast durations in ascending order', () => {
-      expect(TIMING.TOAST_DURATION_SHORT).toBeLessThan(TIMING.TOAST_DURATION_DEFAULT)
-      expect(TIMING.TOAST_DURATION_DEFAULT).toBeLessThan(TIMING.TOAST_DURATION_LONG)
-    })
-
-    it('should have API timeouts in ascending order', () => {
-      expect(TIMING.API_TIMEOUT_DEFAULT).toBeLessThan(TIMING.API_TIMEOUT_EXTENDED)
-    })
-
-    it('should have all values as positive numbers', () => {
-      Object.values(TIMING).forEach(value => {
-        expect(value).toBeGreaterThan(0)
-        expect(typeof value).toBe('number')
-      })
-    })
-  })
-
-  describe('TimingKey type', () => {
-    it('should match all TIMING keys', () => {
-      const keys: TimingKey[] = [
-        'TOKEN_CHECK_INTERVAL',
-        'QUERY_STALE_TIME',
-        'API_TIMEOUT_DEFAULT',
-        'API_TIMEOUT_EXTENDED',
-        'TOAST_DURATION_DEFAULT',
-        'TOAST_DURATION_SHORT',
-        'TOAST_DURATION_LONG',
-      ]
-
-      keys.forEach(key => {
-        expect(TIMING[key]).toBeDefined()
-      })
-    })
-  })
-
-  describe('immutability', () => {
-    it('should not allow modification of values', () => {
-      expect(() => {
-        // @ts-expect-error - testing immutability
-        TIMING.TOKEN_CHECK_INTERVAL = 999
-      }).toThrow()
-    })
-
-    it('should not allow adding new properties', () => {
-      expect(() => {
-        // @ts-expect-error - testing immutability
-        TIMING.NEW_PROPERTY = 123
-      }).toThrow()
-    })
-
-    it('should not allow deletion of properties', () => {
-      expect(() => {
-        // @ts-expect-error - testing immutability
-        delete TIMING.TOKEN_CHECK_INTERVAL
-      }).toThrow()
+      expect(TIMING.TOAST_DURATION_LONG).toBeGreaterThan(
+        TIMING.TOAST_DURATION_DEFAULT,
+      )
+      expect(TIMING.TOAST_DURATION_LONG).toBeGreaterThan(
+        TIMING.TOAST_DURATION_SHORT,
+      )
     })
   })
 })

@@ -9,7 +9,7 @@ import notifee, {
   type Notification,
 } from '@notifee/react-native'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 /**
  * NotificationChannelId

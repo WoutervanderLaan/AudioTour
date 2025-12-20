@@ -7,6 +7,7 @@ import {TAB_BAR_ICON_SIZE} from './constants'
 import {moduleRegistry} from './ModuleRegistry'
 import {type RootStackParams} from './types'
 
+import {TourTabName} from '@/modules/tour/routes.types'
 import {
   getTabNavigatorOptions,
   useNavigationTheme,
@@ -46,7 +47,7 @@ export const Tabs = (): React.JSX.Element => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Tour"
+      initialRouteName={TourTabName.home}
       screenOptions={getTabNavigatorOptions(navTheme)}>
       {bottomTabs}
     </Tab.Navigator>

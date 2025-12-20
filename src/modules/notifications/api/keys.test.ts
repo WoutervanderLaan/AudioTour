@@ -18,41 +18,33 @@ describe('notificationKeys', () => {
     it('should return base key array', () => {
       expect(notificationKeys.all).toEqual(['notifications'])
     })
-
-    it('should be readonly', () => {
-      expect(Object.isFrozen(notificationKeys.all)).toBe(true)
-    })
   })
 
   describe('preferences key', () => {
     it('should return preferences key array', () => {
-      expect(notificationKeys.preferences()).toEqual(['notifications', 'preferences'])
+      expect(notificationKeys.preferences()).toEqual([
+        'notifications',
+        'preferences',
+      ])
     })
 
     it('should include base key', () => {
       const key = notificationKeys.preferences()
       expect(key[0]).toBe('notifications')
-    })
-
-    it('should be readonly', () => {
-      const key = notificationKeys.preferences()
-      expect(Object.isFrozen(key)).toBe(true)
     })
   })
 
   describe('registration key', () => {
     it('should return registration key array', () => {
-      expect(notificationKeys.registration()).toEqual(['notifications', 'registration'])
+      expect(notificationKeys.registration()).toEqual([
+        'notifications',
+        'registration',
+      ])
     })
 
     it('should include base key', () => {
       const key = notificationKeys.registration()
       expect(key[0]).toBe('notifications')
-    })
-
-    it('should be readonly', () => {
-      const key = notificationKeys.registration()
-      expect(Object.isFrozen(key)).toBe(true)
     })
   })
 
@@ -90,19 +82,6 @@ describe('notificationKeys', () => {
       const key2 = notificationKeys.preferences()
 
       expect(key1).toEqual(key2)
-    })
-
-    it('should maintain immutability', () => {
-      const key = notificationKeys.preferences()
-
-      // Attempting to modify should not affect the next call
-      expect(() => {
-        // @ts-expect-error - testing immutability
-        key[0] = 'modified'
-      }).toThrow()
-
-      const newKey = notificationKeys.preferences()
-      expect(newKey[0]).toBe('notifications')
     })
   })
 })

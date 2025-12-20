@@ -22,7 +22,7 @@ export const fonts = {
   'Lora-Bold': Lora_700Bold,
   'PlayfairDisplay-Regular': PlayfairDisplay_400Regular,
   'PlayfairDisplay-SemiBold': PlayfairDisplay_600SemiBold,
-  'PlayfairDisplay-ExtraBold': PlayfairDisplay_800ExtraBold,
+  'PlayfairDisplay-Bold': PlayfairDisplay_800ExtraBold,
   'PlayfairDisplay-Black': PlayfairDisplay_900Black,
 }
 

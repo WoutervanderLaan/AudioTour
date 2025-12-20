@@ -2,7 +2,7 @@ import {Linking} from 'react-native'
 
 import * as ImagePicker from 'expo-image-picker'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 /**
  * MediaSourceType

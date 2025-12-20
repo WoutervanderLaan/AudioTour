@@ -13,7 +13,7 @@ import StorybookUI from '../../.rnstorybook/'
 import {Init} from './init/Init'
 
 import {queryClient} from '@/core/api/queryclient'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 import {RootNavigator} from '@/core/navigation/RootNavigator'
 import {registerModules} from '@/modules/modules'

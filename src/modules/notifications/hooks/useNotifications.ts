@@ -13,7 +13,7 @@ import {
 } from '../services/notificationService'
 import {useNotificationStore} from '../store/useNotificationStore'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**

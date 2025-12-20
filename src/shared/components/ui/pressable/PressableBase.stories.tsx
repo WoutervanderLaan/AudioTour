@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {PressableBase} from './PressableBase'
 
 import {Text} from '@/shared/components/ui/typography'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 const meta = {
   title: 'Pressable/PressableBase',

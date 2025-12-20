@@ -7,7 +7,7 @@ import {useToggleNotificationsMutation} from '../api/mutations'
 import {notificationService} from '../services/notificationService'
 import {useNotificationStore} from '../store/useNotificationStore'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable/Button'

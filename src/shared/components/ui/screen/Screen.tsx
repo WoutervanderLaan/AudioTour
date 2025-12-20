@@ -12,7 +12,10 @@ import {StyleSheet} from 'react-native-unistyles'
 import {StickyBanner} from '@/shared/components/features/banner/StickyBanner'
 import {useBanner} from '@/shared/hooks/useBanner'
 import {useKeyboard} from '@/shared/hooks/useKeyboard'
-import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
+import {
+  type NavigationInset,
+  useNavigationInsets,
+} from '@/shared/hooks/useNavigationInsets'
 
 /**
  * Base props shared by all Screen variants.
@@ -22,6 +25,10 @@ type BaseScreenProps = {
    * Child elements to render within the screen.
    */
   children: ReactNode
+  /**
+   * Optional setting to include or exclude navigation paddings in screen.
+   */
+  includeNavigationPadding?: false | NavigationInset
   /**
    * Optional style to apply to the screen container.
    */
@@ -85,12 +92,17 @@ type ScrollableScreenProps = {
 const Static = ({
   children,
   style,
+  includeNavigationPadding = ['header', 'tab'],
   keyboardAvoiding = false,
   extraPadding = 0,
   animated = true,
 }: StaticScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
-  const {top, bottom} = useNavigationInsets()
+  const {top, bottom} = useNavigationInsets(
+    typeof includeNavigationPadding === 'boolean'
+      ? undefined
+      : includeNavigationPadding,
+  )
   const {banner} = useBanner()
   // Memoize the animated padding to avoid recreating on every render
   const animatedPaddingBottom = useMemo(
@@ -158,13 +170,18 @@ const Scrollable = ({
   style,
   contentContainerStyle,
   keyboardAvoiding = false,
+  includeNavigationPadding = ['header', 'tab'],
   extraPadding = 0,
   animated = true,
   showsVerticalScrollIndicator = false,
   scrollViewProps,
 }: ScrollableScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
-  const {top, bottom} = useNavigationInsets()
+  const {top, bottom} = useNavigationInsets(
+    typeof includeNavigationPadding === 'boolean'
+      ? undefined
+      : includeNavigationPadding,
+  )
   const {banner} = useBanner()
   // Calculate padding based on keyboard avoiding and animation settings
   const paddingBottom = useMemo(() => {

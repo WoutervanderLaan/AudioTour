@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {KNOWN_MUSEUMS, type MuseumLocation} from '@/shared/constants/museums'
 import {
   haversineDistanceMeters,

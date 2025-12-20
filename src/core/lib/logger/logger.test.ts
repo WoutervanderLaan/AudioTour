@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import {logger, LogLevel} from './logger'
+import {logger} from './logger'
+import {LogLevel} from './types'
 
 describe('logger', () => {
   beforeEach(() => {
@@ -28,40 +29,35 @@ describe('logger', () => {
     it('should log debug messages', () => {
       logger.debug('Debug message')
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('[DEBUG]'),
-        expect.stringContaining('Debug message'),
+        expect.stringMatching(/\[DEBUG\].*Debug message/),
       )
     })
 
     it('should log info messages', () => {
       logger.info('Info message')
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('[INFO]'),
-        expect.stringContaining('Info message'),
+        expect.stringMatching(/\[INFO\].*Info message/),
       )
     })
 
     it('should log success messages', () => {
       logger.success('Success message')
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('[SUCCESS]'),
-        expect.stringContaining('Success message'),
+        expect.stringMatching(/\[SUCCESS\].*Success message/),
       )
     })
 
     it('should log warning messages', () => {
       logger.warn('Warning message')
       expect(console.warn).toHaveBeenCalledWith(
-        expect.stringContaining('[WARN]'),
-        expect.stringContaining('Warning message'),
+        expect.stringMatching(/\[WARN\].*Warning message/),
       )
     })
 
     it('should log error messages', () => {
       logger.error('Error message')
       expect(console.error).toHaveBeenCalledWith(
-        expect.stringContaining('[ERROR]'),
-        expect.stringContaining('Error message'),
+        expect.stringMatching(/\[ERROR\].*Error message/),
       )
     })
   })
@@ -75,7 +71,11 @@ describe('logger', () => {
 
     it('should log info with additional args', () => {
       logger.info('Info', 'arg1', 'arg2')
-      expect(console.log).toHaveBeenCalledWith(expect.any(String), 'arg1', 'arg2')
+      expect(console.log).toHaveBeenCalledWith(
+        expect.any(String),
+        'arg1',
+        'arg2',
+      )
     })
 
     it('should log error with error object', () => {
@@ -94,16 +94,13 @@ describe('logger', () => {
       logger.warn('Warn message')
 
       expect(console.log).not.toHaveBeenCalledWith(
-        expect.stringContaining('[DEBUG]'),
-        expect.any(String),
+        expect.stringMatching(/\[DEBUG\].*Debug message/),
       )
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('[INFO]'),
-        expect.any(String),
+        expect.stringMatching(/\[INFO\].*Info message/),
       )
       expect(console.warn).toHaveBeenCalledWith(
-        expect.stringContaining('[WARN]'),
-        expect.any(String),
+        expect.stringMatching(/\[WARN\].*Warn message/),
       )
     })
 
@@ -155,7 +152,7 @@ describe('logger', () => {
 
       const call = (console.log as jest.Mock).mock.calls[0][0]
       // Should not contain ANSI color codes
-      expect(call).not.toContain('\x1b[')
+      expect(call).not.toContain('\x1b')
     })
 
     it('should allow partial configuration updates', () => {
@@ -211,7 +208,9 @@ describe('logger', () => {
     it('should handle empty array', () => {
       logger.table([])
 
-      expect(console.log).toHaveBeenCalledWith(expect.stringContaining('Empty table'))
+      expect(console.log).toHaveBeenCalledWith(
+        expect.stringContaining('Empty table'),
+      )
     })
 
     it('should not log table when disabled', () => {
@@ -306,7 +305,11 @@ describe('logger', () => {
     it('should handle undefined and null in messages', () => {
       logger.info('Test', undefined, null)
 
-      expect(console.log).toHaveBeenCalledWith(expect.any(String), undefined, null)
+      expect(console.log).toHaveBeenCalledWith(
+        expect.any(String),
+        undefined,
+        null,
+      )
     })
 
     it('should handle very long messages', () => {
@@ -315,8 +318,10 @@ describe('logger', () => {
       logger.info(longMessage)
 
       expect(console.log).toHaveBeenCalledWith(
-        expect.stringContaining('[INFO]'),
         expect.stringContaining(longMessage),
+      )
+      expect(console.log).toHaveBeenCalledWith(
+        expect.stringMatching(/\[INFO\].*/),
       )
     })
 

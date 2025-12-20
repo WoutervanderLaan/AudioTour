@@ -33,7 +33,6 @@ export const PermissionContent = ({
 }: PermissionContentProps): React.JSX.Element => {
   return (
     <Column
-      flex={1}
       gap="md"
       centerX>
       <MaterialIcons
@@ -42,7 +41,7 @@ export const PermissionContent = ({
         color={styles.icon.color}
       />
 
-      <Spacer size="md" />
+      <Spacer />
 
       <Text.Title align="center">{content.title}</Text.Title>
 
@@ -51,8 +50,6 @@ export const PermissionContent = ({
         align="center">
         {content.description}
       </Text.Paragraph>
-
-      <Spacer size="lg" />
 
       <Column gap="sm">
         {content.benefits.map(benefit => (

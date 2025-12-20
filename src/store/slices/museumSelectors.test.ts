@@ -1,7 +1,11 @@
-import {renderHook, act} from '@testing-library/react'
+import {act, renderHook} from '@testing-library/react-native'
 
+import {
+  useCurrentMuseumId,
+  useMuseumActions,
+  useMuseumObjects,
+} from './museumSelectors'
 import {useMuseumStore} from './museumStore'
-import {useCurrentMuseumId, useMuseumObjects, useMuseumActions} from './museumSelectors'
 
 import type {ObjectItem} from '@/shared/types/types'
 
@@ -170,7 +174,7 @@ describe('museumSelectors', () => {
 
       const firstReference = result.current
 
-      rerender()
+      rerender(null)
 
       expect(result.current).toBe(firstReference)
     })

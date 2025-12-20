@@ -5,7 +5,7 @@ import {useQueryClient} from '@tanstack/react-query'
 import {useAuthStore} from '../store/useAuthStore'
 
 import {ApiError} from '@/core/api/types'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 import {TIMING} from '@/shared/constants/timing'
 
 /**

@@ -8,7 +8,7 @@ import {TextInputControlled} from './TextInputControlled'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
 import {Column} from '../layout/Column'
-import {logger} from '@/core/lib/logger'
+import {logger} from '@/core/lib/logger/logger'
 
 const meta = {
   title: 'Form/TextInputControlled',
