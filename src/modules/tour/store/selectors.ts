@@ -68,11 +68,12 @@ export const useHasPendingItems = (): boolean =>
  * React hook that returns all tour-related actions for managing tour state.
  * Uses shallow equality to prevent unnecessary re-renders.
  *
- * @returns Object containing addFeedItem, updateFeedItem, setFeedLoading, and reset action functions
+ * @returns Object containing addFeedItem, updateFeedItem, getFeedItem, setFeedLoading, and reset action functions
  */
 export const useTourActions = (): {
   addFeedItem: (photos: string[], metadata?: FeedItemMetadata) => string
   updateFeedItem: (id: string, updates: Partial<FeedItem>) => void
+  getFeedItem: (id: string) => FeedItem | undefined
   setFeedLoading: (loading: boolean) => void
   reset: () => void
 } =>
@@ -80,6 +81,7 @@ export const useTourActions = (): {
     useShallow(state => ({
       addFeedItem: state.addFeedItem,
       updateFeedItem: state.updateFeedItem,
+      getFeedItem: state.getFeedItem,
       setFeedLoading: state.setFeedLoading,
       reset: state.reset,
     })),
