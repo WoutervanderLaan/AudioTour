@@ -8,10 +8,11 @@ import * as Location from 'expo-location'
  */
 export type Coordinates = {
   /**
-   * latitude
+   * The latitude coordinate in decimal degrees (-90 to 90)
    */
-  latitude: number /**
-   * longitude
+  latitude: number
+  /**
+   * The longitude coordinate in decimal degrees (-180 to 180)
    */
   longitude: number
 }
@@ -56,15 +57,18 @@ export function haversineDistanceMeters(
  */
 export type UseUserLocationOptions = {
   /**
-   * shouldWatch
+   * Whether to continuously watch for location updates. When true, the hook will subscribe to location changes.
+   * @default false
    */
   shouldWatch?: boolean
   /**
-   * accuracy
+   * The desired accuracy of location data. Uses expo-location's LocationAccuracy enum.
+   * @default Location.Accuracy.Balanced
    */
   accuracy?: Location.LocationAccuracy
   /**
-   * distanceInterval
+   * Minimum distance in meters that must be moved before a location update is triggered (only applies when shouldWatch is true).
+   * @default 20
    */
   distanceInterval?: number
 }
