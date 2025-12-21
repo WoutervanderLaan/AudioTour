@@ -37,7 +37,7 @@ src/modules/onboarding/
 ├── components/
 │   └── OnboardingBanner.tsx      # Sticky banner component
 ├── config/
-│   └── steps.ts              # Onboarding step configuration
+│   └── steps.ts                  # Onboarding step configuration
 ├── hooks/
 │   └── useOnboardingFlow.ts      # Onboarding flow hook
 ├── screens/
@@ -46,11 +46,11 @@ src/modules/onboarding/
 │   └── useOnboardingStore.ts     # Zustand store with persistence
 ├── utils/
 │   └── createStepSchema.ts       # Zod schema generation utilities
-├── DOCS.md                   # This file
-├── index.ts                  # Module configuration export
-├── routes.types.ts           # Route type definitions
-├── screenConfig.ts           # Screen navigation configuration
-└── types.ts                  # Type definitions
+├── DOCS.md                       # This file
+├── index.ts                      # Module configuration export
+├── routes.types.ts               # Route type definitions
+├── screenConfig.ts               # Screen navigation configuration
+└── types.ts                      # Type definitions
 ```
 
 ### State Management
