@@ -4,7 +4,6 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Text} from '@/shared/components/ui/typography'
-import {Z_INDEX} from '@/shared/constants/ui'
 
 export enum ToastType {
   SUCCESS = 'success',
@@ -41,25 +40,29 @@ export const Toast = ({
 
   return (
     <Box
-      style={[styles.toast, styles[type], {top: top + 20}]}
-      center
-      padding="md">
-      <Text.Label>{message}</Text.Label>
+      padding="md"
+      style={styles.absolute}>
+      <Box
+        style={[styles.toast, styles[type], {top: top + 20}]}
+        center
+        padding="md">
+        <Text.Label>{message}</Text.Label>
+      </Box>
     </Box>
   )
 }
 
-const styles = StyleSheet.create(({color}) => ({
-  toast: {
+const styles = StyleSheet.create(theme => ({
+  absolute: {
     position: 'absolute',
-    left: 20,
-    right: 20,
-    elevation: 2,
-    zIndex: Z_INDEX.TOAST,
-    backgroundColor: color.screen.background.default,
+    zIndex: theme.zIndex.toast,
+  },
+  toast: {
+    backgroundColor: theme.color.screen.background.default,
+    borderWidth: theme.size.xxs,
   },
 
-  success: {borderColor: '#4BB543', borderWidth: 1},
-  error: {borderColor: '#FF3333', borderWidth: 1},
-  info: {borderColor: '#5f5f5f', borderWidth: 1},
+  success: {borderColor: '#4BB543'},
+  error: {borderColor: '#FF3333'},
+  info: {borderColor: '#5f5f5f'},
 }))

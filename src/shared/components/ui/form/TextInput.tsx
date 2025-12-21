@@ -135,7 +135,7 @@ export const TextInput = ({
 const styles = StyleSheet.create(theme => ({
   input: {
     backgroundColor: theme.color.textInput.container.background,
-    borderWidth: 2,
+    borderWidth: theme.size.xxs,
     borderColor: theme.color.transparent.full,
     borderRadius: theme.size.sm,
     paddingVertical: theme.size.smd,
@@ -148,13 +148,12 @@ const styles = StyleSheet.create(theme => ({
   },
   inputFocused: {
     borderColor: theme.color.pressable.primary.default.background,
-    borderWidth: 2,
   },
   inputError: {
     borderColor: theme.color.text.warning,
   },
   inputDisabled: {
-    opacity: 0.5,
+    opacity: theme.opacity.disabled,
     backgroundColor: theme.color.text.tertiary,
   },
 }))

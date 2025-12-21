@@ -1,3 +1,5 @@
+import {opacityTokens} from './tokens/opacity'
+import {zIndexTokens} from './tokens/zIndex'
 import {type Theme, ThemeVariant} from './types'
 
 import {sizeTokens} from '@/themes/tokens/size'
@@ -8,6 +10,8 @@ import {lightColorTokens} from '@/themes/tokens/themeLight'
 const baseTheme = {
   size: sizeTokens,
   text: textTokens,
+  opacity: opacityTokens,
+  zIndex: zIndexTokens,
 }
 
 /**

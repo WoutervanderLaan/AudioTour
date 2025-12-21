@@ -198,7 +198,7 @@ const RADIO_INNER_SIZE = 12
 const styles = StyleSheet.create(theme => ({
   optionContainer: (state: {pressed: boolean; disabled: boolean}): object => ({
     borderRadius: theme.size.sm,
-    borderWidth: 1,
+    borderWidth: theme.size.xxs,
     borderColor: theme.color.textInput.container.background,
     backgroundColor: state.pressed
       ? theme.color.pressable.secondary.pressed.background
@@ -208,7 +208,7 @@ const styles = StyleSheet.create(theme => ({
     width: RADIO_SIZE,
     height: RADIO_SIZE,
     borderRadius: RADIO_SIZE,
-    borderWidth: 2,
+    borderWidth: theme.size.xxs,
     borderColor: theme.color.text.tertiary,
     backgroundColor: theme.color.textInput.container.background,
   },
@@ -216,7 +216,7 @@ const styles = StyleSheet.create(theme => ({
     borderColor: theme.color.text.warning,
   },
   radioCircleDisabled: {
-    opacity: 0.5,
+    opacity: theme.opacity.disabled,
   },
   radioInner: {
     width: RADIO_INNER_SIZE,

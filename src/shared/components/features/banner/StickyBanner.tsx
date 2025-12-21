@@ -156,7 +156,7 @@ const styles = StyleSheet.create(theme => ({
     paddingVertical: theme.size.md,
     paddingHorizontal: theme.size.md,
     gap: theme.size.sm,
-    borderBottomWidth: 1,
+    borderBottomWidth: theme.size.xxs,
   },
   info: {
     backgroundColor: theme.color.pressable.primary.default.background,
@@ -181,11 +181,11 @@ const styles = StyleSheet.create(theme => ({
     paddingHorizontal: theme.size.md,
     borderRadius: theme.size.sm,
     backgroundColor: theme.color.pressable.secondary.default.background,
-    borderWidth: 1,
+    borderWidth: theme.size.xxs,
     borderColor: theme.color.pressable.secondary.default.border,
   },
   ctaButtonPressed: {
-    opacity: 0.7,
+    opacity: theme.opacity.pressed,
   },
   ctaIcon: {
     color: theme.color.text.default,

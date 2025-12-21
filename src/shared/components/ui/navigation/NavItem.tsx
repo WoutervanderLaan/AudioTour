@@ -82,7 +82,7 @@ const styles = StyleSheet.create(theme => ({
     backgroundColor: state.pressed
       ? theme.color.pressable.secondary.pressed.background
       : theme.color.pressable.secondary.default.background,
-    opacity: state.disabled ? 0.5 : 1,
+    opacity: state.disabled ? theme.opacity.disabled : theme.opacity.none,
   }),
   icon: {
     color: theme.color.text.default,

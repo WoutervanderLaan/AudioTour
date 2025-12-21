@@ -1,6 +1,8 @@
 import type {themes} from './themes'
+import type {opacityTokens} from './tokens/opacity'
 import type {sizeTokens} from './tokens/size'
 import type {TextTokens} from './tokens/text'
+import type {zIndexTokens} from './tokens/zIndex'
 
 /**
  * ColorTokens
@@ -86,6 +88,18 @@ export type ColorTokens = {
 export type SizeTokens = typeof sizeTokens
 
 /**
+ * OpacityTokens
+ * Type defining all spacing, padding, and size tokens used throughout the application.
+ */
+export type OpacityTokens = typeof opacityTokens
+
+/**
+ * OpacityTokens
+ * Type defining all spacing, padding, and size tokens used throughout the application.
+ */
+export type ZIndexTokens = typeof zIndexTokens
+
+/**
  * Theme
  * Complete theme object containing all design tokens including colors, sizes, text styles, and theme metadata.
  */
@@ -106,6 +120,14 @@ export type Theme = {
    * text
    */
   text: TextTokens
+  /**
+   * text
+   */
+  opacity: OpacityTokens
+  /**
+   * text
+   */
+  zIndex: ZIndexTokens
 }
 export enum ThemeVariant {
   light = 'light',

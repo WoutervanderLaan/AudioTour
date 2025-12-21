@@ -55,11 +55,11 @@ export const LinkButton = ({
   )
 }
 
-const styles = StyleSheet.create(() => ({
+const styles = StyleSheet.create(theme => ({
   pressed: {
-    opacity: 0.7,
+    opacity: theme.opacity.pressed,
   },
   disabledText: {
-    opacity: 0.5,
+    opacity: theme.opacity.disabled,
   },
 }))

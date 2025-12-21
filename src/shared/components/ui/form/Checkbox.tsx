@@ -228,12 +228,12 @@ export const Checkbox = ({
 
 const styles = StyleSheet.create(theme => ({
   checkboxRowPressed: {
-    opacity: 0.7,
+    opacity: theme.opacity.pressed,
   },
   checkboxBox: {
     width: CHECKBOX_SIZE,
     height: CHECKBOX_SIZE,
-    borderWidth: 2,
+    borderWidth: theme.size.xxs,
     borderColor: theme.color.text.tertiary,
     borderRadius: theme.size.xs,
     backgroundColor: theme.color.textInput.container.background,
@@ -246,7 +246,7 @@ const styles = StyleSheet.create(theme => ({
     borderColor: theme.color.text.warning,
   },
   checkboxBoxDisabled: {
-    opacity: 0.5,
+    opacity: theme.opacity.disabled,
   },
   checkIndicator: {
     color: theme.color.pressable.primary.default.label,

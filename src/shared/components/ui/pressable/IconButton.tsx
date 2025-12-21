@@ -91,9 +91,9 @@ const styles = StyleSheet.create(theme => ({
     padding: theme.size.md,
   },
   pressed: {
-    opacity: 0.7,
+    opacity: theme.opacity.pressed,
   },
   disabled: {
-    opacity: 0.5,
+    opacity: theme.opacity.disabled,
   },
 }))

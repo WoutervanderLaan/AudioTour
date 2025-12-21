@@ -59,10 +59,10 @@ const styles = StyleSheet.create(theme => ({
   base: (state: {pressed: boolean; disabled?: boolean}): object => ({
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: theme.size.xxs,
     paddingVertical: theme.size.sm,
     paddingHorizontal: theme.size.lg,
-    opacity: state.disabled ? 0.5 : 1,
+    opacity: state.disabled ? theme.opacity.disabled : theme.opacity.none,
   }),
   label: (variant: ButtonVariant): object => ({
     color: theme.color.pressable[variant].default.label,

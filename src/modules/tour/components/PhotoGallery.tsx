@@ -8,6 +8,7 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 
+const INDICATOR_SIZE = 8
 /**
  * PhotoGalleryProps
  * Props for the PhotoGallery component
@@ -102,15 +103,15 @@ const styles = StyleSheet.create(theme => ({
     backgroundColor: theme.color.screen.background.default,
   },
   indicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: INDICATOR_SIZE,
+    height: INDICATOR_SIZE,
+    borderRadius: INDICATOR_SIZE,
     backgroundColor: theme.color.text.default,
-    opacity: 0.6,
+    opacity: theme.opacity.disabled,
   },
   activeIndicator: {
     backgroundColor: theme.color.text.default,
-    opacity: 1,
+    opacity: theme.opacity.none,
   },
   thumbnailStrip: {
     paddingHorizontal: theme.size.sm,
@@ -118,8 +119,8 @@ const styles = StyleSheet.create(theme => ({
     gap: theme.size.sm,
   },
   thumbnail: {
-    borderWidth: 2,
-    borderColor: 'transparent',
+    borderWidth: theme.size.xxs,
+    borderColor: theme.color.transparent.full,
   },
   activeThumbnail: {
     borderColor: theme.color.text.link,
