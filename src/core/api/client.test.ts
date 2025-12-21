@@ -243,6 +243,50 @@ describe('ApiClient', () => {
       expect(calledUrl).not.toContain('skip')
       expect(calledUrl).not.toContain('undefined')
     })
+
+    it('should serialize complex query parameters', async () => {
+      await client.get('/test', {
+        params: {
+          array: [1, 2, 3],
+          object: {nested: 'value', deep: {level: 2}},
+          boolean: true,
+          number: 42,
+        },
+      })
+
+      const calledUrl = fetchMock.mock.calls[0][0] as string
+
+      // Verify parameters are JSON stringified
+      expect(calledUrl).toContain('array')
+      expect(calledUrl).toContain('object')
+      expect(calledUrl).toContain('boolean')
+      expect(calledUrl).toContain('number')
+
+      // Parse URL to verify values
+      const url = new URL(calledUrl)
+      expect(JSON.parse(url.searchParams.get('array') || '')).toEqual([1, 2, 3])
+      expect(JSON.parse(url.searchParams.get('object') || '')).toEqual({
+        nested: 'value',
+        deep: {level: 2},
+      })
+      expect(JSON.parse(url.searchParams.get('boolean') || '')).toBe(true)
+      expect(JSON.parse(url.searchParams.get('number') || '')).toBe(42)
+    })
+
+    it('should handle empty objects and arrays in query parameters', async () => {
+      await client.get('/test', {
+        params: {
+          emptyArray: [],
+          emptyObject: {},
+        },
+      })
+
+      const calledUrl = fetchMock.mock.calls[0][0] as string
+      const url = new URL(calledUrl)
+
+      expect(JSON.parse(url.searchParams.get('emptyArray') || '')).toEqual([])
+      expect(JSON.parse(url.searchParams.get('emptyObject') || '')).toEqual({})
+    })
   })
 
   describe('custom headers', () => {
@@ -313,6 +357,38 @@ describe('ApiClient', () => {
 
       const callConfig = fetchMock.mock.calls[0][1] as RequestInit
       expect(typeof callConfig.body).not.toBe('string')
+    })
+
+    it('should handle FormData with Blob objects', async () => {
+      const formData = new FormData()
+      const blob = new Blob(['test file content'], {type: 'image/jpeg'})
+      formData.append('file', blob, 'photo.jpg')
+      formData.append('description', 'Test photo')
+
+      await client.post('/upload', formData)
+
+      const callConfig = fetchMock.mock.calls[0][1] as RequestInit
+      expect(callConfig.body).toBe(formData)
+
+      // Verify Content-Type is undefined (browser/RN will set it with boundary)
+      const headers = callConfig.headers as Record<string, string>
+      expect(headers['Content-Type']).toBeUndefined()
+    })
+
+    it('should handle FormData with multiple fields and files', async () => {
+      const formData = new FormData()
+      const file1 = new Blob(['file 1'], {type: 'image/png'})
+      const file2 = new Blob(['file 2'], {type: 'application/pdf'})
+
+      formData.append('file1', file1, 'image.png')
+      formData.append('file2', file2, 'document.pdf')
+      formData.append('metadata', JSON.stringify({title: 'Test'}))
+
+      await client.post('/upload/multiple', formData)
+
+      const callConfig = fetchMock.mock.calls[0][1] as RequestInit
+      expect(callConfig.body).toBe(formData)
+      expect(callConfig.method).toBe('POST')
     })
   })
 
@@ -456,6 +532,36 @@ describe('ApiClient', () => {
 
       expect(asyncInterceptor).toHaveBeenCalled()
     })
+
+    it('should handle errors thrown by request interceptors', async () => {
+      fetchMock.mockResolvedValue(createMockResponse({success: true}))
+
+      const errorInterceptor = jest.fn(() => {
+        throw new Error('Request interceptor error')
+      })
+
+      client.addRequestInterceptor(errorInterceptor)
+
+      await expect(client.get('/test')).rejects.toThrow(
+        'Request interceptor error',
+      )
+      expect(errorInterceptor).toHaveBeenCalled()
+    })
+
+    it('should handle async errors in request interceptors', async () => {
+      fetchMock.mockResolvedValue(createMockResponse({success: true}))
+
+      const asyncErrorInterceptor = jest.fn(async () => {
+        await new Promise(resolve => setTimeout(resolve, 10))
+        throw new Error('Async interceptor error')
+      })
+
+      client.addRequestInterceptor(asyncErrorInterceptor)
+
+      await expect(client.get('/test')).rejects.toThrow(
+        'Async interceptor error',
+      )
+    })
   })
 
   describe('response interceptors', () => {
@@ -504,6 +610,36 @@ describe('ApiClient', () => {
       await client.get('/test')
 
       expect(asyncInterceptor).toHaveBeenCalled()
+    })
+
+    it('should handle errors thrown by response interceptors', async () => {
+      fetchMock.mockResolvedValue(createMockResponse({success: true}))
+
+      const errorInterceptor = jest.fn(() => {
+        throw new Error('Response interceptor error')
+      })
+
+      client.addResponseInterceptor(errorInterceptor)
+
+      await expect(client.get('/test')).rejects.toThrow(
+        'Response interceptor error',
+      )
+      expect(errorInterceptor).toHaveBeenCalled()
+    })
+
+    it('should handle async errors in response interceptors', async () => {
+      fetchMock.mockResolvedValue(createMockResponse({success: true}))
+
+      const asyncErrorInterceptor = jest.fn(async () => {
+        await new Promise(resolve => setTimeout(resolve, 10))
+        throw new Error('Async response interceptor error')
+      })
+
+      client.addResponseInterceptor(asyncErrorInterceptor)
+
+      await expect(client.get('/test')).rejects.toThrow(
+        'Async response interceptor error',
+      )
     })
   })
 
@@ -610,6 +746,16 @@ describe('ApiClient', () => {
         code: 'TIMEOUT',
       } as ApiError)
     }, 10000)
+
+    it('should not timeout when request completes quickly', async () => {
+      const successResponse = createMockResponse({success: true})
+      fetchMock.mockResolvedValue(successResponse)
+
+      const response = await client.get('/test', {timeout: 5000})
+
+      expect(response.data).toEqual({success: true})
+      expect(response.status).toBe(200)
+    })
   })
 
   describe('AbortSignal', () => {
@@ -709,6 +855,15 @@ describe('ApiClient', () => {
 
       expect(result1.data).toEqual({success: true})
       expect(result2.data).toEqual({success: true})
+
+      // Verify only ONE refresh request was made despite two concurrent 401s
+      const refreshCalls = fetchMock.mock.calls.filter(call =>
+        (call[0] as string).includes('/auth/refresh'),
+      )
+      expect(refreshCalls).toHaveLength(1)
+
+      // Verify total number of requests: 2 initial 401s + 1 refresh + 2 retries
+      expect(fetchMock).toHaveBeenCalledTimes(5)
     })
 
     it('should handle request with all options combined', async () => {
