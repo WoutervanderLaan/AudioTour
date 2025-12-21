@@ -1,4 +1,5 @@
 import {render, screen} from '@testing-library/react-native'
+import {Text, View} from 'react-native'
 
 import {Spacer} from './Spacer'
 
@@ -73,11 +74,11 @@ describe('Spacer', () => {
       const {getAllByText} = render(
         <View style={{flexDirection: 'row'}}>
           <View>
-            <text>Left</text>
+            <Text>Left</Text>
           </View>
           <Spacer />
           <View>
-            <text>Right</text>
+            <Text>Right</Text>
           </View>
         </View>
       )
@@ -90,11 +91,11 @@ describe('Spacer', () => {
       const {getAllByText} = render(
         <View style={{flexDirection: 'column'}}>
           <View>
-            <text>Top</text>
+            <Text>Top</Text>
           </View>
           <Spacer />
           <View>
-            <text>Bottom</text>
+            <Text>Bottom</Text>
           </View>
         </View>
       )
@@ -106,11 +107,11 @@ describe('Spacer', () => {
       const {getAllByText} = render(
         <View style={{flexDirection: 'column'}}>
           <View>
-            <text>Content 1</text>
+            <Text>Content 1</Text>
           </View>
           <Spacer size="lg" />
           <View>
-            <text>Content 2</text>
+            <Text>Content 2</Text>
           </View>
         </View>
       )
@@ -122,15 +123,15 @@ describe('Spacer', () => {
       const {getAllByText} = render(
         <View style={{flexDirection: 'row'}}>
           <View>
-            <text>Item 1</text>
+            <Text>Item 1</Text>
           </View>
           <Spacer />
           <View>
-            <text>Item 2</text>
+            <Text>Item 2</Text>
           </View>
           <Spacer />
           <View>
-            <text>Item 3</text>
+            <Text>Item 3</Text>
           </View>
         </View>
       )

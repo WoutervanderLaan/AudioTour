@@ -8,9 +8,8 @@ import {IconButton} from './IconButton'
 describe('IconButton', () => {
   describe('Rendering', () => {
     it('should render with icon name', () => {
-      const {UNSAFE_queryAllByType} = render(<IconButton name="home" />)
-      // MaterialIcons component should be rendered
-      expect(UNSAFE_queryAllByType).toBeTruthy()
+      render(<IconButton testID="icon-button" name="home" />)
+      expect(screen.getByTestId('icon-button')).toBeTruthy()
     })
 
     it('should render with testID', () => {
