@@ -1,0 +1,400 @@
+import {fireEvent, render, screen} from '@testing-library/react-native'
+
+import {Checkbox} from './Checkbox'
+
+/**
+ * Test suite for Checkbox component
+ */
+describe('Checkbox', () => {
+  describe('Rendering', () => {
+    it('should render correctly', () => {
+      const {container} = render(<Checkbox />)
+      expect(container).toBeTruthy()
+    })
+
+    it('should render with testID', () => {
+      render(<Checkbox testID="test-checkbox" />)
+      expect(screen.getByTestId('test-checkbox')).toBeTruthy()
+    })
+
+    it('should render with label', () => {
+      render(<Checkbox label="Accept terms" />)
+      expect(screen.getByText('Accept terms')).toBeTruthy()
+    })
+
+    it('should render without label', () => {
+      const {container} = render(<Checkbox />)
+      expect(container).toBeTruthy()
+    })
+  })
+
+  describe('Checked State', () => {
+    it('should render unchecked by default', () => {
+      render(<Checkbox testID="checkbox" />)
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+
+    it('should render checked when checked prop is true', () => {
+      render(
+        <Checkbox
+          testID="checkbox"
+          checked
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+
+    it('should toggle checked state', () => {
+      const {rerender} = render(
+        <Checkbox
+          testID="checkbox"
+          checked={false}
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+
+      rerender(
+        <Checkbox
+          testID="checkbox"
+          checked
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+  })
+
+  describe('Interaction', () => {
+    it('should call onChange when pressed', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="checkbox"
+          onChange={onChange}
+          checked={false}
+        />
+      )
+
+      fireEvent.press(screen.getByTestId('checkbox'))
+      expect(onChange).toHaveBeenCalledWith(true)
+    })
+
+    it('should toggle value on press', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="checkbox"
+          onChange={onChange}
+          checked
+        />
+      )
+
+      fireEvent.press(screen.getByTestId('checkbox'))
+      expect(onChange).toHaveBeenCalledWith(false)
+    })
+
+    it('should not call onChange when disabled', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="checkbox"
+          onChange={onChange}
+          disabled
+        />
+      )
+
+      fireEvent.press(screen.getByTestId('checkbox'))
+      expect(onChange).not.toHaveBeenCalled()
+    })
+
+    it('should handle multiple presses', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="checkbox"
+          onChange={onChange}
+          checked={false}
+        />
+      )
+
+      const checkbox = screen.getByTestId('checkbox')
+      fireEvent.press(checkbox)
+      fireEvent.press(checkbox)
+      fireEvent.press(checkbox)
+
+      expect(onChange).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  describe('Disabled State', () => {
+    it('should render when disabled', () => {
+      render(
+        <Checkbox
+          testID="checkbox"
+          label="Disabled checkbox"
+          disabled
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+
+    it('should not trigger onChange when disabled', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="checkbox"
+          onChange={onChange}
+          disabled
+        />
+      )
+
+      fireEvent.press(screen.getByTestId('checkbox'))
+      expect(onChange).not.toHaveBeenCalled()
+    })
+
+    it('should maintain disabled state when toggling checked', () => {
+      const {rerender} = render(
+        <Checkbox
+          testID="checkbox"
+          checked={false}
+          disabled
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+
+      rerender(
+        <Checkbox
+          testID="checkbox"
+          checked
+          disabled
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+  })
+
+  describe('Required Field', () => {
+    it('should show asterisk when required', () => {
+      render(
+        <Checkbox
+          label="Required field"
+          required
+        />
+      )
+      expect(screen.getByText('Required field')).toBeTruthy()
+      expect(screen.getByText('*')).toBeTruthy()
+    })
+
+    it('should not show asterisk when not required', () => {
+      render(<Checkbox label="Optional field" />)
+      expect(screen.getByText('Optional field')).toBeTruthy()
+      expect(screen.queryByText('*')).toBeNull()
+    })
+
+    it('should have required accessibility label on asterisk', () => {
+      render(
+        <Checkbox
+          label="Required"
+          required
+        />
+      )
+      expect(screen.getByLabelText('required')).toBeTruthy()
+    })
+  })
+
+  describe('Error State', () => {
+    it('should render with error state', () => {
+      render(
+        <Checkbox
+          testID="checkbox"
+          hasError
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+
+    it('should toggle error state', () => {
+      const {rerender} = render(
+        <Checkbox
+          testID="checkbox"
+          hasError={false}
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+
+      rerender(
+        <Checkbox
+          testID="checkbox"
+          hasError
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+  })
+
+  describe('Accessibility', () => {
+    it('should have checkbox accessibility role', () => {
+      render(<Checkbox testID="checkbox" />)
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+
+    it('should use label as accessibilityLabel', () => {
+      render(<Checkbox label="Accept terms" />)
+      expect(screen.getByLabelText('Accept terms')).toBeTruthy()
+    })
+
+    it('should accept custom accessibilityLabel', () => {
+      render(
+        <Checkbox
+          label="Terms"
+          accessibilityLabel="Accept terms and conditions"
+        />
+      )
+      expect(
+        screen.getByLabelText('Accept terms and conditions')
+      ).toBeTruthy()
+    })
+
+    it('should accept accessibilityHint', () => {
+      render(
+        <Checkbox
+          testID="checkbox"
+          label="Terms"
+          accessibilityHint="You must accept to continue"
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+
+    it('should have checked state in accessibility', () => {
+      render(
+        <Checkbox
+          testID="checkbox"
+          checked
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+
+    it('should have disabled state in accessibility', () => {
+      render(
+        <Checkbox
+          testID="checkbox"
+          disabled
+        />
+      )
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+    })
+  })
+
+  describe('Common Use Cases', () => {
+    it('should work as terms acceptance checkbox', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="terms"
+          label="I accept the terms and conditions"
+          onChange={onChange}
+          required
+        />
+      )
+
+      fireEvent.press(screen.getByTestId('terms'))
+      expect(onChange).toHaveBeenCalledWith(true)
+    })
+
+    it('should work as newsletter subscription checkbox', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="newsletter"
+          label="Subscribe to newsletter"
+          onChange={onChange}
+          checked={false}
+        />
+      )
+
+      fireEvent.press(screen.getByTestId('newsletter'))
+      expect(onChange).toHaveBeenCalledWith(true)
+    })
+
+    it('should work as remember me checkbox', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="remember"
+          label="Remember me"
+          onChange={onChange}
+        />
+      )
+
+      fireEvent.press(screen.getByTestId('remember'))
+      expect(onChange).toHaveBeenCalled()
+    })
+  })
+
+  describe('Label Variants', () => {
+    it('should render with short label', () => {
+      render(<Checkbox label="OK" />)
+      expect(screen.getByText('OK')).toBeTruthy()
+    })
+
+    it('should render with long label', () => {
+      const longLabel =
+        'I agree to the terms and conditions, privacy policy, and cookie policy'
+      render(<Checkbox label={longLabel} />)
+      expect(screen.getByText(longLabel)).toBeTruthy()
+    })
+
+    it('should render with label containing special characters', () => {
+      render(<Checkbox label="Accept Terms & Conditions" />)
+      expect(screen.getByText('Accept Terms & Conditions')).toBeTruthy()
+    })
+  })
+
+  describe('Edge Cases', () => {
+    it('should handle rapid presses', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="checkbox"
+          onChange={onChange}
+          checked={false}
+        />
+      )
+
+      const checkbox = screen.getByTestId('checkbox')
+      for (let i = 0; i < 5; i++) {
+        fireEvent.press(checkbox)
+      }
+
+      expect(onChange).toHaveBeenCalledTimes(5)
+    })
+
+    it('should work without onChange handler', () => {
+      render(<Checkbox testID="checkbox" />)
+
+      const checkbox = screen.getByTestId('checkbox')
+      expect(() => fireEvent.press(checkbox)).not.toThrow()
+    })
+
+    it('should combine all states', () => {
+      const onChange = jest.fn()
+      render(
+        <Checkbox
+          testID="checkbox"
+          label="Complex checkbox"
+          checked
+          required
+          hasError
+          onChange={onChange}
+          accessibilityLabel="Complex"
+          accessibilityHint="Test all props"
+        />
+      )
+
+      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      expect(screen.getByText('Complex checkbox')).toBeTruthy()
+      expect(screen.getByText('*')).toBeTruthy()
+    })
+  })
+})
