@@ -30,28 +30,31 @@ describe('Checkbox', () => {
 
   describe('Checked State', () => {
     it('should render unchecked by default', () => {
-      render(<Checkbox testID="checkbox" />)
-      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      const {getByTestId} = render(<Checkbox testID="checkbox" />)
+      const checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(false)
     })
 
     it('should render checked when checked prop is true', () => {
-      render(
+      const {getByTestId} = render(
         <Checkbox
           testID="checkbox"
           checked
         />
       )
-      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      const checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(true)
     })
 
     it('should toggle checked state', () => {
-      const {rerender} = render(
+      const {rerender, getByTestId} = render(
         <Checkbox
           testID="checkbox"
           checked={false}
         />
       )
-      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      let checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(false)
 
       rerender(
         <Checkbox
@@ -59,7 +62,8 @@ describe('Checkbox', () => {
           checked
         />
       )
-      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(true)
     })
   })
 
@@ -127,19 +131,21 @@ describe('Checkbox', () => {
 
   describe('Disabled State', () => {
     it('should render when disabled', () => {
-      render(
+      const {getByTestId} = render(
         <Checkbox
           testID="checkbox"
           label="Disabled checkbox"
           disabled
         />
       )
-      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      const checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.disabled).toBe(true)
+      expect(checkbox.props.disabled).toBe(true)
     })
 
     it('should not trigger onChange when disabled', () => {
       const onChange = jest.fn()
-      render(
+      const {getByTestId} = render(
         <Checkbox
           testID="checkbox"
           onChange={onChange}
@@ -147,19 +153,23 @@ describe('Checkbox', () => {
         />
       )
 
-      fireEvent.press(screen.getByTestId('checkbox'))
+      const checkbox = getByTestId('checkbox')
+      expect(checkbox.props.disabled).toBe(true)
+      fireEvent.press(checkbox)
       expect(onChange).not.toHaveBeenCalled()
     })
 
     it('should maintain disabled state when toggling checked', () => {
-      const {rerender} = render(
+      const {rerender, getByTestId} = render(
         <Checkbox
           testID="checkbox"
           checked={false}
           disabled
         />
       )
-      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      let checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.disabled).toBe(true)
+      expect(checkbox.props.accessibilityState.checked).toBe(false)
 
       rerender(
         <Checkbox
@@ -168,7 +178,9 @@ describe('Checkbox', () => {
           disabled
         />
       )
-      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.disabled).toBe(true)
+      expect(checkbox.props.accessibilityState.checked).toBe(true)
     })
   })
 
@@ -351,6 +363,86 @@ describe('Checkbox', () => {
     })
   })
 
+  describe('Controlled vs Uncontrolled', () => {
+    it('should work as controlled component', () => {
+      const onChange = jest.fn()
+      const {getByTestId, rerender} = render(
+        <Checkbox
+          testID="checkbox"
+          checked={false}
+          onChange={onChange}
+        />
+      )
+
+      let checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(false)
+
+      // Simulate user interaction
+      fireEvent.press(checkbox)
+      expect(onChange).toHaveBeenCalledWith(true)
+
+      // Parent component updates the checked prop
+      rerender(
+        <Checkbox
+          testID="checkbox"
+          checked
+          onChange={onChange}
+        />
+      )
+
+      checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(true)
+    })
+
+    it('should work as uncontrolled component', () => {
+      const onChange = jest.fn()
+      const {getByTestId} = render(
+        <Checkbox
+          testID="checkbox"
+          onChange={onChange}
+        />
+      )
+
+      const checkbox = getByTestId('checkbox')
+      // Uncontrolled component starts unchecked
+      expect(checkbox.props.accessibilityState.checked).toBe(false)
+
+      // User interaction triggers onChange with new value
+      fireEvent.press(checkbox)
+      expect(onChange).toHaveBeenCalledWith(true)
+
+      // Component doesn't update its own state (that's parent's job)
+      expect(checkbox.props.accessibilityState.checked).toBe(false)
+    })
+
+    it('should maintain checked state when controlled', () => {
+      const {getByTestId, rerender} = render(
+        <Checkbox
+          testID="checkbox"
+          checked
+        />
+      )
+
+      let checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(true)
+
+      // Even after press, controlled component stays checked if prop doesn't change
+      fireEvent.press(checkbox)
+      checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(true)
+
+      // Only changes when prop changes
+      rerender(
+        <Checkbox
+          testID="checkbox"
+          checked={false}
+        />
+      )
+      checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(false)
+    })
+  })
+
   describe('Edge Cases', () => {
     it('should handle rapid presses', () => {
       const onChange = jest.fn()
@@ -368,6 +460,10 @@ describe('Checkbox', () => {
       }
 
       expect(onChange).toHaveBeenCalledTimes(5)
+      // Verify each call alternates the expected value
+      expect(onChange).toHaveBeenNthCalledWith(1, true)
+      expect(onChange).toHaveBeenNthCalledWith(2, true)
+      expect(onChange).toHaveBeenNthCalledWith(3, true)
     })
 
     it('should work without onChange handler', () => {
@@ -379,7 +475,7 @@ describe('Checkbox', () => {
 
     it('should combine all states', () => {
       const onChange = jest.fn()
-      render(
+      const {getByTestId} = render(
         <Checkbox
           testID="checkbox"
           label="Complex checkbox"
@@ -392,9 +488,16 @@ describe('Checkbox', () => {
         />
       )
 
-      expect(screen.getByTestId('checkbox')).toBeTruthy()
+      const checkbox = getByTestId('checkbox')
+      expect(checkbox.props.accessibilityState.checked).toBe(true)
+      expect(checkbox.props.accessibilityLabel).toBe('Complex')
+      expect(checkbox.props.accessibilityHint).toBe('Test all props')
       expect(screen.getByText('Complex checkbox')).toBeTruthy()
       expect(screen.getByText('*')).toBeTruthy()
+
+      // Verify interaction still works
+      fireEvent.press(checkbox)
+      expect(onChange).toHaveBeenCalledWith(false)
     })
   })
 })

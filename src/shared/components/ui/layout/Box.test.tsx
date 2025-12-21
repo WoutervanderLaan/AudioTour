@@ -168,53 +168,108 @@ describe('Box', () => {
   })
 
   describe('Gap', () => {
-    it('should apply gap when gap prop is provided', () => {
-      render(<Box gap="md" />)
-      // Gap is applied through theme tokens, just verify component renders
-      expect(screen.queryByTestId('box')).toBeTruthy()
+    it('should apply gap from theme tokens', () => {
+      const {UNSAFE_getByType} = render(<Box gap="md" />)
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({gap: expect.any(Number)}),
+        ])
+      )
     })
 
-    it('should render with different gap sizes', () => {
+    it('should render with different gap sizes from theme', () => {
       const {UNSAFE_getByType} = render(<Box gap="lg" />)
       const view = UNSAFE_getByType(View)
-      expect(view.props.style).toBeTruthy()
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({gap: expect.any(Number)}),
+        ])
+      )
+    })
+
+    it('should not apply gap when gap prop is not provided', () => {
+      const {UNSAFE_getByType} = render(<Box />)
+      const view = UNSAFE_getByType(View)
+      const styles = Array.isArray(view.props.style)
+        ? view.props.style
+        : [view.props.style]
+      const hasGap = styles.some(
+        style => style && typeof style === 'object' && 'gap' in style
+      )
+      expect(hasGap).toBe(false)
     })
   })
 
   describe('Padding', () => {
-    it('should apply uniform padding when padding prop is provided', () => {
-      render(<Box padding="md" />)
-      expect(screen.queryByTestId('box')).toBeTruthy()
+    it('should apply uniform padding from theme tokens', () => {
+      const {UNSAFE_getByType} = render(<Box padding="md" />)
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({padding: expect.any(Number)}),
+        ])
+      )
     })
 
-    it('should apply horizontal padding when paddingH is provided', () => {
-      render(<Box paddingH="lg" />)
-      expect(screen.queryByTestId('box')).toBeTruthy()
+    it('should apply horizontal padding from theme tokens', () => {
+      const {UNSAFE_getByType} = render(<Box paddingH="lg" />)
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({paddingHorizontal: expect.any(Number)}),
+        ])
+      )
     })
 
-    it('should apply vertical padding when paddingV is provided', () => {
-      render(<Box paddingV="sm" />)
-      expect(screen.queryByTestId('box')).toBeTruthy()
+    it('should apply vertical padding from theme tokens', () => {
+      const {UNSAFE_getByType} = render(<Box paddingV="sm" />)
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({paddingVertical: expect.any(Number)}),
+        ])
+      )
     })
 
-    it('should apply top padding when paddingTop is provided', () => {
-      render(<Box paddingTop="xl" />)
-      expect(screen.queryByTestId('box')).toBeTruthy()
+    it('should apply top padding from theme tokens', () => {
+      const {UNSAFE_getByType} = render(<Box paddingTop="xl" />)
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({paddingTop: expect.any(Number)}),
+        ])
+      )
     })
 
-    it('should apply right padding when paddingRight is provided', () => {
-      render(<Box paddingRight="md" />)
-      expect(screen.queryByTestId('box')).toBeTruthy()
+    it('should apply right padding from theme tokens', () => {
+      const {UNSAFE_getByType} = render(<Box paddingRight="md" />)
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({paddingRight: expect.any(Number)}),
+        ])
+      )
     })
 
-    it('should apply bottom padding when paddingBottom is provided', () => {
-      render(<Box paddingBottom="sm" />)
-      expect(screen.queryByTestId('box')).toBeTruthy()
+    it('should apply bottom padding from theme tokens', () => {
+      const {UNSAFE_getByType} = render(<Box paddingBottom="sm" />)
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({paddingBottom: expect.any(Number)}),
+        ])
+      )
     })
 
-    it('should apply left padding when paddingLeft is provided', () => {
-      render(<Box paddingLeft="lg" />)
-      expect(screen.queryByTestId('box')).toBeTruthy()
+    it('should apply left padding from theme tokens', () => {
+      const {UNSAFE_getByType} = render(<Box paddingLeft="lg" />)
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({paddingLeft: expect.any(Number)}),
+        ])
+      )
     })
   })
 

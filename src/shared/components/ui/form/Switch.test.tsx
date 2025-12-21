@@ -64,6 +64,7 @@ describe('Switch', () => {
       )
 
       const switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.value).toBe(false)
       fireEvent(switchComponent, 'valueChange', true)
       expect(onChange).toHaveBeenCalledWith(true)
     })
@@ -78,13 +79,14 @@ describe('Switch', () => {
       )
 
       const switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.value).toBe(true)
       fireEvent(switchComponent, 'valueChange', false)
       expect(onChange).toHaveBeenCalledWith(false)
     })
 
     it('should not call onChange when disabled', () => {
       const onChange = jest.fn()
-      render(
+      const {UNSAFE_getByType} = render(
         <Switch
           testID="switch"
           onChange={onChange}
@@ -92,9 +94,12 @@ describe('Switch', () => {
         />
       )
 
-      // When disabled, the onChange should not be triggered
-      // Testing the internal handleValueChange behavior
-      expect(screen.getByTestId('switch')).toBeTruthy()
+      const switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.disabled).toBe(true)
+      expect(switchComponent.props.accessibilityState.disabled).toBe(true)
+
+      // The native Switch component will prevent interaction when disabled
+      // We verify the component is correctly marked as disabled
     })
 
     it('should handle multiple value changes', () => {
@@ -325,6 +330,70 @@ describe('Switch', () => {
     })
   })
 
+  describe('Controlled vs Uncontrolled', () => {
+    it('should work as controlled component', () => {
+      const onChange = jest.fn()
+      const {UNSAFE_getByType, rerender} = render(
+        <Switch
+          value={false}
+          onChange={onChange}
+        />
+      )
+
+      let switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.value).toBe(false)
+
+      // Simulate user interaction
+      fireEvent(switchComponent, 'valueChange', true)
+      expect(onChange).toHaveBeenCalledWith(true)
+
+      // Parent component updates the value prop
+      rerender(
+        <Switch
+          value
+          onChange={onChange}
+        />
+      )
+
+      switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.value).toBe(true)
+      expect(switchComponent.props.accessibilityState.checked).toBe(true)
+    })
+
+    it('should work as uncontrolled component', () => {
+      const onChange = jest.fn()
+      const {UNSAFE_getByType} = render(<Switch onChange={onChange} />)
+
+      const switchComponent = UNSAFE_getByType(RNSwitch)
+      // Uncontrolled component starts with value false
+      expect(switchComponent.props.value).toBe(false)
+
+      // User interaction triggers onChange with new value
+      fireEvent(switchComponent, 'valueChange', true)
+      expect(onChange).toHaveBeenCalledWith(true)
+
+      // Component doesn't update its own state (that's parent's job)
+      expect(switchComponent.props.value).toBe(false)
+    })
+
+    it('should maintain value when controlled', () => {
+      const {UNSAFE_getByType, rerender} = render(<Switch value />)
+
+      let switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.value).toBe(true)
+
+      // Even after value change event, controlled component stays on if prop doesn't change
+      fireEvent(switchComponent, 'valueChange', false)
+      switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.value).toBe(true)
+
+      // Only changes when prop changes
+      rerender(<Switch value={false} />)
+      switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.value).toBe(false)
+    })
+  })
+
   describe('Edge Cases', () => {
     it('should handle rapid value changes', () => {
       const onChange = jest.fn()
@@ -336,6 +405,12 @@ describe('Switch', () => {
       }
 
       expect(onChange).toHaveBeenCalledTimes(5)
+      // Verify the actual values passed
+      expect(onChange).toHaveBeenNthCalledWith(1, true)
+      expect(onChange).toHaveBeenNthCalledWith(2, false)
+      expect(onChange).toHaveBeenNthCalledWith(3, true)
+      expect(onChange).toHaveBeenNthCalledWith(4, false)
+      expect(onChange).toHaveBeenNthCalledWith(5, true)
     })
 
     it('should work without onChange handler', () => {
@@ -362,10 +437,17 @@ describe('Switch', () => {
         />
       )
 
-      expect(screen.getByTestId('switch')).toBeTruthy()
+      const switchComponent = UNSAFE_getByType(RNSwitch)
+      expect(switchComponent.props.value).toBe(true)
+      expect(switchComponent.props.accessibilityState.checked).toBe(true)
+      expect(switchComponent.props.accessibilityLabel).toBe('Complex')
+      expect(switchComponent.props.accessibilityHint).toBe('Test all props')
       expect(screen.getByText('Complex switch')).toBeTruthy()
       expect(screen.getByText('*')).toBeTruthy()
-      expect(UNSAFE_getByType(RNSwitch)).toBeTruthy()
+
+      // Verify interaction still works
+      fireEvent(switchComponent, 'valueChange', false)
+      expect(onChange).toHaveBeenCalledWith(false)
     })
   })
 })

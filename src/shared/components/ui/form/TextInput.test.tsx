@@ -129,33 +129,39 @@ describe('TextInput', () => {
 
   describe('Error State', () => {
     it('should render with error state', () => {
-      render(
+      const {getByTestId} = render(
         <TextInput
           testID="input"
           hasError
         />
       )
-      expect(screen.getByTestId('input')).toBeTruthy()
+      const input = getByTestId('input')
+      // Error state is applied through styling, verify component renders
+      expect(input).toBeTruthy()
     })
 
     it('should apply error styling when hasError is true', () => {
-      render(
+      const {getByTestId, UNSAFE_getByType} = render(
         <TextInput
           testID="input"
           hasError
         />
       )
-      expect(screen.getByTestId('input')).toBeTruthy()
+      const input = UNSAFE_getByType(require('react-native').TextInput)
+      // Verify input has styles applied (error styles are in the style array)
+      expect(input.props.style).toBeDefined()
+      expect(Array.isArray(input.props.style)).toBe(true)
     })
 
     it('should toggle error state', () => {
-      const {rerender} = render(
+      const {rerender, UNSAFE_getByType} = render(
         <TextInput
           testID="input"
           hasError={false}
         />
       )
-      expect(screen.getByTestId('input')).toBeTruthy()
+      let input = UNSAFE_getByType(require('react-native').TextInput)
+      expect(input.props.style).toBeDefined()
 
       rerender(
         <TextInput
@@ -163,7 +169,9 @@ describe('TextInput', () => {
           hasError
         />
       )
-      expect(screen.getByTestId('input')).toBeTruthy()
+      input = UNSAFE_getByType(require('react-native').TextInput)
+      // Style array length may change when error state is toggled
+      expect(input.props.style).toBeDefined()
     })
   })
 
@@ -286,6 +294,77 @@ describe('TextInput', () => {
     })
   })
 
+  describe('Controlled vs Uncontrolled', () => {
+    it('should work as controlled component', () => {
+      const onChangeText = jest.fn()
+      const {rerender} = render(
+        <TextInput
+          testID="input"
+          value=""
+          onChangeText={onChangeText}
+        />
+      )
+
+      let input = screen.getByTestId('input')
+      expect(screen.getByDisplayValue('')).toBeTruthy()
+
+      // Simulate user interaction
+      fireEvent.changeText(input, 'hello')
+      expect(onChangeText).toHaveBeenCalledWith('hello')
+
+      // Parent component updates the value prop
+      rerender(
+        <TextInput
+          testID="input"
+          value="hello"
+          onChangeText={onChangeText}
+        />
+      )
+
+      expect(screen.getByDisplayValue('hello')).toBeTruthy()
+    })
+
+    it('should work as uncontrolled component', () => {
+      const onChangeText = jest.fn()
+      render(
+        <TextInput
+          testID="input"
+          onChangeText={onChangeText}
+        />
+      )
+
+      // User interaction triggers onChangeText
+      fireEvent.changeText(screen.getByTestId('input'), 'test')
+      expect(onChangeText).toHaveBeenCalledWith('test')
+
+      // Component doesn't manage its own state (parent's responsibility)
+    })
+
+    it('should maintain value when controlled', () => {
+      const {rerender} = render(
+        <TextInput
+          testID="input"
+          value="initial"
+        />
+      )
+
+      expect(screen.getByDisplayValue('initial')).toBeTruthy()
+
+      // Even after text change event, controlled component keeps value if prop doesn't change
+      fireEvent.changeText(screen.getByTestId('input'), 'changed')
+      expect(screen.getByDisplayValue('initial')).toBeTruthy()
+
+      // Only changes when prop changes
+      rerender(
+        <TextInput
+          testID="input"
+          value="updated"
+        />
+      )
+      expect(screen.getByDisplayValue('updated')).toBeTruthy()
+    })
+  })
+
   describe('Edge Cases', () => {
     it('should handle rapid text changes', () => {
       const onChangeText = jest.fn()
@@ -302,6 +381,9 @@ describe('TextInput', () => {
       fireEvent.changeText(input, 'abc')
 
       expect(onChangeText).toHaveBeenCalledTimes(3)
+      expect(onChangeText).toHaveBeenNthCalledWith(1, 'a')
+      expect(onChangeText).toHaveBeenNthCalledWith(2, 'ab')
+      expect(onChangeText).toHaveBeenNthCalledWith(3, 'abc')
     })
 
     it('should handle long text input', () => {
