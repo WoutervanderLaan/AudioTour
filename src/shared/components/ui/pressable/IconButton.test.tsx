@@ -1,3 +1,6 @@
+/* eslint-disable max-nested-callbacks */
+/* eslint-disable max-lines */
+/* eslint-disable max-lines-per-function */
 import {fireEvent, render, screen} from '@testing-library/react-native'
 
 import {IconButton} from './IconButton'
@@ -8,7 +11,12 @@ import {IconButton} from './IconButton'
 describe('IconButton', () => {
   describe('Rendering', () => {
     it('should render with icon name', () => {
-      render(<IconButton testID="icon-button" name="home" />)
+      render(
+        <IconButton
+          testID="icon-button"
+          name="home"
+        />,
+      )
       expect(screen.getByTestId('icon-button')).toBeTruthy()
     })
 
@@ -17,35 +25,56 @@ describe('IconButton', () => {
         <IconButton
           testID="test-icon-button"
           name="settings"
-        />
+        />,
       )
       expect(screen.getByTestId('test-icon-button')).toBeTruthy()
     })
 
     it('should render different icon names', () => {
-      const {rerender} = render(<IconButton name="home" />)
+      const {rerender} = render(
+        <IconButton
+          testID="icon-button"
+          name="home"
+        />,
+      )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
 
-      rerender(<IconButton name="search" />)
+      rerender(
+        <IconButton
+          testID="icon-button"
+          name="search"
+        />,
+      )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
 
-      rerender(<IconButton name="settings" />)
+      rerender(
+        <IconButton
+          testID="icon-button"
+          name="settings"
+        />,
+      )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
   })
 
   describe('Sizes', () => {
     it('should render with default md size', () => {
-      render(<IconButton name="home" />)
+      render(
+        <IconButton
+          testID="icon-button"
+          name="home"
+        />,
+      )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
 
     it('should render with small size', () => {
       render(
         <IconButton
+          testID="icon-button"
           name="home"
           size="sm"
-        />
+        />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
@@ -53,9 +82,10 @@ describe('IconButton', () => {
     it('should render with medium size', () => {
       render(
         <IconButton
+          testID="icon-button"
           name="home"
           size="md"
-        />
+        />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
@@ -63,9 +93,10 @@ describe('IconButton', () => {
     it('should render with large size', () => {
       render(
         <IconButton
+          testID="icon-button"
           name="home"
           size="lg"
-        />
+        />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
@@ -74,16 +105,18 @@ describe('IconButton', () => {
       const {rerender} = render(
         <IconButton
           name="home"
+          testID="icon-button"
           size="sm"
-        />
+        />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
 
       rerender(
         <IconButton
           name="home"
+          testID="icon-button"
           size="lg"
-        />
+        />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
@@ -91,7 +124,12 @@ describe('IconButton', () => {
 
   describe('Color', () => {
     it('should render with default color', () => {
-      render(<IconButton name="home" />)
+      render(
+        <IconButton
+          testID="icon-button"
+          name="home"
+        />,
+      )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
 
@@ -99,8 +137,9 @@ describe('IconButton', () => {
       render(
         <IconButton
           name="home"
+          testID="icon-button"
           color="red"
-        />
+        />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
@@ -110,7 +149,8 @@ describe('IconButton', () => {
         <IconButton
           name="home"
           color="#FF0000"
-        />
+          testID="icon-button"
+        />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
@@ -119,8 +159,9 @@ describe('IconButton', () => {
       render(
         <IconButton
           name="home"
+          testID="icon-button"
           color="rgb(255, 0, 0)"
-        />
+        />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
     })
@@ -134,7 +175,7 @@ describe('IconButton', () => {
           testID="icon-button"
           name="home"
           onPress={onPress}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('icon-button'))
@@ -149,7 +190,7 @@ describe('IconButton', () => {
           name="home"
           onPress={onPress}
           disabled
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('icon-button'))
@@ -163,7 +204,7 @@ describe('IconButton', () => {
           testID="icon-button"
           name="home"
           onPress={onPress}
-        />
+        />,
       )
 
       const button = screen.getByTestId('icon-button')
@@ -182,7 +223,7 @@ describe('IconButton', () => {
           testID="icon-button"
           name="home"
           disabled
-        />
+        />,
       )
       expect(screen.getByTestId('icon-button')).toBeTruthy()
     })
@@ -195,7 +236,7 @@ describe('IconButton', () => {
           name="home"
           onPress={onPress}
           disabled
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('icon-button'))
@@ -209,7 +250,7 @@ describe('IconButton', () => {
           name="home"
           size="sm"
           disabled
-        />
+        />,
       )
       expect(screen.getByTestId('icon-button')).toBeTruthy()
 
@@ -219,7 +260,7 @@ describe('IconButton', () => {
           name="home"
           size="lg"
           disabled
-        />
+        />,
       )
       expect(screen.getByTestId('icon-button')).toBeTruthy()
     })
@@ -227,8 +268,15 @@ describe('IconButton', () => {
 
   describe('Accessibility', () => {
     it('should have button accessibility role', () => {
-      render(<IconButton name="home" />)
-      expect(screen.queryByTestId('icon-button')).toBeTruthy()
+      render(
+        <IconButton
+          testID="icon-button"
+          name="home"
+        />,
+      )
+      expect(screen.queryByTestId('icon-button').props.accessibilityRole).toBe(
+        'button',
+      )
     })
 
     it('should accept accessibilityLabel', () => {
@@ -236,7 +284,7 @@ describe('IconButton', () => {
         <IconButton
           name="home"
           accessibilityLabel="Go to home"
-        />
+        />,
       )
       expect(screen.getByLabelText('Go to home')).toBeTruthy()
     })
@@ -247,7 +295,7 @@ describe('IconButton', () => {
           testID="icon-button"
           name="settings"
           accessibilityHint="Opens settings menu"
-        />
+        />,
       )
       expect(screen.getByTestId('icon-button')).toBeTruthy()
     })
@@ -261,7 +309,7 @@ describe('IconButton', () => {
           testID="nav-button"
           name="arrow-back"
           onPress={onNavigate}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('nav-button'))
@@ -275,7 +323,7 @@ describe('IconButton', () => {
           testID="menu-button"
           name="menu"
           onPress={onMenuPress}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('menu-button'))
@@ -290,7 +338,7 @@ describe('IconButton', () => {
           name="close"
           onPress={onClose}
           size="sm"
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('close-button'))
@@ -305,7 +353,7 @@ describe('IconButton', () => {
           name="settings"
           onPress={onSettings}
           accessibilityLabel="Settings"
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('settings-button'))
@@ -327,7 +375,7 @@ describe('IconButton', () => {
           <IconButton
             testID={`icon-${index}`}
             name={name as 'home'}
-          />
+          />,
         )
         expect(screen.getByTestId(`icon-${index}`)).toBeTruthy()
         unmount()
@@ -347,7 +395,7 @@ describe('IconButton', () => {
           <IconButton
             testID={`icon-${index}`}
             name={name as 'home'}
-          />
+          />,
         )
         expect(screen.getByTestId(`icon-${index}`)).toBeTruthy()
         unmount()
@@ -367,7 +415,7 @@ describe('IconButton', () => {
           onPress={onPress}
           accessibilityLabel="Add to favorites"
           accessibilityHint="Double tap to add to favorites"
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('full-props'))
@@ -383,7 +431,7 @@ describe('IconButton', () => {
           testID="icon-button"
           name="home"
           onPress={onPress}
-        />
+        />,
       )
 
       const button = screen.getByTestId('icon-button')
@@ -403,7 +451,7 @@ describe('IconButton', () => {
             testID={`icon-${index}`}
             name="home"
             size={size}
-          />
+          />,
         )
         expect(screen.getByTestId(`icon-${index}`)).toBeTruthy()
         unmount()

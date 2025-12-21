@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {render, screen} from '@testing-library/react-native'
 
 import {TextBase} from './TextBase'
@@ -22,7 +23,7 @@ describe('TextBase', () => {
 
     it('should render with custom accessibility role', () => {
       const {getByText} = render(
-        <TextBase accessibilityRole="header">Header Text</TextBase>
+        <TextBase accessibilityRole="header">Header Text</TextBase>,
       )
       const text = getByText('Header Text')
       expect(text.props.accessibilityRole).toBe('header')
@@ -30,7 +31,7 @@ describe('TextBase', () => {
 
     it('should render when accessible is false', () => {
       const {getByText} = render(
-        <TextBase accessible={false}>Non-accessible Text</TextBase>
+        <TextBase accessible={false}>Non-accessible Text</TextBase>,
       )
       const text = getByText('Non-accessible Text')
       expect(text.props.accessible).toBe(false)
@@ -81,7 +82,7 @@ describe('TextBase', () => {
     it('should accept custom style prop', () => {
       const customStyle = {opacity: 0.5}
       const {getByText} = render(
-        <TextBase style={customStyle}>Custom Style Text</TextBase>
+        <TextBase style={customStyle}>Custom Style Text</TextBase>,
       )
       expect(getByText('Custom Style Text')).toBeTruthy()
     })
@@ -97,10 +98,10 @@ describe('TextBase', () => {
       const {getByText} = render(
         <TextBase numberOfLines={2}>
           Long text that should be truncated after two lines
-        </TextBase>
+        </TextBase>,
       )
       const text = getByText(
-        'Long text that should be truncated after two lines'
+        'Long text that should be truncated after two lines',
       )
       expect(text.props.numberOfLines).toBe(2)
     })
@@ -111,7 +112,7 @@ describe('TextBase', () => {
           numberOfLines={1}
           ellipsizeMode="tail">
           Text with ellipsis
-        </TextBase>
+        </TextBase>,
       )
       const text = getByText('Text with ellipsis')
       expect(text.props.ellipsizeMode).toBe('tail')
@@ -120,7 +121,7 @@ describe('TextBase', () => {
     it('should forward onPress prop', () => {
       const onPress = jest.fn()
       const {getByText} = render(
-        <TextBase onPress={onPress}>Pressable Text</TextBase>
+        <TextBase onPress={onPress}>Pressable Text</TextBase>,
       )
       const text = getByText('Pressable Text')
       expect(text.props.onPress).toBe(onPress)
@@ -136,14 +137,14 @@ describe('TextBase', () => {
 
     it('should accept accessibilityLabel prop', () => {
       const {getByLabelText} = render(
-        <TextBase accessibilityLabel="Custom Label">Text Content</TextBase>
+        <TextBase accessibilityLabel="Custom Label">Text Content</TextBase>,
       )
       expect(getByLabelText('Custom Label')).toBeTruthy()
     })
 
     it('should accept accessibilityHint prop', () => {
       const {getByText} = render(
-        <TextBase accessibilityHint="This is a hint">Hinted Text</TextBase>
+        <TextBase accessibilityHint="This is a hint">Hinted Text</TextBase>,
       )
       const text = getByText('Hinted Text')
       expect(text.props.accessibilityHint).toBe('This is a hint')
@@ -152,13 +153,13 @@ describe('TextBase', () => {
 
   describe('Edge Cases', () => {
     it('should render with empty children', () => {
-      const {container} = render(<TextBase />)
-      expect(container).toBeTruthy()
+      const {root} = render(<TextBase />)
+      expect(root).toBeTruthy()
     })
 
     it('should render with null children', () => {
-      const {container} = render(<TextBase>{null}</TextBase>)
-      expect(container).toBeTruthy()
+      const {root} = render(<TextBase>{null}</TextBase>)
+      expect(root).toBeTruthy()
     })
 
     it('should render with number children', () => {
@@ -168,12 +169,12 @@ describe('TextBase', () => {
 
     it('should render with multiple children elements', () => {
       render(
-        <TextBase>
-          First <TextBase>Second</TextBase>
-        </TextBase>
+        <TextBase testID="firstTextBase">
+          First<TextBase testID="secondTextBase">Second</TextBase>
+        </TextBase>,
       )
-      expect(screen.getByText('First')).toBeTruthy()
-      expect(screen.getByText('Second')).toBeTruthy()
+      expect(screen.getByTestId('firstTextBase')).toBeTruthy()
+      expect(screen.getByTestId('secondTextBase')).toBeTruthy()
     })
   })
 })

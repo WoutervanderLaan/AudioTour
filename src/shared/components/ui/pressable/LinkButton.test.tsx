@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {fireEvent, render, screen} from '@testing-library/react-native'
 
 import {LinkButton} from './LinkButton'
@@ -17,7 +18,7 @@ describe('LinkButton', () => {
         <LinkButton
           testID="test-link"
           label="Test Link"
-        />
+        />,
       )
       expect(screen.getByTestId('test-link')).toBeTruthy()
     })
@@ -39,7 +40,7 @@ describe('LinkButton', () => {
         <LinkButton
           label="Label Link"
           textVariant="Label"
-        />
+        />,
       )
       expect(screen.getByText('Label Link')).toBeTruthy()
     })
@@ -49,7 +50,7 @@ describe('LinkButton', () => {
         <LinkButton
           label="Title Link"
           textVariant="Title"
-        />
+        />,
       )
       expect(screen.getByText('Title Link')).toBeTruthy()
     })
@@ -66,7 +67,7 @@ describe('LinkButton', () => {
         <LinkButton
           label="Small Link"
           variant="small"
-        />
+        />,
       )
       expect(screen.getByText('Small Link')).toBeTruthy()
     })
@@ -76,7 +77,7 @@ describe('LinkButton', () => {
         <LinkButton
           label="Extra Small Link"
           variant="extraSmall"
-        />
+        />,
       )
       expect(screen.getByText('Extra Small Link')).toBeTruthy()
     })
@@ -86,7 +87,7 @@ describe('LinkButton', () => {
         <LinkButton
           label="Intro Link"
           variant="intro"
-        />
+        />,
       )
       expect(screen.getByText('Intro Link')).toBeTruthy()
     })
@@ -96,7 +97,7 @@ describe('LinkButton', () => {
         <LinkButton
           label="Quote Link"
           variant="quote"
-        />
+        />,
       )
       expect(screen.getByText('Quote Link')).toBeTruthy()
     })
@@ -110,7 +111,7 @@ describe('LinkButton', () => {
           testID="link"
           label="Press me"
           onPress={onPress}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('link'))
@@ -125,7 +126,7 @@ describe('LinkButton', () => {
           label="Disabled Link"
           onPress={onPress}
           disabled
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('link'))
@@ -139,7 +140,7 @@ describe('LinkButton', () => {
           testID="link"
           label="Multi press"
           onPress={onPress}
-        />
+        />,
       )
 
       const link = screen.getByTestId('link')
@@ -157,7 +158,7 @@ describe('LinkButton', () => {
         <LinkButton
           label="Disabled Link"
           disabled
-        />
+        />,
       )
       expect(screen.getByText('Disabled Link')).toBeTruthy()
     })
@@ -170,7 +171,7 @@ describe('LinkButton', () => {
           label="Disabled"
           onPress={onPress}
           disabled
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('link'))
@@ -183,7 +184,7 @@ describe('LinkButton', () => {
           label="Link"
           variant="body"
           disabled
-        />
+        />,
       )
       expect(screen.getByText('Link')).toBeTruthy()
 
@@ -192,7 +193,7 @@ describe('LinkButton', () => {
           label="Link"
           variant="small"
           disabled
-        />
+        />,
       )
       expect(screen.getByText('Link')).toBeTruthy()
     })
@@ -209,7 +210,7 @@ describe('LinkButton', () => {
         <LinkButton
           label="Sign up"
           accessibilityLabel="Sign up for an account"
-        />
+        />,
       )
       expect(screen.getByLabelText('Sign up for an account')).toBeTruthy()
     })
@@ -220,7 +221,7 @@ describe('LinkButton', () => {
           testID="link"
           label="Learn more"
           accessibilityHint="Opens details page"
-        />
+        />,
       )
       expect(screen.getByTestId('link')).toBeTruthy()
     })
@@ -234,7 +235,7 @@ describe('LinkButton', () => {
           testID="signup"
           label="Sign up"
           onPress={onSignUp}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('signup'))
@@ -249,7 +250,7 @@ describe('LinkButton', () => {
           label="Forgot password?"
           variant="small"
           onPress={onForgotPassword}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('forgot-password'))
@@ -264,7 +265,7 @@ describe('LinkButton', () => {
           label="Terms and Conditions"
           variant="extraSmall"
           onPress={onTerms}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('terms'))
@@ -278,7 +279,7 @@ describe('LinkButton', () => {
           testID="nav-link"
           label="Go to profile"
           onPress={onNavigate}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('nav-link'))
@@ -292,7 +293,7 @@ describe('LinkButton', () => {
           testID="learn-more"
           label="Learn more →"
           onPress={onLearnMore}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('learn-more'))
@@ -310,8 +311,8 @@ describe('LinkButton', () => {
       render(
         <LinkButton
           label="Custom Color"
-          color="primary"
-        />
+          color="link"
+        />,
       )
       expect(screen.getByText('Custom Color')).toBeTruthy()
     })
@@ -347,7 +348,7 @@ describe('LinkButton', () => {
           onPress={onPress}
           accessibilityLabel="Complete link"
           accessibilityHint="Navigates to page"
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('full-props'))
@@ -378,7 +379,7 @@ describe('LinkButton', () => {
           testID="link"
           label="Rapid"
           onPress={onPress}
-        />
+        />,
       )
 
       const link = screen.getByTestId('link')

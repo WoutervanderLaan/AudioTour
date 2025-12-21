@@ -1,5 +1,8 @@
-import {render, screen} from '@testing-library/react-native'
+/* eslint-disable no-restricted-imports */
+/* eslint-disable max-lines-per-function */
 import {Text, View} from 'react-native'
+
+import {render, screen} from '@testing-library/react-native'
 
 import {Spacer} from './Spacer'
 
@@ -9,8 +12,8 @@ import {Spacer} from './Spacer'
 describe('Spacer', () => {
   describe('Rendering', () => {
     it('should render without crashing', () => {
-      const {container} = render(<Spacer />)
-      expect(container).toBeTruthy()
+      const {root} = render(<Spacer />)
+      expect(root).toBeTruthy()
     })
 
     it('should render with testID', () => {
@@ -24,7 +27,7 @@ describe('Spacer', () => {
       render(<Spacer testID="spacer" />)
       const view = screen.getByTestId('spacer')
       expect(view.props.style).toEqual(
-        expect.arrayContaining([expect.objectContaining({flex: 1})])
+        expect.arrayContaining([expect.objectContaining({flex: 1})]),
       )
     })
 
@@ -32,7 +35,7 @@ describe('Spacer', () => {
       render(<Spacer testID="spacer" />)
       const view = screen.getByTestId('spacer')
       expect(view.props.style).toEqual(
-        expect.arrayContaining([expect.objectContaining({flex: 1})])
+        expect.arrayContaining([expect.objectContaining({flex: 1})]),
       )
     })
   })
@@ -44,27 +47,52 @@ describe('Spacer', () => {
     })
 
     it('should accept size prop for padding', () => {
-      render(<Spacer testID="spacer" size="md" />)
+      render(
+        <Spacer
+          testID="spacer"
+          size="md"
+        />,
+      )
       expect(screen.getByTestId('spacer')).toBeTruthy()
     })
 
     it('should accept small size', () => {
-      render(<Spacer testID="spacer" size="sm" />)
+      render(
+        <Spacer
+          testID="spacer"
+          size="sm"
+        />,
+      )
       expect(screen.getByTestId('spacer')).toBeTruthy()
     })
 
     it('should accept large size', () => {
-      render(<Spacer testID="spacer" size="lg" />)
+      render(
+        <Spacer
+          testID="spacer"
+          size="lg"
+        />,
+      )
       expect(screen.getByTestId('spacer')).toBeTruthy()
     })
 
     it('should accept extra large size', () => {
-      render(<Spacer testID="spacer" size="xl" />)
+      render(
+        <Spacer
+          testID="spacer"
+          size="xl"
+        />,
+      )
       expect(screen.getByTestId('spacer')).toBeTruthy()
     })
 
     it('should accept extra small size', () => {
-      render(<Spacer testID="spacer" size="xs" />)
+      render(
+        <Spacer
+          testID="spacer"
+          size="xs"
+        />,
+      )
       expect(screen.getByTestId('spacer')).toBeTruthy()
     })
   })
@@ -80,7 +108,7 @@ describe('Spacer', () => {
           <View>
             <Text>Right</Text>
           </View>
-        </View>
+        </View>,
       )
       // Verify all children are rendered
       expect(getAllByText('Left')).toBeTruthy()
@@ -97,7 +125,7 @@ describe('Spacer', () => {
           <View>
             <Text>Bottom</Text>
           </View>
-        </View>
+        </View>,
       )
       expect(getAllByText('Top')).toBeTruthy()
       expect(getAllByText('Bottom')).toBeTruthy()
@@ -113,7 +141,7 @@ describe('Spacer', () => {
           <View>
             <Text>Content 2</Text>
           </View>
-        </View>
+        </View>,
       )
       expect(getAllByText('Content 1')).toBeTruthy()
       expect(getAllByText('Content 2')).toBeTruthy()
@@ -133,7 +161,7 @@ describe('Spacer', () => {
           <View>
             <Text>Item 3</Text>
           </View>
-        </View>
+        </View>,
       )
       expect(getAllByText('Item 1')).toBeTruthy()
       expect(getAllByText('Item 2')).toBeTruthy()
@@ -148,7 +176,7 @@ describe('Spacer', () => {
           <Spacer testID="spacer-1" />
           <Spacer testID="spacer-2" />
           <Spacer testID="spacer-3" />
-        </>
+        </>,
       )
       expect(screen.getByTestId('spacer-1')).toBeTruthy()
       expect(screen.getByTestId('spacer-2')).toBeTruthy()
@@ -158,10 +186,19 @@ describe('Spacer', () => {
     it('should work with different sizes in sequence', () => {
       render(
         <>
-          <Spacer testID="spacer-sm" size="sm" />
-          <Spacer testID="spacer-md" size="md" />
-          <Spacer testID="spacer-lg" size="lg" />
-        </>
+          <Spacer
+            testID="spacer-sm"
+            size="sm"
+          />
+          <Spacer
+            testID="spacer-md"
+            size="md"
+          />
+          <Spacer
+            testID="spacer-lg"
+            size="lg"
+          />
+        </>,
       )
       expect(screen.getByTestId('spacer-sm')).toBeTruthy()
       expect(screen.getByTestId('spacer-md')).toBeTruthy()

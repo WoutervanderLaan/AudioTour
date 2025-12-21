@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {fireEvent, render, screen} from '@testing-library/react-native'
 
 import {TextInput} from './TextInput'
@@ -8,7 +9,7 @@ import {TextInput} from './TextInput'
 describe('TextInput', () => {
   describe('Rendering', () => {
     it('should render correctly', () => {
-      render(<TextInput />)
+      render(<TextInput testID="text-input" />)
       expect(screen.queryByTestId('text-input')).toBeTruthy()
     })
 
@@ -35,7 +36,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           onChangeText={onChangeText}
-        />
+        />,
       )
 
       fireEvent.changeText(screen.getByTestId('input'), 'new text')
@@ -63,7 +64,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           onFocus={onFocus}
-        />
+        />,
       )
 
       fireEvent(screen.getByTestId('input'), 'focus')
@@ -76,7 +77,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           onBlur={onBlur}
-        />
+        />,
       )
 
       fireEvent(screen.getByTestId('input'), 'blur')
@@ -91,7 +92,7 @@ describe('TextInput', () => {
           testID="input"
           onFocus={onFocus}
           onBlur={onBlur}
-        />
+        />,
       )
 
       const input = screen.getByTestId('input')
@@ -109,13 +110,18 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           disabled
-        />
+        />,
       )
       expect(screen.getByTestId('input')).toBeTruthy()
     })
 
     it('should not be editable when disabled', () => {
-      render(<TextInput testID="input" disabled />)
+      render(
+        <TextInput
+          testID="input"
+          disabled
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.editable).toBe(false)
     })
@@ -133,7 +139,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           hasError
-        />
+        />,
       )
       const input = screen.getByTestId('input')
       // Error state is applied through styling, verify component renders
@@ -145,7 +151,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           hasError
-        />
+        />,
       )
       const input = screen.getByTestId('input')
       // Verify input has styles applied (error styles are in the style array)
@@ -158,7 +164,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           hasError={false}
-        />
+        />,
       )
       let input = screen.getByTestId('input')
       expect(input.props.style).toBeDefined()
@@ -167,7 +173,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           hasError
-        />
+        />,
       )
       input = screen.getByTestId('input')
       // Style array length may change when error state is toggled
@@ -178,20 +184,33 @@ describe('TextInput', () => {
   describe('Keyboard Types', () => {
     it('should accept email-address keyboard type', () => {
       render(
-        <TextInput testID="input" keyboardType="email-address" />
+        <TextInput
+          testID="input"
+          keyboardType="email-address"
+        />,
       )
       const input = screen.getByTestId('input')
       expect(input.props.keyboardType).toBe('email-address')
     })
 
     it('should accept numeric keyboard type', () => {
-      render(<TextInput testID="input" keyboardType="numeric" />)
+      render(
+        <TextInput
+          testID="input"
+          keyboardType="numeric"
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.keyboardType).toBe('numeric')
     })
 
     it('should accept phone-pad keyboard type', () => {
-      render(<TextInput testID="input" keyboardType="phone-pad" />)
+      render(
+        <TextInput
+          testID="input"
+          keyboardType="phone-pad"
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.keyboardType).toBe('phone-pad')
     })
@@ -199,19 +218,32 @@ describe('TextInput', () => {
 
   describe('Secure Text Entry', () => {
     it('should support secure text entry', () => {
-      render(<TextInput testID="input" secureTextEntry />)
+      render(
+        <TextInput
+          testID="input"
+          secureTextEntry
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.secureTextEntry).toBe(true)
     })
 
     it('should toggle secure text entry', () => {
       const {rerender} = render(
-        <TextInput testID="input" secureTextEntry={false} />
+        <TextInput
+          testID="input"
+          secureTextEntry={false}
+        />,
       )
       let input = screen.getByTestId('input')
       expect(input.props.secureTextEntry).toBe(false)
 
-      rerender(<TextInput testID="input" secureTextEntry />)
+      rerender(
+        <TextInput
+          testID="input"
+          secureTextEntry
+        />,
+      )
       input = screen.getByTestId('input')
       expect(input.props.secureTextEntry).toBe(true)
     })
@@ -219,7 +251,12 @@ describe('TextInput', () => {
 
   describe('Multiline', () => {
     it('should support multiline input', () => {
-      render(<TextInput testID="input" multiline />)
+      render(
+        <TextInput
+          testID="input"
+          multiline
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.multiline).toBe(true)
     })
@@ -230,7 +267,7 @@ describe('TextInput', () => {
           testID="input"
           multiline
           numberOfLines={4}
-        />
+        />,
       )
       const input = screen.getByTestId('input')
       expect(input.props.numberOfLines).toBe(4)
@@ -249,21 +286,29 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           accessibilityLabel="Email input"
-        />
+        />,
       )
       expect(screen.getByLabelText('Email input')).toBeTruthy()
     })
 
     it('should accept accessibilityHint', () => {
       render(
-        <TextInput testID="input" accessibilityHint="Enter your email address" />
+        <TextInput
+          testID="input"
+          accessibilityHint="Enter your email address"
+        />,
       )
       const input = screen.getByTestId('input')
       expect(input.props.accessibilityHint).toBe('Enter your email address')
     })
 
     it('should have disabled state in accessibility', () => {
-      render(<TextInput testID="input" disabled />)
+      render(
+        <TextInput
+          testID="input"
+          disabled
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.accessibilityState.disabled).toBe(true)
     })
@@ -271,25 +316,45 @@ describe('TextInput', () => {
 
   describe('Props Forwarding', () => {
     it('should forward maxLength prop', () => {
-      render(<TextInput testID="input" maxLength={10} />)
+      render(
+        <TextInput
+          testID="input"
+          maxLength={10}
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.maxLength).toBe(10)
     })
 
     it('should forward autoCapitalize prop', () => {
-      render(<TextInput testID="input" autoCapitalize="none" />)
+      render(
+        <TextInput
+          testID="input"
+          autoCapitalize="none"
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.autoCapitalize).toBe('none')
     })
 
     it('should forward autoCorrect prop', () => {
-      render(<TextInput testID="input" autoCorrect={false} />)
+      render(
+        <TextInput
+          testID="input"
+          autoCorrect={false}
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.autoCorrect).toBe(false)
     })
 
     it('should forward autoComplete prop', () => {
-      render(<TextInput testID="input" autoComplete="email" />)
+      render(
+        <TextInput
+          testID="input"
+          autoComplete="email"
+        />,
+      )
       const input = screen.getByTestId('input')
       expect(input.props.autoComplete).toBe('email')
     })
@@ -303,7 +368,7 @@ describe('TextInput', () => {
           testID="input"
           value=""
           onChangeText={onChangeText}
-        />
+        />,
       )
 
       expect(screen.getByDisplayValue('')).toBeTruthy()
@@ -318,7 +383,7 @@ describe('TextInput', () => {
           testID="input"
           value="hello"
           onChangeText={onChangeText}
-        />
+        />,
       )
 
       expect(screen.getByDisplayValue('hello')).toBeTruthy()
@@ -331,7 +396,7 @@ describe('TextInput', () => {
           testID="input"
           value=""
           onChangeText={onChangeText}
-        />
+        />,
       )
 
       // User types - onChangeText fires but component doesn't self-update
@@ -347,7 +412,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           value="initial"
-        />
+        />,
       )
 
       expect(screen.getByDisplayValue('initial')).toBeTruthy()
@@ -361,7 +426,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           value="updated"
-        />
+        />,
       )
       expect(screen.getByDisplayValue('updated')).toBeTruthy()
     })
@@ -374,7 +439,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           onChangeText={onChangeText}
-        />
+        />,
       )
 
       const input = screen.getByTestId('input')
@@ -395,7 +460,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           onChangeText={onChangeText}
-        />
+        />,
       )
 
       fireEvent.changeText(screen.getByTestId('input'), longText)
@@ -408,7 +473,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           onChangeText={onChangeText}
-        />
+        />,
       )
 
       fireEvent.changeText(screen.getByTestId('input'), '@#$%^&*()')
@@ -421,7 +486,7 @@ describe('TextInput', () => {
         <TextInput
           testID="input"
           onChangeText={onChangeText}
-        />
+        />,
       )
 
       fireEvent.changeText(screen.getByTestId('input'), '🎵 音楽 Музыка')

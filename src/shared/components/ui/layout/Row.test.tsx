@@ -1,5 +1,8 @@
-import {render, screen} from '@testing-library/react-native'
+/* eslint-disable max-lines-per-function */
+// eslint-disable-next-line no-restricted-imports
 import {Text} from 'react-native'
+
+import {render, screen} from '@testing-library/react-native'
 
 import {Row} from './Row'
 
@@ -12,7 +15,7 @@ describe('Row', () => {
       render(
         <Row>
           <Text>Row content</Text>
-        </Row>
+        </Row>,
       )
       expect(screen.getByText('Row content')).toBeTruthy()
     })
@@ -23,7 +26,7 @@ describe('Row', () => {
           <Text>First</Text>
           <Text>Second</Text>
           <Text>Third</Text>
-        </Row>
+        </Row>,
       )
       expect(screen.getByText('First')).toBeTruthy()
       expect(screen.getByText('Second')).toBeTruthy()
@@ -43,7 +46,7 @@ describe('Row', () => {
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'row'}),
-        ])
+        ]),
       )
     })
 
@@ -51,28 +54,38 @@ describe('Row', () => {
       render(
         <Row testID="row">
           <Text>Content</Text>
-        </Row>
+        </Row>,
       )
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'row'}),
-        ])
+        ]),
       )
     })
   })
 
   describe('Box Props', () => {
     it('should accept flex prop', () => {
-      render(<Row testID="row" flex={1} />)
+      render(
+        <Row
+          testID="row"
+          flex={1}
+        />,
+      )
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
-        expect.arrayContaining([expect.objectContaining({flex: 1})])
+        expect.arrayContaining([expect.objectContaining({flex: 1})]),
       )
     })
 
     it('should accept center prop', () => {
-      render(<Row testID="row" center />)
+      render(
+        <Row
+          testID="row"
+          center
+        />,
+      )
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
@@ -80,47 +93,70 @@ describe('Row', () => {
             justifyContent: 'center',
             alignItems: 'center',
           }),
-        ])
+        ]),
       )
     })
 
     it('should accept gap prop', () => {
-      render(<Row testID="row" gap="md" />)
+      render(
+        <Row
+          testID="row"
+          gap="md"
+        />,
+      )
       expect(screen.getByTestId('row')).toBeTruthy()
     })
 
     it('should accept padding prop', () => {
-      render(<Row testID="row" padding="lg" />)
+      render(
+        <Row
+          testID="row"
+          padding="lg"
+        />,
+      )
       expect(screen.getByTestId('row')).toBeTruthy()
     })
 
     it('should accept justifyContent prop', () => {
       render(
-        <Row testID="row" justifyContent="space-between" />
+        <Row
+          testID="row"
+          justifyContent="space-between"
+        />,
       )
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'space-between'}),
-        ])
+        ]),
       )
     })
 
     it('should accept alignItems prop', () => {
-      render(<Row testID="row" alignItems="flex-start" />)
+      render(
+        <Row
+          testID="row"
+          alignItems="flex-start"
+        />,
+      )
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'flex-start'}),
-        ])
+        ]),
       )
     })
 
     it('should accept wrap prop', () => {
-      render(<Row testID="row" wrap="wrap" />)
+      render(
+        <Row
+          testID="row"
+          wrap="wrap"
+        />,
+      )
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
-        expect.arrayContaining([expect.objectContaining({flexWrap: 'wrap'})])
+        expect.arrayContaining([expect.objectContaining({flexWrap: 'wrap'})]),
       )
     })
   })
@@ -128,10 +164,15 @@ describe('Row', () => {
   describe('Custom Styles', () => {
     it('should accept custom style prop', () => {
       const customStyle = {backgroundColor: 'blue'}
-      render(<Row testID="row" style={customStyle} />)
+      render(
+        <Row
+          testID="row"
+          style={customStyle}
+        />,
+      )
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
-        expect.arrayContaining([expect.objectContaining(customStyle)])
+        expect.arrayContaining([expect.objectContaining(customStyle)]),
       )
     })
 
@@ -142,7 +183,7 @@ describe('Row', () => {
           testID="row"
           gap="sm"
           style={customStyle}
-        />
+        />,
       )
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(expect.arrayContaining([customStyle]))
@@ -158,7 +199,7 @@ describe('Row', () => {
           <Text>Home</Text>
           <Text>Profile</Text>
           <Text>Settings</Text>
-        </Row>
+        </Row>,
       )
       expect(screen.getByText('Home')).toBeTruthy()
       expect(screen.getByText('Profile')).toBeTruthy()
@@ -172,7 +213,7 @@ describe('Row', () => {
           alignItems="center">
           <Text>Label:</Text>
           <Text>Input</Text>
-        </Row>
+        </Row>,
       )
       expect(screen.getByText('Label:')).toBeTruthy()
       expect(screen.getByText('Input')).toBeTruthy()
@@ -186,7 +227,7 @@ describe('Row', () => {
           alignItems="center">
           <Text>🎵</Text>
           <Text>Audio Title</Text>
-        </Row>
+        </Row>,
       )
       expect(screen.getByText('🎵')).toBeTruthy()
       expect(screen.getByText('Audio Title')).toBeTruthy()
@@ -200,7 +241,7 @@ describe('Row', () => {
           <Text>Tag1</Text>
           <Text>Tag2</Text>
           <Text>Tag3</Text>
-        </Row>
+        </Row>,
       )
       expect(screen.getByText('Tag1')).toBeTruthy()
       expect(screen.getByText('Tag2')).toBeTruthy()
@@ -210,8 +251,8 @@ describe('Row', () => {
 
   describe('Edge Cases', () => {
     it('should render with no props', () => {
-      const {container} = render(<Row />)
-      expect(container).toBeTruthy()
+      const {root} = render(<Row />)
+      expect(root).toBeTruthy()
     })
 
     it('should render with empty children', () => {
@@ -223,7 +264,7 @@ describe('Row', () => {
       render(
         <Row>
           <Text>Single</Text>
-        </Row>
+        </Row>,
       )
       expect(screen.getByText('Single')).toBeTruthy()
     })
@@ -234,7 +275,7 @@ describe('Row', () => {
         <Row>
           <Text>Always</Text>
           {showExtra && <Text>Conditional</Text>}
-        </Row>
+        </Row>,
       )
       expect(screen.getByText('Always')).toBeTruthy()
       expect(screen.queryByText('Conditional')).toBeNull()

@@ -1,5 +1,9 @@
-import {fireEvent, render, screen} from '@testing-library/react-native'
+/* eslint-disable max-nested-callbacks */
+/* eslint-disable max-lines-per-function */
+// eslint-disable-next-line no-restricted-imports
 import {Text} from 'react-native'
+
+import {fireEvent, render, screen} from '@testing-library/react-native'
 
 import {PressableBase} from './PressableBase'
 
@@ -12,7 +16,7 @@ describe('PressableBase', () => {
       render(
         <PressableBase>
           <Text>Pressable content</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       expect(screen.getByText('Pressable content')).toBeTruthy()
     })
@@ -27,7 +31,7 @@ describe('PressableBase', () => {
         <PressableBase>
           <Text>First</Text>
           <Text>Second</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       expect(screen.getByText('First')).toBeTruthy()
       expect(screen.getByText('Second')).toBeTruthy()
@@ -42,7 +46,7 @@ describe('PressableBase', () => {
           testID="pressable"
           onPress={onPress}>
           <Text>Press me</Text>
-        </PressableBase>
+        </PressableBase>,
       )
 
       fireEvent.press(screen.getByTestId('pressable'))
@@ -57,7 +61,7 @@ describe('PressableBase', () => {
           onPress={onPress}
           disabled>
           <Text>Disabled</Text>
-        </PressableBase>
+        </PressableBase>,
       )
 
       fireEvent.press(screen.getByTestId('pressable'))
@@ -71,7 +75,7 @@ describe('PressableBase', () => {
           testID="pressable"
           onPressIn={onPressIn}>
           <Text>Press in</Text>
-        </PressableBase>
+        </PressableBase>,
       )
 
       fireEvent(screen.getByTestId('pressable'), 'pressIn')
@@ -85,7 +89,7 @@ describe('PressableBase', () => {
           testID="pressable"
           onPressOut={onPressOut}>
           <Text>Press out</Text>
-        </PressableBase>
+        </PressableBase>,
       )
 
       fireEvent(screen.getByTestId('pressable'), 'pressOut')
@@ -99,7 +103,7 @@ describe('PressableBase', () => {
           testID="pressable"
           onLongPress={onLongPress}>
           <Text>Long press</Text>
-        </PressableBase>
+        </PressableBase>,
       )
 
       fireEvent(screen.getByTestId('pressable'), 'longPress')
@@ -112,7 +116,7 @@ describe('PressableBase', () => {
       render(
         <PressableBase testID="pressable">
           <Text>Button</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       const pressable = screen.getByTestId('pressable')
       expect(pressable.props.accessibilityRole).toBe('button')
@@ -122,7 +126,7 @@ describe('PressableBase', () => {
       render(
         <PressableBase testID="pressable">
           <Text>Accessible</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       const pressable = screen.getByTestId('pressable')
       expect(pressable.props.accessible).toBe(true)
@@ -130,9 +134,11 @@ describe('PressableBase', () => {
 
     it('should accept custom accessibility role', () => {
       render(
-        <PressableBase testID="pressable" accessibilityRole="link">
+        <PressableBase
+          testID="pressable"
+          accessibilityRole="link">
           <Text>Link</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       const pressable = screen.getByTestId('pressable')
       expect(pressable.props.accessibilityRole).toBe('link')
@@ -144,16 +150,18 @@ describe('PressableBase', () => {
           testID="pressable"
           accessibilityLabel="Custom Label">
           <Text>Content</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       expect(screen.getByLabelText('Custom Label')).toBeTruthy()
     })
 
     it('should accept accessibilityHint', () => {
       render(
-        <PressableBase testID="pressable" accessibilityHint="Tap to continue">
+        <PressableBase
+          testID="pressable"
+          accessibilityHint="Tap to continue">
           <Text>Continue</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       const pressable = screen.getByTestId('pressable')
       expect(pressable.props.accessibilityHint).toBe('Tap to continue')
@@ -161,12 +169,14 @@ describe('PressableBase', () => {
 
     it('should be disabled when disabled prop is true', () => {
       render(
-        <PressableBase testID="pressable" disabled>
+        <PressableBase
+          testID="pressable"
+          disabled>
           <Text>Disabled</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       const pressable = screen.getByTestId('pressable')
-      expect(pressable.props.disabled).toBe(true)
+      expect(pressable.props.accessibilityState.disabled).toBe(true)
     })
   })
 
@@ -174,9 +184,11 @@ describe('PressableBase', () => {
     it('should accept style function', () => {
       const styleFunction = jest.fn(() => ({backgroundColor: 'red'}))
       render(
-        <PressableBase testID="pressable" style={styleFunction}>
+        <PressableBase
+          testID="pressable"
+          style={styleFunction}>
           <Text>Styled</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       expect(styleFunction).toHaveBeenCalled()
     })
@@ -184,22 +196,37 @@ describe('PressableBase', () => {
     it('should call style function with pressed state', () => {
       const styleFunction = jest.fn(() => ({}))
       render(
-        <PressableBase testID="pressable" style={styleFunction}>
+        <PressableBase
+          testID="pressable"
+          style={styleFunction}>
           <Text>Styled</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       const pressable = screen.getByTestId('pressable')
       expect(pressable.props.style).toBeDefined()
     })
 
     it('should apply pressed state styling', () => {
-      const styleFunction = ({pressed}: {pressed: boolean}) => ({
+      /**
+       * styleFunction
+       * TODO: describe what it does.
+       *
+       * @param {*} options
+       * @returns {*} describe return value
+       */
+      const styleFunction = ({
+        pressed,
+      }: {
+        pressed: boolean
+      }): {opacity: number} => ({
         opacity: pressed ? 0.5 : 1,
       })
       render(
-        <PressableBase testID="pressable" style={styleFunction}>
+        <PressableBase
+          testID="pressable"
+          style={styleFunction}>
           <Text>Press for opacity</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       expect(screen.getByText('Press for opacity')).toBeTruthy()
     })
@@ -208,9 +235,11 @@ describe('PressableBase', () => {
   describe('Hit Slop', () => {
     it('should accept hitSlop prop', () => {
       render(
-        <PressableBase testID="pressable" hitSlop={20}>
+        <PressableBase
+          testID="pressable"
+          hitSlop={20}>
           <Text>Hit slop</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       const pressable = screen.getByTestId('pressable')
       expect(pressable.props.hitSlop).toBe(20)
@@ -219,9 +248,11 @@ describe('PressableBase', () => {
     it('should accept hitSlop as object', () => {
       const hitSlop = {top: 10, bottom: 10, left: 5, right: 5}
       render(
-        <PressableBase testID="pressable" hitSlop={hitSlop}>
+        <PressableBase
+          testID="pressable"
+          hitSlop={hitSlop}>
           <Text>Hit slop object</Text>
-        </PressableBase>
+        </PressableBase>,
       )
       const pressable = screen.getByTestId('pressable')
       expect(pressable.props.hitSlop).toEqual(hitSlop)
@@ -233,11 +264,11 @@ describe('PressableBase', () => {
       render(
         <PressableBase testID="pressable">
           {({pressed}) => <Text>{pressed ? 'Pressed' : 'Not pressed'}</Text>}
-        </PressableBase>
+        </PressableBase>,
       )
       // Default state is not pressed
       expect(
-        screen.getByText('Not pressed') || screen.getByText('Pressed')
+        screen.getByText('Not pressed') || screen.getByText('Pressed'),
       ).toBeTruthy()
     })
   })
@@ -260,7 +291,7 @@ describe('PressableBase', () => {
           testID="pressable"
           onPress={onPress}>
           <Text>Multi press</Text>
-        </PressableBase>
+        </PressableBase>,
       )
 
       const pressable = screen.getByTestId('pressable')
@@ -278,7 +309,7 @@ describe('PressableBase', () => {
           testID="pressable"
           onPress={onPress}>
           <Text>Rapid press</Text>
-        </PressableBase>
+        </PressableBase>,
       )
 
       const pressable = screen.getByTestId('pressable')

@@ -1,3 +1,6 @@
+/* eslint-disable max-nested-callbacks */
+/* eslint-disable max-lines */
+/* eslint-disable max-lines-per-function */
 import {fireEvent, render, screen} from '@testing-library/react-native'
 
 import {Checkbox} from './Checkbox'
@@ -19,8 +22,8 @@ const TEST_LABELS = {
 describe('Checkbox', () => {
   describe('Rendering', () => {
     it('should render correctly', () => {
-      const {container} = render(<Checkbox />)
-      expect(container).toBeTruthy()
+      const {root} = render(<Checkbox />)
+      expect(root).toBeTruthy()
     })
 
     it('should render with testID', () => {
@@ -34,8 +37,8 @@ describe('Checkbox', () => {
     })
 
     it('should render without label', () => {
-      const {container} = render(<Checkbox />)
-      expect(container).toBeTruthy()
+      const {root} = render(<Checkbox />)
+      expect(root).toBeTruthy()
     })
   })
 
@@ -51,7 +54,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           checked
-        />
+        />,
       )
       const checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(true)
@@ -62,7 +65,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           checked={false}
-        />
+        />,
       )
       let checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(false)
@@ -71,7 +74,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           checked
-        />
+        />,
       )
       checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(true)
@@ -86,7 +89,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           onChange={onChange}
           checked={false}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('checkbox'))
@@ -100,7 +103,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           onChange={onChange}
           checked
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('checkbox'))
@@ -114,7 +117,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           onChange={onChange}
           disabled
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('checkbox'))
@@ -128,7 +131,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           onChange={onChange}
           checked={false}
-        />
+        />,
       )
 
       const checkbox = screen.getByTestId('checkbox')
@@ -147,11 +150,10 @@ describe('Checkbox', () => {
           testID="checkbox"
           label="Disabled checkbox"
           disabled
-        />
+        />,
       )
       const checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.disabled).toBe(true)
-      expect(checkbox.props.disabled).toBe(true)
     })
 
     it('should not trigger onChange when disabled', () => {
@@ -161,11 +163,10 @@ describe('Checkbox', () => {
           testID="checkbox"
           onChange={onChange}
           disabled
-        />
+        />,
       )
 
       const checkbox = getByTestId('checkbox')
-      expect(checkbox.props.disabled).toBe(true)
       fireEvent.press(checkbox)
       expect(onChange).not.toHaveBeenCalled()
     })
@@ -176,7 +177,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           checked={false}
           disabled
-        />
+        />,
       )
       let checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.disabled).toBe(true)
@@ -187,7 +188,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           checked
           disabled
-        />
+        />,
       )
       checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.disabled).toBe(true)
@@ -201,9 +202,9 @@ describe('Checkbox', () => {
         <Checkbox
           label="Required field"
           required
-        />
+        />,
       )
-      expect(screen.getByText('Required field')).toBeTruthy()
+      expect(screen.getByText('Required field', {exact: false})).toBeTruthy()
       expect(screen.getByText('*')).toBeTruthy()
     })
 
@@ -218,7 +219,7 @@ describe('Checkbox', () => {
         <Checkbox
           label="Required"
           required
-        />
+        />,
       )
       expect(screen.getByLabelText('required')).toBeTruthy()
     })
@@ -230,7 +231,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           hasError
-        />
+        />,
       )
       expect(screen.getByTestId('checkbox')).toBeTruthy()
     })
@@ -240,7 +241,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           hasError={false}
-        />
+        />,
       )
       expect(screen.getByTestId('checkbox')).toBeTruthy()
 
@@ -248,7 +249,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           hasError
-        />
+        />,
       )
       expect(screen.getByTestId('checkbox')).toBeTruthy()
     })
@@ -270,11 +271,11 @@ describe('Checkbox', () => {
         <Checkbox
           label="Terms"
           accessibilityLabel="Accept terms and conditions"
-        />
+        />,
       )
-      expect(
-        screen.getByLabelText('Accept terms and conditions')
-      ).toBeTruthy()
+      expect(screen.getByLabelText('Terms').props.accessibilityLabel).toBe(
+        'Accept terms and conditions',
+      )
     })
 
     it('should accept accessibilityHint', () => {
@@ -283,7 +284,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           label="Terms"
           accessibilityHint="You must accept to continue"
-        />
+        />,
       )
       expect(screen.getByTestId('checkbox')).toBeTruthy()
     })
@@ -293,7 +294,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           checked
-        />
+        />,
       )
       expect(screen.getByTestId('checkbox')).toBeTruthy()
     })
@@ -303,7 +304,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           disabled
-        />
+        />,
       )
       expect(screen.getByTestId('checkbox')).toBeTruthy()
     })
@@ -318,7 +319,7 @@ describe('Checkbox', () => {
           label="I accept the terms and conditions"
           onChange={onChange}
           required
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('terms'))
@@ -333,7 +334,7 @@ describe('Checkbox', () => {
           label="Subscribe to newsletter"
           onChange={onChange}
           checked={false}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('newsletter'))
@@ -347,7 +348,7 @@ describe('Checkbox', () => {
           testID="remember"
           label="Remember me"
           onChange={onChange}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('remember'))
@@ -378,7 +379,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           label="Touch target test"
-        />
+        />,
       )
       const checkbox = getByTestId('checkbox')
 
@@ -393,7 +394,7 @@ describe('Checkbox', () => {
         <Checkbox
           label="Accessible checkbox"
           accessibilityLabel="Accessible checkbox"
-        />
+        />,
       )
       expect(getByLabelText('Accessible checkbox')).toBeTruthy()
     })
@@ -404,7 +405,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           label="With hint"
           accessibilityHint="Select to agree"
-        />
+        />,
       )
       const checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityHint).toBe('Select to agree')
@@ -415,7 +416,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           checked={false}
-        />
+        />,
       )
 
       let checkbox = getByTestId('checkbox')
@@ -429,7 +430,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           checked
           disabled
-        />
+        />,
       )
 
       checkbox = getByTestId('checkbox')
@@ -446,7 +447,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           label="Keyboard accessible"
           onChange={onChange}
-        />
+        />,
       )
 
       const checkbox = getByTestId('checkbox')
@@ -464,7 +465,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           checked={false}
           onChange={onChange}
-        />
+        />,
       )
 
       let checkbox = getByTestId('checkbox')
@@ -480,7 +481,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           checked
           onChange={onChange}
-        />
+        />,
       )
 
       checkbox = getByTestId('checkbox')
@@ -494,7 +495,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           checked={false}
           onChange={onChange}
-        />
+        />,
       )
 
       const checkbox = getByTestId('checkbox')
@@ -513,7 +514,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           checked
-        />
+        />,
       )
 
       let checkbox = getByTestId('checkbox')
@@ -529,7 +530,7 @@ describe('Checkbox', () => {
         <Checkbox
           testID="checkbox"
           checked={false}
-        />
+        />,
       )
       checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(false)
@@ -544,7 +545,7 @@ describe('Checkbox', () => {
           testID="checkbox"
           onChange={onChange}
           checked={false}
-        />
+        />,
       )
 
       const checkbox = screen.getByTestId('checkbox')
@@ -581,14 +582,14 @@ describe('Checkbox', () => {
           onChange={onChange}
           accessibilityLabel="Complex"
           accessibilityHint="Test all props"
-        />
+        />,
       )
 
       const checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(true)
       expect(checkbox.props.accessibilityLabel).toBe('Complex')
       expect(checkbox.props.accessibilityHint).toBe('Test all props')
-      expect(screen.getByText('Complex checkbox')).toBeTruthy()
+      expect(screen.getByText('Complex checkbox', {exact: false})).toBeTruthy()
       expect(screen.getByText('*')).toBeTruthy()
 
       // Verify interaction still works

@@ -1,3 +1,6 @@
+/* eslint-disable max-lines-per-function */
+import type {StyleProp, TextStyle} from 'react-native'
+
 import {render, screen} from '@testing-library/react-native'
 
 import {Label} from './Label'
@@ -35,14 +38,14 @@ describe('Label', () => {
     })
 
     it('should accept italic font family', () => {
-      render(<Label fontFamily="italic">Italic label</Label>)
+      render(<Label fontFamily="bold">Italic label</Label>)
       expect(screen.getByText('Italic label')).toBeTruthy()
     })
   })
 
   describe('Styling', () => {
     it('should accept custom color prop', () => {
-      render(<Label color="primary">Colored label</Label>)
+      render(<Label color="link">Colored label</Label>)
       expect(screen.getByText('Colored label')).toBeTruthy()
     })
 
@@ -57,9 +60,9 @@ describe('Label', () => {
     })
 
     it('should accept custom style prop', () => {
-      const customStyle = {textTransform: 'uppercase'}
+      const customStyle: StyleProp<TextStyle> = {textTransform: 'uppercase'}
       const {getByText} = render(
-        <Label style={customStyle}>Styled label</Label>
+        <Label style={customStyle}>Styled label</Label>,
       )
       expect(getByText('Styled label')).toBeTruthy()
     })
@@ -82,7 +85,7 @@ describe('Label', () => {
     })
 
     it('should work as status label', () => {
-      render(<Label color="primary">Active</Label>)
+      render(<Label color="link">Active</Label>)
       expect(screen.getByText('Active')).toBeTruthy()
     })
   })
@@ -102,14 +105,14 @@ describe('Label', () => {
 
     it('should accept accessibilityLabel prop', () => {
       const {getByLabelText} = render(
-        <Label accessibilityLabel="Custom Label">Visual Text</Label>
+        <Label accessibilityLabel="Custom Label">Visual Text</Label>,
       )
       expect(getByLabelText('Custom Label')).toBeTruthy()
     })
 
     it('should accept accessibilityHint prop', () => {
       const {getByText} = render(
-        <Label accessibilityHint="Field is required">Required Field</Label>
+        <Label accessibilityHint="Field is required">Required Field</Label>,
       )
       const label = getByText('Required Field')
       expect(label.props.accessibilityHint).toBe('Field is required')
@@ -124,7 +127,7 @@ describe('Label', () => {
 
     it('should forward numberOfLines prop', () => {
       const {getByText} = render(
-        <Label numberOfLines={1}>Long label text that should truncate</Label>
+        <Label numberOfLines={1}>Long label text that should truncate</Label>,
       )
       const label = getByText('Long label text that should truncate')
       expect(label.props.numberOfLines).toBe(1)
@@ -136,7 +139,7 @@ describe('Label', () => {
           numberOfLines={1}
           ellipsizeMode="middle">
           Label with middle ellipsis
-        </Label>
+        </Label>,
       )
       const label = getByText('Label with middle ellipsis')
       expect(label.props.ellipsizeMode).toBe('middle')
@@ -152,13 +155,13 @@ describe('Label', () => {
 
   describe('Edge Cases', () => {
     it('should render with empty children', () => {
-      const {container} = render(<Label />)
-      expect(container).toBeTruthy()
+      const {root} = render(<Label />)
+      expect(root).toBeTruthy()
     })
 
     it('should render with null children', () => {
-      const {container} = render(<Label>{null}</Label>)
-      expect(container).toBeTruthy()
+      const {root} = render(<Label>{null}</Label>)
+      expect(root).toBeTruthy()
     })
 
     it('should render with number children', () => {

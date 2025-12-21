@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {render, screen} from '@testing-library/react-native'
 
 import {Title} from './Title'
@@ -71,7 +72,7 @@ describe('Title', () => {
 
   describe('Styling', () => {
     it('should accept custom color prop', () => {
-      render(<Title color="primary">Colored Title</Title>)
+      render(<Title color="link">Colored Title</Title>)
       expect(screen.getByText('Colored Title')).toBeTruthy()
     })
 
@@ -83,7 +84,7 @@ describe('Title', () => {
     it('should accept custom style prop', () => {
       const customStyle = {opacity: 0.8}
       const {getByText} = render(
-        <Title style={customStyle}>Styled Title</Title>
+        <Title style={customStyle}>Styled Title</Title>,
       )
       expect(getByText('Styled Title')).toBeTruthy()
     })
@@ -98,7 +99,7 @@ describe('Title', () => {
 
     it('should accept accessibilityLabel prop', () => {
       const {getByLabelText} = render(
-        <Title accessibilityLabel="Custom Header Label">Title</Title>
+        <Title accessibilityLabel="Custom Header Label">Title</Title>,
       )
       expect(getByLabelText('Custom Header Label')).toBeTruthy()
     })
@@ -120,10 +121,10 @@ describe('Title', () => {
       const {getByText} = render(
         <Title numberOfLines={1}>
           Long title that should be truncated after one line
-        </Title>
+        </Title>,
       )
       const title = getByText(
-        'Long title that should be truncated after one line'
+        'Long title that should be truncated after one line',
       )
       expect(title.props.numberOfLines).toBe(1)
     })
@@ -134,7 +135,7 @@ describe('Title', () => {
           numberOfLines={1}
           ellipsizeMode="middle">
           Title with ellipsis
-        </Title>
+        </Title>,
       )
       const title = getByText('Title with ellipsis')
       expect(title.props.ellipsizeMode).toBe('middle')
@@ -143,8 +144,8 @@ describe('Title', () => {
 
   describe('Edge Cases', () => {
     it('should render with empty children', () => {
-      const {container} = render(<Title />)
-      expect(container).toBeTruthy()
+      const {root} = render(<Title />)
+      expect(root).toBeTruthy()
     })
 
     it('should render with number children', () => {
@@ -154,12 +155,19 @@ describe('Title', () => {
 
     it('should render with mixed content', () => {
       render(
-        <Title>
-          Part 1 <Title level="h2">Part 2</Title>
-        </Title>
+        <Title testID="Title1">
+          Part 1{' '}
+          <Title
+            level="h2"
+            testID="Title2">
+            Part 2
+          </Title>
+        </Title>,
       )
-      expect(screen.getByText('Part 1')).toBeTruthy()
-      expect(screen.getByText('Part 2')).toBeTruthy()
+      expect(screen.getByTestId('Title1')).toHaveStyle({fontSize: 32})
+      expect(screen.getByTestId('Title1')).toBeOnTheScreen()
+      expect(screen.getByTestId('Title2')).toHaveStyle({fontSize: 28})
+      expect(screen.getByTestId('Title2')).toBeOnTheScreen()
     })
   })
 })

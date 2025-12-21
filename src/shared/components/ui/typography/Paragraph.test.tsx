@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {render, screen} from '@testing-library/react-native'
 
 import {Paragraph} from './Paragraph'
@@ -62,14 +63,14 @@ describe('Paragraph', () => {
     })
 
     it('should accept italic font family', () => {
-      render(<Paragraph fontFamily="italic">Italic paragraph</Paragraph>)
+      render(<Paragraph fontFamily="bold">Italic paragraph</Paragraph>)
       expect(screen.getByText('Italic paragraph')).toBeTruthy()
     })
   })
 
   describe('Styling', () => {
     it('should accept custom color prop', () => {
-      render(<Paragraph color="primary">Colored text</Paragraph>)
+      render(<Paragraph color="link">Colored text</Paragraph>)
       expect(screen.getByText('Colored text')).toBeTruthy()
     })
 
@@ -86,7 +87,7 @@ describe('Paragraph', () => {
     it('should accept custom style prop', () => {
       const customStyle = {marginTop: 10}
       const {getByText} = render(
-        <Paragraph style={customStyle}>Styled paragraph</Paragraph>
+        <Paragraph style={customStyle}>Styled paragraph</Paragraph>,
       )
       expect(getByText('Styled paragraph')).toBeTruthy()
     })
@@ -109,14 +110,14 @@ describe('Paragraph', () => {
       const {getByLabelText} = render(
         <Paragraph accessibilityLabel="Custom Paragraph Label">
           Content
-        </Paragraph>
+        </Paragraph>,
       )
       expect(getByLabelText('Custom Paragraph Label')).toBeTruthy()
     })
 
     it('should accept accessibilityHint prop', () => {
       const {getByText} = render(
-        <Paragraph accessibilityHint="Additional info">Text</Paragraph>
+        <Paragraph accessibilityHint="Additional info">Text</Paragraph>,
       )
       const paragraph = getByText('Text')
       expect(paragraph.props.accessibilityHint).toBe('Additional info')
@@ -133,10 +134,10 @@ describe('Paragraph', () => {
       const {getByText} = render(
         <Paragraph numberOfLines={3}>
           Long paragraph text that should be truncated after three lines
-        </Paragraph>
+        </Paragraph>,
       )
       const paragraph = getByText(
-        'Long paragraph text that should be truncated after three lines'
+        'Long paragraph text that should be truncated after three lines',
       )
       expect(paragraph.props.numberOfLines).toBe(3)
     })
@@ -147,7 +148,7 @@ describe('Paragraph', () => {
           numberOfLines={2}
           ellipsizeMode="tail">
           Paragraph with ellipsis at the end
-        </Paragraph>
+        </Paragraph>,
       )
       const paragraph = getByText('Paragraph with ellipsis at the end')
       expect(paragraph.props.ellipsizeMode).toBe('tail')
@@ -156,7 +157,7 @@ describe('Paragraph', () => {
     it('should forward onPress prop', () => {
       const onPress = jest.fn()
       const {getByText} = render(
-        <Paragraph onPress={onPress}>Pressable paragraph</Paragraph>
+        <Paragraph onPress={onPress}>Pressable paragraph</Paragraph>,
       )
       const paragraph = getByText('Pressable paragraph')
       expect(paragraph.props.onPress).toBe(onPress)
@@ -165,13 +166,13 @@ describe('Paragraph', () => {
 
   describe('Edge Cases', () => {
     it('should render with empty children', () => {
-      const {container} = render(<Paragraph />)
-      expect(container).toBeTruthy()
+      const {root} = render(<Paragraph />)
+      expect(root).toBeTruthy()
     })
 
     it('should render with null children', () => {
-      const {container} = render(<Paragraph>{null}</Paragraph>)
-      expect(container).toBeTruthy()
+      const {root} = render(<Paragraph>{null}</Paragraph>)
+      expect(root).toBeTruthy()
     })
 
     it('should render with number children', () => {

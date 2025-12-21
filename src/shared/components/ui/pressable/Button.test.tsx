@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {fireEvent, render, screen} from '@testing-library/react-native'
 
 import {Button} from './Button'
@@ -17,7 +18,7 @@ describe('Button', () => {
         <Button
           testID="test-button"
           label="Test"
-        />
+        />,
       )
       expect(screen.getByTestId('test-button')).toBeTruthy()
     })
@@ -39,7 +40,7 @@ describe('Button', () => {
         <Button
           variant="secondary"
           label="Secondary Button"
-        />
+        />,
       )
       expect(screen.getByText('Secondary Button')).toBeTruthy()
     })
@@ -52,7 +53,7 @@ describe('Button', () => {
         <Button
           variant="secondary"
           label="Button"
-        />
+        />,
       )
       expect(screen.getByText('Button')).toBeTruthy()
     })
@@ -66,7 +67,7 @@ describe('Button', () => {
           testID="button"
           label="Press me"
           onPress={onPress}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('button'))
@@ -81,7 +82,7 @@ describe('Button', () => {
           label="Disabled"
           onPress={onPress}
           disabled
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('button'))
@@ -95,7 +96,7 @@ describe('Button', () => {
           testID="button"
           label="Multi press"
           onPress={onPress}
-        />
+        />,
       )
 
       const button = screen.getByTestId('button')
@@ -113,7 +114,7 @@ describe('Button', () => {
         <Button
           label="Disabled Button"
           disabled
-        />
+        />,
       )
       expect(screen.getByText('Disabled Button')).toBeTruthy()
     })
@@ -126,7 +127,7 @@ describe('Button', () => {
           label="Disabled"
           onPress={onPress}
           disabled
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('button'))
@@ -138,7 +139,7 @@ describe('Button', () => {
         <Button
           label="Button"
           disabled
-        />
+        />,
       )
       expect(screen.getByText('Button')).toBeTruthy()
 
@@ -147,7 +148,7 @@ describe('Button', () => {
           variant="secondary"
           label="Button"
           disabled
-        />
+        />,
       )
       expect(screen.getByText('Button')).toBeTruthy()
     })
@@ -164,7 +165,7 @@ describe('Button', () => {
         <Button
           label="Submit"
           accessibilityLabel="Submit form"
-        />
+        />,
       )
       expect(screen.getByLabelText('Submit form')).toBeTruthy()
     })
@@ -175,7 +176,7 @@ describe('Button', () => {
           testID="button"
           label="Next"
           accessibilityHint="Navigate to next page"
-        />
+        />,
       )
       expect(screen.getByTestId('button')).toBeTruthy()
     })
@@ -207,7 +208,7 @@ describe('Button', () => {
           testID="submit"
           label="Submit"
           onPress={onSubmit}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('submit'))
@@ -222,7 +223,7 @@ describe('Button', () => {
           variant="secondary"
           label="Cancel"
           onPress={onCancel}
-        />
+        />,
       )
 
       fireEvent.press(screen.getByTestId('cancel'))
@@ -235,7 +236,7 @@ describe('Button', () => {
         <Button
           label={isLoading ? 'Loading...' : 'Submit'}
           disabled={isLoading}
-        />
+        />,
       )
       expect(screen.getByText('Loading...')).toBeTruthy()
     })
@@ -256,7 +257,7 @@ describe('Button', () => {
             label="Cancel"
             onPress={onCancel}
           />
-        </>
+        </>,
       )
 
       expect(screen.getByTestId('submit')).toBeTruthy()
