@@ -18,7 +18,7 @@ export const useSessionId = (): string =>
  * @returns The current user profile, or undefined if not logged in
  */
 export const useCurrentUser = (): UserProfile | undefined =>
-  useUserSessionStore(useShallow(state => state.user))
+  useUserSessionStore(state => state.user)
 
 /**
  * useUserSessionActions
