@@ -13,11 +13,12 @@ import {KeyboardProvider} from '@/shared/context/keyboard/KeyboardContext.provid
 import {ToastProvider} from '@/shared/context/toast/ToastContext.provider'
 
 /**
- * RootProviders
- * TODO: describe what it does.
+ * Root provider component that wraps the entire application with all necessary context providers.
+ * Combines system-level providers (QueryClient, SafeArea, Keyboard) with custom app providers (Toast, Banner).
  *
- * @param {*} options
- * @returns {*} describe return value
+ * @param props - Component props
+ * @param props.children - Child components to be wrapped by providers
+ * @returns JSX element with nested provider hierarchy
  */
 export const RootProviders = ({
   children,
@@ -30,10 +31,12 @@ export const RootProviders = ({
 }
 
 /**
- * SystemProviders
- * TODO: describe what it does.
+ * System-level providers for core functionality.
+ * Provides QueryClient for data fetching, SafeAreaProvider for device insets, and KeyboardProvider for keyboard handling.
  *
- * @returns {*} describe return value
+ * @param props - Component props
+ * @param props.children - Child components to be wrapped by system providers
+ * @returns JSX element with system provider hierarchy
  */
 const SystemProviders = ({children}: PropsWithChildren): React.JSX.Element => (
   <QueryClientProvider client={queryClient}>
@@ -44,11 +47,12 @@ const SystemProviders = ({children}: PropsWithChildren): React.JSX.Element => (
 )
 
 /**
- * CustomProviders
- * TODO: describe what it does.
+ * Custom app-specific providers for UI features.
+ * Provides ToastProvider for toast notifications, BannerProvider for banner messages, and KeyboardProvider for keyboard context.
  *
- * @param {*} options
- * @returns {*} describe return value
+ * @param props - Component props
+ * @param props.children - Child components to be wrapped by custom providers
+ * @returns JSX element with custom provider hierarchy
  */
 const CustomProviders = ({children}: PropsWithChildren): React.JSX.Element => (
   <ToastProvider>
