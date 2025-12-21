@@ -8,11 +8,6 @@ import {
 } from './userSessionSelectors'
 import {type UserProfile, useUserSessionStore} from './userSessionStore'
 
-// Mock expo-crypto
-jest.mock('expo-crypto', () => ({
-  randomUUID: jest.fn(() => 'test-uuid-123'),
-}))
-
 describe('userSessionSelectors', () => {
   beforeEach(() => {
     // Reset store
