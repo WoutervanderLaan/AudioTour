@@ -21,6 +21,6 @@ export const Default: Story = {
     children: 'This is a Box',
     flex: 1,
     padding: 'xxl',
-    style: {borderWidth: 1, borderColor: 'black'},
+    style: {borderWidth: 2, borderColor: 'black'},
   },
 }

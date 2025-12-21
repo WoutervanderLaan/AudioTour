@@ -24,25 +24,25 @@ export const Default: Story = {
         <Box
           padding="sm"
           flex={1}
-          style={{borderWidth: 1, borderColor: 'black'}}>
+          style={{borderWidth: 2, borderColor: 'black'}}>
           This is a Row (1)
         </Box>
         <Box
           padding="sm"
           flex={1}
-          style={{borderWidth: 1, borderColor: 'black'}}>
+          style={{borderWidth: 2, borderColor: 'black'}}>
           This is a Row (2)
         </Box>
         <Box
           padding="sm"
           flex={1}
-          style={{borderWidth: 1, borderColor: 'black'}}>
+          style={{borderWidth: 2, borderColor: 'black'}}>
           This is a Row (3)
         </Box>
       </>
     ),
     padding: 'sm',
     gap: 'sm',
-    style: {borderWidth: 1, borderColor: 'black'},
+    style: {borderWidth: 2, borderColor: 'black'},
   },
 }

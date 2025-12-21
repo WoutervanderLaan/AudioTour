@@ -6,7 +6,7 @@ import {ToastContext} from './ToastContext'
 import type {ToastProps} from './ToastContext.types'
 
 import {Toast} from '@/shared/components/features/toast/Toast'
-import {DURATION} from '@/shared/constants/ui'
+import {TIMING} from '@/shared/constants/timing'
 
 /**
  * Provider component that manages toast notification state throughout the app.
@@ -44,7 +44,7 @@ export const ToastProvider = ({
 
     timeoutRef.current = setTimeout(
       () => setToast(null),
-      toast.duration ?? DURATION.TOAST_DEFAULT,
+      toast.duration ?? TIMING.TOAST_DURATION,
     )
   }, [])
 

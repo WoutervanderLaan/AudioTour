@@ -17,7 +17,7 @@ const meta = {
         <Box
           padding="sm"
           style={{
-            borderWidth: 1,
+            borderWidth: 2,
             borderColor: 'black',
             backgroundColor: 'white',
           }}
@@ -28,7 +28,7 @@ const meta = {
         <Box
           padding="sm"
           style={{
-            borderWidth: 1,
+            borderWidth: 2,
             borderColor: 'black',
             backgroundColor: 'white',
           }}

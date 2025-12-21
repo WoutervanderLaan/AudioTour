@@ -8,6 +8,11 @@ import {
 } from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography'
 
+enum AddPhotoSize {
+  small = 60,
+  medium = 100,
+  large = 140,
+}
 /**
  * AddPhotoProps
  * Props for the AddPhoto component.
@@ -47,22 +52,22 @@ export const AddPhoto = ({
 
 const styles = StyleSheet.create(theme => ({
   sm: {
-    width: 60,
-    height: 60,
+    width: AddPhotoSize.small,
+    height: AddPhotoSize.small,
     borderRadius: theme.size.sm,
   },
   md: {
-    width: 100,
-    height: 100,
+    width: AddPhotoSize.medium,
+    height: AddPhotoSize.medium,
     borderRadius: theme.size.md,
   },
   lg: {
-    width: 140,
-    height: 140,
+    width: AddPhotoSize.large,
+    height: AddPhotoSize.large,
     borderRadius: theme.size.lg,
   },
   container: {
-    borderWidth: 2,
+    borderWidth: theme.size.xxs,
     borderColor: theme.color.text.secondary,
     borderStyle: 'dashed',
   },
