@@ -364,6 +364,125 @@ describe('Box', () => {
     })
   })
 
+  describe('Style Prop Combinations', () => {
+    it('should combine gap and padding correctly', () => {
+      const {UNSAFE_getByType} = render(
+        <Box
+          gap="md"
+          padding="lg"
+        />
+      )
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            gap: expect.any(Number),
+            padding: expect.any(Number),
+          }),
+        ])
+      )
+    })
+
+    it('should combine paddingH and paddingV correctly', () => {
+      const {UNSAFE_getByType} = render(
+        <Box
+          paddingH="md"
+          paddingV="lg"
+        />
+      )
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            paddingHorizontal: expect.any(Number),
+            paddingVertical: expect.any(Number),
+          }),
+        ])
+      )
+    })
+
+    it('should combine individual padding props correctly', () => {
+      const {UNSAFE_getByType} = render(
+        <Box
+          paddingTop="sm"
+          paddingRight="md"
+          paddingBottom="lg"
+          paddingLeft="xl"
+        />
+      )
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            paddingTop: expect.any(Number),
+            paddingRight: expect.any(Number),
+            paddingBottom: expect.any(Number),
+            paddingLeft: expect.any(Number),
+          }),
+        ])
+      )
+    })
+
+    it('should combine flex direction with gap and padding', () => {
+      const {UNSAFE_getByType} = render(
+        <Box
+          row
+          gap="md"
+          paddingH="lg"
+        />
+      )
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            flexDirection: 'row',
+            gap: expect.any(Number),
+            paddingHorizontal: expect.any(Number),
+          }),
+        ])
+      )
+    })
+
+    it('should combine alignment with padding', () => {
+      const {UNSAFE_getByType} = render(
+        <Box
+          center
+          padding="md"
+        />
+      )
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: expect.any(Number),
+          }),
+        ])
+      )
+    })
+
+    it('should combine flex with wrap and gap', () => {
+      const {UNSAFE_getByType} = render(
+        <Box
+          flex={1}
+          wrap="wrap"
+          gap="sm"
+        />
+      )
+      const view = UNSAFE_getByType(View)
+      expect(view.props.style).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            flex: 1,
+            flexWrap: 'wrap',
+            gap: expect.any(Number),
+          }),
+        ])
+      )
+    })
+  })
+
   describe('Edge Cases', () => {
     it('should render with no props', () => {
       const {container} = render(<Box />)
