@@ -14,7 +14,7 @@ import type {AuthTokens, User} from '@/modules/auth/types'
  * @returns Current user object or null if not authenticated
  */
 export const useUser = (): User | null =>
-  useAuthStore(useShallow(state => state.user))
+  useAuthStore(state => state.user)
 /**
  * useTokens
  * React hook that returns the current authentication tokens from the auth store.
@@ -22,7 +22,7 @@ export const useUser = (): User | null =>
  * @returns Authentication tokens object or null if not authenticated
  */
 export const useTokens = (): AuthTokens | null =>
-  useAuthStore(useShallow(state => state.tokens))
+  useAuthStore(state => state.tokens)
 /**
  * useIsAuthenticated
  * React hook that returns whether the user is currently authenticated.
