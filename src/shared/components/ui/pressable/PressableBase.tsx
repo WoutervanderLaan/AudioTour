@@ -17,7 +17,7 @@ export type PressableBaseProps = Omit<RNPressableProps, 'style'> & {
   /**
    * children - Content to display inside the pressable
    */
-  children?: React.ReactNode
+  // children?: React.ReactNode
   style?: (state: PressableStateCallbackType) => StyleProp<ViewStyle>
 }
 

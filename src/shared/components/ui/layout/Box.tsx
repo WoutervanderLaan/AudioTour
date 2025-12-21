@@ -141,6 +141,7 @@ export const Box = ({
   paddingLeft,
   stretch,
   wrap,
+  ...rest
 }: BoxProps): React.JSX.Element => {
   const {theme} = useUnistyles()
 
@@ -162,5 +163,11 @@ export const Box = ({
     paddingLeft: paddingLeft ? theme.size[paddingLeft] : undefined,
   }
 
-  return <View style={[dynamic, style]}>{children}</View>
+  return (
+    <View
+      style={[dynamic, style]}
+      {...rest}>
+      {children}
+    </View>
+  )
 }

@@ -139,6 +139,10 @@
     },
     "transformIgnorePatterns": [
       "node_modules/(?!react-native|@react-native|expo|msw|until-async|zustand|immer)"
+    ],
+    "setupFiles": [
+      "react-native-unistyles/mocks",
+      "./src/themes/unistyles.ts"
     ]
   }
 }
