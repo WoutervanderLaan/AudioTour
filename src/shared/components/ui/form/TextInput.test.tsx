@@ -115,52 +115,52 @@ describe('TextInput', () => {
     })
 
     it('should not be editable when disabled', () => {
-      const {UNSAFE_getByType} = render(<TextInput disabled />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" disabled />)
+      const input = screen.getByTestId('input')
       expect(input.props.editable).toBe(false)
     })
 
     it('should be editable by default', () => {
-      const {UNSAFE_getByType} = render(<TextInput />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" />)
+      const input = screen.getByTestId('input')
       expect(input.props.editable).toBe(true)
     })
   })
 
   describe('Error State', () => {
     it('should render with error state', () => {
-      const {getByTestId} = render(
+      render(
         <TextInput
           testID="input"
           hasError
         />
       )
-      const input = getByTestId('input')
+      const input = screen.getByTestId('input')
       // Error state is applied through styling, verify component renders
       expect(input).toBeTruthy()
     })
 
     it('should apply error styling when hasError is true', () => {
-      const {getByTestId, UNSAFE_getByType} = render(
+      render(
         <TextInput
           testID="input"
           hasError
         />
       )
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      const input = screen.getByTestId('input')
       // Verify input has styles applied (error styles are in the style array)
       expect(input.props.style).toBeDefined()
       expect(Array.isArray(input.props.style)).toBe(true)
     })
 
     it('should toggle error state', () => {
-      const {rerender, UNSAFE_getByType} = render(
+      const {rerender} = render(
         <TextInput
           testID="input"
           hasError={false}
         />
       )
-      let input = UNSAFE_getByType(require('react-native').TextInput)
+      let input = screen.getByTestId('input')
       expect(input.props.style).toBeDefined()
 
       rerender(
@@ -169,7 +169,7 @@ describe('TextInput', () => {
           hasError
         />
       )
-      input = UNSAFE_getByType(require('react-native').TextInput)
+      input = screen.getByTestId('input')
       // Style array length may change when error state is toggled
       expect(input.props.style).toBeDefined()
     })
@@ -177,69 +177,70 @@ describe('TextInput', () => {
 
   describe('Keyboard Types', () => {
     it('should accept email-address keyboard type', () => {
-      const {UNSAFE_getByType} = render(
-        <TextInput keyboardType="email-address" />
+      render(
+        <TextInput testID="input" keyboardType="email-address" />
       )
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      const input = screen.getByTestId('input')
       expect(input.props.keyboardType).toBe('email-address')
     })
 
     it('should accept numeric keyboard type', () => {
-      const {UNSAFE_getByType} = render(<TextInput keyboardType="numeric" />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" keyboardType="numeric" />)
+      const input = screen.getByTestId('input')
       expect(input.props.keyboardType).toBe('numeric')
     })
 
     it('should accept phone-pad keyboard type', () => {
-      const {UNSAFE_getByType} = render(<TextInput keyboardType="phone-pad" />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" keyboardType="phone-pad" />)
+      const input = screen.getByTestId('input')
       expect(input.props.keyboardType).toBe('phone-pad')
     })
   })
 
   describe('Secure Text Entry', () => {
     it('should support secure text entry', () => {
-      const {UNSAFE_getByType} = render(<TextInput secureTextEntry />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" secureTextEntry />)
+      const input = screen.getByTestId('input')
       expect(input.props.secureTextEntry).toBe(true)
     })
 
     it('should toggle secure text entry', () => {
-      const {UNSAFE_getByType, rerender} = render(
-        <TextInput secureTextEntry={false} />
+      const {rerender} = render(
+        <TextInput testID="input" secureTextEntry={false} />
       )
-      let input = UNSAFE_getByType(require('react-native').TextInput)
+      let input = screen.getByTestId('input')
       expect(input.props.secureTextEntry).toBe(false)
 
-      rerender(<TextInput secureTextEntry />)
-      input = UNSAFE_getByType(require('react-native').TextInput)
+      rerender(<TextInput testID="input" secureTextEntry />)
+      input = screen.getByTestId('input')
       expect(input.props.secureTextEntry).toBe(true)
     })
   })
 
   describe('Multiline', () => {
     it('should support multiline input', () => {
-      const {UNSAFE_getByType} = render(<TextInput multiline />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" multiline />)
+      const input = screen.getByTestId('input')
       expect(input.props.multiline).toBe(true)
     })
 
     it('should accept numberOfLines prop', () => {
-      const {UNSAFE_getByType} = render(
+      render(
         <TextInput
+          testID="input"
           multiline
           numberOfLines={4}
         />
       )
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      const input = screen.getByTestId('input')
       expect(input.props.numberOfLines).toBe(4)
     })
   })
 
   describe('Accessibility', () => {
     it('should be accessible by default', () => {
-      const {UNSAFE_getByType} = render(<TextInput />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" />)
+      const input = screen.getByTestId('input')
       expect(input.props.accessible).toBe(true)
     })
 
@@ -254,48 +255,48 @@ describe('TextInput', () => {
     })
 
     it('should accept accessibilityHint', () => {
-      const {UNSAFE_getByType} = render(
-        <TextInput accessibilityHint="Enter your email address" />
+      render(
+        <TextInput testID="input" accessibilityHint="Enter your email address" />
       )
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      const input = screen.getByTestId('input')
       expect(input.props.accessibilityHint).toBe('Enter your email address')
     })
 
     it('should have disabled state in accessibility', () => {
-      const {UNSAFE_getByType} = render(<TextInput disabled />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" disabled />)
+      const input = screen.getByTestId('input')
       expect(input.props.accessibilityState.disabled).toBe(true)
     })
   })
 
   describe('Props Forwarding', () => {
     it('should forward maxLength prop', () => {
-      const {UNSAFE_getByType} = render(<TextInput maxLength={10} />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" maxLength={10} />)
+      const input = screen.getByTestId('input')
       expect(input.props.maxLength).toBe(10)
     })
 
     it('should forward autoCapitalize prop', () => {
-      const {UNSAFE_getByType} = render(<TextInput autoCapitalize="none" />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" autoCapitalize="none" />)
+      const input = screen.getByTestId('input')
       expect(input.props.autoCapitalize).toBe('none')
     })
 
     it('should forward autoCorrect prop', () => {
-      const {UNSAFE_getByType} = render(<TextInput autoCorrect={false} />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" autoCorrect={false} />)
+      const input = screen.getByTestId('input')
       expect(input.props.autoCorrect).toBe(false)
     })
 
     it('should forward autoComplete prop', () => {
-      const {UNSAFE_getByType} = render(<TextInput autoComplete="email" />)
-      const input = UNSAFE_getByType(require('react-native').TextInput)
+      render(<TextInput testID="input" autoComplete="email" />)
+      const input = screen.getByTestId('input')
       expect(input.props.autoComplete).toBe('email')
     })
   })
 
-  describe('Controlled vs Uncontrolled', () => {
-    it('should work as controlled component', () => {
+  describe('Controlled Component Behavior', () => {
+    it('should update when parent changes value prop', () => {
       const onChangeText = jest.fn()
       const {rerender} = render(
         <TextInput
@@ -305,14 +306,13 @@ describe('TextInput', () => {
         />
       )
 
-      let input = screen.getByTestId('input')
       expect(screen.getByDisplayValue('')).toBeTruthy()
 
-      // Simulate user interaction
-      fireEvent.changeText(input, 'hello')
+      // Simulate user interaction - notifies parent of desired change
+      fireEvent.changeText(screen.getByTestId('input'), 'hello')
       expect(onChangeText).toHaveBeenCalledWith('hello')
 
-      // Parent component updates the value prop
+      // Parent component controls state and updates the value prop
       rerender(
         <TextInput
           testID="input"
@@ -324,23 +324,25 @@ describe('TextInput', () => {
       expect(screen.getByDisplayValue('hello')).toBeTruthy()
     })
 
-    it('should work as uncontrolled component', () => {
+    it('should not self-update state (parent controls state)', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
           testID="input"
+          value=""
           onChangeText={onChangeText}
         />
       )
 
-      // User interaction triggers onChangeText
+      // User types - onChangeText fires but component doesn't self-update
       fireEvent.changeText(screen.getByTestId('input'), 'test')
       expect(onChangeText).toHaveBeenCalledWith('test')
 
-      // Component doesn't manage its own state (parent's responsibility)
+      // Value unchanged because parent hasn't updated the prop
+      expect(screen.getByDisplayValue('')).toBeTruthy()
     })
 
-    it('should maintain value when controlled', () => {
+    it('should only update when value prop changes', () => {
       const {rerender} = render(
         <TextInput
           testID="input"
@@ -350,11 +352,11 @@ describe('TextInput', () => {
 
       expect(screen.getByDisplayValue('initial')).toBeTruthy()
 
-      // Even after text change event, controlled component keeps value if prop doesn't change
+      // Text change doesn't update value without parent updating prop
       fireEvent.changeText(screen.getByTestId('input'), 'changed')
       expect(screen.getByDisplayValue('initial')).toBeTruthy()
 
-      // Only changes when prop changes
+      // Value only changes when parent updates prop
       rerender(
         <TextInput
           testID="input"

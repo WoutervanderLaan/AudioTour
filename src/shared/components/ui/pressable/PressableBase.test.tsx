@@ -1,5 +1,5 @@
 import {fireEvent, render, screen} from '@testing-library/react-native'
-import {Pressable, Text} from 'react-native'
+import {Text} from 'react-native'
 
 import {PressableBase} from './PressableBase'
 
@@ -109,32 +109,32 @@ describe('PressableBase', () => {
 
   describe('Accessibility', () => {
     it('should have button accessibility role by default', () => {
-      const {UNSAFE_getByType} = render(
-        <PressableBase>
+      render(
+        <PressableBase testID="pressable">
           <Text>Button</Text>
         </PressableBase>
       )
-      const pressable = UNSAFE_getByType(Pressable)
+      const pressable = screen.getByTestId('pressable')
       expect(pressable.props.accessibilityRole).toBe('button')
     })
 
     it('should be accessible by default', () => {
-      const {UNSAFE_getByType} = render(
-        <PressableBase>
+      render(
+        <PressableBase testID="pressable">
           <Text>Accessible</Text>
         </PressableBase>
       )
-      const pressable = UNSAFE_getByType(Pressable)
+      const pressable = screen.getByTestId('pressable')
       expect(pressable.props.accessible).toBe(true)
     })
 
     it('should accept custom accessibility role', () => {
-      const {UNSAFE_getByType} = render(
-        <PressableBase accessibilityRole="link">
+      render(
+        <PressableBase testID="pressable" accessibilityRole="link">
           <Text>Link</Text>
         </PressableBase>
       )
-      const pressable = UNSAFE_getByType(Pressable)
+      const pressable = screen.getByTestId('pressable')
       expect(pressable.props.accessibilityRole).toBe('link')
     })
 
@@ -150,22 +150,22 @@ describe('PressableBase', () => {
     })
 
     it('should accept accessibilityHint', () => {
-      const {UNSAFE_getByType} = render(
-        <PressableBase accessibilityHint="Tap to continue">
+      render(
+        <PressableBase testID="pressable" accessibilityHint="Tap to continue">
           <Text>Continue</Text>
         </PressableBase>
       )
-      const pressable = UNSAFE_getByType(Pressable)
+      const pressable = screen.getByTestId('pressable')
       expect(pressable.props.accessibilityHint).toBe('Tap to continue')
     })
 
     it('should be disabled when disabled prop is true', () => {
-      const {UNSAFE_getByType} = render(
-        <PressableBase disabled>
+      render(
+        <PressableBase testID="pressable" disabled>
           <Text>Disabled</Text>
         </PressableBase>
       )
-      const pressable = UNSAFE_getByType(Pressable)
+      const pressable = screen.getByTestId('pressable')
       expect(pressable.props.disabled).toBe(true)
     })
   })
@@ -174,7 +174,7 @@ describe('PressableBase', () => {
     it('should accept style function', () => {
       const styleFunction = jest.fn(() => ({backgroundColor: 'red'}))
       render(
-        <PressableBase style={styleFunction}>
+        <PressableBase testID="pressable" style={styleFunction}>
           <Text>Styled</Text>
         </PressableBase>
       )
@@ -183,12 +183,12 @@ describe('PressableBase', () => {
 
     it('should call style function with pressed state', () => {
       const styleFunction = jest.fn(() => ({}))
-      const {UNSAFE_getByType} = render(
-        <PressableBase style={styleFunction}>
+      render(
+        <PressableBase testID="pressable" style={styleFunction}>
           <Text>Styled</Text>
         </PressableBase>
       )
-      const pressable = UNSAFE_getByType(Pressable)
+      const pressable = screen.getByTestId('pressable')
       expect(pressable.props.style).toBeDefined()
     })
 
@@ -197,7 +197,7 @@ describe('PressableBase', () => {
         opacity: pressed ? 0.5 : 1,
       })
       render(
-        <PressableBase style={styleFunction}>
+        <PressableBase testID="pressable" style={styleFunction}>
           <Text>Press for opacity</Text>
         </PressableBase>
       )
@@ -207,23 +207,23 @@ describe('PressableBase', () => {
 
   describe('Hit Slop', () => {
     it('should accept hitSlop prop', () => {
-      const {UNSAFE_getByType} = render(
-        <PressableBase hitSlop={20}>
+      render(
+        <PressableBase testID="pressable" hitSlop={20}>
           <Text>Hit slop</Text>
         </PressableBase>
       )
-      const pressable = UNSAFE_getByType(Pressable)
+      const pressable = screen.getByTestId('pressable')
       expect(pressable.props.hitSlop).toBe(20)
     })
 
     it('should accept hitSlop as object', () => {
       const hitSlop = {top: 10, bottom: 10, left: 5, right: 5}
-      const {UNSAFE_getByType} = render(
-        <PressableBase hitSlop={hitSlop}>
+      render(
+        <PressableBase testID="pressable" hitSlop={hitSlop}>
           <Text>Hit slop object</Text>
         </PressableBase>
       )
-      const pressable = UNSAFE_getByType(Pressable)
+      const pressable = screen.getByTestId('pressable')
       expect(pressable.props.hitSlop).toEqual(hitSlop)
     })
   })
@@ -231,7 +231,7 @@ describe('PressableBase', () => {
   describe('Children as Function', () => {
     it('should support children as function', () => {
       render(
-        <PressableBase>
+        <PressableBase testID="pressable">
           {({pressed}) => <Text>{pressed ? 'Pressed' : 'Not pressed'}</Text>}
         </PressableBase>
       )
@@ -244,13 +244,13 @@ describe('PressableBase', () => {
 
   describe('Edge Cases', () => {
     it('should render with no children', () => {
-      const {UNSAFE_getByType} = render(<PressableBase />)
-      expect(UNSAFE_getByType(Pressable)).toBeTruthy()
+      render(<PressableBase testID="pressable" />)
+      expect(screen.getByTestId('pressable')).toBeTruthy()
     })
 
     it('should render with null children', () => {
-      const {UNSAFE_getByType} = render(<PressableBase>{null}</PressableBase>)
-      expect(UNSAFE_getByType(Pressable)).toBeTruthy()
+      render(<PressableBase testID="pressable">{null}</PressableBase>)
+      expect(screen.getByTestId('pressable')).toBeTruthy()
     })
 
     it('should handle multiple press events', () => {

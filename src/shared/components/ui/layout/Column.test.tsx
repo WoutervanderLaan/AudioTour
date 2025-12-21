@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react-native'
-import {Text, View} from 'react-native'
+import {Text} from 'react-native'
 
 import {Column} from './Column'
 
@@ -38,8 +38,8 @@ describe('Column', () => {
 
   describe('Layout Direction', () => {
     it('should apply column flex direction', () => {
-      const {UNSAFE_getByType} = render(<Column />)
-      const view = UNSAFE_getByType(View)
+      render(<Column testID="column" />)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'column'}),
@@ -48,12 +48,12 @@ describe('Column', () => {
     })
 
     it('should always use column direction even without explicit column prop', () => {
-      const {UNSAFE_getByType} = render(
-        <Column>
+      render(
+        <Column testID="column">
           <Text>Content</Text>
         </Column>
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'column'}),
@@ -64,16 +64,16 @@ describe('Column', () => {
 
   describe('Box Props', () => {
     it('should accept flex prop', () => {
-      const {UNSAFE_getByType} = render(<Column flex={1} />)
-      const view = UNSAFE_getByType(View)
+      render(<Column testID="column" flex={1} />)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 1})])
       )
     })
 
     it('should accept center prop', () => {
-      const {UNSAFE_getByType} = render(<Column center />)
-      const view = UNSAFE_getByType(View)
+      render(<Column testID="column" center />)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -85,20 +85,20 @@ describe('Column', () => {
     })
 
     it('should accept gap prop', () => {
-      render(<Column gap="md" />)
-      expect(screen.queryByTestId('column')).toBeTruthy()
+      render(<Column testID="column" gap="md" />)
+      expect(screen.getByTestId('column')).toBeTruthy()
     })
 
     it('should accept padding prop', () => {
-      render(<Column padding="lg" />)
-      expect(screen.queryByTestId('column')).toBeTruthy()
+      render(<Column testID="column" padding="lg" />)
+      expect(screen.getByTestId('column')).toBeTruthy()
     })
 
     it('should accept justifyContent prop', () => {
-      const {UNSAFE_getByType} = render(
-        <Column justifyContent="space-evenly" />
+      render(
+        <Column testID="column" justifyContent="space-evenly" />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'space-evenly'}),
@@ -107,8 +107,8 @@ describe('Column', () => {
     })
 
     it('should accept alignItems prop', () => {
-      const {UNSAFE_getByType} = render(<Column alignItems="flex-end" />)
-      const view = UNSAFE_getByType(View)
+      render(<Column testID="column" alignItems="flex-end" />)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'flex-end'}),
@@ -117,8 +117,8 @@ describe('Column', () => {
     })
 
     it('should accept stretch prop', () => {
-      const {UNSAFE_getByType} = render(<Column stretch />)
-      const view = UNSAFE_getByType(View)
+      render(<Column testID="column" stretch />)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignSelf: 'stretch'}),
@@ -130,8 +130,8 @@ describe('Column', () => {
   describe('Custom Styles', () => {
     it('should accept custom style prop', () => {
       const customStyle = {backgroundColor: 'green'}
-      const {UNSAFE_getByType} = render(<Column style={customStyle} />)
-      const view = UNSAFE_getByType(View)
+      render(<Column testID="column" style={customStyle} />)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining(customStyle)])
       )
@@ -139,13 +139,14 @@ describe('Column', () => {
 
     it('should merge custom styles with Column styles', () => {
       const customStyle = {borderRadius: 8}
-      const {UNSAFE_getByType} = render(
+      render(
         <Column
+          testID="column"
           gap="sm"
           style={customStyle}
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(expect.arrayContaining([customStyle]))
     })
   })
@@ -216,8 +217,8 @@ describe('Column', () => {
     })
 
     it('should render with empty children', () => {
-      const {UNSAFE_getByType} = render(<Column>{null}</Column>)
-      expect(UNSAFE_getByType(View)).toBeTruthy()
+      render(<Column testID="column">{null}</Column>)
+      expect(screen.getByTestId('column')).toBeTruthy()
     })
 
     it('should render with single child', () => {

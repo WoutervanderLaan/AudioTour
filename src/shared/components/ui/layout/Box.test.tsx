@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react-native'
-import {Text, View} from 'react-native'
+import {Text} from 'react-native'
 
 import {Box} from './Box'
 
@@ -38,8 +38,8 @@ describe('Box', () => {
 
   describe('Flexbox Direction', () => {
     it('should apply row direction when row prop is true', () => {
-      const {UNSAFE_getByType} = render(<Box row />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" row />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'row'}),
@@ -48,8 +48,8 @@ describe('Box', () => {
     })
 
     it('should apply column direction when column prop is true', () => {
-      const {UNSAFE_getByType} = render(<Box column />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" column />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'column'}),
@@ -58,8 +58,8 @@ describe('Box', () => {
     })
 
     it('should not apply flex direction by default', () => {
-      const {UNSAFE_getByType} = render(<Box />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.not.objectContaining({flexDirection: expect.anything()}),
@@ -70,30 +70,30 @@ describe('Box', () => {
 
   describe('Flex', () => {
     it('should apply flex when flex prop is provided', () => {
-      const {UNSAFE_getByType} = render(<Box flex={1} />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" flex={1} />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 1})])
       )
     })
 
     it('should apply different flex values', () => {
-      const {UNSAFE_getByType, rerender} = render(<Box flex={2} />)
-      let view = UNSAFE_getByType(View)
+      const {rerender} = render(<Box testID="box" flex={2} />)
+      let view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 2})])
       )
 
-      rerender(<Box flex={0} />)
-      view = UNSAFE_getByType(View)
+      rerender(<Box testID="box" flex={0} />)
+      view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 0})])
       )
     })
 
     it('should apply flexShrink 0 when flex is undefined', () => {
-      const {UNSAFE_getByType} = render(<Box />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexShrink: 0})])
       )
@@ -102,8 +102,8 @@ describe('Box', () => {
 
   describe('Alignment', () => {
     it('should center content when center prop is true', () => {
-      const {UNSAFE_getByType} = render(<Box center />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" center />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -115,8 +115,8 @@ describe('Box', () => {
     })
 
     it('should center horizontally when centerX prop is true', () => {
-      const {UNSAFE_getByType} = render(<Box centerX />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" centerX />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'center'}),
@@ -125,8 +125,8 @@ describe('Box', () => {
     })
 
     it('should center vertically when centerY prop is true', () => {
-      const {UNSAFE_getByType} = render(<Box centerY />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" centerY />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'center'}),
@@ -135,10 +135,8 @@ describe('Box', () => {
     })
 
     it('should apply custom justifyContent', () => {
-      const {UNSAFE_getByType} = render(
-        <Box justifyContent="space-between" />
-      )
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" justifyContent="space-between" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'space-between'}),
@@ -147,8 +145,8 @@ describe('Box', () => {
     })
 
     it('should apply custom alignItems', () => {
-      const {UNSAFE_getByType} = render(<Box alignItems="flex-end" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" alignItems="flex-end" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'flex-end'}),
@@ -157,8 +155,8 @@ describe('Box', () => {
     })
 
     it('should stretch when stretch prop is true', () => {
-      const {UNSAFE_getByType} = render(<Box stretch />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" stretch />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignSelf: 'stretch'}),
@@ -169,8 +167,8 @@ describe('Box', () => {
 
   describe('Gap', () => {
     it('should apply gap from theme tokens', () => {
-      const {UNSAFE_getByType} = render(<Box gap="md" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" gap="md" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({gap: expect.any(Number)}),
@@ -179,8 +177,8 @@ describe('Box', () => {
     })
 
     it('should render with different gap sizes from theme', () => {
-      const {UNSAFE_getByType} = render(<Box gap="lg" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" gap="lg" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({gap: expect.any(Number)}),
@@ -189,8 +187,8 @@ describe('Box', () => {
     })
 
     it('should not apply gap when gap prop is not provided', () => {
-      const {UNSAFE_getByType} = render(<Box />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" />)
+      const view = screen.getByTestId('box')
       const styles = Array.isArray(view.props.style)
         ? view.props.style
         : [view.props.style]
@@ -203,8 +201,8 @@ describe('Box', () => {
 
   describe('Padding', () => {
     it('should apply uniform padding from theme tokens', () => {
-      const {UNSAFE_getByType} = render(<Box padding="md" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" padding="md" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({padding: expect.any(Number)}),
@@ -213,8 +211,8 @@ describe('Box', () => {
     })
 
     it('should apply horizontal padding from theme tokens', () => {
-      const {UNSAFE_getByType} = render(<Box paddingH="lg" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" paddingH="lg" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingHorizontal: expect.any(Number)}),
@@ -223,8 +221,8 @@ describe('Box', () => {
     })
 
     it('should apply vertical padding from theme tokens', () => {
-      const {UNSAFE_getByType} = render(<Box paddingV="sm" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" paddingV="sm" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingVertical: expect.any(Number)}),
@@ -233,8 +231,8 @@ describe('Box', () => {
     })
 
     it('should apply top padding from theme tokens', () => {
-      const {UNSAFE_getByType} = render(<Box paddingTop="xl" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" paddingTop="xl" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingTop: expect.any(Number)}),
@@ -243,8 +241,8 @@ describe('Box', () => {
     })
 
     it('should apply right padding from theme tokens', () => {
-      const {UNSAFE_getByType} = render(<Box paddingRight="md" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" paddingRight="md" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingRight: expect.any(Number)}),
@@ -253,8 +251,8 @@ describe('Box', () => {
     })
 
     it('should apply bottom padding from theme tokens', () => {
-      const {UNSAFE_getByType} = render(<Box paddingBottom="sm" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" paddingBottom="sm" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingBottom: expect.any(Number)}),
@@ -263,8 +261,8 @@ describe('Box', () => {
     })
 
     it('should apply left padding from theme tokens', () => {
-      const {UNSAFE_getByType} = render(<Box paddingLeft="lg" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" paddingLeft="lg" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingLeft: expect.any(Number)}),
@@ -275,16 +273,16 @@ describe('Box', () => {
 
   describe('Wrap', () => {
     it('should apply flexWrap when wrap prop is provided', () => {
-      const {UNSAFE_getByType} = render(<Box wrap="wrap" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" wrap="wrap" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexWrap: 'wrap'})])
       )
     })
 
     it('should apply nowrap', () => {
-      const {UNSAFE_getByType} = render(<Box wrap="nowrap" />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" wrap="nowrap" />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexWrap: 'nowrap'})])
       )
@@ -294,8 +292,8 @@ describe('Box', () => {
   describe('Custom Styles', () => {
     it('should accept custom style prop', () => {
       const customStyle = {backgroundColor: 'red'}
-      const {UNSAFE_getByType} = render(<Box style={customStyle} />)
-      const view = UNSAFE_getByType(View)
+      render(<Box testID="box" style={customStyle} />)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining(customStyle)])
       )
@@ -303,27 +301,29 @@ describe('Box', () => {
 
     it('should merge custom styles with Box styles', () => {
       const customStyle = {opacity: 0.5}
-      const {UNSAFE_getByType} = render(
+      render(
         <Box
+          testID="box"
           flex={1}
           style={customStyle}
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(expect.arrayContaining([customStyle]))
     })
   })
 
   describe('Complex Layouts', () => {
     it('should create a centered flex container', () => {
-      const {UNSAFE_getByType} = render(
+      render(
         <Box
+          testID="box"
           flex={1}
           center>
           <Text>Centered</Text>
         </Box>
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -366,13 +366,14 @@ describe('Box', () => {
 
   describe('Style Prop Combinations', () => {
     it('should combine gap and padding correctly', () => {
-      const {UNSAFE_getByType} = render(
+      render(
         <Box
+          testID="box"
           gap="md"
           padding="lg"
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -384,13 +385,14 @@ describe('Box', () => {
     })
 
     it('should combine paddingH and paddingV correctly', () => {
-      const {UNSAFE_getByType} = render(
+      render(
         <Box
+          testID="box"
           paddingH="md"
           paddingV="lg"
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -402,15 +404,16 @@ describe('Box', () => {
     })
 
     it('should combine individual padding props correctly', () => {
-      const {UNSAFE_getByType} = render(
+      render(
         <Box
+          testID="box"
           paddingTop="sm"
           paddingRight="md"
           paddingBottom="lg"
           paddingLeft="xl"
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -424,14 +427,15 @@ describe('Box', () => {
     })
 
     it('should combine flex direction with gap and padding', () => {
-      const {UNSAFE_getByType} = render(
+      render(
         <Box
+          testID="box"
           row
           gap="md"
           paddingH="lg"
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -444,13 +448,14 @@ describe('Box', () => {
     })
 
     it('should combine alignment with padding', () => {
-      const {UNSAFE_getByType} = render(
+      render(
         <Box
+          testID="box"
           center
           padding="md"
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -463,14 +468,15 @@ describe('Box', () => {
     })
 
     it('should combine flex with wrap and gap', () => {
-      const {UNSAFE_getByType} = render(
+      render(
         <Box
+          testID="box"
           flex={1}
           wrap="wrap"
           gap="sm"
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -490,8 +496,8 @@ describe('Box', () => {
     })
 
     it('should render with empty children', () => {
-      const {UNSAFE_getByType} = render(<Box>{null}</Box>)
-      expect(UNSAFE_getByType(View)).toBeTruthy()
+      render(<Box testID="box">{null}</Box>)
+      expect(screen.getByTestId('box')).toBeTruthy()
     })
 
     it('should render with conditional children', () => {

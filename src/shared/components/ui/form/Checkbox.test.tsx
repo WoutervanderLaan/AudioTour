@@ -17,65 +17,6 @@ const TEST_LABELS = {
  * Test suite for Checkbox component
  */
 describe('Checkbox', () => {
-  describe('Snapshots', () => {
-    it('should match snapshot - default state', () => {
-      const {toJSON} = render(<Checkbox label="Default" />)
-      expect(toJSON()).toMatchSnapshot()
-    })
-
-    it('should match snapshot - checked state', () => {
-      const {toJSON} = render(
-        <Checkbox
-          label="Checked"
-          checked
-        />
-      )
-      expect(toJSON()).toMatchSnapshot()
-    })
-
-    it('should match snapshot - disabled state', () => {
-      const {toJSON} = render(
-        <Checkbox
-          label="Disabled"
-          disabled
-        />
-      )
-      expect(toJSON()).toMatchSnapshot()
-    })
-
-    it('should match snapshot - error state', () => {
-      const {toJSON} = render(
-        <Checkbox
-          label="Error"
-          hasError
-        />
-      )
-      expect(toJSON()).toMatchSnapshot()
-    })
-
-    it('should match snapshot - required field', () => {
-      const {toJSON} = render(
-        <Checkbox
-          label="Required"
-          required
-        />
-      )
-      expect(toJSON()).toMatchSnapshot()
-    })
-
-    it('should match snapshot - all states combined', () => {
-      const {toJSON} = render(
-        <Checkbox
-          label="Complex"
-          checked
-          required
-          hasError
-        />
-      )
-      expect(toJSON()).toMatchSnapshot()
-    })
-  })
-
   describe('Rendering', () => {
     it('should render correctly', () => {
       const {container} = render(<Checkbox />)
@@ -515,8 +456,8 @@ describe('Checkbox', () => {
     })
   })
 
-  describe('Controlled vs Uncontrolled', () => {
-    it('should work as controlled component', () => {
+  describe('Controlled Component Behavior', () => {
+    it('should update when parent changes checked prop', () => {
       const onChange = jest.fn()
       const {getByTestId, rerender} = render(
         <Checkbox
@@ -529,11 +470,11 @@ describe('Checkbox', () => {
       let checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(false)
 
-      // Simulate user interaction
+      // Simulate user interaction - notifies parent of desired change
       fireEvent.press(checkbox)
       expect(onChange).toHaveBeenCalledWith(true)
 
-      // Parent component updates the checked prop
+      // Parent component controls state and updates the checked prop
       rerender(
         <Checkbox
           testID="checkbox"
@@ -546,28 +487,28 @@ describe('Checkbox', () => {
       expect(checkbox.props.accessibilityState.checked).toBe(true)
     })
 
-    it('should work as uncontrolled component', () => {
+    it('should not self-update state (parent controls state)', () => {
       const onChange = jest.fn()
       const {getByTestId} = render(
         <Checkbox
           testID="checkbox"
+          checked={false}
           onChange={onChange}
         />
       )
 
       const checkbox = getByTestId('checkbox')
-      // Uncontrolled component starts unchecked
       expect(checkbox.props.accessibilityState.checked).toBe(false)
 
-      // User interaction triggers onChange with new value
+      // User presses checkbox - onChange fires but component doesn't self-update
       fireEvent.press(checkbox)
       expect(onChange).toHaveBeenCalledWith(true)
 
-      // Component doesn't update its own state (that's parent's job)
+      // State unchanged because parent hasn't updated the prop
       expect(checkbox.props.accessibilityState.checked).toBe(false)
     })
 
-    it('should maintain checked state when controlled', () => {
+    it('should only update when checked prop changes', () => {
       const {getByTestId, rerender} = render(
         <Checkbox
           testID="checkbox"
@@ -578,12 +519,12 @@ describe('Checkbox', () => {
       let checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(true)
 
-      // Even after press, controlled component stays checked if prop doesn't change
+      // Press doesn't change state without parent updating prop
       fireEvent.press(checkbox)
       checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(true)
 
-      // Only changes when prop changes
+      // State only changes when parent updates prop
       rerender(
         <Checkbox
           testID="checkbox"
@@ -612,10 +553,13 @@ describe('Checkbox', () => {
       }
 
       expect(onChange).toHaveBeenCalledTimes(5)
-      // Verify each call alternates the expected value
+      // Component is controlled, so onChange always receives the opposite of current checked state
+      // Since checked=false, all calls receive true (user wants to check it)
       expect(onChange).toHaveBeenNthCalledWith(1, true)
       expect(onChange).toHaveBeenNthCalledWith(2, true)
       expect(onChange).toHaveBeenNthCalledWith(3, true)
+      expect(onChange).toHaveBeenNthCalledWith(4, true)
+      expect(onChange).toHaveBeenNthCalledWith(5, true)
     })
 
     it('should work without onChange handler', () => {

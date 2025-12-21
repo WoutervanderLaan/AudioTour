@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react-native'
-import {Text, View} from 'react-native'
+import {Text} from 'react-native'
 
 import {Row} from './Row'
 
@@ -38,8 +38,8 @@ describe('Row', () => {
 
   describe('Layout Direction', () => {
     it('should apply row flex direction', () => {
-      const {UNSAFE_getByType} = render(<Row />)
-      const view = UNSAFE_getByType(View)
+      render(<Row testID="row" />)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'row'}),
@@ -48,12 +48,12 @@ describe('Row', () => {
     })
 
     it('should always use row direction even without explicit row prop', () => {
-      const {UNSAFE_getByType} = render(
-        <Row>
+      render(
+        <Row testID="row">
           <Text>Content</Text>
         </Row>
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'row'}),
@@ -64,16 +64,16 @@ describe('Row', () => {
 
   describe('Box Props', () => {
     it('should accept flex prop', () => {
-      const {UNSAFE_getByType} = render(<Row flex={1} />)
-      const view = UNSAFE_getByType(View)
+      render(<Row testID="row" flex={1} />)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 1})])
       )
     })
 
     it('should accept center prop', () => {
-      const {UNSAFE_getByType} = render(<Row center />)
-      const view = UNSAFE_getByType(View)
+      render(<Row testID="row" center />)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -85,20 +85,20 @@ describe('Row', () => {
     })
 
     it('should accept gap prop', () => {
-      render(<Row gap="md" />)
-      expect(screen.queryByTestId('row')).toBeTruthy()
+      render(<Row testID="row" gap="md" />)
+      expect(screen.getByTestId('row')).toBeTruthy()
     })
 
     it('should accept padding prop', () => {
-      render(<Row padding="lg" />)
-      expect(screen.queryByTestId('row')).toBeTruthy()
+      render(<Row testID="row" padding="lg" />)
+      expect(screen.getByTestId('row')).toBeTruthy()
     })
 
     it('should accept justifyContent prop', () => {
-      const {UNSAFE_getByType} = render(
-        <Row justifyContent="space-between" />
+      render(
+        <Row testID="row" justifyContent="space-between" />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'space-between'}),
@@ -107,8 +107,8 @@ describe('Row', () => {
     })
 
     it('should accept alignItems prop', () => {
-      const {UNSAFE_getByType} = render(<Row alignItems="flex-start" />)
-      const view = UNSAFE_getByType(View)
+      render(<Row testID="row" alignItems="flex-start" />)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'flex-start'}),
@@ -117,8 +117,8 @@ describe('Row', () => {
     })
 
     it('should accept wrap prop', () => {
-      const {UNSAFE_getByType} = render(<Row wrap="wrap" />)
-      const view = UNSAFE_getByType(View)
+      render(<Row testID="row" wrap="wrap" />)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexWrap: 'wrap'})])
       )
@@ -128,8 +128,8 @@ describe('Row', () => {
   describe('Custom Styles', () => {
     it('should accept custom style prop', () => {
       const customStyle = {backgroundColor: 'blue'}
-      const {UNSAFE_getByType} = render(<Row style={customStyle} />)
-      const view = UNSAFE_getByType(View)
+      render(<Row testID="row" style={customStyle} />)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining(customStyle)])
       )
@@ -137,13 +137,14 @@ describe('Row', () => {
 
     it('should merge custom styles with Row styles', () => {
       const customStyle = {borderWidth: 1}
-      const {UNSAFE_getByType} = render(
+      render(
         <Row
+          testID="row"
           gap="sm"
           style={customStyle}
         />
       )
-      const view = UNSAFE_getByType(View)
+      const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(expect.arrayContaining([customStyle]))
     })
   })
@@ -214,8 +215,8 @@ describe('Row', () => {
     })
 
     it('should render with empty children', () => {
-      const {UNSAFE_getByType} = render(<Row>{null}</Row>)
-      expect(UNSAFE_getByType(View)).toBeTruthy()
+      render(<Row testID="row">{null}</Row>)
+      expect(screen.getByTestId('row')).toBeTruthy()
     })
 
     it('should render with single child', () => {
