@@ -40,7 +40,7 @@ Interactive button component with predefined styling variants.
 **Usage:**
 
 ```tsx
-import {Button} from '@/shared/components/ui/pressable'
+import {Button} from '@/shared/components/ui/pressable/Button'
 
 <Button
   variant="primary"
@@ -52,6 +52,80 @@ import {Button} from '@/shared/components/ui/pressable'
   variant="secondary"
   disabled
   label="Disabled Button"
+  />
+```
+
+### IconButton
+
+A pressable icon button component for navigation and actions.
+
+**Features:**
+
+- Material Icons integration via @expo/vector-icons
+- Multiple size variants (sm, md, lg)
+- Theme-aware icon colors
+- Disabled state support
+- Optional color override
+- State-based styling (pressed, default)
+- Inherits all PressableBase component features
+
+**Usage:**
+
+```tsx
+import {IconButton} from '@/shared/components/ui/pressable/IconButton'
+
+<IconButton
+  name="arrow-back"
+  size="md"
+  onPress={() => navigation.goBack()}
+  />
+
+<IconButton
+  name="settings"
+  size="lg"
+  color="#FF0000"
+  onPress={() => navigation.navigate('Settings')}
+  />
+
+<IconButton
+  name="delete"
+  size="sm"
+  disabled
+  />
+```
+
+### LinkButton
+
+A text-styled pressable component that looks like a hyperlink.
+
+**Features:**
+
+- Hyperlink-styled text appearance
+- Theme-aware text colors (link color)
+- Customizable text variant
+- Underline on press for visual feedback
+- Disabled state support with opacity
+- Inherits all PressableBase component features
+
+**Usage:**
+
+```tsx
+import {LinkButton} from '@/shared/components/ui/pressable/LinkButton'
+
+<LinkButton
+  label="Sign up"
+  onPress={() => navigation.navigate('Register')}
+  />
+
+<LinkButton
+  label="Forgot password?"
+  textVariant="SmallLabel"
+  onPress={() => navigation.navigate('ForgotPassword')}
+  />
+
+<LinkButton
+  label="Learn more"
+  disabled
   />
 ```
 
