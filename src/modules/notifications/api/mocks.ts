@@ -38,10 +38,6 @@ const notificationPostHandlers = [
       success: true,
       preferences: {
         pushEnabled: enabled,
-        tourNotifications: true,
-        narrativeNotifications: true,
-        recommendationNotifications: true,
-        socialNotifications: true,
       },
     })
   }),
@@ -57,10 +53,6 @@ const notificationGetHandlers = [
 
     return HttpResponse.json({
       pushEnabled: false,
-      tourNotifications: true,
-      narrativeNotifications: true,
-      recommendationNotifications: true,
-      socialNotifications: true,
     })
   }),
 ]

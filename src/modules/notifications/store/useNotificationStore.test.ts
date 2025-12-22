@@ -43,10 +43,6 @@ describe('useNotificationStore', () => {
       const {preferences} = useNotificationStore.getState()
       expect(preferences).toEqual({
         pushEnabled: false,
-        tourNotifications: true,
-        narrativeNotifications: true,
-        recommendationNotifications: true,
-        socialNotifications: true,
       })
     })
 
@@ -152,59 +148,23 @@ describe('useNotificationStore', () => {
   })
 
   describe('setPreferences', () => {
-    it('should update single preference', () => {
+    it('should update preferences', () => {
       const {setPreferences} = useNotificationStore.getState()
 
       setPreferences({pushEnabled: true})
 
       const {preferences} = useNotificationStore.getState()
       expect(preferences.pushEnabled).toBe(true)
-      expect(preferences.tourNotifications).toBe(true) // unchanged
-    })
-
-    it('should update multiple preferences', () => {
-      const {setPreferences} = useNotificationStore.getState()
-
-      setPreferences({
-        pushEnabled: true,
-        tourNotifications: false,
-        socialNotifications: false,
-      })
-
-      const {preferences} = useNotificationStore.getState()
-      expect(preferences.pushEnabled).toBe(true)
-      expect(preferences.tourNotifications).toBe(false)
-      expect(preferences.socialNotifications).toBe(false)
-      expect(preferences.narrativeNotifications).toBe(true) // unchanged
-      expect(preferences.recommendationNotifications).toBe(true) // unchanged
     })
 
     it('should merge with existing preferences', () => {
       const {setPreferences} = useNotificationStore.getState()
 
-      setPreferences({pushEnabled: true, tourNotifications: false})
-      setPreferences({narrativeNotifications: false})
+      setPreferences({pushEnabled: true})
+      setPreferences({pushEnabled: false})
 
       const {preferences} = useNotificationStore.getState()
-      expect(preferences.pushEnabled).toBe(true)
-      expect(preferences.tourNotifications).toBe(false)
-      expect(preferences.narrativeNotifications).toBe(false)
-    })
-
-    it('should handle all preference types', () => {
-      const {setPreferences} = useNotificationStore.getState()
-      const allPreferences: NotificationPreferences = {
-        pushEnabled: true,
-        tourNotifications: false,
-        narrativeNotifications: true,
-        recommendationNotifications: false,
-        socialNotifications: true,
-      }
-
-      setPreferences(allPreferences)
-
-      const {preferences} = useNotificationStore.getState()
-      expect(preferences).toEqual(allPreferences)
+      expect(preferences.pushEnabled).toBe(false)
     })
   })
 
@@ -332,10 +292,6 @@ describe('useNotificationStore', () => {
       expect(state.permissionGranted).toBe(false)
       expect(state.preferences).toEqual({
         pushEnabled: false,
-        tourNotifications: true,
-        narrativeNotifications: true,
-        recommendationNotifications: true,
-        socialNotifications: true,
       })
       expect(state.lastNotification).toBeNull()
     })
@@ -408,23 +364,15 @@ describe('useNotificationStore', () => {
       expect(state.isRegistered).toBe(false)
     })
 
-    it('should handle disabling all notifications', () => {
+    it('should handle disabling notifications', () => {
       const {setPreferences} = useNotificationStore.getState()
 
       setPreferences({
         pushEnabled: false,
-        tourNotifications: false,
-        narrativeNotifications: false,
-        recommendationNotifications: false,
-        socialNotifications: false,
       })
 
       const {preferences} = useNotificationStore.getState()
       expect(preferences.pushEnabled).toBe(false)
-      expect(preferences.tourNotifications).toBe(false)
-      expect(preferences.narrativeNotifications).toBe(false)
-      expect(preferences.recommendationNotifications).toBe(false)
-      expect(preferences.socialNotifications).toBe(false)
     })
 
     it('should handle multiple notification updates', () => {

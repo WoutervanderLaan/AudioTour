@@ -55,22 +55,6 @@ export type NotificationPreferences = {
    * Whether push notifications are enabled globally
    */
   pushEnabled: boolean
-  /**
-   * Whether tour completion notifications are enabled
-   */
-  tourNotifications: boolean
-  /**
-   * Whether new narrative notifications are enabled
-   */
-  narrativeNotifications: boolean
-  /**
-   * Whether recommendation notifications are enabled
-   */
-  recommendationNotifications: boolean
-  /**
-   * Whether social notifications are enabled
-   */
-  socialNotifications: boolean
 }
 
 /**

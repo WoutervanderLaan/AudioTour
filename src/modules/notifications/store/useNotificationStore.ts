@@ -4,10 +4,6 @@ import {createModuleStore} from '@/store/createStore'
 
 const defaultPreferences: NotificationPreferences = {
   pushEnabled: false,
-  tourNotifications: true,
-  narrativeNotifications: true,
-  recommendationNotifications: true,
-  socialNotifications: true,
 }
 
 const initialState = {
