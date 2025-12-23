@@ -5,7 +5,7 @@ import {TourRouteName} from '../routes.types'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable/Button'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 

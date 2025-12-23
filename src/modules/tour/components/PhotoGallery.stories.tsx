@@ -1,9 +1,10 @@
+import React, {useState} from 'react'
+
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
 import {PhotoGallery} from './PhotoGallery'
 
 import {logger} from '@/core/lib/logger/logger'
-import {useState} from 'react'
 
 const meta = {
   title: 'Module/Tour/PhotoGallery',
@@ -35,7 +36,13 @@ export const Default: Story = {
   },
 }
 
-const InteractivePhotoGallery = () => {
+/**
+ * InteractivePhotoGallery
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
+const InteractivePhotoGallery = (): React.JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0)
 
   return (

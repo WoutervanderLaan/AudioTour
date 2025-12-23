@@ -1,6 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-/* eslint-disable max-lines-per-function */
-// eslint-disable-next-line no-restricted-imports
 import {type StyleProp, Text, type ViewStyle} from 'react-native'
 
 import {render, screen} from '@testing-library/react-native'

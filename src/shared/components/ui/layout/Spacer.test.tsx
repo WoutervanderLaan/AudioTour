@@ -1,5 +1,3 @@
-/* eslint-disable no-restricted-imports */
-/* eslint-disable max-lines-per-function */
 import {Text, View} from 'react-native'
 
 import {render, screen} from '@testing-library/react-native'

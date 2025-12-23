@@ -10,7 +10,7 @@ import type {TourModalName, TourModalParams} from '../routes.types'
 import {getPermissionContent} from '../utils/permissionContent'
 
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 
 /**
  * TourCameraPermissionScreenProps

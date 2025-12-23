@@ -5,7 +5,7 @@ import {OnboardingBanner} from '@/modules/onboarding/components/OnboardingBanner
 import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {NavItem} from '@/shared/components/ui/navigation'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**

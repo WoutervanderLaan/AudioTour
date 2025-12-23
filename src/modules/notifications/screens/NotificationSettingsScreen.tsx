@@ -6,7 +6,7 @@ import {useNotificationStore} from '../store/useNotificationStore'
 
 import {FormField, Switch} from '@/shared/components/ui/form'
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 

@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 // Mock datetime module before importing ApiClient
 jest.mock('@/core/lib/datetime', () => ({
   datetime: {

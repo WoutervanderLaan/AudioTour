@@ -30,7 +30,7 @@ The Screen component integrates with the global `KeyboardContext` ([KeyboardCont
 Simple flex container with no scrolling or keyboard behavior:
 
 ```tsx
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 ;<Screen>
   <Text>Simple static content</Text>
 </Screen>

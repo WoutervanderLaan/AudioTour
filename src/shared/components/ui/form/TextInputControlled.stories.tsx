@@ -1,14 +1,16 @@
+import type React from 'react'
+import {useForm} from 'react-hook-form'
+
 import {zodResolver} from '@hookform/resolvers/zod'
 import type {Meta} from '@storybook/react-native-web-vite'
-import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 
+import {Column} from '../layout/Column'
 import {TextInputControlled} from './TextInputControlled'
 
+import {logger} from '@/core/lib/logger/logger'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
-import {Column} from '../layout/Column'
-import {logger} from '@/core/lib/logger/logger'
 
 const meta = {
   title: 'Form/TextInputControlled',
@@ -25,6 +27,10 @@ const simpleSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
 })
 
+/**
+ * SimpleFormData
+ * TODO: describe what this type represents.
+ */
 type SimpleFormData = z.infer<typeof simpleSchema>
 
 /**
@@ -39,6 +45,13 @@ const SimpleFormExample = (): React.JSX.Element => {
     mode: 'onChange',
   })
 
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
   const onSubmit = (data: SimpleFormData): void => {
     logger.debug('Form submitted:', data)
   }
@@ -96,6 +109,10 @@ const complexSchema = z
     path: ['confirmPassword'],
   })
 
+/**
+ * ComplexFormData
+ * TODO: describe what this type represents.
+ */
 type ComplexFormData = z.infer<typeof complexSchema>
 
 /**
@@ -117,6 +134,13 @@ const ComplexFormExample = (): React.JSX.Element => {
     },
   })
 
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
   const onSubmit = (data: ComplexFormData): void => {
     logger.debug('Form submitted:', data)
   }
@@ -210,6 +234,10 @@ const defaultValuesSchema = z.object({
   email: z.string().email('Invalid email'),
 })
 
+/**
+ * DefaultValuesFormData
+ * TODO: describe what this type represents.
+ */
 type DefaultValuesFormData = z.infer<typeof defaultValuesSchema>
 
 /**
@@ -227,6 +255,13 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
     },
   })
 
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
   const onSubmit = (data: DefaultValuesFormData): void => {
     logger.debug('Form submitted:', data)
   }

@@ -1,15 +1,17 @@
+import type React from 'react'
+import {useForm} from 'react-hook-form'
+
 import {zodResolver} from '@hookform/resolvers/zod'
 import type {Meta} from '@storybook/react-native-web-vite'
-import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 
-import {RadioGroupControlled} from './RadioGroupControlled'
+import {Column} from '../layout/Column'
 import type {RadioOption} from './RadioGroup'
+import {RadioGroupControlled} from './RadioGroupControlled'
 
+import {logger} from '@/core/lib/logger/logger'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
-import {logger} from '@/core/lib/logger/logger'
-import {Column} from '../layout/Column'
 
 const meta = {
   title: 'Form/RadioGroupControlled',
@@ -31,6 +33,10 @@ const formSchema = z.object({
   }),
 })
 
+/**
+ * FormData
+ * TODO: describe what this type represents.
+ */
 type FormData = z.infer<typeof formSchema>
 
 /**
@@ -87,6 +93,10 @@ const preferencesSchema = z.object({
   }),
 })
 
+/**
+ * PreferencesData
+ * TODO: describe what this type represents.
+ */
 type PreferencesData = z.infer<typeof preferencesSchema>
 
 /**

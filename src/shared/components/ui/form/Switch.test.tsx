@@ -1,7 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-/* eslint-disable max-lines */
-/* eslint-disable max-lines-per-function */
-
 import {fireEvent, render, screen} from '@testing-library/react-native'
 
 import {Switch} from './Switch'

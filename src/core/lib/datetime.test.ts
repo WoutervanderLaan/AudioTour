@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import {datetime} from './datetime'
 
 const TEST_DATE = '2024-01-15'

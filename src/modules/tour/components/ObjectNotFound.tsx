@@ -1,7 +1,7 @@
 import React from 'react'
 
 import {Box} from '@/shared/components/ui/layout/Box'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 
 /**

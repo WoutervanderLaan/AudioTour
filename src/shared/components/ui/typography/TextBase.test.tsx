@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import {render, screen} from '@testing-library/react-native'
 
 import {TextBase} from './TextBase'

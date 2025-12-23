@@ -25,6 +25,7 @@ import requireTypeDocComment from './eslint-rules/require-type-doc-comment.js'
 
 export default [
   js.configs.recommended,
+  ...storybook.configs['flat/recommended'],
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     ignores: [
@@ -39,9 +40,9 @@ export default [
       '.storybook/**',
       '.rnstorybook/**',
       '.jest/**',
-      '**/*.stories.{ts,tsx,js,jsx}',
       '*.config.js',
-      '**/*.test.{ts,js}',
+      '**/*.test.{ts,js,jsx,tsx}',
+      '!.storybook',
     ],
     languageOptions: {
       parser: tsParser,
@@ -90,7 +91,6 @@ export default [
       'import/resolver': {
         typescript: {
           project: './tsconfig.json',
-          alwaysTryTypes: true,
         },
       },
       'boundaries/elements': [
@@ -256,7 +256,6 @@ export default [
         },
       ],
       /** --- Imports --- **/
-      // 'import/no-relative-parent-imports': 'error',
       'import/no-cycle': ['error', {maxDepth: 1}],
       'simple-import-sort/imports': [
         'error',
@@ -402,13 +401,6 @@ export default [
       ],
 
       'react/jsx-filename-extension': ['error', {extensions: ['.jsx', '.tsx']}],
-
-      // Jest
-      'jest/no-disabled-tests': 'warn',
-      'jest/no-focused-tests': 'error',
-      'jest/no-identical-title': 'error',
-      'jest/prefer-to-have-length': 'warn',
-      'jest/valid-expect': 'error',
     },
   },
   {
@@ -427,5 +419,59 @@ export default [
       'no-undef': 'off',
     },
   },
-  // ...storybook.configs['flat/recommended'],
+  {
+    files: ['**/*.stories.{tsx,jsx}'],
+    rules: {
+      'import/no-default-export': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+    },
+  },
+  {
+    files: ['**/*.test.{ts,js,tsx,jsx}'],
+    plugins: {
+      '@typescript-eslint': tseslint,
+      react,
+      jest: jestPlugin,
+    },
+    settings: {
+      react: {version: 'detect'},
+      'import/resolver': {
+        typescript: {
+          project: './tsconfig.json',
+        },
+      },
+    },
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        ecmaFeatures: {jsx: true},
+        project: './tsconfig.json',
+        tsconfigRootDir: import.meta.dirname,
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.jest,
+        ...jestPlugin.environments.globals.globals,
+        fail: true,
+        __DEV__: true,
+        NodeJS: true,
+      },
+    },
+    rules: {
+      'max-lines': 'off',
+      complexity: 'off',
+      'max-nested-callbacks': 'off',
+      'max-depth': 'off',
+      'max-lines-per-function': 'off',
+      'max-params': 'off',
+      'jest/no-disabled-tests': 'warn',
+      'jest/no-focused-tests': 'error',
+      'jest/no-identical-title': 'error',
+      'jest/prefer-to-have-length': 'warn',
+      'jest/valid-expect': 'error',
+    },
+  },
 ]

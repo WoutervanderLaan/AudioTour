@@ -1,15 +1,16 @@
+import React from 'react'
+import {useForm} from 'react-hook-form'
+
 import {zodResolver} from '@hookform/resolvers/zod'
 import type {Meta} from '@storybook/react-native-web-vite'
-import {useForm} from 'react-hook-form'
 import {z} from 'zod'
 
+import {Column} from '../layout/Column'
 import {ImageInputControlled} from './ImageInputControlled'
 
+import {logger} from '@/core/lib/logger/logger'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography'
-import {logger} from '@/core/lib/logger/logger'
-import {Column} from '../layout/Column'
-import React from 'react'
 
 const meta = {
   title: 'Form/ImageInputControlled',
@@ -29,6 +30,10 @@ const simpleSchema = z.object({
     .max(5, 'Maximum 5 photos allowed'),
 })
 
+/**
+ * SimpleFormData
+ * TODO: describe what this type represents.
+ */
 type SimpleFormData = z.infer<typeof simpleSchema>
 
 /**
@@ -46,6 +51,13 @@ const SimpleFormExample = (): React.JSX.Element => {
     },
   })
 
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
   const onSubmit = (data: SimpleFormData): void => {
     logger.debug('Form submitted:', data)
   }
@@ -93,6 +105,10 @@ const singleImageSchema = z.object({
     .max(1, 'Only one photo allowed'),
 })
 
+/**
+ * SingleImageFormData
+ * TODO: describe what this type represents.
+ */
 type SingleImageFormData = z.infer<typeof singleImageSchema>
 
 /**
@@ -110,6 +126,13 @@ const SingleImageFormExample = (): React.JSX.Element => {
     },
   })
 
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
   const onSubmit = (data: SingleImageFormData): void => {
     logger.debug('Form submitted:', data)
   }
@@ -154,6 +177,10 @@ const complexSchema = z.object({
     .max(1, 'Only one cover photo allowed'),
 })
 
+/**
+ * ComplexFormData
+ * TODO: describe what this type represents.
+ */
 type ComplexFormData = z.infer<typeof complexSchema>
 
 /**
@@ -177,6 +204,13 @@ const ComplexFormExample = (): React.JSX.Element => {
   const photos = watch('photos')
   const coverPhoto = watch('coverPhoto')
 
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
   const onSubmit = (data: ComplexFormData): void => {
     logger.debug('Form submitted:', data)
   }
@@ -240,6 +274,10 @@ const defaultValuesSchema = z.object({
     .max(5, 'Maximum 5 photos allowed'),
 })
 
+/**
+ * DefaultValuesFormData
+ * TODO: describe what this type represents.
+ */
 type DefaultValuesFormData = z.infer<typeof defaultValuesSchema>
 
 /**
@@ -259,6 +297,13 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
     },
   })
 
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
   const onSubmit = (data: DefaultValuesFormData): void => {
     logger.debug('Form submitted:', data)
   }
@@ -293,6 +338,10 @@ const smallThumbnailsSchema = z.object({
   photos: z.array(z.string()).min(1, 'At least one photo is required'),
 })
 
+/**
+ * SmallThumbnailsFormData
+ * TODO: describe what this type represents.
+ */
 type SmallThumbnailsFormData = z.infer<typeof smallThumbnailsSchema>
 
 /**
@@ -309,6 +358,13 @@ const SmallThumbnailsFormExample = (): React.JSX.Element => {
     },
   })
 
+  /**
+   * onSubmit
+   * TODO: describe what it does.
+   *
+   * @param {*} data
+   * @returns {*} describe return value
+   */
   const onSubmit = (data: SmallThumbnailsFormData): void => {
     logger.debug('Form submitted:', data)
   }

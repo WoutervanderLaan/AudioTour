@@ -1,15 +1,16 @@
+import React from 'react'
+
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {Spacer} from './Spacer'
-import {Column} from './Column'
 import {Box} from './Box'
-import React from 'react'
+import {Column} from './Column'
+import {Spacer} from './Spacer'
 
 const meta = {
   title: 'Layout/Spacer',
   component: Spacer,
   decorators: [
-    Story => (
+    (Story): React.JSX.Element => (
       <Column
         style={{
           backgroundColor: 'rgba(0,0,0,0.1)',

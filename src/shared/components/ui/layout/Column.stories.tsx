@@ -1,7 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {Column} from './Column'
 import {Box} from './Box'
+import {Column} from './Column'
 
 const meta = {
   title: 'Layout/Column',

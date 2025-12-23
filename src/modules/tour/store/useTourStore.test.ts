@@ -1,7 +1,7 @@
 import * as Crypto from 'expo-crypto'
 
 import {useTourStore} from './useTourStore'
-import type {FeedItem, FeedItemMetadata} from '../types'
+import type {FeedItemMetadata} from '../types'
 
 import {datetime} from '@/core/lib/datetime'
 
@@ -113,7 +113,7 @@ describe('useTourStore', () => {
     it('should handle empty photos array', () => {
       const {addFeedItem} = useTourStore.getState()
 
-      const id = addFeedItem([])
+      addFeedItem([])
 
       const {feedItems} = useTourStore.getState()
       expect(feedItems[0].photos).toEqual([])
@@ -177,7 +177,7 @@ describe('useTourStore', () => {
       )
 
       const id1 = addFeedItem(['photo1.jpg'])
-      const id2 = addFeedItem(['photo2.jpg'])
+      addFeedItem(['photo2.jpg'])
 
       updateFeedItem(id1, {status: 'ready'})
 
