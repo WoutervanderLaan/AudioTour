@@ -1,7 +1,9 @@
+import {StyleSheet} from 'react-native-unistyles'
+
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {Column} from './Column'
 import {Box} from './Box'
+import {Column} from './Column'
 
 const meta = {
   title: 'Layout/Column',
@@ -17,6 +19,13 @@ export default meta
  */
 type Story = StoryObj<typeof meta>
 
+const styles = StyleSheet.create(theme => ({
+  demoBox: {
+    borderWidth: theme.size.xxs,
+    borderColor: theme.color.text.default,
+  },
+}))
+
 export const Default: Story = {
   args: {
     children: (
@@ -25,28 +34,28 @@ export const Default: Story = {
           padding="sm"
           flex={1}
           testID="StoryBox"
-          style={{borderWidth: 2, borderColor: 'black'}}>
+          style={styles.demoBox}>
           This is a Column (1)
         </Box>
         <Box
           padding="sm"
           flex={1}
           testID="StoryBox"
-          style={{borderWidth: 2, borderColor: 'black'}}>
+          style={styles.demoBox}>
           This is a Column (2)
         </Box>
         <Box
           padding="sm"
           flex={1}
           testID="StoryBox"
-          style={{borderWidth: 2, borderColor: 'black'}}>
+          style={styles.demoBox}>
           This is a Column (3)
         </Box>
       </>
     ),
     padding: 'sm',
     gap: 'sm',
-    style: {borderWidth: 2, borderColor: 'black'},
     testID: 'StoryColumn',
+    style: styles.demoBox,
   },
 }

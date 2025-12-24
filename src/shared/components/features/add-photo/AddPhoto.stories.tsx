@@ -1,3 +1,5 @@
+import type React from 'react'
+
 import type {Meta} from '@storybook/react-native-web-vite'
 
 import {AddPhoto} from './AddPhoto'
@@ -21,7 +23,7 @@ export const Small = {
     <AddPhoto
       testID="StorySmallAddPhoto"
       size="sm"
-      onPress={() => {}}
+      onPress={() => null}
     />
   ),
 }
@@ -30,7 +32,7 @@ export const Medium = {
   render: (): React.JSX.Element => (
     <AddPhoto
       testID="StoryMediumAddPhoto"
-      onPress={() => {}}
+      onPress={() => null}
     />
   ),
 }
@@ -40,7 +42,7 @@ export const Large = {
     <AddPhoto
       testID="StoryLargeAddPhoto"
       size="lg"
-      onPress={() => {}}
+      onPress={() => null}
     />
   ),
 }
@@ -51,7 +53,7 @@ export const Disabled = {
       testID="StoryDisabledAddPhoto"
       size="lg"
       disabled
-      onPress={() => {}}
+      onPress={() => null}
     />
   ),
 }

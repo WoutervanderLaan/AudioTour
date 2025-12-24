@@ -107,7 +107,7 @@ class ModuleRegistryManager {
   async unregister(moduleName: ModuleSlug): Promise<void> {
     try {
       const module = this.modules[moduleName]
-      if (!module) {
+      if (module === undefined) {
         logger.warn(`Cannot unregister: module ${moduleName} not found`)
         return
       }

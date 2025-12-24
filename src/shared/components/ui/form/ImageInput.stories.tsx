@@ -1,4 +1,6 @@
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type React from 'react'
+
+import type {Meta} from '@storybook/react-native-web-vite'
 
 import {FormField} from './FormField'
 import {ImageInput} from './ImageInput'
@@ -13,12 +15,6 @@ const meta = {
 } satisfies Meta<typeof ImageInput>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for ImageInput component
- */
-type Story = StoryObj<typeof meta>
 
 /**
  * renderImageLabel

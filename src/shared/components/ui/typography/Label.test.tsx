@@ -1,5 +1,4 @@
-/* eslint-disable max-lines-per-function */
-import {type StyleProp, type TextStyle} from 'react-native'
+import type {StyleProp, TextStyle} from 'react-native'
 
 import {render, screen} from '@testing-library/react-native'
 

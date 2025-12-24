@@ -1,10 +1,10 @@
+import React from 'react'
+
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {GradientBackground} from './GradientBackground'
-
-import React from 'react'
-import {Text} from '../typography'
 import {Box} from '../layout/Box'
+import {Text} from '../typography'
+import {GradientBackground} from './GradientBackground'
 
 const meta = {
   title: 'Gradient/GradientBackground',

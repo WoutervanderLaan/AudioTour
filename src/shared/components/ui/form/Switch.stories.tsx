@@ -1,8 +1,9 @@
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
-import React, {useState} from 'react'
+import React from 'react'
 
-import {Switch} from './Switch'
+import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+
 import {Column} from '../layout/Column'
+import {Switch} from './Switch'
 
 const meta = {
   title: 'Form/Switch',

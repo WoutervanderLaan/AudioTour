@@ -30,6 +30,14 @@ ruleTester.run('require-doc-comment', rule, {
     {
       code: `
         /**
+         * test
+         */
+        async function test() {}
+      `,
+    },
+    {
+      code: `
+        /**
          * foo
          */
         export function foo() {}
@@ -41,6 +49,14 @@ ruleTester.run('require-doc-comment', rule, {
          * bar
          */
         const bar = () => {}
+      `,
+    },
+    {
+      code: `
+        /**
+         * bar
+         */
+        const bar = async () => {}
       `,
     },
     {

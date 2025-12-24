@@ -12,6 +12,7 @@ import {StyleSheet} from 'react-native-unistyles'
 import {StickyBanner} from '@/shared/components/features/banner/StickyBanner'
 import {useBanner} from '@/shared/hooks/useBanner'
 import {useKeyboard} from '@/shared/hooks/useKeyboard'
+import {useNavigation} from '@/shared/hooks/useNavigation'
 import {
   type NavigationInset,
   useNavigationInsets,
@@ -106,13 +107,13 @@ const Static = ({
       : includeNavigationPadding,
   )
   const {banner} = useBanner()
-  // Memoize the animated padding to avoid recreating on every render
+  const p = useNavigation()
+  p.getId()
   const animatedPaddingBottom = useMemo(
     () => Animated.add(animatedKeyboardHeight, extraPadding + bottom),
     [animatedKeyboardHeight, extraPadding, bottom],
   )
 
-  // No keyboard avoiding - use simple View with navigation insets
   if (!keyboardAvoiding) {
     return (
       <View
@@ -128,7 +129,6 @@ const Static = ({
     )
   }
 
-  // Keyboard avoiding with animation
   if (animated) {
     return (
       <Animated.View
@@ -147,7 +147,6 @@ const Static = ({
     )
   }
 
-  // Keyboard avoiding without animation
   return (
     <View
       testID={testID}
@@ -189,7 +188,6 @@ const Scrollable = ({
       : includeNavigationPadding,
   )
   const {banner} = useBanner()
-  // Calculate padding based on keyboard avoiding and animation settings
   const paddingBottom = useMemo(() => {
     const basePadding = bottom
     if (!keyboardAvoiding) return basePadding
@@ -206,7 +204,6 @@ const Scrollable = ({
     bottom,
   ])
 
-  // Use Animated.ScrollView when animation is enabled with keyboard avoiding
   const Component =
     animated && keyboardAvoiding ? Animated.ScrollView : ScrollView
 
@@ -284,17 +281,6 @@ const Scrollable = ({
  * </Screen.Scrollable>
  * ```
  *
- * @example Access keyboard state anywhere in the app
- * ```tsx
- * const { isKeyboardVisible, keyboardHeight } = useKeyboard();
- *
- * return (
- *   <View>
- *     <Text>Keyboard is {isKeyboardVisible ? 'visible' : 'hidden'}</Text>
- *     <Text>Height: {keyboardHeight}px</Text>
- *   </View>
- * );
- * ```
  *
  * @example Custom scroll view props
  * ```tsx

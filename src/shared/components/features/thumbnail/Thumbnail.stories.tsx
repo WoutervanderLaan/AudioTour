@@ -1,6 +1,9 @@
+import type React from 'react'
+
 import type {Meta} from '@storybook/react-native-web-vite'
 
 import {Thumbnail} from './Thumbnail'
+
 import {logger} from '@/core/lib/logger/logger'
 
 const meta = {

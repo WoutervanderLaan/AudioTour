@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import {fireEvent, render, screen} from '@testing-library/react-native'
 
 import {Button} from './Button'

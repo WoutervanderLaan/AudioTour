@@ -144,11 +144,7 @@ Toggle push notifications on/off.
 {
   "success": true,
   "preferences": {
-    "pushEnabled": true,
-    "tourNotifications": true,
-    "narrativeNotifications": true,
-    "recommendationNotifications": true,
-    "socialNotifications": true
+    "pushEnabled": true
   }
 }
 ```

@@ -1,12 +1,13 @@
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
-import {useState} from 'react'
+import React, {useState} from 'react'
 
-import {FormField} from './FormField'
-import {Column} from '../layout/Column'
-import {TextInput} from './TextInput'
+import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+
 import {GradientBackground} from '../gradient/GradientBackground'
-import {Text} from '../typography'
+import {Column} from '../layout/Column'
 import {Row} from '../layout/Row'
+import {Text} from '../typography'
+import {FormField} from './FormField'
+import {TextInput} from './TextInput'
 
 const meta = {
   title: 'Form/FormField',
@@ -109,6 +110,13 @@ const InteractiveExample = (): React.JSX.Element => {
   const [value, setValue] = useState('')
   const [error, setError] = useState<string>()
 
+  /**
+   * handleChange
+   * TODO: describe what it does.
+   *
+   * @param {*} text
+   * @returns {*} describe return value
+   */
   const handleChange = (text: string): void => {
     setValue(text)
     if (text && !text.includes('@')) {
@@ -163,7 +171,7 @@ const CustomLabelExample = (): React.JSX.Element => (
             color="inverse">
             {label}
           </Text.Title>
-          {required && (
+          {!!required && (
             <Text.Title
               testID="StoryText"
               color="warning">

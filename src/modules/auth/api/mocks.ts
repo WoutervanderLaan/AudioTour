@@ -6,6 +6,15 @@ import {wait} from '@/shared/utils/wait'
 
 const TIMEOUT = 2000
 
+// Mock user data constants
+const MOCK_USER_ID = 'user-123'
+const MOCK_USER_EMAIL = 'test@example.com'
+const MOCK_USER_NAME = 'John Doe'
+
+// Mock token constants
+const MOCK_ACCESS_TOKEN = 'access-token-abc'
+const MOCK_REFRESH_TOKEN = 'refresh-token-xyz'
+
 /**
  * MSW (Mock Service Worker) handlers for authentication GET endpoints.
  *
@@ -19,16 +28,16 @@ const authGetHandlers = [
     await wait(TIMEOUT)
 
     return HttpResponse.json({
-      id: 'user-123',
-      email: 'test@example.com',
-      name: 'John Doe',
+      id: MOCK_USER_ID,
+      email: MOCK_USER_EMAIL,
+      name: MOCK_USER_NAME,
     })
   }),
   http.get(createHandler('/auth/session'), async () => {
     await wait(TIMEOUT)
 
     return HttpResponse.json({
-      user: {id: 'user-123', email: 'test@example.com', name: 'John Doe'},
+      user: {id: MOCK_USER_ID, email: MOCK_USER_EMAIL, name: MOCK_USER_NAME},
       expiresAt: datetime().add(1, 'hour').format(),
     })
   }),
@@ -51,10 +60,10 @@ const authPostHandlers = [
     await wait(TIMEOUT)
 
     return HttpResponse.json({
-      user: {id: 'user-123', email: 'test@example.com', name: 'John Doe'},
+      user: {id: MOCK_USER_ID, email: MOCK_USER_EMAIL, name: MOCK_USER_NAME},
       tokens: {
-        accessToken: 'access-token-abc',
-        refreshToken: 'refresh-token-xyz',
+        accessToken: MOCK_ACCESS_TOKEN,
+        refreshToken: MOCK_REFRESH_TOKEN,
       },
     })
   }),
@@ -70,10 +79,10 @@ const authPostHandlers = [
     await wait(TIMEOUT)
 
     return HttpResponse.json({
-      user: {id: 'user-123', email: 'test@example.com', name: 'John Doe'},
+      user: {id: MOCK_USER_ID, email: MOCK_USER_EMAIL, name: MOCK_USER_NAME},
       tokens: {
-        accessToken: 'access-token-abc',
-        refreshToken: 'refresh-token-xyz',
+        accessToken: MOCK_ACCESS_TOKEN,
+        refreshToken: MOCK_REFRESH_TOKEN,
       },
     })
   }),

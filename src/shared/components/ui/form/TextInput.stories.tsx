@@ -1,9 +1,10 @@
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
-import {useState} from 'react'
+import React, {useState} from 'react'
 
+import type {Meta} from '@storybook/react-native-web-vite'
+
+import {Column} from '../layout/Column'
 import {FormField} from './FormField'
 import {TextInput} from './TextInput'
-import {Column} from '../layout/Column'
 
 const meta = {
   title: 'Form/TextInput',
@@ -12,12 +13,6 @@ const meta = {
 } satisfies Meta<typeof TextInput>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for TextInput component
- */
-type Story = StoryObj<typeof meta>
 
 export const Default = {
   render: () => (
@@ -144,6 +139,13 @@ const InteractiveExample = (): React.JSX.Element => {
   const [value, setValue] = useState('')
   const [error, setError] = useState<string>()
 
+  /**
+   * handleChange
+   * TODO: describe what it does.
+   *
+   * @param {*} text
+   * @returns {*} describe return value
+   */
   const handleChange = (text: string): void => {
     setValue(text)
     // Simple email validation

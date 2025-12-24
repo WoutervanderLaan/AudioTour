@@ -1,7 +1,8 @@
 import type {Meta} from '@storybook/react-native-web-vite'
 
 import {ProgressIndicator} from './ProgressIndicator'
-import {Column} from '../../ui/layout/Column'
+
+import {Column} from '@/shared/components/ui/layout/Column'
 
 const meta = {
   title: 'Features/ProgressIndicator',
@@ -11,6 +12,12 @@ const meta = {
 
 export default meta
 
+/**
+ * AllSteps
+ * TODO: describe what it does.
+ *
+ * @returns {*} describe return value
+ */
 const AllSteps = () => (
   <Column
     testID="StoryProgressContainerColumn"

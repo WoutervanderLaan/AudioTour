@@ -1,6 +1,3 @@
-/* eslint-disable max-nested-callbacks */
-/* eslint-disable max-lines-per-function */
-// eslint-disable-next-line no-restricted-imports
 import {Text} from 'react-native'
 
 import {fireEvent, render, screen} from '@testing-library/react-native'

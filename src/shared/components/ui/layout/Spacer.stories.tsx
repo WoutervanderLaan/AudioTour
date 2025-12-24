@@ -1,28 +1,35 @@
+import React from 'react'
+import {StyleSheet} from 'react-native-unistyles'
+
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {Spacer} from './Spacer'
-import {Column} from './Column'
 import {Box} from './Box'
-import React from 'react'
+import {Column} from './Column'
+import {Spacer} from './Spacer'
+
+const styles = StyleSheet.create(theme => ({
+  container: {
+    backgroundColor: theme.color.text.secondary,
+  },
+  demoBox: {
+    borderWidth: theme.size.xxs,
+    borderColor: theme.color.text.default,
+    backgroundColor: theme.color.screen.background.default,
+  },
+}))
 
 const meta = {
   title: 'Layout/Spacer',
   component: Spacer,
   decorators: [
-    Story => (
+    (Story): React.JSX.Element => (
       <Column
         testID="StoryColumn"
-        style={{
-          backgroundColor: 'rgba(0,0,0,0.1)',
-        }}>
+        style={styles.container}>
         <Box
           testID="StoryBox"
           padding="sm"
-          style={{
-            borderWidth: 2,
-            borderColor: 'black',
-            backgroundColor: 'white',
-          }}
+          style={styles.demoBox}
           center>
           This is a Spacer
         </Box>
@@ -30,11 +37,7 @@ const meta = {
         <Box
           testID="StoryBox"
           padding="sm"
-          style={{
-            borderWidth: 2,
-            borderColor: 'black',
-            backgroundColor: 'white',
-          }}
+          style={styles.demoBox}
           center>
           This is a Spacer
         </Box>
