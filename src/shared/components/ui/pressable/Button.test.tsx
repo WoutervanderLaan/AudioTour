@@ -16,7 +16,7 @@ describe('Button', () => {
     it('should render with testID', () => {
       render(
         <Button
-          testID="test-button"
+          testId="test-button"
           label="Test"
         />,
       )
@@ -64,7 +64,7 @@ describe('Button', () => {
       const onPress = jest.fn()
       render(
         <Button
-          testID="button"
+          testId="button"
           label="Press me"
           onPress={onPress}
         />,
@@ -78,7 +78,7 @@ describe('Button', () => {
       const onPress = jest.fn()
       render(
         <Button
-          testID="button"
+          testId="button"
           label="Disabled"
           onPress={onPress}
           disabled
@@ -93,7 +93,7 @@ describe('Button', () => {
       const onPress = jest.fn()
       render(
         <Button
-          testID="button"
+          testId="button"
           label="Multi press"
           onPress={onPress}
         />,
@@ -123,7 +123,7 @@ describe('Button', () => {
       const onPress = jest.fn()
       render(
         <Button
-          testID="button"
+          testId="button"
           label="Disabled"
           onPress={onPress}
           disabled
@@ -173,7 +173,7 @@ describe('Button', () => {
     it('should accept accessibilityHint', () => {
       render(
         <Button
-          testID="button"
+          testId="button"
           label="Next"
           accessibilityHint="Navigate to next page"
         />,
@@ -205,7 +205,7 @@ describe('Button', () => {
       const onSubmit = jest.fn()
       render(
         <Button
-          testID="submit"
+          testId="submit"
           label="Submit"
           onPress={onSubmit}
         />,
@@ -219,7 +219,7 @@ describe('Button', () => {
       const onCancel = jest.fn()
       render(
         <Button
-          testID="cancel"
+          testId="cancel"
           variant="secondary"
           label="Cancel"
           onPress={onCancel}
@@ -247,12 +247,12 @@ describe('Button', () => {
       render(
         <>
           <Button
-            testID="submit"
+            testId="submit"
             label="Submit"
             onPress={onSubmit}
           />
           <Button
-            testID="cancel"
+            testId="cancel"
             variant="secondary"
             label="Cancel"
             onPress={onCancel}

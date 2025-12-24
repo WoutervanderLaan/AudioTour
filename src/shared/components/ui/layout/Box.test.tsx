@@ -35,7 +35,7 @@ describe('Box', () => {
     })
 
     it('should render with testID', () => {
-      render(<Box testID="test-box" />)
+      render(<Box testId="test-box" />)
       expect(screen.getByTestId('test-box')).toBeTruthy()
     })
   })
@@ -44,7 +44,7 @@ describe('Box', () => {
     it('should apply row direction when row prop is true', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           row
         />,
       )
@@ -59,7 +59,7 @@ describe('Box', () => {
     it('should apply column direction when column prop is true', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           column
         />,
       )
@@ -72,7 +72,7 @@ describe('Box', () => {
     })
 
     it('should not apply flex direction by default', () => {
-      render(<Box testID="box" />)
+      render(<Box testId="box" />)
       const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
@@ -86,7 +86,7 @@ describe('Box', () => {
     it('should apply flex when flex prop is provided', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           flex={1}
         />,
       )
@@ -99,7 +99,7 @@ describe('Box', () => {
     it('should apply different flex values', () => {
       const {rerender} = render(
         <Box
-          testID="box"
+          testId="box"
           flex={2}
         />,
       )
@@ -110,7 +110,7 @@ describe('Box', () => {
 
       rerender(
         <Box
-          testID="box"
+          testId="box"
           flex={0}
         />,
       )
@@ -121,7 +121,7 @@ describe('Box', () => {
     })
 
     it('should apply flexShrink 0 when flex is undefined', () => {
-      render(<Box testID="box" />)
+      render(<Box testId="box" />)
       const view = screen.getByTestId('box')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexShrink: 0})]),
@@ -133,7 +133,7 @@ describe('Box', () => {
     it('should center content when center prop is true', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           center
         />,
       )
@@ -151,7 +151,7 @@ describe('Box', () => {
     it('should center horizontally when centerX prop is true', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           centerX
         />,
       )
@@ -166,7 +166,7 @@ describe('Box', () => {
     it('should center vertically when centerY prop is true', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           centerY
         />,
       )
@@ -181,7 +181,7 @@ describe('Box', () => {
     it('should apply custom justifyContent', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           justifyContent="space-between"
         />,
       )
@@ -196,7 +196,7 @@ describe('Box', () => {
     it('should apply custom alignItems', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           alignItems="flex-end"
         />,
       )
@@ -211,7 +211,7 @@ describe('Box', () => {
     it('should stretch when stretch prop is true', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           stretch
         />,
       )
@@ -228,7 +228,7 @@ describe('Box', () => {
     it('should apply gap from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           gap="md"
         />,
       )
@@ -243,7 +243,7 @@ describe('Box', () => {
     it('should render with different gap sizes from theme', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           gap="lg"
         />,
       )
@@ -256,7 +256,7 @@ describe('Box', () => {
     })
 
     it('should not apply gap when gap prop is not provided', () => {
-      render(<Box testID="box" />)
+      render(<Box testId="box" />)
       const view = screen.getByTestId('box')
       const styles = Array.isArray(view.props.style)
         ? view.props.style
@@ -278,7 +278,7 @@ describe('Box', () => {
     it('should apply uniform padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           padding="md"
         />,
       )
@@ -293,7 +293,7 @@ describe('Box', () => {
     it('should apply horizontal padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           paddingH="lg"
         />,
       )
@@ -308,7 +308,7 @@ describe('Box', () => {
     it('should apply vertical padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           paddingV="sm"
         />,
       )
@@ -323,7 +323,7 @@ describe('Box', () => {
     it('should apply top padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           paddingTop="xl"
         />,
       )
@@ -338,7 +338,7 @@ describe('Box', () => {
     it('should apply right padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           paddingRight="md"
         />,
       )
@@ -353,7 +353,7 @@ describe('Box', () => {
     it('should apply bottom padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           paddingBottom="sm"
         />,
       )
@@ -368,7 +368,7 @@ describe('Box', () => {
     it('should apply left padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           paddingLeft="lg"
         />,
       )
@@ -385,7 +385,7 @@ describe('Box', () => {
     it('should apply flexWrap when wrap prop is provided', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           wrap="wrap"
         />,
       )
@@ -398,7 +398,7 @@ describe('Box', () => {
     it('should apply nowrap', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           wrap="nowrap"
         />,
       )
@@ -414,7 +414,7 @@ describe('Box', () => {
       const customStyle = {backgroundColor: 'red'}
       render(
         <Box
-          testID="box"
+          testId="box"
           style={customStyle}
         />,
       )
@@ -428,7 +428,7 @@ describe('Box', () => {
       const customStyle = {opacity: 0.5}
       render(
         <Box
-          testID="box"
+          testId="box"
           flex={1}
           style={customStyle}
         />,
@@ -442,7 +442,7 @@ describe('Box', () => {
     it('should create a centered flex container', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           flex={1}
           center>
           <Text>Centered</Text>
@@ -493,7 +493,7 @@ describe('Box', () => {
     it('should combine gap and padding correctly', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           gap="md"
           padding="lg"
         />,
@@ -512,7 +512,7 @@ describe('Box', () => {
     it('should combine paddingH and paddingV correctly', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           paddingH="md"
           paddingV="lg"
         />,
@@ -531,7 +531,7 @@ describe('Box', () => {
     it('should combine individual padding props correctly', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           paddingTop="sm"
           paddingRight="md"
           paddingBottom="lg"
@@ -554,7 +554,7 @@ describe('Box', () => {
     it('should combine flex direction with gap and padding', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           row
           gap="md"
           paddingH="lg"
@@ -575,7 +575,7 @@ describe('Box', () => {
     it('should combine alignment with padding', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           center
           padding="md"
         />,
@@ -595,7 +595,7 @@ describe('Box', () => {
     it('should combine flex with wrap and gap', () => {
       render(
         <Box
-          testID="box"
+          testId="box"
           flex={1}
           wrap="wrap"
           gap="sm"
@@ -621,7 +621,7 @@ describe('Box', () => {
     })
 
     it('should render with empty children', () => {
-      render(<Box testID="box">{null}</Box>)
+      render(<Box testId="box">{null}</Box>)
       expect(screen.getByTestId('box')).toBeTruthy()
     })
 

@@ -26,6 +26,10 @@ type FeedItemProps = {
    * Callback when item is pressed to view details
    */
   onPress: () => void
+  /**
+   * Test ID for the component
+   */
+  testId?: string
 }
 
 /**
@@ -36,29 +40,40 @@ type FeedItemProps = {
  * @param props - Component props
  * @returns Feed item component
  */
-export const FeedItem = ({item, onPress}: FeedItemProps): React.JSX.Element => {
+export const FeedItem = ({
+  item,
+  onPress,
+  testId = 'FeedItem',
+}: FeedItemProps): React.JSX.Element => {
   const isLoading = !['ready', 'error'].includes(item.status)
   const showAudio = item.status === 'ready' && item.audioUrl
 
   return (
-    <PressableBase onPress={onPress}>
+    <PressableBase
+      onPress={onPress}
+      testId={`${testId}Pressable`}>
       <Column
         gap="sm"
-        padding="md">
+        padding="md"
+        testId={`${testId}ContainerView`}>
         {item.photos.length > 0 && (
           <Row
             gap="xs"
-            wrap="wrap">
+            wrap="wrap"
+            testId={`${testId}PhotosView`}>
             {item.photos.slice(0, MAX_PHOTOS).map((photo, index) => (
               <Thumbnail
                 key={`photo-${index + 1}`}
                 source={{uri: photo}}
                 resizeMode="cover"
+                testId={`${testId}Photo${index + 1}Thumbnail`}
               />
             ))}
             {item.photos.length > MAX_PHOTOS && (
-              <Box>
-                <Text.Label color="secondary">
+              <Box testId={`${testId}MorePhotosView`}>
+                <Text.Label
+                  color="secondary"
+                  testId={`${testId}MorePhotosText`}>
                   +{item.photos.length - MAX_PHOTOS}
                 </Text.Label>
               </Box>
@@ -67,37 +82,54 @@ export const FeedItem = ({item, onPress}: FeedItemProps): React.JSX.Element => {
         )}
 
         {!!item.metadata?.title && (
-          <Text.Paragraph numberOfLines={2}>
+          <Text.Paragraph
+            numberOfLines={2}
+            testId={`${testId}TitleText`}>
             {item.metadata.title}
           </Text.Paragraph>
         )}
 
         {!!item.metadata?.artist && (
-          <Text.Label numberOfLines={1}>{item.metadata.artist}</Text.Label>
+          <Text.Label
+            numberOfLines={1}
+            testId={`${testId}ArtistText`}>
+            {item.metadata.artist}
+          </Text.Label>
         )}
 
         {!!isLoading && (
           <Row
             gap="sm"
-            center>
+            center
+            testId={`${testId}LoadingView`}>
             <ActivityIndicator size="small" />
-            <Text.Label>{getFeedItemStatusText(item.status)}</Text.Label>
+            <Text.Label testId={`${testId}LoadingText`}>
+              {getFeedItemStatusText(item.status)}
+            </Text.Label>
           </Row>
         )}
 
         {item.status === 'error' && (
-          <Text.Label color="warning">
+          <Text.Label
+            color="warning"
+            testId={`${testId}ErrorText`}>
             {item.error || 'An error occurred'}
           </Text.Label>
         )}
 
         {!!item.narrativeText && (
-          <Text.Paragraph numberOfLines={3}>
+          <Text.Paragraph
+            numberOfLines={3}
+            testId={`${testId}NarrativeText`}>
             {item.narrativeText}
           </Text.Paragraph>
         )}
 
-        {Boolean(showAudio) && <AudioPlayer src={item.audioUrl!} />}
+        {Boolean(showAudio) && (
+          <AudioPlayer
+            src={item.audioUrl!}
+            testId={`${testId}AudioPlayer`} />
+        )}
       </Column>
     </PressableBase>
   )

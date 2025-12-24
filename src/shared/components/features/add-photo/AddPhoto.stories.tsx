@@ -19,6 +19,7 @@ export default meta
 export const Small = {
   render: (): React.JSX.Element => (
     <AddPhoto
+      testId="StorySmallPressable"
       size="sm"
       onPress={() => {}}
     />
@@ -26,12 +27,18 @@ export const Small = {
 }
 
 export const Medium = {
-  render: (): React.JSX.Element => <AddPhoto onPress={() => {}} />,
+  render: (): React.JSX.Element => (
+    <AddPhoto
+      testId="StoryMediumPressable"
+      onPress={() => {}}
+    />
+  ),
 }
 
 export const Large = {
   render: (): React.JSX.Element => (
     <AddPhoto
+      testId="StoryLargePressable"
       size="lg"
       onPress={() => {}}
     />
@@ -41,6 +48,7 @@ export const Large = {
 export const Disabled = {
   render: (): React.JSX.Element => (
     <AddPhoto
+      testId="StoryDisabledPressable"
       size="lg"
       disabled
       onPress={() => {}}

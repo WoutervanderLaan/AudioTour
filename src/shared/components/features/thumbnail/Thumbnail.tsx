@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {IconButton} from '@/shared/components/ui/pressable/IconButton'
+import type {TestProps} from '@/shared/types/test'
 
 /**
  * WithDelete
@@ -26,12 +27,13 @@ type WithDelete = {
  * Props for the Thumbnail component.
  * Extends ImageProps with size options and optional deletion functionality.
  */
-export type ThumbnailProps = ImageProps & {
-  /**
-   * Size variant for the thumbnail (default: 'md')
-   */
-  size?: 'sm' | 'md' | 'lg'
-} & ({deletable?: false; onDelete?: never} | WithDelete)
+export type ThumbnailProps = Omit<ImageProps, 'testID'> &
+  TestProps<'Thumbnail'> & {
+    /**
+     * Size variant for the thumbnail (default: 'md')
+     */
+    size?: 'sm' | 'md' | 'lg'
+  } & ({deletable?: false; onDelete?: never} | WithDelete)
 
 /**
  * Thumbnail
@@ -46,17 +48,20 @@ export const Thumbnail = ({
   deletable,
   size = 'md',
   onDelete,
+  testId,
   ...image
 }: ThumbnailProps): React.JSX.Element => {
   return (
-    <Column>
+    <Column testId={`${testId}View` as `${string}View`}>
       <Image
         {...image}
+        testID={testId}
         style={styles[size]}
         resizeMode="cover"
       />
       {!!deletable && (
         <IconButton
+          testId={`${testId}DeleteIconButton` as `${string}IconButton`}
           name="cancel"
           onPress={onDelete}
         />

@@ -7,6 +7,8 @@ import {Row} from '../layout/Row'
 import {PressableBase} from '../pressable/PressableBase'
 import {Text} from '../typography'
 
+import type {TestProps} from '@/shared/types/test'
+
 /**
  * RadioOption
  * Type definition for a single radio option
@@ -34,7 +36,7 @@ export type RadioOption<T extends string = string> = {
  * RadioGroupProps
  * Props for the RadioGroup component
  */
-export type RadioGroupProps<T extends string = string> = {
+export type RadioGroupProps<T extends string = string> = TestProps<'RadioGroup'> & {
   /**
    * options - Array of options to display
    */
@@ -55,10 +57,6 @@ export type RadioGroupProps<T extends string = string> = {
    * hasError - Whether there is an error (for styling)
    */
   hasError?: boolean
-  /**
-   * testID - Test identifier for automated testing
-   */
-  testID?: string
 }
 
 /**
@@ -81,13 +79,14 @@ const RadioIndicator = ({
   hasError: boolean
 }): React.JSX.Element => (
   <Box
+    testId="RadioIndicatorView"
     center
     style={[
       styles.radioCircle,
       hasError && styles.radioCircleError,
       disabled && styles.radioCircleDisabled,
     ]}>
-    {!!selected && <Box style={styles.radioInner} />}
+    {!!selected && <Box testId="RadioIndicatorInnerView" style={styles.radioInner} />}
   </Box>
 )
 
@@ -127,7 +126,7 @@ export const RadioGroup = <T extends string = string>({
   onChange,
   disabled = false,
   hasError = false,
-  testID,
+  testId,
 }: RadioGroupProps<T>): React.JSX.Element => {
   /**
    * handleSelect
@@ -146,7 +145,7 @@ export const RadioGroup = <T extends string = string>({
     <Column
       gap="xs"
       stretch
-      testID={testID}>
+      testId={`${testId}View` as `${string}View`}>
       {options.map(option => {
         const isSelected = value === option.value
         const isDisabled = disabled || option.disabled
@@ -154,6 +153,7 @@ export const RadioGroup = <T extends string = string>({
         return (
           <PressableBase
             key={option.value}
+            testId={`${testId}Option${option.value}Pressable` as `${string}Pressable`}
             onPress={() => handleSelect(option.value)}
             disabled={isDisabled}
             style={({pressed}) => [
@@ -165,6 +165,7 @@ export const RadioGroup = <T extends string = string>({
               disabled: isDisabled,
             }}>
             <Row
+              testId={`${testId}Option${option.value}RowView` as `${string}View`}
               gap="sm"
               padding="sm">
               <RadioIndicator
@@ -172,12 +173,15 @@ export const RadioGroup = <T extends string = string>({
                 disabled={!!isDisabled}
                 hasError={hasError}
               />
-              <Column>
-                <Text.Label color={isDisabled ? 'secondary' : 'default'}>
+              <Column testId={`${testId}Option${option.value}ColumnView` as `${string}View`}>
+                <Text.Label
+                  testId={`${testId}Option${option.value}LabelText` as `${string}Text`}
+                  color={isDisabled ? 'secondary' : 'default'}>
                   {option.label}
                 </Text.Label>
                 {!!option.description && (
                   <Text.Paragraph
+                    testId={`${testId}Option${option.value}DescriptionText` as `${string}Text`}
                     variant="extraSmall"
                     color="secondary">
                     {option.description}

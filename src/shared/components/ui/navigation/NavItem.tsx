@@ -11,25 +11,26 @@ import {
 import type {IconName} from '@/core/navigation/types'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/test'
 
 /**
  * NavItemProps
  * Props for the NavItem component
  */
-export type NavItemProps = Omit<PressableBaseProps, 'children' | 'style'> & {
-  /**
-   * label - Text label for the navigation item
-   */
-  label: string
-  /**
-   * icon - Optional icon name from MaterialIcons
-   */
-  icon?: IconName
-  /**
-   * testID - Test identifier for automated testing
-   */
-  testID?: string
-}
+export type NavItemProps = Omit<
+  PressableBaseProps,
+  'children' | 'style' | 'testId'
+> &
+  TestProps<'NavItem'> & {
+    /**
+     * label - Text label for the navigation item
+     */
+    label: string
+    /**
+     * icon - Optional icon name from MaterialIcons
+     */
+    icon?: IconName
+  }
 
 /**
  * NavItem
@@ -43,19 +44,21 @@ export const NavItem = ({
   label,
   icon,
   disabled,
-  testID,
+  testId,
   ...rest
 }: NavItemProps): React.JSX.Element => {
   return (
     <PressableBase
+      testId={`${testId}Pressable` as `${string}Pressable`}
       disabled={disabled}
       style={({pressed}) => [styles.container({pressed, disabled: !!disabled})]}
-      testID={testID}
       {...rest}>
       <Row
+        testId={`${testId}ContainerRowView` as `${string}View`}
         justifyContent="space-between"
         padding="md">
         <Row
+          testId={`${testId}ContentRowView` as `${string}View`}
           gap="md"
           centerX>
           {!!icon && (
@@ -65,7 +68,7 @@ export const NavItem = ({
               color={styles.icon.color}
             />
           )}
-          <Text.Paragraph variant="small">{label}</Text.Paragraph>
+          <Text.Paragraph testId={`${testId}LabelText` as `${string}Text`} variant="small">{label}</Text.Paragraph>
         </Row>
         <MaterialIcons
           name="chevron-right"

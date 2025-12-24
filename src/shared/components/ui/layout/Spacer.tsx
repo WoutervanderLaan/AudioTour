@@ -2,17 +2,16 @@ import React from 'react'
 
 import {Box} from './Box'
 
+import type {TestProps} from '@/shared/types/test'
 import type {Theme} from '@/themes/types'
 
 /**
  * SpacerProps
  * Props for the Spacer component
  */
-type SpacerProps = {
+type SpacerProps = TestProps<'View'> & {
   /** Optional padding size from theme */
   size?: keyof Theme['size']
-  /** Test identifier for automated testing */
-  testID?: string
 }
 
 /**
@@ -22,12 +21,12 @@ type SpacerProps = {
  * @param props - Component props with optional size from theme
  * @returns Spacer component
  */
-export const Spacer = ({size, testID}: SpacerProps): React.JSX.Element => {
+export const Spacer = ({size, testId}: SpacerProps): React.JSX.Element => {
   return (
     <Box
       flex={1}
       padding={size}
-      testID={testID}
+      testId={testId}
     />
   )
 }

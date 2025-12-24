@@ -126,7 +126,7 @@ describe('Paragraph', () => {
 
   describe('Props Forwarding', () => {
     it('should forward testID prop', () => {
-      render(<Paragraph testID="test-paragraph">Test paragraph</Paragraph>)
+      render(<Paragraph testId="test-paragraph">Test paragraph</Paragraph>)
       expect(screen.getByTestId('test-paragraph')).toBeTruthy()
     })
 

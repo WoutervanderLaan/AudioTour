@@ -26,6 +26,10 @@ export type PhotoGalleryProps = {
    * Callback when a photo is selected
    */
   onPhotoSelect: (index: number) => void
+  /**
+   * Test ID for the component
+   */
+  testId?: string
 }
 
 /**
@@ -39,6 +43,7 @@ export const PhotoGallery = ({
   photos,
   activePhotoIndex,
   onPhotoSelect,
+  testId = 'PhotoGallery',
 }: PhotoGalleryProps): React.JSX.Element | null => {
   const {width} = useWindowDimensions()
 
@@ -49,7 +54,7 @@ export const PhotoGallery = ({
   const hasMultiplePhotos = photos.length > 1
 
   return (
-    <Column>
+    <Column testId={`${testId}ContainerView`}>
       <Image
         source={{uri: photos[activePhotoIndex]}}
         style={[styles.mainPhoto, {width, height: width}]}
@@ -64,7 +69,8 @@ export const PhotoGallery = ({
           {photos.map((photo, index) => (
             <PressableBase
               key={photo}
-              onTouchEnd={() => onPhotoSelect(index)}>
+              onTouchEnd={() => onPhotoSelect(index)}
+              testId={`${testId}Thumbnail${index + 1}Pressable`}>
               <Thumbnail
                 source={{uri: photo}}
                 style={[
@@ -72,6 +78,7 @@ export const PhotoGallery = ({
                   index === activePhotoIndex && styles.activeThumbnail,
                 ]}
                 resizeMode="cover"
+                testId={`${testId}Thumbnail${index + 1}Thumbnail`}
               />
             </PressableBase>
           ))}
@@ -82,7 +89,8 @@ export const PhotoGallery = ({
         <Row
           gap="xs"
           paddingTop="md"
-          center>
+          center
+          testId={`${testId}IndicatorsView`}>
           {photos.map((photo, index) => (
             <Box
               key={photo}
@@ -90,6 +98,7 @@ export const PhotoGallery = ({
                 styles.indicator,
                 index === activePhotoIndex && styles.activeIndicator,
               ]}
+              testId={`${testId}Indicator${index + 1}View`}
             />
           ))}
         </Row>

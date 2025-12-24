@@ -11,6 +11,7 @@ import {ImageInput, type ImageInputProps} from './ImageInput'
 
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/test'
 
 /**
  * ImageInputControlledProps
@@ -18,33 +19,34 @@ import {Text} from '@/shared/components/ui/typography'
  */
 export type ImageInputControlledProps<T extends FieldValues> = Omit<
   ImageInputProps,
-  'value' | 'onChange'
-> & {
-  /**
-   * control - React Hook Form control object
-   */
-  control: Control<T>
-  /**
-   * name - Field name in the form (must be a valid path in the form data)
-   */
-  name: Path<T>
-  /**
-   * defaultValue - Default value for the field
-   */
-  defaultValue?: string[]
-  /**
-   * label - Label text for the input field
-   */
-  label?: string
-  /**
-   * hint - Helper text to display when no error
-   */
-  hint?: string
-  /**
-   * required - Whether the field is required (adds asterisk to label)
-   */
-  required?: boolean
-}
+  'value' | 'onChange' | 'testId'
+> &
+  TestProps<'ImageInput'> & {
+    /**
+     * control - React Hook Form control object
+     */
+    control: Control<T>
+    /**
+     * name - Field name in the form (must be a valid path in the form data)
+     */
+    name: Path<T>
+    /**
+     * defaultValue - Default value for the field
+     */
+    defaultValue?: string[]
+    /**
+     * label - Label text for the input field
+     */
+    label?: string
+    /**
+     * hint - Helper text to display when no error
+     */
+    hint?: string
+    /**
+     * required - Whether the field is required (adds asterisk to label)
+     */
+    required?: boolean
+  }
 
 /**
  * ImageInputControlled
@@ -106,7 +108,7 @@ export const ImageInputControlled = <T extends FieldValues>({
   required,
   disabled,
   maxImages = 5,
-  testID,
+  testId,
   ...rest
 }: ImageInputControlledProps<T>): React.JSX.Element => {
   return (
@@ -122,26 +124,29 @@ export const ImageInputControlled = <T extends FieldValues>({
 
         return (
           <FormField
+            testId={`${testId}View` as `${string}View`}
             label={label}
             error={error?.message}
             hint={hint}
             disabled={disabled}
             required={required}
-            testID={testID}
             renderLabel={
               // eslint-disable-next-line react/jsx-no-leaked-render
               label
                 ? ({label, labelId, disabled, required}): React.JSX.Element => (
                     <Row
+                      testId="ImageInputLabelRowView"
                       gap="xs"
                       center>
                       <Text.Label
+                        testId="ImageInputLabelText"
                         nativeID={labelId}
                         color={disabled ? 'secondary' : 'default'}
                         accessibilityRole="text">
                         {label}
                         {!!required && (
                           <Text.Label
+                            testId="ImageInputRequiredText"
                             color="warning"
                             accessibilityLabel="required">
                             {' '}
@@ -149,7 +154,7 @@ export const ImageInputControlled = <T extends FieldValues>({
                           </Text.Label>
                         )}
                       </Text.Label>
-                      <Text.Label color="secondary">
+                      <Text.Label testId="ImageInputCountText" color="secondary">
                         {images.length} / {maxImages}
                       </Text.Label>
                     </Row>
@@ -161,7 +166,7 @@ export const ImageInputControlled = <T extends FieldValues>({
               onChange={onChange}
               maxImages={maxImages}
               disabled={disabled}
-              testID={testID}
+              testId={testId}
               {...rest}
             />
           </FormField>

@@ -17,14 +17,14 @@ describe('Spacer', () => {
     })
 
     it('should render with testID', () => {
-      render(<Spacer testID="spacer" />)
+      render(<Spacer testId="spacer" />)
       expect(screen.getByTestId('spacer')).toBeTruthy()
     })
   })
 
   describe('Flex Behavior', () => {
     it('should have flex 1 by default', () => {
-      render(<Spacer testID="spacer" />)
+      render(<Spacer testId="spacer" />)
       const view = screen.getByTestId('spacer')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 1})]),
@@ -32,7 +32,7 @@ describe('Spacer', () => {
     })
 
     it('should fill available space', () => {
-      render(<Spacer testID="spacer" />)
+      render(<Spacer testId="spacer" />)
       const view = screen.getByTestId('spacer')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 1})]),
@@ -42,14 +42,14 @@ describe('Spacer', () => {
 
   describe('Size Prop', () => {
     it('should render without size prop', () => {
-      render(<Spacer testID="spacer" />)
+      render(<Spacer testId="spacer" />)
       expect(screen.getByTestId('spacer')).toBeTruthy()
     })
 
     it('should accept size prop for padding', () => {
       render(
         <Spacer
-          testID="spacer"
+          testId="spacer"
           size="md"
         />,
       )
@@ -59,7 +59,7 @@ describe('Spacer', () => {
     it('should accept small size', () => {
       render(
         <Spacer
-          testID="spacer"
+          testId="spacer"
           size="sm"
         />,
       )
@@ -69,7 +69,7 @@ describe('Spacer', () => {
     it('should accept large size', () => {
       render(
         <Spacer
-          testID="spacer"
+          testId="spacer"
           size="lg"
         />,
       )
@@ -79,7 +79,7 @@ describe('Spacer', () => {
     it('should accept extra large size', () => {
       render(
         <Spacer
-          testID="spacer"
+          testId="spacer"
           size="xl"
         />,
       )
@@ -89,7 +89,7 @@ describe('Spacer', () => {
     it('should accept extra small size', () => {
       render(
         <Spacer
-          testID="spacer"
+          testId="spacer"
           size="xs"
         />,
       )
@@ -173,9 +173,9 @@ describe('Spacer', () => {
     it('should render multiple spacers', () => {
       render(
         <>
-          <Spacer testID="spacer-1" />
-          <Spacer testID="spacer-2" />
-          <Spacer testID="spacer-3" />
+          <Spacer testId="spacer-1" />
+          <Spacer testId="spacer-2" />
+          <Spacer testId="spacer-3" />
         </>,
       )
       expect(screen.getByTestId('spacer-1')).toBeTruthy()
@@ -187,15 +187,15 @@ describe('Spacer', () => {
       render(
         <>
           <Spacer
-            testID="spacer-sm"
+            testId="spacer-sm"
             size="sm"
           />
           <Spacer
-            testID="spacer-md"
+            testId="spacer-md"
             size="md"
           />
           <Spacer
-            testID="spacer-lg"
+            testId="spacer-lg"
             size="lg"
           />
         </>,
@@ -206,7 +206,7 @@ describe('Spacer', () => {
     })
 
     it('should not render children', () => {
-      const {queryByText} = render(<Spacer testID="spacer" />)
+      const {queryByText} = render(<Spacer testId="spacer" />)
       expect(queryByText('Should not appear')).toBeNull()
     })
   })

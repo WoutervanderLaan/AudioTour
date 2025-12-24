@@ -3,12 +3,13 @@ import React from 'react'
 import {useAddArtwork} from '../hooks/useAddArtwork'
 
 import {Button} from '@/shared/components/ui/pressable/Button'
+import type {TestProps} from '@/shared/types/test'
 
 /**
  * AddArtworkButtonProps
  * Props for the AddArtworkButton component
  */
-type AddArtworkButtonProps = {
+type AddArtworkButtonProps = TestProps<'Button'> & {
   /**
    * Optional disabled state
    */
@@ -31,6 +32,7 @@ type AddArtworkButtonProps = {
 export const AddArtworkButton = ({
   disabled = false,
   label = 'New Artwork',
+  testId = 'AddArtworkButton',
 }: AddArtworkButtonProps): React.JSX.Element => {
   const {isLaunching, handleAddArtwork} = useAddArtwork()
 
@@ -39,6 +41,7 @@ export const AddArtworkButton = ({
       label={label}
       onPress={handleAddArtwork}
       disabled={disabled || isLaunching}
+      testId={testId}
     />
   )
 }

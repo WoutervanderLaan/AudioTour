@@ -27,7 +27,7 @@ describe('Checkbox', () => {
     })
 
     it('should render with testID', () => {
-      render(<Checkbox testID="test-checkbox" />)
+      render(<Checkbox testId="TestCheckbox" />)
       expect(screen.getByTestId('test-checkbox')).toBeTruthy()
     })
 
@@ -44,7 +44,7 @@ describe('Checkbox', () => {
 
   describe('Checked State', () => {
     it('should render unchecked by default', () => {
-      const {getByTestId} = render(<Checkbox testID="checkbox" />)
+      const {getByTestId} = render(<Checkbox testId="TestCheckbox" />)
       const checkbox = getByTestId('checkbox')
       expect(checkbox.props.accessibilityState.checked).toBe(false)
     })
@@ -52,7 +52,7 @@ describe('Checkbox', () => {
     it('should render checked when checked prop is true', () => {
       const {getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked
         />,
       )
@@ -63,7 +63,7 @@ describe('Checkbox', () => {
     it('should toggle checked state', () => {
       const {rerender, getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked={false}
         />,
       )
@@ -72,7 +72,7 @@ describe('Checkbox', () => {
 
       rerender(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked
         />,
       )
@@ -86,7 +86,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           onChange={onChange}
           checked={false}
         />,
@@ -100,7 +100,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           onChange={onChange}
           checked
         />,
@@ -114,7 +114,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           onChange={onChange}
           disabled
         />,
@@ -128,7 +128,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           onChange={onChange}
           checked={false}
         />,
@@ -147,7 +147,7 @@ describe('Checkbox', () => {
     it('should render when disabled', () => {
       const {getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           label="Disabled checkbox"
           disabled
         />,
@@ -160,7 +160,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       const {getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           onChange={onChange}
           disabled
         />,
@@ -174,7 +174,7 @@ describe('Checkbox', () => {
     it('should maintain disabled state when toggling checked', () => {
       const {rerender, getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked={false}
           disabled
         />,
@@ -185,7 +185,7 @@ describe('Checkbox', () => {
 
       rerender(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked
           disabled
         />,
@@ -229,7 +229,7 @@ describe('Checkbox', () => {
     it('should render with error state', () => {
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           hasError
         />,
       )
@@ -239,7 +239,7 @@ describe('Checkbox', () => {
     it('should toggle error state', () => {
       const {rerender} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           hasError={false}
         />,
       )
@@ -247,7 +247,7 @@ describe('Checkbox', () => {
 
       rerender(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           hasError
         />,
       )
@@ -257,7 +257,7 @@ describe('Checkbox', () => {
 
   describe('Accessibility', () => {
     it('should have checkbox accessibility role', () => {
-      render(<Checkbox testID="checkbox" />)
+      render(<Checkbox testId="TestCheckbox" />)
       expect(screen.getByTestId('checkbox')).toBeTruthy()
     })
 
@@ -281,7 +281,7 @@ describe('Checkbox', () => {
     it('should accept accessibilityHint', () => {
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           label="Terms"
           accessibilityHint="You must accept to continue"
         />,
@@ -292,7 +292,7 @@ describe('Checkbox', () => {
     it('should have checked state in accessibility', () => {
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked
         />,
       )
@@ -302,7 +302,7 @@ describe('Checkbox', () => {
     it('should have disabled state in accessibility', () => {
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           disabled
         />,
       )
@@ -315,7 +315,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       render(
         <Checkbox
-          testID="terms"
+          testId="terms"
           label="I accept the terms and conditions"
           onChange={onChange}
           required
@@ -330,7 +330,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       render(
         <Checkbox
-          testID="newsletter"
+          testId="newsletter"
           label="Subscribe to newsletter"
           onChange={onChange}
           checked={false}
@@ -345,7 +345,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       render(
         <Checkbox
-          testID="remember"
+          testId="remember"
           label="Remember me"
           onChange={onChange}
         />,
@@ -377,7 +377,7 @@ describe('Checkbox', () => {
     it('should have minimum touch target size (44x44pt)', () => {
       const {getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           label="Touch target test"
         />,
       )
@@ -402,7 +402,7 @@ describe('Checkbox', () => {
     it('should have accessible hint when provided', () => {
       const {getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           label="With hint"
           accessibilityHint="Select to agree"
         />,
@@ -414,7 +414,7 @@ describe('Checkbox', () => {
     it('should communicate state through accessibility', () => {
       const {getByTestId, rerender} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked={false}
         />,
       )
@@ -427,7 +427,7 @@ describe('Checkbox', () => {
 
       rerender(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked
           disabled
         />,
@@ -444,7 +444,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       const {getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           label="Keyboard accessible"
           onChange={onChange}
         />,
@@ -462,7 +462,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       const {getByTestId, rerender} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked={false}
           onChange={onChange}
         />,
@@ -478,7 +478,7 @@ describe('Checkbox', () => {
       // Parent component controls state and updates the checked prop
       rerender(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked
           onChange={onChange}
         />,
@@ -492,7 +492,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       const {getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked={false}
           onChange={onChange}
         />,
@@ -512,7 +512,7 @@ describe('Checkbox', () => {
     it('should only update when checked prop changes', () => {
       const {getByTestId, rerender} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked
         />,
       )
@@ -528,7 +528,7 @@ describe('Checkbox', () => {
       // State only changes when parent updates prop
       rerender(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           checked={false}
         />,
       )
@@ -542,7 +542,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           onChange={onChange}
           checked={false}
         />,
@@ -564,7 +564,7 @@ describe('Checkbox', () => {
     })
 
     it('should work without onChange handler', () => {
-      render(<Checkbox testID="checkbox" />)
+      render(<Checkbox testId="TestCheckbox" />)
 
       const checkbox = screen.getByTestId('checkbox')
       expect(() => fireEvent.press(checkbox)).not.toThrow()
@@ -574,7 +574,7 @@ describe('Checkbox', () => {
       const onChange = jest.fn()
       const {getByTestId} = render(
         <Checkbox
-          testID="checkbox"
+          testId="TestCheckbox"
           label="Complex checkbox"
           checked
           required

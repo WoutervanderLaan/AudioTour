@@ -42,23 +42,29 @@ export const TourObjectDetailScreen = ({
   const feedItem = useFeedItem(feedItemId)
 
   if (!feedItem) {
-    return <ObjectNotFound />
+    return <ObjectNotFound testId="TourObjectDetailScreenNotFound" />
   }
 
   return (
-    <Screen.Scrollable>
-      <Column gap="lg">
+    <Screen.Scrollable testId="TourObjectDetailScreen">
+      <Column
+        gap="lg"
+        testId="TourObjectDetailScreenContainerView">
         <PhotoGallery
           photos={feedItem.photos}
           activePhotoIndex={activePhotoIndex}
           onPhotoSelect={setActivePhotoIndex}
+          testId="TourObjectDetailScreenPhotoGallery"
         />
 
         <Column
           paddingH="md"
           paddingBottom="xl"
-          gap="lg">
-          <ObjectMetadata metadata={feedItem.metadata} />
+          gap="lg"
+          testId="TourObjectDetailScreenContentView">
+          <ObjectMetadata
+            metadata={feedItem.metadata}
+            testId="TourObjectDetailScreenMetadata" />
 
           <ObjectDetails
             description={feedItem.metadata?.description}
@@ -68,6 +74,7 @@ export const TourObjectDetailScreen = ({
             audioUrl={feedItem.audioUrl}
             status={feedItem.status}
             error={feedItem.error}
+            testId="TourObjectDetailScreenDetails"
           />
         </Column>
       </Column>

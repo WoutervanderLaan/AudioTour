@@ -34,14 +34,14 @@ describe('Column', () => {
     })
 
     it('should render with testID', () => {
-      render(<Column testID="test-column" />)
+      render(<Column testId="test-column" />)
       expect(screen.getByTestId('test-column')).toBeTruthy()
     })
   })
 
   describe('Layout Direction', () => {
     it('should apply column flex direction', () => {
-      render(<Column testID="column" />)
+      render(<Column testId="column" />)
       const view = screen.getByTestId('column')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
@@ -52,7 +52,7 @@ describe('Column', () => {
 
     it('should always use column direction even without explicit column prop', () => {
       render(
-        <Column testID="column">
+        <Column testId="column">
           <Text>Content</Text>
         </Column>,
       )
@@ -69,7 +69,7 @@ describe('Column', () => {
     it('should accept flex prop', () => {
       render(
         <Column
-          testID="column"
+          testId="column"
           flex={1}
         />,
       )
@@ -82,7 +82,7 @@ describe('Column', () => {
     it('should accept center prop', () => {
       render(
         <Column
-          testID="column"
+          testId="column"
           center
         />,
       )
@@ -100,7 +100,7 @@ describe('Column', () => {
     it('should accept gap prop', () => {
       render(
         <Column
-          testID="column"
+          testId="column"
           gap="md"
         />,
       )
@@ -110,7 +110,7 @@ describe('Column', () => {
     it('should accept padding prop', () => {
       render(
         <Column
-          testID="column"
+          testId="column"
           padding="lg"
         />,
       )
@@ -120,7 +120,7 @@ describe('Column', () => {
     it('should accept justifyContent prop', () => {
       render(
         <Column
-          testID="column"
+          testId="column"
           justifyContent="space-evenly"
         />,
       )
@@ -135,7 +135,7 @@ describe('Column', () => {
     it('should accept alignItems prop', () => {
       render(
         <Column
-          testID="column"
+          testId="column"
           alignItems="flex-end"
         />,
       )
@@ -150,7 +150,7 @@ describe('Column', () => {
     it('should accept stretch prop', () => {
       render(
         <Column
-          testID="column"
+          testId="column"
           stretch
         />,
       )
@@ -168,7 +168,7 @@ describe('Column', () => {
       const customStyle = {backgroundColor: 'green'}
       render(
         <Column
-          testID="column"
+          testId="column"
           style={customStyle}
         />,
       )
@@ -182,7 +182,7 @@ describe('Column', () => {
       const customStyle = {borderRadius: 8}
       render(
         <Column
-          testID="column"
+          testId="column"
           gap="sm"
           style={customStyle}
         />,
@@ -258,7 +258,7 @@ describe('Column', () => {
     })
 
     it('should render with empty children', () => {
-      render(<Column testID="column">{null}</Column>)
+      render(<Column testId="column">{null}</Column>)
       expect(screen.getByTestId('column')).toBeTruthy()
     })
 

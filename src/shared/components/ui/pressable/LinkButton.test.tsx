@@ -16,7 +16,7 @@ describe('LinkButton', () => {
     it('should render with testID', () => {
       render(
         <LinkButton
-          testID="test-link"
+          testId="test-link"
           label="Test Link"
         />,
       )
@@ -108,7 +108,7 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testID="link"
+          testId="link"
           label="Press me"
           onPress={onPress}
         />,
@@ -122,7 +122,7 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testID="link"
+          testId="link"
           label="Disabled Link"
           onPress={onPress}
           disabled
@@ -137,7 +137,7 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testID="link"
+          testId="link"
           label="Multi press"
           onPress={onPress}
         />,
@@ -167,7 +167,7 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testID="link"
+          testId="link"
           label="Disabled"
           onPress={onPress}
           disabled
@@ -218,7 +218,7 @@ describe('LinkButton', () => {
     it('should accept accessibilityHint', () => {
       render(
         <LinkButton
-          testID="link"
+          testId="link"
           label="Learn more"
           accessibilityHint="Opens details page"
         />,
@@ -232,7 +232,7 @@ describe('LinkButton', () => {
       const onSignUp = jest.fn()
       render(
         <LinkButton
-          testID="signup"
+          testId="signup"
           label="Sign up"
           onPress={onSignUp}
         />,
@@ -246,7 +246,7 @@ describe('LinkButton', () => {
       const onForgotPassword = jest.fn()
       render(
         <LinkButton
-          testID="forgot-password"
+          testId="forgot-password"
           label="Forgot password?"
           variant="small"
           onPress={onForgotPassword}
@@ -261,7 +261,7 @@ describe('LinkButton', () => {
       const onTerms = jest.fn()
       render(
         <LinkButton
-          testID="terms"
+          testId="terms"
           label="Terms and Conditions"
           variant="extraSmall"
           onPress={onTerms}
@@ -276,7 +276,7 @@ describe('LinkButton', () => {
       const onNavigate = jest.fn()
       render(
         <LinkButton
-          testID="nav-link"
+          testId="nav-link"
           label="Go to profile"
           onPress={onNavigate}
         />,
@@ -290,7 +290,7 @@ describe('LinkButton', () => {
       const onLearnMore = jest.fn()
       render(
         <LinkButton
-          testID="learn-more"
+          testId="learn-more"
           label="Learn more →"
           onPress={onLearnMore}
         />,
@@ -341,7 +341,7 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testID="full-props"
+          testId="full-props"
           label="Full Props Link"
           textVariant="Paragraph"
           variant="small"
@@ -376,7 +376,7 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testID="link"
+          testId="link"
           label="Rapid"
           onPress={onPress}
         />,

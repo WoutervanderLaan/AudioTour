@@ -19,6 +19,10 @@ export type PermissionContentProps = {
    * Permission content configuration
    */
   content: PermissionContentType
+  /**
+   * Test ID for the component
+   */
+  testId?: string
 }
 
 /**
@@ -30,34 +34,44 @@ export type PermissionContentProps = {
  */
 export const PermissionContent = ({
   content,
+  testId = 'PermissionContent',
 }: PermissionContentProps): React.JSX.Element => {
   return (
     <Column
       gap="md"
-      centerX>
+      centerX
+      testId={`${testId}ContainerView`}>
       <MaterialIcons
         name={content.icon}
         size={80}
         color={styles.icon.color}
       />
 
-      <Spacer />
+      <Spacer testId={`${testId}SpacerView`} />
 
-      <Text.Title align="center">{content.title}</Text.Title>
+      <Text.Title
+        align="center"
+        testId={`${testId}TitleText`}>
+        {content.title}
+      </Text.Title>
 
       <Text.Paragraph
         color="secondary"
-        align="center">
+        align="center"
+        testId={`${testId}DescriptionText`}>
         {content.description}
       </Text.Paragraph>
 
-      <Column gap="sm">
-        {content.benefits.map(benefit => (
+      <Column
+        gap="sm"
+        testId={`${testId}BenefitsView`}>
+        {content.benefits.map((benefit, index) => (
           <PermissionBenefit
             key={`${benefit.icon}-${benefit.title}`}
             icon={benefit.icon}
             title={benefit.title}
             description={benefit.description}
+            testId={`${testId}Benefit${index + 1}`}
           />
         ))}
       </Column>

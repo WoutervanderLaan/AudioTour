@@ -12,12 +12,12 @@ import {Switch} from './Switch'
 describe('Switch', () => {
   describe('Rendering', () => {
     it('should render correctly', () => {
-      render(<Switch testID="switch" />)
+      render(<Switch testId="switch" />)
       expect(screen.getByTestId('switch')).toBeTruthy()
     })
 
     it('should render with testID', () => {
-      render(<Switch testID="test-switch" />)
+      render(<Switch testId="test-switch" />)
       expect(screen.getByTestId('test-switch')).toBeTruthy()
     })
 
@@ -27,14 +27,14 @@ describe('Switch', () => {
     })
 
     it('should render without label', () => {
-      render(<Switch testID="switch" />)
+      render(<Switch testId="switch" />)
       expect(screen.getByTestId('switch')).toBeTruthy()
     })
   })
 
   describe('Value State', () => {
     it('should render off by default', () => {
-      render(<Switch testID="switch" />)
+      render(<Switch testId="switch" />)
       const switchComponent = screen.getByTestId('switch')
       expect(switchComponent.props.value).toBe(false)
     })
@@ -42,7 +42,7 @@ describe('Switch', () => {
     it('should render on when value is true', () => {
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           value
         />,
       )
@@ -53,7 +53,7 @@ describe('Switch', () => {
     it('should toggle value state', () => {
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testId="switch"
           value={false}
         />,
       )
@@ -62,7 +62,7 @@ describe('Switch', () => {
 
       rerender(
         <Switch
-          testID="switch"
+          testId="switch"
           value
         />,
       )
@@ -76,7 +76,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           value={false}
           onChange={onChange}
         />,
@@ -92,7 +92,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           value
           onChange={onChange}
         />,
@@ -108,7 +108,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           onChange={onChange}
           disabled
         />,
@@ -126,7 +126,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           onChange={onChange}
         />,
       )
@@ -144,7 +144,7 @@ describe('Switch', () => {
     it('should render when disabled', () => {
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           disabled
         />,
       )
@@ -153,7 +153,7 @@ describe('Switch', () => {
     })
 
     it('should not be disabled by default', () => {
-      render(<Switch testID="switch" />)
+      render(<Switch testId="switch" />)
       const switchComponent = screen.getByTestId('switch')
       expect(switchComponent.props.disabled).toBe(false)
     })
@@ -161,7 +161,7 @@ describe('Switch', () => {
     it('should maintain disabled state when toggling value', () => {
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testId="switch"
           value={false}
           disabled
         />,
@@ -171,7 +171,7 @@ describe('Switch', () => {
 
       rerender(
         <Switch
-          testID="switch"
+          testId="switch"
           value
           disabled
         />,
@@ -214,7 +214,7 @@ describe('Switch', () => {
     it('should render with error state', () => {
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           hasError
         />,
       )
@@ -224,7 +224,7 @@ describe('Switch', () => {
     it('should toggle error state', () => {
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testId="switch"
           hasError={false}
         />,
       )
@@ -232,7 +232,7 @@ describe('Switch', () => {
 
       rerender(
         <Switch
-          testID="switch"
+          testId="switch"
           hasError
         />,
       )
@@ -242,7 +242,7 @@ describe('Switch', () => {
 
   describe('Accessibility', () => {
     it('should have switch accessibility role', () => {
-      render(<Switch testID="switch" />)
+      render(<Switch testId="switch" />)
       const switchComponent = screen.getByTestId('switch')
       expect(switchComponent.props.accessibilityRole).toBe('switch')
     })
@@ -267,7 +267,7 @@ describe('Switch', () => {
     it('should accept accessibilityHint', () => {
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           accessibilityHint="Toggle to enable or disable"
         />,
       )
@@ -280,7 +280,7 @@ describe('Switch', () => {
     it('should have checked state in accessibility', () => {
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           value
         />,
       )
@@ -291,7 +291,7 @@ describe('Switch', () => {
     it('should have disabled state in accessibility', () => {
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           disabled
         />,
       )
@@ -305,7 +305,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           label="Enable notifications"
           onChange={onChange}
         />,
@@ -319,7 +319,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           label="Dark mode"
           value={false}
           onChange={onChange}
@@ -334,7 +334,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           label="Make profile private"
           onChange={onChange}
         />,
@@ -366,7 +366,7 @@ describe('Switch', () => {
 
   describe('Track Colors', () => {
     it('should apply track colors', () => {
-      render(<Switch testID="switch" />)
+      render(<Switch testId="switch" />)
       const switchComponent = screen.getByTestId('switch')
       expect(switchComponent.props.tintColor).toBeDefined()
       expect(switchComponent.props.thumbTintColor).toBeDefined()
@@ -376,7 +376,7 @@ describe('Switch', () => {
     it('should apply error color to track when hasError is true', () => {
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           hasError
         />,
       )
@@ -390,7 +390,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testId="switch"
           value={false}
           onChange={onChange}
         />,
@@ -406,7 +406,7 @@ describe('Switch', () => {
       // Parent component controls state and updates the value prop
       rerender(
         <Switch
-          testID="switch"
+          testId="switch"
           value
           onChange={onChange}
         />,
@@ -420,7 +420,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           value={false}
           onChange={onChange}
         />,
@@ -440,7 +440,7 @@ describe('Switch', () => {
     it('should only update when value prop changes', () => {
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testId="switch"
           value
         />,
       )
@@ -456,7 +456,7 @@ describe('Switch', () => {
       // State only changes when parent updates prop
       rerender(
         <Switch
-          testID="switch"
+          testId="switch"
           value={false}
         />,
       )
@@ -470,7 +470,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           onChange={onChange}
         />,
       )
@@ -490,7 +490,7 @@ describe('Switch', () => {
     })
 
     it('should work without onChange handler', () => {
-      render(<Switch testID="switch" />)
+      render(<Switch testId="switch" />)
       const switchComponent = screen.getByTestId('switch')
 
       expect(() =>
@@ -502,7 +502,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testId="switch"
           label="Complex switch"
           value
           required

@@ -121,7 +121,7 @@ describe('Label', () => {
 
   describe('Props Forwarding', () => {
     it('should forward testID prop', () => {
-      render(<Label testID="test-label">Test label</Label>)
+      render(<Label testId="test-label">Test label</Label>)
       expect(screen.getByTestId('test-label')).toBeTruthy()
     })
 

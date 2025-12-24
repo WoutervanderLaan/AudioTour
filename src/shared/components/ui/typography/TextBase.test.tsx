@@ -90,7 +90,7 @@ describe('TextBase', () => {
 
   describe('Props Forwarding', () => {
     it('should forward testID prop', () => {
-      render(<TextBase testID="test-text">Test ID Text</TextBase>)
+      render(<TextBase testId="test-text">Test ID Text</TextBase>)
       expect(screen.getByTestId('test-text')).toBeTruthy()
     })
 
@@ -169,8 +169,8 @@ describe('TextBase', () => {
 
     it('should render with multiple children elements', () => {
       render(
-        <TextBase testID="firstTextBase">
-          First<TextBase testID="secondTextBase">Second</TextBase>
+        <TextBase testId="firstTextBase">
+          First<TextBase testId="secondTextBase">Second</TextBase>
         </TextBase>,
       )
       expect(screen.getByTestId('firstTextBase')).toBeTruthy()

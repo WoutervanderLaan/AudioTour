@@ -6,32 +6,31 @@ import {
 } from 'react-native'
 import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
+import type {TestProps} from '@/shared/types/test'
+
 /**
  * TextInputProps
  * Props for the TextInput component
  */
-export type TextInputProps = Omit<RNTextInputProps, 'editable'> & {
-  /**
-   * disabled - Whether the input is disabled
-   */
-  disabled?: boolean
-  /**
-   * hasError - Whether the input has an error (for styling)
-   */
-  hasError?: boolean
-  /**
-   * testID - Test identifier for automated testing
-   */
-  testID?: string
-  /**
-   * inputId - Native ID for the input element
-   */
-  inputId?: string
-  /**
-   * labelId - Native ID for the associated label element
-   */
-  labelId?: string
-}
+export type TextInputProps = Omit<RNTextInputProps, 'editable' | 'testID'> &
+  TestProps<'TextInput'> & {
+    /**
+     * disabled - Whether the input is disabled
+     */
+    disabled?: boolean
+    /**
+     * hasError - Whether the input has an error (for styling)
+     */
+    hasError?: boolean
+    /**
+     * inputId - Native ID for the input element
+     */
+    inputId?: string
+    /**
+     * labelId - Native ID for the associated label element
+     */
+    labelId?: string
+  }
 
 /**
  * TextInput
@@ -69,7 +68,7 @@ export type TextInputProps = Omit<RNTextInputProps, 'editable'> & {
 export const TextInput = ({
   disabled = false,
   hasError = false,
-  testID,
+  testId,
   inputId,
   labelId,
   style,
@@ -105,7 +104,7 @@ export const TextInput = ({
   }
 
   const editable = !disabled
-  const nativeId = inputId || testID || 'text-input'
+  const nativeId = inputId || testId || 'text-input'
 
   const inputStyles = [
     styles.input,
@@ -117,7 +116,7 @@ export const TextInput = ({
 
   return (
     <RNTextInput
-      testID={testID}
+      testID={testId}
       nativeID={nativeId}
       editable={editable}
       style={inputStyles}

@@ -24,6 +24,10 @@ export type PermissionBenefitProps = {
    * Benefit description
    */
   description: string
+  /**
+   * Test ID for the component
+   */
+  testId?: string
 }
 
 /**
@@ -37,24 +41,31 @@ export const PermissionBenefit = ({
   icon,
   title,
   description,
+  testId = 'PermissionBenefit',
 }: PermissionBenefitProps): React.JSX.Element => {
   return (
     <Column
       gap="xs"
-      paddingV="md">
+      paddingV="md"
+      testId={`${testId}ContainerView`}>
       <Row
         gap="sm"
         stretch
         wrap="wrap"
-        centerX>
+        centerX
+        testId={`${testId}TitleView`}>
         <MaterialIcons
           name={icon}
           size={24}
           color={styles.benefitIcon.color}
         />
-        <Text.Label>{title}</Text.Label>
+        <Text.Label testId={`${testId}TitleText`}>{title}</Text.Label>
       </Row>
-      <Text.Label color="secondary">{description}</Text.Label>
+      <Text.Label
+        color="secondary"
+        testId={`${testId}DescriptionText`}>
+        {description}
+      </Text.Label>
     </Column>
   )
 }

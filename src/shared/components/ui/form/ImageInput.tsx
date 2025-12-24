@@ -8,12 +8,13 @@ import {logger} from '@/core/lib/logger/logger'
 import {AddPhoto} from '@/shared/components/features/add-photo/AddPhoto'
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
 import {Row} from '@/shared/components/ui/layout/Row'
+import type {TestProps} from '@/shared/types/test'
 
 /**
  * ImageInputProps
  * Props for the ImageInput component
  */
-export type ImageInputProps = {
+export type ImageInputProps = TestProps<'ImageInput'> & {
   /**
    * disabled - Whether the input is disabled
    */
@@ -34,10 +35,6 @@ export type ImageInputProps = {
    * thumbnailSize - Size of thumbnail images (default: 'md')
    */
   thumbnailSize?: 'sm' | 'md' | 'lg'
-  /**
-   * testID - Test identifier for automated testing
-   */
-  testID?: string
 }
 
 /**
@@ -80,7 +77,7 @@ export const ImageInput = ({
   value = [],
   onChange,
   thumbnailSize = 'md',
-  testID,
+  testId,
 }: ImageInputProps): React.JSX.Element => {
   const canAddMore = value.length < maxImages && !disabled
 
@@ -158,10 +155,11 @@ export const ImageInput = ({
       gap="sm"
       justifyContent="flex-start"
       wrap="wrap"
-      testID={testID}>
+      testId={`${testId}RowView` as `${string}View`}>
       {value.map((imageUri, index) => (
         <Thumbnail
           key={`image-${index + 1}`}
+          testId={`${testId}Thumbnail${index + 1}Thumbnail` as `${string}Thumbnail`}
           source={{uri: imageUri}}
           deletable
           size={thumbnailSize}
@@ -173,6 +171,7 @@ export const ImageInput = ({
 
       {!!canAddMore && (
         <AddPhoto
+          testId={`${testId}AddPhotoPressable` as `${string}Pressable`}
           onPress={handleInitImageAdd}
           size={thumbnailSize}
           accessibilityLabel={`Add image, ${value.length} of ${maxImages} selected`}

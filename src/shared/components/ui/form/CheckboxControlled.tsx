@@ -9,35 +9,38 @@ import {
 import {Checkbox, type CheckboxProps} from './Checkbox'
 import {FormField} from './FormField'
 
+import type {TestProps} from '@/shared/types/test'
+
 /**
  * CheckboxControlledProps
  * Props for the CheckboxControlled component
  */
 export type CheckboxControlledProps<T extends FieldValues> = Omit<
   CheckboxProps,
-  'checked' | 'onChange' | 'hasError'
-> & {
-  /**
-   * control - React Hook Form control object
-   */
-  control: Control<T>
-  /**
-   * name - Field name in the form (must be a valid path in the form data)
-   */
-  name: Path<T>
-  /**
-   * defaultValue - Default value for the field
-   */
-  defaultValue?: boolean
-  /**
-   * hint - Helper text to display when no error
-   */
-  hint?: string
-  /**
-   * checkboxLabel
-   */
-  checkboxLabel?: string
-}
+  'checked' | 'onChange' | 'hasError' | 'testId'
+> &
+  TestProps<'Checkbox'> & {
+    /**
+     * control - React Hook Form control object
+     */
+    control: Control<T>
+    /**
+     * name - Field name in the form (must be a valid path in the form data)
+     */
+    name: Path<T>
+    /**
+     * defaultValue - Default value for the field
+     */
+    defaultValue?: boolean
+    /**
+     * hint - Helper text to display when no error
+     */
+    hint?: string
+    /**
+     * checkboxLabel
+     */
+    checkboxLabel?: string
+  }
 
 /**
  * CheckboxControlled
@@ -102,7 +105,7 @@ export const CheckboxControlled = <T extends FieldValues>({
   defaultValue,
   hint,
   disabled,
-  testID,
+  testId,
   label,
   checkboxLabel,
   ...rest
@@ -117,17 +120,17 @@ export const CheckboxControlled = <T extends FieldValues>({
         fieldState: {error},
       }): React.JSX.Element => (
         <FormField
+          testId={`${testId}View` as `${string}View`}
           error={error?.message}
           hint={hint}
           disabled={disabled}
-          label={label}
-          testID={testID}>
+          label={label}>
           <Checkbox
             checked={value as boolean}
             onChange={onChange}
             hasError={!!error}
             disabled={disabled}
-            testID={testID}
+            testId={testId}
             label={checkboxLabel}
             {...rest}
           />

@@ -58,24 +58,31 @@ export const LoginScreen = (): React.JSX.Element => {
   }
 
   return (
-    <Screen.Static keyboardAvoiding>
+    <Screen.Static
+      keyboardAvoiding
+      testId="LoginScreen">
       <Column
         gap="md"
         center
         flex={1}
-        padding="md">
-        <Text.Title>Login</Text.Title>
-        <Text.Paragraph>Sign in to your account</Text.Paragraph>
+        padding="md"
+        testId="LoginScreenContainerView">
+        <Text.Title testId="LoginScreenTitleText">Login</Text.Title>
+        <Text.Paragraph testId="LoginScreenSubtitleText">
+          Sign in to your account
+        </Text.Paragraph>
 
         <Column
           gap="lg"
-          stretch>
+          stretch
+          testId="LoginScreenFormView">
           <TextInputControlled<LoginForm>
             placeholder="Email"
             name="email"
             control={control}
             autoCapitalize="none"
             keyboardType="email-address"
+            testId="LoginScreenEmailTextInput"
           />
 
           <TextInputControlled<LoginForm>
@@ -83,12 +90,14 @@ export const LoginScreen = (): React.JSX.Element => {
             control={control}
             placeholder="Password"
             secureTextEntry
+            testId="LoginScreenPasswordTextInput"
           />
 
           {!!loginError && (
             <Text.Paragraph
               variant="small"
-              color="warning">
+              color="warning"
+              testId="LoginScreenErrorText">
               {loginError.message || 'Something went wrong...'}
             </Text.Paragraph>
           )}
@@ -97,6 +106,7 @@ export const LoginScreen = (): React.JSX.Element => {
             label={isLoggingIn ? 'Logging in...' : 'Login'}
             onPress={handleSubmit(handleLogin)}
             disabled={isLoggingIn || isLoading}
+            testId="LoginScreenSubmitButton"
           />
 
           {!!(isLoggingIn || isLoading) && <ActivityIndicator />}
@@ -104,14 +114,18 @@ export const LoginScreen = (): React.JSX.Element => {
 
         <Row
           gap="xs"
-          centerY>
-          <Text.Paragraph variant="small">
+          centerY
+          testId="LoginScreenSignUpPromptView">
+          <Text.Paragraph
+            variant="small"
+            testId="LoginScreenSignUpPromptText">
             Don&apos;t have an account?
           </Text.Paragraph>
           <LinkButton
             label="Sign up"
             variant="small"
             onPress={handleSignUpPress}
+            testId="LoginScreenSignUpLinkButton"
           />
         </Row>
       </Column>

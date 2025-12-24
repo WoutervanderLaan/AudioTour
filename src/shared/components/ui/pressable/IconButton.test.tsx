@@ -13,7 +13,7 @@ describe('IconButton', () => {
     it('should render with icon name', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
         />,
       )
@@ -23,7 +23,7 @@ describe('IconButton', () => {
     it('should render with testID', () => {
       render(
         <IconButton
-          testID="test-icon-button"
+          testId="test-icon-button"
           name="settings"
         />,
       )
@@ -33,7 +33,7 @@ describe('IconButton', () => {
     it('should render different icon names', () => {
       const {rerender} = render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
         />,
       )
@@ -41,7 +41,7 @@ describe('IconButton', () => {
 
       rerender(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="search"
         />,
       )
@@ -49,7 +49,7 @@ describe('IconButton', () => {
 
       rerender(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="settings"
         />,
       )
@@ -61,7 +61,7 @@ describe('IconButton', () => {
     it('should render with default md size', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
         />,
       )
@@ -71,7 +71,7 @@ describe('IconButton', () => {
     it('should render with small size', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           size="sm"
         />,
@@ -82,7 +82,7 @@ describe('IconButton', () => {
     it('should render with medium size', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           size="md"
         />,
@@ -93,7 +93,7 @@ describe('IconButton', () => {
     it('should render with large size', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           size="lg"
         />,
@@ -105,7 +105,7 @@ describe('IconButton', () => {
       const {rerender} = render(
         <IconButton
           name="home"
-          testID="icon-button"
+          testId="icon-button"
           size="sm"
         />,
       )
@@ -114,7 +114,7 @@ describe('IconButton', () => {
       rerender(
         <IconButton
           name="home"
-          testID="icon-button"
+          testId="icon-button"
           size="lg"
         />,
       )
@@ -126,7 +126,7 @@ describe('IconButton', () => {
     it('should render with default color', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
         />,
       )
@@ -137,7 +137,7 @@ describe('IconButton', () => {
       render(
         <IconButton
           name="home"
-          testID="icon-button"
+          testId="icon-button"
           color="red"
         />,
       )
@@ -149,7 +149,7 @@ describe('IconButton', () => {
         <IconButton
           name="home"
           color="#FF0000"
-          testID="icon-button"
+          testId="icon-button"
         />,
       )
       expect(screen.queryByTestId('icon-button')).toBeTruthy()
@@ -159,7 +159,7 @@ describe('IconButton', () => {
       render(
         <IconButton
           name="home"
-          testID="icon-button"
+          testId="icon-button"
           color="rgb(255, 0, 0)"
         />,
       )
@@ -172,7 +172,7 @@ describe('IconButton', () => {
       const onPress = jest.fn()
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           onPress={onPress}
         />,
@@ -186,7 +186,7 @@ describe('IconButton', () => {
       const onPress = jest.fn()
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           onPress={onPress}
           disabled
@@ -201,7 +201,7 @@ describe('IconButton', () => {
       const onPress = jest.fn()
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           onPress={onPress}
         />,
@@ -220,7 +220,7 @@ describe('IconButton', () => {
     it('should render when disabled', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           disabled
         />,
@@ -232,7 +232,7 @@ describe('IconButton', () => {
       const onPress = jest.fn()
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           onPress={onPress}
           disabled
@@ -246,7 +246,7 @@ describe('IconButton', () => {
     it('should maintain disabled state across size changes', () => {
       const {rerender} = render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           size="sm"
           disabled
@@ -256,7 +256,7 @@ describe('IconButton', () => {
 
       rerender(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           size="lg"
           disabled
@@ -270,7 +270,7 @@ describe('IconButton', () => {
     it('should have button accessibility role', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
         />,
       )
@@ -292,7 +292,7 @@ describe('IconButton', () => {
     it('should accept accessibilityHint', () => {
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="settings"
           accessibilityHint="Opens settings menu"
         />,
@@ -306,7 +306,7 @@ describe('IconButton', () => {
       const onNavigate = jest.fn()
       render(
         <IconButton
-          testID="nav-button"
+          testId="nav-button"
           name="arrow-back"
           onPress={onNavigate}
         />,
@@ -320,7 +320,7 @@ describe('IconButton', () => {
       const onMenuPress = jest.fn()
       render(
         <IconButton
-          testID="menu-button"
+          testId="menu-button"
           name="menu"
           onPress={onMenuPress}
         />,
@@ -334,7 +334,7 @@ describe('IconButton', () => {
       const onClose = jest.fn()
       render(
         <IconButton
-          testID="close-button"
+          testId="close-button"
           name="close"
           onPress={onClose}
           size="sm"
@@ -349,7 +349,7 @@ describe('IconButton', () => {
       const onSettings = jest.fn()
       render(
         <IconButton
-          testID="settings-button"
+          testId="settings-button"
           name="settings"
           onPress={onSettings}
           accessibilityLabel="Settings"
@@ -373,7 +373,7 @@ describe('IconButton', () => {
       icons.forEach(({name}, index) => {
         const {unmount} = render(
           <IconButton
-            testID={`icon-${index}`}
+            testId={`icon-${index}`}
             name={name as 'home'}
           />,
         )
@@ -393,7 +393,7 @@ describe('IconButton', () => {
       icons.forEach(({name}, index) => {
         const {unmount} = render(
           <IconButton
-            testID={`icon-${index}`}
+            testId={`icon-${index}`}
             name={name as 'home'}
           />,
         )
@@ -408,7 +408,7 @@ describe('IconButton', () => {
       const onPress = jest.fn()
       render(
         <IconButton
-          testID="full-props"
+          testId="full-props"
           name="favorite"
           size="lg"
           color="red"
@@ -428,7 +428,7 @@ describe('IconButton', () => {
       const onPress = jest.fn()
       render(
         <IconButton
-          testID="icon-button"
+          testId="icon-button"
           name="home"
           onPress={onPress}
         />,
@@ -448,7 +448,7 @@ describe('IconButton', () => {
       sizes.forEach((size, index) => {
         const {unmount} = render(
           <IconButton
-            testID={`icon-${index}`}
+            testId={`icon-${index}`}
             name="home"
             size={size}
           />,

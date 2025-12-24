@@ -19,22 +19,25 @@ export const ProfileScreen = (): React.JSX.Element => {
   const navigation = useNavigation()
 
   return (
-    <Screen.Scrollable>
-      <OnboardingBanner />
+    <Screen.Scrollable testId="ProfileScreen">
+      <OnboardingBanner testId="ProfileScreenOnboardingBanner" />
 
       <Column
         gap="xs"
         flex={1}
-        padding="md">
+        padding="md"
+        testId="ProfileScreenContentView">
         <NavItem
           label="Preferences"
           icon="tune"
           onPress={() => navigation.navigate(OnboardingRouteName.flow)}
+          testId="ProfileScreenPreferencesNavItem"
         />
         <NavItem
           label="Push Notifications"
           icon="notifications"
           onPress={() => navigation.navigate(NotificationRouteName.settings)}
+          testId="ProfileScreenPushNotificationsNavItem"
         />
       </Column>
     </Screen.Scrollable>

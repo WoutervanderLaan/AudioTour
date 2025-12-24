@@ -37,15 +37,18 @@ type AddPhotoProps = {
 export const AddPhoto = ({
   onPress,
   size = 'md',
+  testId,
   ...pressableProps
 }: AddPhotoProps): React.JSX.Element => (
   <PressableBase
+    testId={testId}
     onPress={onPress}
     {...pressableProps}>
     <Column
+      testId={`${testId}View` as `${string}View`}
       center
       style={[styles.container, styles[size]]}>
-      <Text.Title>+</Text.Title>
+      <Text.Title testId={`${testId}Text` as `${string}Text`}>+</Text.Title>
     </Column>
   </PressableBase>
 )

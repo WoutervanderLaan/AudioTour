@@ -20,19 +20,24 @@ export const TourHomeScreen = (): React.JSX.Element => {
   const {navigate} = useNavigation()
 
   return (
-    <Screen.Static>
+    <Screen.Static testId="TourHomeScreen">
       <Box
         flex={1}
         center
-        paddingH="lg">
+        paddingH="lg"
+        testId="TourHomeScreenContainerView">
         <Column
           gap="xl"
-          center>
+          center
+          testId="TourHomeScreenContentView">
           <Column
             gap="md"
-            center>
-            <Text.Title>AudioTour</Text.Title>
-            <Text.Paragraph align="center">
+            center
+            testId="TourHomeScreenHeaderView">
+            <Text.Title testId="TourHomeScreenTitleText">AudioTour</Text.Title>
+            <Text.Paragraph
+              align="center"
+              testId="TourHomeScreenDescriptionText">
               Discover museum treasures with personalized audio narratives
             </Text.Paragraph>
           </Column>
@@ -40,6 +45,7 @@ export const TourHomeScreen = (): React.JSX.Element => {
           <Button
             label="Start new tour"
             onPress={() => navigate(TourRouteName.feed, {})}
+            testId="TourHomeScreenStartButton"
           />
         </Column>
       </Box>

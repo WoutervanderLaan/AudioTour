@@ -6,6 +6,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import {PressableBase, type PressableBaseProps} from './PressableBase'
 
 import type {IconName} from '@/core/navigation/types'
+import type {TestProps} from '@/shared/types/test'
 
 /**
  * IconButtonSize
@@ -17,20 +18,24 @@ export type IconButtonSize = 'sm' | 'md' | 'lg'
  * IconButtonProps
  * Props for the IconButton component
  */
-export type IconButtonProps = Omit<PressableBaseProps, 'style' | 'children'> & {
-  /**
-   * name - The icon name from MaterialIcons
-   */
-  name: IconName
-  /**
-   * size - The size variant of the icon button
-   */
-  size?: IconButtonSize
-  /**
-   * color - Optional color override for the icon
-   */
-  color?: string
-}
+export type IconButtonProps = Omit<
+  PressableBaseProps,
+  'style' | 'children' | 'testId'
+> &
+  TestProps<'IconButton'> & {
+    /**
+     * name - The icon name from MaterialIcons
+     */
+    name: IconName
+    /**
+     * size - The size variant of the icon button
+     */
+    size?: IconButtonSize
+    /**
+     * color - Optional color override for the icon
+     */
+    color?: string
+  }
 
 const ICON_SIZES: Record<IconButtonSize, number> = {
   sm: 20,
@@ -51,6 +56,7 @@ export const IconButton = ({
   size = 'md',
   color,
   disabled,
+  testId,
   ...rest
 }: IconButtonProps): React.JSX.Element => {
   const {theme} = useUnistyles()
@@ -58,6 +64,7 @@ export const IconButton = ({
 
   return (
     <PressableBase
+      testId={`${testId}Pressable` as `${string}Pressable`}
       disabled={disabled}
       style={({pressed}) => [
         styles.base,

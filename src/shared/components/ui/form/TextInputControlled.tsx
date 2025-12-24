@@ -9,39 +9,42 @@ import {
 import {FormField} from './FormField'
 import {TextInput, type TextInputProps} from './TextInput'
 
+import type {TestProps} from '@/shared/types/test'
+
 /**
  * TextInputControlledProps
  * Props for the TextInputControlled component
  */
 export type TextInputControlledProps<T extends FieldValues> = Omit<
   TextInputProps,
-  'value' | 'onChangeText' | 'onBlur' | 'hasError' | 'inputId' | 'labelId'
-> & {
-  /**
-   * control - React Hook Form control object
-   */
-  control: Control<T>
-  /**
-   * name - Field name in the form (must be a valid path in the form data)
-   */
-  name: Path<T>
-  /**
-   * defaultValue - Default value for the field
-   */
-  defaultValue?: string
-  /**
-   * label - Label text for the input field
-   */
-  label?: string
-  /**
-   * hint - Helper text to display when no error
-   */
-  hint?: string
-  /**
-   * required - Whether the field is required (adds asterisk to label)
-   */
-  required?: boolean
-}
+  'value' | 'onChangeText' | 'onBlur' | 'hasError' | 'inputId' | 'labelId' | 'testId'
+> &
+  TestProps<'TextInput'> & {
+    /**
+     * control - React Hook Form control object
+     */
+    control: Control<T>
+    /**
+     * name - Field name in the form (must be a valid path in the form data)
+     */
+    name: Path<T>
+    /**
+     * defaultValue - Default value for the field
+     */
+    defaultValue?: string
+    /**
+     * label - Label text for the input field
+     */
+    label?: string
+    /**
+     * hint - Helper text to display when no error
+     */
+    hint?: string
+    /**
+     * required - Whether the field is required (adds asterisk to label)
+     */
+    required?: boolean
+  }
 
 /**
  * TextInputControlled
@@ -107,10 +110,10 @@ export const TextInputControlled = <T extends FieldValues>({
   hint,
   required,
   disabled,
-  testID,
+  testId,
   ...rest
 }: TextInputControlledProps<T>): React.JSX.Element => {
-  const inputId = testID || `input-${name}`
+  const inputId = testId || `input-${name}`
   const labelId = `${inputId}-label`
   const helpTextId = `${inputId}-help`
 
@@ -124,14 +127,14 @@ export const TextInputControlled = <T extends FieldValues>({
         fieldState: {error},
       }): React.JSX.Element => (
         <FormField
+          testId={`${testId}View` as `${string}View`}
           label={label}
           error={error?.message}
           hint={hint}
           disabled={disabled}
           required={required}
           labelId={labelId}
-          helpTextId={helpTextId}
-          testID={testID}>
+          helpTextId={helpTextId}>
           <TextInput
             value={value as string}
             onChangeText={onChange}
@@ -140,7 +143,7 @@ export const TextInputControlled = <T extends FieldValues>({
             disabled={disabled}
             inputId={inputId}
             labelId={labelId}
-            testID={testID}
+            testId={testId}
             {...rest}
           />
         </FormField>

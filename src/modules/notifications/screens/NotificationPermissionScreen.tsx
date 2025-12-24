@@ -89,72 +89,93 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
   const isPending = isRequesting || toggleMutation.isPending
 
   return (
-    <Screen.Static>
+    <Screen.Static testId="NotificationPermissionScreen">
       <Column
         flex={1}
         padding="lg"
         paddingTop="xl"
-        gap="lg">
+        gap="lg"
+        testId="NotificationPermissionScreenContainerView">
         <Column
           flex={1}
           gap="md"
-          centerX>
+          centerX
+          testId="NotificationPermissionScreenContentView">
           <MaterialIcons
             name="notifications-active"
             size={80}
             color={styles.icon.color}
           />
 
-          <Spacer size="md" />
+          <Spacer
+            size="md"
+            testId="NotificationPermissionScreenTopSpacerView" />
 
-          <Text.Title align="center">Stay Updated</Text.Title>
+          <Text.Title
+            align="center"
+            testId="NotificationPermissionScreenTitleText">
+            Stay Updated
+          </Text.Title>
 
           <Text.Paragraph
             color="secondary"
-            align="center">
+            align="center"
+            testId="NotificationPermissionScreenDescriptionText">
             Enable push notifications to receive updates about your audio tours,
             new narratives for your collected objects, and personalized
             recommendations.
           </Text.Paragraph>
 
-          <Spacer size="lg" />
+          <Spacer
+            size="lg"
+            testId="NotificationPermissionScreenMiddleSpacerView" />
 
-          <Column gap="sm">
+          <Column
+            gap="sm"
+            testId="NotificationPermissionScreenBenefitsView">
             <NotificationBenefit
               icon="tour"
               title="Tour Updates"
               description="Get notified when you complete tours and earn achievements"
+              testId="NotificationPermissionScreenTourUpdatesBenefit"
             />
             <NotificationBenefit
               icon="auto-stories"
               title="New Narratives"
               description="Discover new stories about museum objects you've captured"
+              testId="NotificationPermissionScreenNewNarrativesBenefit"
             />
             <NotificationBenefit
               icon="recommend"
               title="Recommendations"
               description="Receive personalized suggestions based on your interests"
+              testId="NotificationPermissionScreenRecommendationsBenefit"
             />
           </Column>
         </Column>
 
-        <Column gap="sm">
+        <Column
+          gap="sm"
+          testId="NotificationPermissionScreenActionsView">
           <Button
             label="Enable Notifications"
             onPress={handleEnableNotifications}
             disabled={isPending}
+            testId="NotificationPermissionScreenEnableButton"
           />
           <Button
             label="Not Now"
             variant="secondary"
             onPress={handleSkip}
             disabled={isPending}
+            testId="NotificationPermissionScreenNotNowButton"
           />
           <Button
             label="Open Settings"
             variant="secondary"
             onPress={handleOpenSettings}
             disabled={isPending}
+            testId="NotificationPermissionScreenOpenSettingsButton"
           />
         </Column>
       </Column>
@@ -179,6 +200,10 @@ type NotificationBenefitProps = {
    * Benefit description
    */
   description: string
+  /**
+   * Test ID for the benefit component
+   */
+  testId?: string
 }
 
 /**
@@ -192,14 +217,17 @@ const NotificationBenefit = ({
   icon,
   title,
   description,
+  testId,
 }: NotificationBenefitProps): React.JSX.Element => {
   return (
     <Column
       gap="xs"
-      style={styles.benefitContainer}>
+      style={styles.benefitContainer}
+      testId={`${testId}View`}>
       <Column
         gap="sm"
-        style={styles.benefitRow}>
+        style={styles.benefitRow}
+        testId={`${testId}ContentView`}>
         <MaterialIcons
           name={icon}
           size={24}
@@ -207,11 +235,13 @@ const NotificationBenefit = ({
         />
         <Column
           flex={1}
-          gap="xs">
-          <Text.Label>{title}</Text.Label>
+          gap="xs"
+          testId={`${testId}TextContainerView`}>
+          <Text.Label testId={`${testId}TitleText`}>{title}</Text.Label>
           <Text.Paragraph
             variant="small"
-            color="secondary">
+            color="secondary"
+            testId={`${testId}DescriptionText`}>
             {description}
           </Text.Paragraph>
         </Column>

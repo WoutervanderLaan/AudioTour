@@ -10,12 +10,13 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/test'
 
 /**
  * AudioPlayerProps
  * Props for the AudioPlayer component
  */
-type AudioPlayerProps = {
+type AudioPlayerProps = TestProps<'AudioPlayer'> & {
   /**
    * Audio source URL
    */
@@ -44,7 +45,10 @@ const formatTime = (millis: number): string => {
  * @param props - Component props with audio source URL
  * @returns Audio player component with controls
  */
-export const AudioPlayer = ({src}: AudioPlayerProps): React.JSX.Element => {
+export const AudioPlayer = ({
+  src,
+  testId,
+}: AudioPlayerProps): React.JSX.Element => {
   const player = useAudioPlayer(src)
   const status = useAudioPlayerStatus(player)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -94,19 +98,29 @@ export const AudioPlayer = ({src}: AudioPlayerProps): React.JSX.Element => {
   if (!status.duration && !error) {
     return (
       <Row
+        testId={`${testId}LoadingView` as `${string}View`}
         gap="sm"
         center>
         <ActivityIndicator size="small" />
-        <Text.Label>Loading audio...</Text.Label>
+        <Text.Label testId={`${testId}LoadingText` as `${string}Text`}>
+          Loading audio...
+        </Text.Label>
       </Row>
     )
   }
 
   if (error) {
     return (
-      <Column gap="xs">
-        <Text.Label color="warning">{error}</Text.Label>
+      <Column
+        testId={`${testId}ErrorView` as `${string}View`}
+        gap="xs">
+        <Text.Label
+          testId={`${testId}ErrorText` as `${string}Text`}
+          color="warning">
+          {error}
+        </Text.Label>
         <Button
+          testId={`${testId}RetryButton` as `${string}Button`}
           label="Retry"
           onPress={(): void => {
             setError(undefined)
@@ -122,13 +136,22 @@ export const AudioPlayer = ({src}: AudioPlayerProps): React.JSX.Element => {
   const progress = duration > 0 ? position / duration : 0
 
   return (
-    <Column gap="sm">
-      <Row justifyContent="space-between">
-        <Text.Label>{formatTime(position)}</Text.Label>
-        <Text.Label>{formatTime(duration)}</Text.Label>
+    <Column
+      testId={`${testId}ContainerView` as `${string}View`}
+      gap="sm">
+      <Row
+        testId={`${testId}TimeView` as `${string}View`}
+        justifyContent="space-between">
+        <Text.Label testId={`${testId}PositionText` as `${string}Text`}>
+          {formatTime(position)}
+        </Text.Label>
+        <Text.Label testId={`${testId}DurationText` as `${string}Text`}>
+          {formatTime(duration)}
+        </Text.Label>
       </Row>
 
       <PressableBase
+        testId={`${testId}SeekPressable` as `${string}Pressable`}
         onPress={e => {
           const {locationX} = e.nativeEvent
 
@@ -142,9 +165,11 @@ export const AudioPlayer = ({src}: AudioPlayerProps): React.JSX.Element => {
           })
         }}>
         <Row
+          testId={`${testId}ProgressBarBackgroundView` as `${string}View`}
           style={styles.progressBarBackground}
           padding="no">
           <Row
+            testId={`${testId}ProgressBarFillView` as `${string}View`}
             padding="sm"
             flex={1}
             stretch
@@ -154,6 +179,7 @@ export const AudioPlayer = ({src}: AudioPlayerProps): React.JSX.Element => {
       </PressableBase>
 
       <Button
+        testId={`${testId}PlayPauseButton` as `${string}Button`}
         label={status.playing ? '⏸ Pause' : '▶ Play'}
         onPress={togglePlayback}
       />

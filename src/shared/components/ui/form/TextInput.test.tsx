@@ -9,12 +9,12 @@ import {TextInput} from './TextInput'
 describe('TextInput', () => {
   describe('Rendering', () => {
     it('should render correctly', () => {
-      render(<TextInput testID="text-input" />)
+      render(<TextInput testId="text-input" />)
       expect(screen.queryByTestId('text-input')).toBeTruthy()
     })
 
     it('should render with testID', () => {
-      render(<TextInput testID="test-input" />)
+      render(<TextInput testId="test-input" />)
       expect(screen.getByTestId('test-input')).toBeTruthy()
     })
 
@@ -34,7 +34,7 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           onChangeText={onChangeText}
         />,
       )
@@ -62,7 +62,7 @@ describe('TextInput', () => {
       const onFocus = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           onFocus={onFocus}
         />,
       )
@@ -75,7 +75,7 @@ describe('TextInput', () => {
       const onBlur = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           onBlur={onBlur}
         />,
       )
@@ -89,7 +89,7 @@ describe('TextInput', () => {
       const onBlur = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           onFocus={onFocus}
           onBlur={onBlur}
         />,
@@ -108,7 +108,7 @@ describe('TextInput', () => {
     it('should render when disabled', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           disabled
         />,
       )
@@ -118,7 +118,7 @@ describe('TextInput', () => {
     it('should not be editable when disabled', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           disabled
         />,
       )
@@ -127,7 +127,7 @@ describe('TextInput', () => {
     })
 
     it('should be editable by default', () => {
-      render(<TextInput testID="input" />)
+      render(<TextInput testId="input" />)
       const input = screen.getByTestId('input')
       expect(input.props.editable).toBe(true)
     })
@@ -137,7 +137,7 @@ describe('TextInput', () => {
     it('should render with error state', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           hasError
         />,
       )
@@ -149,7 +149,7 @@ describe('TextInput', () => {
     it('should apply error styling when hasError is true', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           hasError
         />,
       )
@@ -162,7 +162,7 @@ describe('TextInput', () => {
     it('should toggle error state', () => {
       const {rerender} = render(
         <TextInput
-          testID="input"
+          testId="input"
           hasError={false}
         />,
       )
@@ -171,7 +171,7 @@ describe('TextInput', () => {
 
       rerender(
         <TextInput
-          testID="input"
+          testId="input"
           hasError
         />,
       )
@@ -185,7 +185,7 @@ describe('TextInput', () => {
     it('should accept email-address keyboard type', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           keyboardType="email-address"
         />,
       )
@@ -196,7 +196,7 @@ describe('TextInput', () => {
     it('should accept numeric keyboard type', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           keyboardType="numeric"
         />,
       )
@@ -207,7 +207,7 @@ describe('TextInput', () => {
     it('should accept phone-pad keyboard type', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           keyboardType="phone-pad"
         />,
       )
@@ -220,7 +220,7 @@ describe('TextInput', () => {
     it('should support secure text entry', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           secureTextEntry
         />,
       )
@@ -231,7 +231,7 @@ describe('TextInput', () => {
     it('should toggle secure text entry', () => {
       const {rerender} = render(
         <TextInput
-          testID="input"
+          testId="input"
           secureTextEntry={false}
         />,
       )
@@ -240,7 +240,7 @@ describe('TextInput', () => {
 
       rerender(
         <TextInput
-          testID="input"
+          testId="input"
           secureTextEntry
         />,
       )
@@ -253,7 +253,7 @@ describe('TextInput', () => {
     it('should support multiline input', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           multiline
         />,
       )
@@ -264,7 +264,7 @@ describe('TextInput', () => {
     it('should accept numberOfLines prop', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           multiline
           numberOfLines={4}
         />,
@@ -276,7 +276,7 @@ describe('TextInput', () => {
 
   describe('Accessibility', () => {
     it('should be accessible by default', () => {
-      render(<TextInput testID="input" />)
+      render(<TextInput testId="input" />)
       const input = screen.getByTestId('input')
       expect(input.props.accessible).toBe(true)
     })
@@ -284,7 +284,7 @@ describe('TextInput', () => {
     it('should accept accessibilityLabel', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           accessibilityLabel="Email input"
         />,
       )
@@ -294,7 +294,7 @@ describe('TextInput', () => {
     it('should accept accessibilityHint', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           accessibilityHint="Enter your email address"
         />,
       )
@@ -305,7 +305,7 @@ describe('TextInput', () => {
     it('should have disabled state in accessibility', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           disabled
         />,
       )
@@ -318,7 +318,7 @@ describe('TextInput', () => {
     it('should forward maxLength prop', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           maxLength={10}
         />,
       )
@@ -329,7 +329,7 @@ describe('TextInput', () => {
     it('should forward autoCapitalize prop', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           autoCapitalize="none"
         />,
       )
@@ -340,7 +340,7 @@ describe('TextInput', () => {
     it('should forward autoCorrect prop', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           autoCorrect={false}
         />,
       )
@@ -351,7 +351,7 @@ describe('TextInput', () => {
     it('should forward autoComplete prop', () => {
       render(
         <TextInput
-          testID="input"
+          testId="input"
           autoComplete="email"
         />,
       )
@@ -365,7 +365,7 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       const {rerender} = render(
         <TextInput
-          testID="input"
+          testId="input"
           value=""
           onChangeText={onChangeText}
         />,
@@ -380,7 +380,7 @@ describe('TextInput', () => {
       // Parent component controls state and updates the value prop
       rerender(
         <TextInput
-          testID="input"
+          testId="input"
           value="hello"
           onChangeText={onChangeText}
         />,
@@ -393,7 +393,7 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           value=""
           onChangeText={onChangeText}
         />,
@@ -410,7 +410,7 @@ describe('TextInput', () => {
     it('should only update when value prop changes', () => {
       const {rerender} = render(
         <TextInput
-          testID="input"
+          testId="input"
           value="initial"
         />,
       )
@@ -424,7 +424,7 @@ describe('TextInput', () => {
       // Value only changes when parent updates prop
       rerender(
         <TextInput
-          testID="input"
+          testId="input"
           value="updated"
         />,
       )
@@ -437,7 +437,7 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           onChangeText={onChangeText}
         />,
       )
@@ -458,7 +458,7 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           onChangeText={onChangeText}
         />,
       )
@@ -471,7 +471,7 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           onChangeText={onChangeText}
         />,
       )
@@ -484,7 +484,7 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testID="input"
+          testId="input"
           onChangeText={onChangeText}
         />,
       )

@@ -81,27 +81,42 @@ export const TourPhotoSubmitScreen = ({
 
   return (
     <FormProvider {...form}>
-      <Screen.Scrollable keyboardAvoiding>
+      <Screen.Scrollable
+        keyboardAvoiding
+        testId="TourPhotoSubmitScreen">
         <Box
           paddingH="md"
-          paddingBottom="xl">
-          <Column gap="lg">
-            <TourPhotoSubmitFormInputs />
+          paddingBottom="xl"
+          testId="TourPhotoSubmitScreenContainerView">
+          <Column
+            gap="lg"
+            testId="TourPhotoSubmitScreenContentView">
+            <TourPhotoSubmitFormInputs testId="TourPhotoSubmitScreenFormInputs" />
 
-            {!!submitError && <Text.Paragraph>{submitError}</Text.Paragraph>}
+            {!!submitError && (
+              <Text.Paragraph testId="TourPhotoSubmitScreenErrorText">
+                {submitError}
+              </Text.Paragraph>
+            )}
 
-            <Column gap="sm">
+            <Column
+              gap="sm"
+              testId="TourPhotoSubmitScreenActionsView">
               <Button
                 label={isLoading ? 'Submitting...' : 'Submit'}
                 onPress={handleSubmit(onSubmit)}
                 disabled={isLoading}
+                testId="TourPhotoSubmitScreenSubmitButton"
               />
               {!!isLoading && (
                 <Row
                   gap="sm"
-                  center>
+                  center
+                  testId="TourPhotoSubmitScreenLoadingView">
                   <ActivityIndicator size="small" />
-                  <Text.Label>Processing photos...</Text.Label>
+                  <Text.Label testId="TourPhotoSubmitScreenLoadingText">
+                    Processing photos...
+                  </Text.Label>
                 </Row>
               )}
               <Button
@@ -109,6 +124,7 @@ export const TourPhotoSubmitScreen = ({
                 onPress={goBack}
                 variant="secondary"
                 disabled={isLoading}
+                testId="TourPhotoSubmitScreenCancelButton"
               />
             </Column>
           </Column>

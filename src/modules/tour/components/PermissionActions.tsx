@@ -28,6 +28,10 @@ export type PermissionActionsProps = {
    * Handler for opening settings
    */
   onOpenSettings: () => void
+  /**
+   * Test ID for the component
+   */
+  testId?: string
 }
 
 /**
@@ -43,25 +47,31 @@ export const PermissionActions = ({
   onPrimaryAction,
   onSkip,
   onOpenSettings,
+  testId = 'PermissionActions',
 }: PermissionActionsProps): React.JSX.Element => {
   return (
-    <Column gap="sm">
+    <Column
+      gap="sm"
+      testId={`${testId}ContainerView`}>
       <Button
         label={primaryButtonLabel}
         onPress={onPrimaryAction}
         disabled={isDisabled}
+        testId={`${testId}PrimaryButton`}
       />
       <Button
         label="Not Now"
         variant="secondary"
         onPress={onSkip}
         disabled={isDisabled}
+        testId={`${testId}NotNowButton`}
       />
       <Button
         label="Open Settings"
         variant="secondary"
         onPress={onOpenSettings}
         disabled={isDisabled}
+        testId={`${testId}OpenSettingsButton`}
       />
     </Column>
   )

@@ -22,7 +22,7 @@ describe('PressableBase', () => {
     })
 
     it('should render with testID', () => {
-      render(<PressableBase testID="test-pressable" />)
+      render(<PressableBase testId="test-pressable" />)
       expect(screen.getByTestId('test-pressable')).toBeTruthy()
     })
 
@@ -43,7 +43,7 @@ describe('PressableBase', () => {
       const onPress = jest.fn()
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           onPress={onPress}>
           <Text>Press me</Text>
         </PressableBase>,
@@ -57,7 +57,7 @@ describe('PressableBase', () => {
       const onPress = jest.fn()
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           onPress={onPress}
           disabled>
           <Text>Disabled</Text>
@@ -72,7 +72,7 @@ describe('PressableBase', () => {
       const onPressIn = jest.fn()
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           onPressIn={onPressIn}>
           <Text>Press in</Text>
         </PressableBase>,
@@ -86,7 +86,7 @@ describe('PressableBase', () => {
       const onPressOut = jest.fn()
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           onPressOut={onPressOut}>
           <Text>Press out</Text>
         </PressableBase>,
@@ -100,7 +100,7 @@ describe('PressableBase', () => {
       const onLongPress = jest.fn()
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           onLongPress={onLongPress}>
           <Text>Long press</Text>
         </PressableBase>,
@@ -114,7 +114,7 @@ describe('PressableBase', () => {
   describe('Accessibility', () => {
     it('should have button accessibility role by default', () => {
       render(
-        <PressableBase testID="pressable">
+        <PressableBase testId="pressable">
           <Text>Button</Text>
         </PressableBase>,
       )
@@ -124,7 +124,7 @@ describe('PressableBase', () => {
 
     it('should be accessible by default', () => {
       render(
-        <PressableBase testID="pressable">
+        <PressableBase testId="pressable">
           <Text>Accessible</Text>
         </PressableBase>,
       )
@@ -135,7 +135,7 @@ describe('PressableBase', () => {
     it('should accept custom accessibility role', () => {
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           accessibilityRole="link">
           <Text>Link</Text>
         </PressableBase>,
@@ -147,7 +147,7 @@ describe('PressableBase', () => {
     it('should accept accessibilityLabel', () => {
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           accessibilityLabel="Custom Label">
           <Text>Content</Text>
         </PressableBase>,
@@ -158,7 +158,7 @@ describe('PressableBase', () => {
     it('should accept accessibilityHint', () => {
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           accessibilityHint="Tap to continue">
           <Text>Continue</Text>
         </PressableBase>,
@@ -170,7 +170,7 @@ describe('PressableBase', () => {
     it('should be disabled when disabled prop is true', () => {
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           disabled>
           <Text>Disabled</Text>
         </PressableBase>,
@@ -185,7 +185,7 @@ describe('PressableBase', () => {
       const styleFunction = jest.fn(() => ({backgroundColor: 'red'}))
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           style={styleFunction}>
           <Text>Styled</Text>
         </PressableBase>,
@@ -197,7 +197,7 @@ describe('PressableBase', () => {
       const styleFunction = jest.fn(() => ({}))
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           style={styleFunction}>
           <Text>Styled</Text>
         </PressableBase>,
@@ -223,7 +223,7 @@ describe('PressableBase', () => {
       })
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           style={styleFunction}>
           <Text>Press for opacity</Text>
         </PressableBase>,
@@ -236,7 +236,7 @@ describe('PressableBase', () => {
     it('should accept hitSlop prop', () => {
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           hitSlop={20}>
           <Text>Hit slop</Text>
         </PressableBase>,
@@ -249,7 +249,7 @@ describe('PressableBase', () => {
       const hitSlop = {top: 10, bottom: 10, left: 5, right: 5}
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           hitSlop={hitSlop}>
           <Text>Hit slop object</Text>
         </PressableBase>,
@@ -262,7 +262,7 @@ describe('PressableBase', () => {
   describe('Children as Function', () => {
     it('should support children as function', () => {
       render(
-        <PressableBase testID="pressable">
+        <PressableBase testId="pressable">
           {({pressed}) => <Text>{pressed ? 'Pressed' : 'Not pressed'}</Text>}
         </PressableBase>,
       )
@@ -275,12 +275,12 @@ describe('PressableBase', () => {
 
   describe('Edge Cases', () => {
     it('should render with no children', () => {
-      render(<PressableBase testID="pressable" />)
+      render(<PressableBase testId="pressable" />)
       expect(screen.getByTestId('pressable')).toBeTruthy()
     })
 
     it('should render with null children', () => {
-      render(<PressableBase testID="pressable">{null}</PressableBase>)
+      render(<PressableBase testId="pressable">{null}</PressableBase>)
       expect(screen.getByTestId('pressable')).toBeTruthy()
     })
 
@@ -288,7 +288,7 @@ describe('PressableBase', () => {
       const onPress = jest.fn()
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           onPress={onPress}>
           <Text>Multi press</Text>
         </PressableBase>,
@@ -306,7 +306,7 @@ describe('PressableBase', () => {
       const onPress = jest.fn()
       render(
         <PressableBase
-          testID="pressable"
+          testId="pressable"
           onPress={onPress}>
           <Text>Rapid press</Text>
         </PressableBase>,

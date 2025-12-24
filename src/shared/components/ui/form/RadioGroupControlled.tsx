@@ -9,6 +9,8 @@ import {
 import {FormField} from './FormField'
 import {RadioGroup, type RadioGroupProps} from './RadioGroup'
 
+import type {TestProps} from '@/shared/types/test'
+
 /**
  * RadioGroupControlledProps
  * Props for the RadioGroupControlled component
@@ -16,32 +18,33 @@ import {RadioGroup, type RadioGroupProps} from './RadioGroup'
 export type RadioGroupControlledProps<
   TFieldValues extends FieldValues,
   TValue extends string = string,
-> = Omit<RadioGroupProps<TValue>, 'value' | 'onChange' | 'hasError'> & {
-  /**
-   * control - React Hook Form control object
-   */
-  control: Control<TFieldValues>
-  /**
-   * name - Field name in the form (must be a valid path in the form data)
-   */
-  name: Path<TFieldValues>
-  /**
-   * defaultValue - Default value for the field
-   */
-  defaultValue?: TValue
-  /**
-   * label - Label text for the radio group
-   */
-  label?: string
-  /**
-   * hint - Helper text to display when no error
-   */
-  hint?: string
-  /**
-   * required - Whether the field is required (adds asterisk to label)
-   */
-  required?: boolean
-}
+> = Omit<RadioGroupProps<TValue>, 'value' | 'onChange' | 'hasError' | 'testId'> &
+  TestProps<'RadioGroup'> & {
+    /**
+     * control - React Hook Form control object
+     */
+    control: Control<TFieldValues>
+    /**
+     * name - Field name in the form (must be a valid path in the form data)
+     */
+    name: Path<TFieldValues>
+    /**
+     * defaultValue - Default value for the field
+     */
+    defaultValue?: TValue
+    /**
+     * label - Label text for the radio group
+     */
+    label?: string
+    /**
+     * hint - Helper text to display when no error
+     */
+    hint?: string
+    /**
+     * required - Whether the field is required (adds asterisk to label)
+     */
+    required?: boolean
+  }
 
 /**
  * RadioGroupControlled
@@ -107,7 +110,7 @@ export const RadioGroupControlled = <
   hint,
   required,
   disabled,
-  testID,
+  testId,
   ...rest
 }: RadioGroupControlledProps<TFieldValues, TValue>): React.JSX.Element => {
   return (
@@ -120,18 +123,18 @@ export const RadioGroupControlled = <
         fieldState: {error},
       }): React.JSX.Element => (
         <FormField
+          testId={`${testId}View` as `${string}View`}
           label={label}
           error={error?.message}
           hint={hint}
           disabled={disabled}
-          required={required}
-          testID={testID}>
+          required={required}>
           <RadioGroup
             value={value as TValue}
             onChange={onChange as (value: TValue) => void}
             hasError={!!error}
             disabled={disabled}
-            testID={testID}
+            testId={testId}
             {...rest}
           />
         </FormField>

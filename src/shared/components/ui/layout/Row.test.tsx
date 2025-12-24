@@ -34,14 +34,14 @@ describe('Row', () => {
     })
 
     it('should render with testID', () => {
-      render(<Row testID="test-row" />)
+      render(<Row testId="test-row" />)
       expect(screen.getByTestId('test-row')).toBeTruthy()
     })
   })
 
   describe('Layout Direction', () => {
     it('should apply row flex direction', () => {
-      render(<Row testID="row" />)
+      render(<Row testId="row" />)
       const view = screen.getByTestId('row')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
@@ -52,7 +52,7 @@ describe('Row', () => {
 
     it('should always use row direction even without explicit row prop', () => {
       render(
-        <Row testID="row">
+        <Row testId="row">
           <Text>Content</Text>
         </Row>,
       )
@@ -69,7 +69,7 @@ describe('Row', () => {
     it('should accept flex prop', () => {
       render(
         <Row
-          testID="row"
+          testId="row"
           flex={1}
         />,
       )
@@ -82,7 +82,7 @@ describe('Row', () => {
     it('should accept center prop', () => {
       render(
         <Row
-          testID="row"
+          testId="row"
           center
         />,
       )
@@ -100,7 +100,7 @@ describe('Row', () => {
     it('should accept gap prop', () => {
       render(
         <Row
-          testID="row"
+          testId="row"
           gap="md"
         />,
       )
@@ -110,7 +110,7 @@ describe('Row', () => {
     it('should accept padding prop', () => {
       render(
         <Row
-          testID="row"
+          testId="row"
           padding="lg"
         />,
       )
@@ -120,7 +120,7 @@ describe('Row', () => {
     it('should accept justifyContent prop', () => {
       render(
         <Row
-          testID="row"
+          testId="row"
           justifyContent="space-between"
         />,
       )
@@ -135,7 +135,7 @@ describe('Row', () => {
     it('should accept alignItems prop', () => {
       render(
         <Row
-          testID="row"
+          testId="row"
           alignItems="flex-start"
         />,
       )
@@ -150,7 +150,7 @@ describe('Row', () => {
     it('should accept wrap prop', () => {
       render(
         <Row
-          testID="row"
+          testId="row"
           wrap="wrap"
         />,
       )
@@ -166,7 +166,7 @@ describe('Row', () => {
       const customStyle = {backgroundColor: 'blue'}
       render(
         <Row
-          testID="row"
+          testId="row"
           style={customStyle}
         />,
       )
@@ -180,7 +180,7 @@ describe('Row', () => {
       const customStyle = {borderWidth: 1}
       render(
         <Row
-          testID="row"
+          testId="row"
           gap="sm"
           style={customStyle}
         />,
@@ -256,7 +256,7 @@ describe('Row', () => {
     })
 
     it('should render with empty children', () => {
-      render(<Row testID="row">{null}</Row>)
+      render(<Row testId="row">{null}</Row>)
       expect(screen.getByTestId('row')).toBeTruthy()
     })
 

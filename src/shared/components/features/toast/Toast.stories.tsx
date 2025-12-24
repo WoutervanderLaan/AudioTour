@@ -13,6 +13,7 @@ type Story = StoryObj<typeof meta>
 
 export const Info: Story = {
   args: {
+    testId: 'StoryInfoToast',
     message: 'Hello, World!',
     type: ToastType.INFO,
   },
@@ -20,6 +21,7 @@ export const Info: Story = {
 
 export const Error: Story = {
   args: {
+    testId: 'StoryErrorToast',
     message: 'Error: Something went wrong',
     type: ToastType.ERROR,
   },
@@ -27,6 +29,7 @@ export const Error: Story = {
 
 export const Success: Story = {
   args: {
+    testId: 'StorySuccessToast',
     message: 'Well done! Operation successful',
     type: ToastType.SUCCESS,
   },

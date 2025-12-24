@@ -113,7 +113,7 @@ describe('Title', () => {
 
   describe('Props Forwarding', () => {
     it('should forward testID prop', () => {
-      render(<Title testID="test-title">Test Title</Title>)
+      render(<Title testId="test-title">Test Title</Title>)
       expect(screen.getByTestId('test-title')).toBeTruthy()
     })
 
@@ -155,11 +155,11 @@ describe('Title', () => {
 
     it('should render with mixed content', () => {
       render(
-        <Title testID="Title1">
+        <Title testId="Title1">
           Part 1{' '}
           <Title
             level="h2"
-            testID="Title2">
+            testId="Title2">
             Part 2
           </Title>
         </Title>,

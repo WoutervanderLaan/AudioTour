@@ -4,13 +4,14 @@ import {StyleSheet} from 'react-native-unistyles'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/test'
 
 /**
  * ProgressIndicatorProps
  * Props for the ProgressIndicator component.
  * Defines the total number of steps and which step is currently active.
  */
-type ProgressIndicatorProps = {
+type ProgressIndicatorProps = TestProps<'ProgressIndicator'> & {
   /**
    * Total number of steps in the process
    */
@@ -32,20 +33,31 @@ type ProgressIndicatorProps = {
 export const ProgressIndicator = ({
   totalSteps,
   currentStep,
+  testId,
 }: ProgressIndicatorProps): React.JSX.Element => {
   const progress = (currentStep / totalSteps) * 100
 
   return (
-    <Column gap="xs">
+    <Column
+      testId={`${testId}View` as `${string}View`}
+      gap="xs">
       <Row
+        testId={`${testId}StepView` as `${string}View`}
         centerY
         gap="sm">
-        <Text.Label color="secondary">
+        <Text.Label
+          testId={`${testId}StepText` as `${string}Text`}
+          color="secondary">
           Step {currentStep} of {totalSteps}
         </Text.Label>
       </Row>
-      <Column style={styles.progressBar}>
-        <Column style={[styles.progressFill, {width: `${progress}%`}]} />
+      <Column
+        testId={`${testId}ProgressBarView` as `${string}View`}
+        style={styles.progressBar}>
+        <Column
+          testId={`${testId}ProgressFillView` as `${string}View`}
+          style={[styles.progressFill, {width: `${progress}%`}]}
+        />
       </Column>
     </Column>
   )

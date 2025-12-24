@@ -3,38 +3,40 @@ import type React from 'react'
 import {Text as RNText, type TextProps as RNTextProps} from 'react-native'
 import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
+import type {TestProps} from '@/shared/types/test'
 import type {Theme} from '@/themes/types'
 
 /**
  * TextPropsBase
  * Base props for the TextBase component with theme integration
  */
-export type TextPropsBase = {
-  /**
-   * children - Text content to display
-   */
-  children?: React.ReactNode
-  /**
-   * color - Text color from theme
-   */
-  color?: keyof Theme['color']['text']
-  /**
-   * fontSize - Font size from theme
-   */
-  fontSize?: keyof Theme['text']['fontSize']
-  /**
-   * fontFamily - Font family from theme
-   */
-  fontFamily?: keyof Theme['text']['fontFamily']
-  /**
-   * align - Text alignment
-   */
-  align?: 'left' | 'center' | 'right' | 'justify'
-  /**
-   * lineHeight - Line height from theme
-   */
-  lineHeight?: keyof Theme['text']['lineHeight']
-} & RNTextProps
+export type TextPropsBase = Omit<RNTextProps, 'testID'> &
+  TestProps<'Text'> & {
+    /**
+     * children - Text content to display
+     */
+    children?: React.ReactNode
+    /**
+     * color - Text color from theme
+     */
+    color?: keyof Theme['color']['text']
+    /**
+     * fontSize - Font size from theme
+     */
+    fontSize?: keyof Theme['text']['fontSize']
+    /**
+     * fontFamily - Font family from theme
+     */
+    fontFamily?: keyof Theme['text']['fontFamily']
+    /**
+     * align - Text alignment
+     */
+    align?: 'left' | 'center' | 'right' | 'justify'
+    /**
+     * lineHeight - Line height from theme
+     */
+    lineHeight?: keyof Theme['text']['lineHeight']
+  }
 
 /**
  * TextProps
@@ -60,6 +62,7 @@ export const TextBase = ({
   lineHeight,
   accessible = true,
   accessibilityRole = 'text',
+  testId,
   ...rest
 }: TextProps): React.JSX.Element => {
   const {theme} = useUnistyles()
@@ -74,6 +77,7 @@ export const TextBase = ({
 
   return (
     <RNText
+      testID={testId}
       accessible={accessible}
       accessibilityRole={accessibilityRole}
       style={[styles.text, dynamicStyle, style]}
