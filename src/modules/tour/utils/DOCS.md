@@ -54,6 +54,7 @@ function getPermissionContent(sourceType: MediaSourceType): PermissionContent
 ```
 
 **Returns**: Configuration object containing:
+
 - `title`: Screen title ("Camera Access Required" or "Photo Library Access Required")
 - `icon`: MaterialIcons icon name
 - `description`: Explanation of why permission is needed
