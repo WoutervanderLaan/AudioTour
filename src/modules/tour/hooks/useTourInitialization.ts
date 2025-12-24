@@ -69,7 +69,10 @@ export function useTourInitialization(): UseTourInitializationReturn {
 
       const nearest = museumsWithDistance[0]
 
-      if (nearest && nearest.distance <= NEARBY_MUSEUM_RADIUS_METERS) {
+      if (
+        nearest !== undefined &&
+        nearest.distance <= NEARBY_MUSEUM_RADIUS_METERS
+      ) {
         logger.debug('[Tour] Found nearby museum:', nearest.name, {
           distance: nearest.distance,
         })

@@ -118,7 +118,7 @@ export const ImageInputControlled = <T extends FieldValues>({
         field: {onChange, value},
         fieldState: {error},
       }): React.JSX.Element => {
-        const images: string[] = value || []
+        const images: string[] = value ?? []
 
         return (
           <FormField

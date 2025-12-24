@@ -246,7 +246,9 @@ export const datetime = Object.assign(dayjs, {
    * @returns True if the value is a valid date
    */
   isValid: (date: dayjs.ConfigType): boolean => {
-    return date ? dayjs(date).isValid() : Boolean(date)
+    return date !== null && date !== undefined
+      ? dayjs(date).isValid()
+      : Boolean(date)
   },
 
   /**

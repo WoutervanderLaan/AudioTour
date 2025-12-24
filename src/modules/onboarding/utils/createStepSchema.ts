@@ -15,7 +15,7 @@ export const createStepSchema = (
 ): z.ZodObject<{[key: string]: z.ZodTypeAny}> => {
   const step = ONBOARDING_STEPS[stepIndex]
 
-  if (!step) {
+  if (step === undefined) {
     return z.object({})
   }
 
