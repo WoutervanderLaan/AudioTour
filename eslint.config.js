@@ -472,6 +472,7 @@ export default [
       'jest/no-identical-title': 'error',
       'jest/prefer-to-have-length': 'warn',
       'jest/valid-expect': 'error',
+      'no-unused-vars': 'off',
     },
   },
 ]
