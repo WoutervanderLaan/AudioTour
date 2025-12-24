@@ -8,7 +8,7 @@ This folder contains all screen components for the tour module navigation flow.
 
 Landing screen for starting a new tour.
 
-**Route**: `TourRouteName.home`
+**Route**: `TourTabName.home`
 
 **Features**:
 

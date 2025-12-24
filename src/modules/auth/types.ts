@@ -4,15 +4,15 @@
  */
 export type User = {
   /**
-   * id
+   * Unique identifier for the user account
    */
   id: string
   /**
-   * email
+   * User's email address used for authentication
    */
   email: string
   /**
-   * name
+   * User's display name
    */
   name: string
 }
@@ -23,19 +23,19 @@ export type User = {
  */
 export type AuthTokens = {
   /**
-   * accessToken
+   * JWT access token used to authenticate API requests
    */
   accessToken: string
   /**
-   * refreshToken
+   * JWT refresh token used to obtain new access tokens when they expire
    */
   refreshToken: string
   /**
-   * accessTokenExpiresAt
+   * ISO 8601 timestamp when the access token expires
    */
   accessTokenExpiresAt?: string
   /**
-   * refreshTokenExpiresAt
+   * ISO 8601 timestamp when the refresh token expires
    */
   refreshTokenExpiresAt?: string
 }
@@ -46,43 +46,43 @@ export type AuthTokens = {
  */
 export type AuthState = {
   /**
-   * user
+   * The currently authenticated user or null if not authenticated
    */
   user: User | null
   /**
-   * tokens
+   * JWT authentication tokens or null if not authenticated
    */
   tokens: AuthTokens | null
   /**
-   * isAuthenticated
+   * Whether the user is currently authenticated (has valid tokens)
    */
   isAuthenticated: boolean
   /**
-   * isInitialized
+   * Whether the auth store has completed initialization from persisted state
    */
   isInitialized: boolean
   /**
-   * setUser
+   * Updates the user data without changing authentication tokens
    */
   setUser: (user: User) => void
   /**
-   * setAuth
+   * Sets both user and tokens, marking the user as authenticated
    */
   setAuth: (user: User, tokens: AuthTokens) => void
   /**
-   * updateTokens
+   * Updates only the authentication tokens (e.g., after token refresh)
    */
   updateTokens: (tokens: AuthTokens) => void
   /**
-   * logout
+   * Clears user data and tokens, logging the user out
    */
   logout: () => void
   /**
-   * reset
+   * Resets the auth store to its initial state
    */
   reset: () => void
   /**
-   * initialize
+   * Marks the store as initialized (called after loading persisted state)
    */
   initialize: () => void
 }
@@ -93,11 +93,11 @@ export type AuthState = {
  */
 export type SessionResponse = {
   /**
-   * user
+   * The authenticated user's profile information
    */
   user: User
   /**
-   * expiresAt
+   * ISO 8601 timestamp when the session expires
    */
   expiresAt: string
 }
@@ -108,11 +108,11 @@ export type SessionResponse = {
  */
 export type LoginCredentials = {
   /**
-   * email
+   * User's email address for authentication
    */
   email: string
   /**
-   * password
+   * User's password
    */
   password: string
 }
@@ -123,15 +123,15 @@ export type LoginCredentials = {
  */
 export type RegisterData = {
   /**
-   * email
+   * Email address for the new account
    */
   email: string
   /**
-   * password
+   * Password for the new account
    */
   password: string
   /**
-   * name
+   * Display name for the new user
    */
   name: string
 }
@@ -142,11 +142,11 @@ export type RegisterData = {
  */
 export type LoginResponse = {
   /**
-   * user
+   * The authenticated user's profile information
    */
   user: User
   /**
-   * tokens
+   * JWT authentication tokens for the session
    */
   tokens: AuthTokens
 }
@@ -157,15 +157,15 @@ export type LoginResponse = {
  */
 export type RefreshTokenResponse = {
   /**
-   * accessToken
+   * New JWT access token
    */
   accessToken: string
   /**
-   * refreshToken
+   * Optional new refresh token (may not be provided if refresh token rotation is disabled)
    */
   refreshToken?: string
   /**
-   * accessTokenExpiresAt
+   * ISO 8601 timestamp when the new access token expires
    */
   accessTokenExpiresAt?: string
 }

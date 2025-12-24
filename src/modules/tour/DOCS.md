@@ -20,7 +20,7 @@ The Tour module handles the complete audio tour experience, from initialization 
 
 Landing screen for starting a new tour. Displays app title and call-to-action to begin a new tour session.
 
-**Route**: `TourRouteName.home`
+**Route**: `TourTabName.home`
 
 ### TourFeedScreen
 

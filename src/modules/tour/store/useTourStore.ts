@@ -20,19 +20,19 @@ type TourState = {
    */
   feedLoading: boolean
   /**
-   * addFeedItem - Add a new feed item
+   * Adds a new feed item with the provided photos and metadata. Returns the generated feed item ID
    */
   addFeedItem: (photos: string[], metadata?: FeedItemMetadata) => string
   /**
-   * updateFeedItem - Update an existing feed item
+   * Updates an existing feed item with partial updates (e.g., status, narrative, audio URL)
    */
   updateFeedItem: (id: string, updates: Partial<FeedItem>) => void
   /**
-   * setFeedLoading - Set the feed loading state
+   * Sets the feed loading state to prevent concurrent submissions while processing
    */
   setFeedLoading: (loading: boolean) => void
   /**
-   * getFeedItem - Get a feed item by ID
+   * Retrieves a feed item by its ID, or undefined if not found
    */
   getFeedItem: (id: string) => FeedItem | undefined
   /**

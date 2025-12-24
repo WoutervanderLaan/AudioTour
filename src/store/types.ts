@@ -5,15 +5,15 @@
  */
 export type CreateStoreOptions = {
   /**
-   * name
+   * Unique identifier for the store (used in devtools and persistence key)
    */
   name: string
   /**
-   * persist
+   * When true, persists store state to AsyncStorage across app restarts
    */
   persist?: boolean
   /**
-   * devtools
+   * When true, enables Redux DevTools integration in development mode
    */
   devtools?: boolean
 }
