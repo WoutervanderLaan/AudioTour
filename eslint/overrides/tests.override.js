@@ -4,6 +4,8 @@ import jestPlugin from 'eslint-plugin-jest'
 import react from 'eslint-plugin-react'
 import globals from 'globals'
 
+import {PROJECT_ROOT} from '../paths.config.js'
+
 /**
  * ESLint configuration override for test files
  * @returns {import('eslint').Linter.Config}
@@ -30,7 +32,7 @@ export const testsOverride = () => ({
       sourceType: 'module',
       ecmaFeatures: {jsx: true},
       project: './tsconfig.json',
-      tsconfigRootDir: import.meta.dirname + '/../..',
+      tsconfigRootDir: PROJECT_ROOT,
     },
     globals: {
       ...globals.browser,
