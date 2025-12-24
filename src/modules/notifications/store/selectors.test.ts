@@ -130,10 +130,6 @@ describe('notification selectors', () => {
 
       expect(result.current).toEqual({
         pushEnabled: false,
-        tourNotifications: true,
-        narrativeNotifications: true,
-        recommendationNotifications: true,
-        socialNotifications: true,
       })
     })
 
@@ -153,13 +149,10 @@ describe('notification selectors', () => {
       act(() => {
         useNotificationStore.getState().setPreferences({
           pushEnabled: true,
-          tourNotifications: false,
         })
       })
 
       expect(result.current.pushEnabled).toBe(true)
-      expect(result.current.tourNotifications).toBe(false)
-      expect(result.current.narrativeNotifications).toBe(true) // unchanged
     })
   })
 
@@ -251,7 +244,6 @@ describe('notification selectors', () => {
       const {result} = renderHook(() => useNotificationActions())
       const prefs: Partial<NotificationPreferences> = {
         pushEnabled: true,
-        tourNotifications: false,
       }
 
       act(() => {
@@ -260,7 +252,6 @@ describe('notification selectors', () => {
 
       const state = useNotificationStore.getState()
       expect(state.preferences.pushEnabled).toBe(true)
-      expect(state.preferences.tourNotifications).toBe(false)
     })
 
     it('should set last notification via action', () => {

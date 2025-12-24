@@ -10,6 +10,7 @@ import notifee, {
 } from '@notifee/react-native'
 
 import {logger} from '@/core/lib/logger/logger'
+import {wait} from '@/shared/utils/wait'
 
 /**
  * NotificationChannelId
@@ -72,6 +73,12 @@ class NotificationService {
       logger.error('[NotificationService] Initialization failed:', error)
       throw error
     }
+  }
+
+  async reset(): Promise<void> {
+    //TODO: improve reset logic
+    await wait(100)
+    this.isInitialized = false
   }
 
   /**
