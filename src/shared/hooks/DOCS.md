@@ -13,6 +13,7 @@ Hook for accessing the banner notification system.
 **Returns**: Banner context with methods to show and hide banner notifications.
 
 **Usage**:
+
 ```typescript
 const {showBanner, hideBanner} = useBanner()
 showBanner({message: 'Success!', type: 'success'})
@@ -29,6 +30,7 @@ Hook for accessing the toast notification system.
 **Returns**: Toast context with methods to show and hide toast notifications.
 
 **Usage**:
+
 ```typescript
 const {showToast} = useToast()
 showToast({message: 'Item saved', type: 'success'})
@@ -45,6 +47,7 @@ Type-safe wrapper around React Navigation's useNavigation hook.
 **Returns**: Navigation prop with type-safe methods for navigating between screens.
 
 **Usage**:
+
 ```typescript
 const {navigate, goBack} = useNavigation()
 navigate('TourFeed', {sessionId: '123'})
@@ -59,13 +62,16 @@ Hook for accessing keyboard state and dimensions.
 **Purpose**: Provides keyboard visibility, height, and animated height values for responsive layouts.
 
 **Returns**:
+
 - `isKeyboardVisible`: Boolean indicating if keyboard is visible
 - `keyboardHeight`: Static keyboard height in pixels
 - `animatedKeyboardHeight`: Animated value for smooth transitions
 
 **Usage**:
+
 ```typescript
-const {isKeyboardVisible, keyboardHeight, animatedKeyboardHeight} = useKeyboard()
+const {isKeyboardVisible, keyboardHeight, animatedKeyboardHeight} =
+  useKeyboard()
 ```
 
 **Location**: `src/shared/hooks/useKeyboard.ts`
@@ -79,6 +85,7 @@ Hook for retrieving the bottom tab bar height.
 **Returns**: The height of the bottom tab bar in pixels, or 0 if unavailable.
 
 **Usage**:
+
 ```typescript
 const tabBarHeight = useBottomTabBarHeight()
 ```
@@ -92,17 +99,23 @@ Hook for calculating navigation-related insets (header and tab bar heights).
 **Purpose**: Provides header height, tab bar height, and total insets for responsive layouts that need to account for navigation elements.
 
 **Parameters**:
+
 - `insets`: Optional array specifying which elements to include (`['header']`, `['tab']`, or `['header', 'tab']`)
 
 **Returns**:
+
 - `headerHeight`: Height of the header including safe area
 - `tabBarHeight`: Height of the bottom tab bar
 - `top`: Total top inset
 - `bottom`: Total bottom inset
 
 **Usage**:
+
 ```typescript
-const {headerHeight, tabBarHeight, top, bottom} = useNavigationInsets(['header', 'tab'])
+const {headerHeight, tabBarHeight, top, bottom} = useNavigationInsets([
+  'header',
+  'tab',
+])
 ```
 
 **Location**: `src/shared/hooks/useNavigationInsets.ts`
@@ -114,11 +127,13 @@ Hook for accessing navigation theme configuration.
 **Purpose**: Provides theme-aware navigation options for headers, tab bars, and screen options.
 
 **Returns**:
+
 - `theme`: Object with header and tabBar color/style configuration
 - `defaultHeaderOptions`: Default header options for stack navigators
 - `defaultTabBarOptions`: Default tab bar options for tab navigators
 
 **Usage**:
+
 ```typescript
 const {theme, defaultHeaderOptions, defaultTabBarOptions} = useNavigationTheme()
 ```
@@ -132,12 +147,14 @@ Hook for accessing user's current geographic location.
 **Purpose**: Requests location permissions and retrieves the user's current coordinates.
 
 **Returns**:
+
 - `location`: Coordinates object with latitude and longitude, or null if unavailable
 - `error`: Error message if location access failed
 - `requestLocation()`: Function to manually request location
 - `haversineDistanceMeters()`: Utility function to calculate distance between two coordinates
 
 **Usage**:
+
 ```typescript
 const {location, error, requestLocation} = useUserLocation()
 ```
@@ -151,10 +168,12 @@ Hook for loading custom fonts used in the application.
 **Purpose**: Loads Google Fonts (Lora and Playfair Display families) asynchronously.
 
 **Returns**:
+
 - `fontsLoaded`: Boolean indicating if all fonts have loaded successfully
 - `fontLoadError`: Error object if font loading failed
 
 **Usage**:
+
 ```typescript
 const {fontsLoaded, fontLoadError} = useFonts()
 ```
@@ -164,6 +183,7 @@ const {fontsLoaded, fontLoadError} = useFonts()
 ## Guidelines
 
 These hooks should be:
+
 - Generic and reusable across multiple features
 - Not tied to specific business logic
 - Well-documented with clear purpose and usage examples

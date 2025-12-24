@@ -89,7 +89,8 @@ Hook for handling camera and photo library permission requests within the permis
 **Usage**:
 
 ```typescript
-const {isRequesting, requestPermission, openSettings, skip} = usePermissionRequest(sourceType)
+const {isRequesting, requestPermission, openSettings, skip} =
+  usePermissionRequest(sourceType)
 ```
 
 **Location**: `src/modules/tour/hooks/usePermissionRequest.ts`
