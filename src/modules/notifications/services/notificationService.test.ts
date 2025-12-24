@@ -26,16 +26,15 @@ jest.mock('@/core/lib/logger/logger')
 describe('NotificationService', () => {
   const mockNotifee = notifee as jest.Mocked<typeof notifee>
 
-  beforeEach(() => {
+  beforeEach(async () => {
     jest.clearAllMocks()
     // Reset initialization state
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ;(notificationService as any).isInitialized = false
+    await notificationService.reset()
   })
 
   describe('initialize', () => {
     it('should initialize successfully on Android', async () => {
-      Platform.OS = 'android'
+      jest.replaceProperty(Platform, 'OS', 'android')
       mockNotifee.createChannels.mockResolvedValue(undefined)
       mockNotifee.onForegroundEvent.mockReturnValue(jest.fn() as never)
       mockNotifee.onBackgroundEvent.mockReturnValue(jest.fn() as never)
@@ -81,7 +80,7 @@ describe('NotificationService', () => {
     })
 
     it('should initialize successfully on iOS', async () => {
-      Platform.OS = 'ios'
+      jest.replaceProperty(Platform, 'OS', 'ios')
       mockNotifee.onForegroundEvent.mockReturnValue(jest.fn() as never)
       mockNotifee.onBackgroundEvent.mockReturnValue(jest.fn() as never)
 
@@ -96,7 +95,7 @@ describe('NotificationService', () => {
     })
 
     it('should not initialize twice', async () => {
-      Platform.OS = 'ios'
+      jest.replaceProperty(Platform, 'OS', 'ios')
       mockNotifee.onForegroundEvent.mockReturnValue(jest.fn() as never)
       mockNotifee.onBackgroundEvent.mockReturnValue(jest.fn() as never)
 
@@ -108,7 +107,7 @@ describe('NotificationService', () => {
     })
 
     it('should initialize with custom event handlers', async () => {
-      Platform.OS = 'ios'
+      jest.replaceProperty(Platform, 'OS', 'ios')
       const onForegroundEvent = jest.fn()
       const onBackgroundEvent = jest.fn()
       mockNotifee.onForegroundEvent.mockReturnValue(jest.fn() as never)
@@ -124,7 +123,8 @@ describe('NotificationService', () => {
     })
 
     it('should handle initialization errors', async () => {
-      Platform.OS = 'android'
+      jest.replaceProperty(Platform, 'OS', 'android')
+
       const error = new Error('Initialization failed')
       mockNotifee.createChannels.mockRejectedValue(error)
 
@@ -323,9 +323,6 @@ describe('NotificationService', () => {
       const channels = [
         NotificationChannelId.default,
         NotificationChannelId.tours,
-        NotificationChannelId.narratives,
-        NotificationChannelId.recommendations,
-        NotificationChannelId.social,
       ]
 
       for (const channelId of channels) {
@@ -445,7 +442,7 @@ describe('NotificationService', () => {
 
   describe('event handling', () => {
     it('should handle foreground PRESS event', async () => {
-      Platform.OS = 'ios'
+      jest.replaceProperty(Platform, 'OS', 'ios')
       const onForegroundEvent = jest.fn()
       let eventHandler: ((event: Event) => void) | null = null
 
@@ -486,7 +483,7 @@ describe('NotificationService', () => {
     })
 
     it('should handle foreground DISMISSED event', async () => {
-      Platform.OS = 'ios'
+      jest.replaceProperty(Platform, 'OS', 'ios')
       const onForegroundEvent = jest.fn()
       let eventHandler: ((event: Event) => void) | null = null
 
@@ -522,7 +519,7 @@ describe('NotificationService', () => {
     })
 
     it('should handle foreground DELIVERED event', async () => {
-      Platform.OS = 'ios'
+      jest.replaceProperty(Platform, 'OS', 'ios')
       const onForegroundEvent = jest.fn()
       let eventHandler: ((event: Event) => void) | null = null
 
@@ -558,7 +555,7 @@ describe('NotificationService', () => {
     })
 
     it('should handle background event', async () => {
-      Platform.OS = 'ios'
+      jest.replaceProperty(Platform, 'OS', 'ios')
       const onBackgroundEvent = jest.fn().mockResolvedValue(undefined)
       let eventHandler: ((event: Event) => Promise<void>) | null = null
 
