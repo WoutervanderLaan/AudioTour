@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import type React from 'react'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
@@ -79,6 +80,7 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
             name={currentStep.id}
             options={currentStep.options || []}
             required={currentStep.required}
+            testID="OnboardingFlowScreenStepRadioGroup"
           />
         )
       case OnboardingStepType.TOGGLE:
@@ -88,6 +90,7 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
             name={currentStep.id}
             label={currentStep.label ?? 'Enable this option'}
             hint={currentStep.hint}
+            testID="OnboardingFlowScreenStepSwitch"
           />
         )
       case OnboardingStepType.TEXT:
@@ -97,6 +100,7 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
             name={currentStep.id}
             placeholder={currentStep.placeholder}
             required={currentStep.required}
+            testID="OnboardingFlowScreenStepTextInput"
           />
         )
       default:
@@ -105,23 +109,34 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
   }
 
   return (
-    <Screen.Scrollable keyboardAvoiding>
+    <Screen.Scrollable
+      keyboardAvoiding
+      testID="OnboardingFlowScreen">
       <Column
         flex={1}
         padding="md"
         paddingBottom="xl"
-        gap="lg">
+        gap="lg"
+        testID="OnboardingFlowScreenContainerColumn">
         <ProgressIndicator
           currentStep={currentStepIndex + 1}
           totalSteps={ONBOARDING_STEPS.length}
+          testID="OnboardingFlowScreenProgressIndicator"
         />
 
         <Column
           flex={1}
-          gap="md">
-          <Column gap="sm">
-            <Text.Title>{currentStep.title}</Text.Title>
-            <Text.Paragraph color="secondary">
+          gap="md"
+          testID="OnboardingFlowScreenContentColumn">
+          <Column
+            gap="sm"
+            testID="OnboardingFlowScreenHeaderColumn">
+            <Text.Title testID="OnboardingFlowScreenTitleText">
+              {currentStep.title}
+            </Text.Title>
+            <Text.Paragraph
+              color="secondary"
+              testID="OnboardingFlowScreenDescriptionText">
               {currentStep.description}
             </Text.Paragraph>
           </Column>
@@ -129,22 +144,30 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
           {renderStepInput()}
         </Column>
 
-        <Column gap="sm">
+        <Column
+          gap="sm"
+          testID="OnboardingFlowScreenActionsColumn">
           <Button
             label={isLastStep ? 'Complete' : 'Next'}
             onPress={handleSubmit(handleNext)}
             disabled={formState.isSubmitting}
+            testID="OnboardingFlowScreenNextButton"
           />
           <Button
             label="Back"
             variant="secondary"
             onPress={handleBack}
+            testID="OnboardingFlowScreenBackButton"
           />
-          <Spacer size="sm" />
+          <Spacer
+            size="sm"
+            testID="OnboardingFlowScreenSpacerSpacer"
+          />
           <Button
             label="Skip"
             onPress={handleSkip}
             disabled={formState.isSubmitting || isLastStep}
+            testID="OnboardingFlowScreenSkipButton"
           />
         </Column>
       </Column>

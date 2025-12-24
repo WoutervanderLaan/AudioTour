@@ -7,15 +7,29 @@ import {useBanner} from '@/shared/hooks/useBanner'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
+ * OnboardingBannerProps
+ * Props for the OnboardingBanner component
+ */
+type OnboardingBannerProps = {
+  /**
+   * Test ID for the banner
+   */
+  testID?: string
+}
+
+/**
  * OnboardingBanner
  * Manages the display of a sticky banner prompting users to complete onboarding.
  * Uses the useBanner hook to show/hide the banner based on onboarding state.
  * Only shows if onboarding is incomplete and not dismissed.
  * Navigates to the onboarding flow when the CTA is pressed.
  *
+ * @param {OnboardingBannerProps} props - Component props
  * @returns {React.JSX.Element | null} Returns null (banner is managed via context)
  */
-export const OnboardingBanner = (): React.JSX.Element | null => {
+export const OnboardingBanner = ({
+  testID = 'OnboardingBannerStickyBanner',
+}: OnboardingBannerProps): React.JSX.Element | null => {
   const navigation = useNavigation()
   const {completed, dismissed, dismissBanner} = useOnboardingStore()
   const {showBanner, hideBanner} = useBanner()
@@ -35,13 +49,21 @@ export const OnboardingBanner = (): React.JSX.Element | null => {
           hideBanner()
         },
         variant: 'info',
-        testID: 'onboarding-banner',
+        testID: testID as `${string}StickyBanner`,
       })
     } else {
       // Hide banner if conditions no longer met
       hideBanner()
     }
-  }, [completed, dismissed, showBanner, hideBanner, navigation, dismissBanner])
+  }, [
+    completed,
+    dismissed,
+    showBanner,
+    hideBanner,
+    navigation,
+    dismissBanner,
+    testID,
+  ])
 
   return null
 }

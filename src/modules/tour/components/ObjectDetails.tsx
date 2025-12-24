@@ -6,6 +6,7 @@ import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 import {capitalizeFirstLetter} from '@/shared/utils/capitalizeFirstLetter'
 
 /**
@@ -41,7 +42,7 @@ export type ObjectDetailsProps = {
    * Error message if any
    */
   error?: string
-}
+} & TestProps<'ObjectDetails'>
 
 /**
  * ObjectDetails
@@ -58,53 +59,83 @@ export const ObjectDetails = ({
   audioUrl,
   status,
   error,
+  testID,
 }: ObjectDetailsProps): React.JSX.Element => {
   return (
-    <Column gap="lg">
+    <Column
+      gap="lg"
+      testID={`${testID}ContainerColumn`}>
       {description !== undefined && (
-        <Column gap="xs">
-          <Text.Label>Description</Text.Label>
-          <Text.Paragraph>{description}</Text.Paragraph>
+        <Column
+          gap="xs"
+          testID={`${testID}DescriptionColumn`}>
+          <Text.Label testID={`${testID}DescriptionLabelText`}>
+            Description
+          </Text.Label>
+          <Text.Paragraph testID={`${testID}DescriptionText`}>
+            {description}
+          </Text.Paragraph>
         </Column>
       )}
 
       {recognitionConfidence !== undefined && (
-        <Column gap="xs">
-          <Text.Label>Recognition</Text.Label>
-          <Text.Label>
+        <Column
+          gap="xs"
+          testID={`${testID}RecognitionColumn`}>
+          <Text.Label testID={`${testID}RecognitionLabelText`}>
+            Recognition
+          </Text.Label>
+          <Text.Label testID={`${testID}RecognitionConfidenceText`}>
             Confidence: {recognitionConfidence.toFixed(1)}%
           </Text.Label>
           {objectId !== undefined && (
-            <Text.Label>Object ID: {objectId}</Text.Label>
+            <Text.Label testID={`${testID}RecognitionObjectIdText`}>
+              Object ID: {objectId}
+            </Text.Label>
           )}
         </Column>
       )}
 
       {narrativeText !== undefined && (
-        <Column gap="xs">
-          <Text.Label>Narrative</Text.Label>
-          <Text.Paragraph>{narrativeText}</Text.Paragraph>
+        <Column
+          gap="xs"
+          testID={`${testID}NarrativeColumn`}>
+          <Text.Label testID={`${testID}NarrativeLabelText`}>
+            Narrative
+          </Text.Label>
+          <Text.Paragraph testID={`${testID}NarrativeText`}>
+            {narrativeText}
+          </Text.Paragraph>
         </Column>
       )}
 
       {audioUrl !== undefined && (
-        <Column gap="xs">
-          <Text.Label>Audio Tour</Text.Label>
-          <AudioPlayer src={audioUrl} />
+        <Column
+          gap="xs"
+          testID={`${testID}AudioColumn`}>
+          <Text.Label testID={`${testID}AudioLabelText`}>Audio Tour</Text.Label>
+          <AudioPlayer
+            src={audioUrl}
+            testID={`${testID}AudioPlayer`}
+          />
         </Column>
       )}
 
       {status !== 'ready' && (
-        <Box>
-          <Text.Label>
+        <Box testID={`${testID}StatusBox`}>
+          <Text.Label testID={`${testID}StatusText`}>
             Status: {capitalizeFirstLetter(status.replaceAll('_', ' '))}
           </Text.Label>
         </Box>
       )}
 
       {error !== undefined && (
-        <Box>
-          <Text.Label color="warning">Error: {error}</Text.Label>
+        <Box testID={`${testID}ErrorBox`}>
+          <Text.Label
+            color="warning"
+            testID={`${testID}ErrorText`}>
+            Error: {error}
+          </Text.Label>
         </Box>
       )}
     </Column>

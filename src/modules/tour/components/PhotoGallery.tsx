@@ -7,6 +7,7 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
+import type {TestProps} from '@/shared/types/TestProps'
 
 const INDICATOR_SIZE = 8
 /**
@@ -26,7 +27,7 @@ export type PhotoGalleryProps = {
    * Callback when a photo is selected
    */
   onPhotoSelect: (index: number) => void
-}
+} & TestProps<'PhotoGallery'>
 
 /**
  * PhotoGallery
@@ -39,6 +40,7 @@ export const PhotoGallery = ({
   photos,
   activePhotoIndex,
   onPhotoSelect,
+  testID,
 }: PhotoGalleryProps): React.JSX.Element | null => {
   const {width} = useWindowDimensions()
 
@@ -49,7 +51,7 @@ export const PhotoGallery = ({
   const hasMultiplePhotos = photos.length > 1
 
   return (
-    <Column>
+    <Column testID={`${testID}ContainerColumn`}>
       <Image
         source={{uri: photos[activePhotoIndex]}}
         style={[styles.mainPhoto, {width, height: width}]}
@@ -64,7 +66,8 @@ export const PhotoGallery = ({
           {photos.map((photo, index) => (
             <PressableBase
               key={photo}
-              onTouchEnd={() => onPhotoSelect(index)}>
+              onTouchEnd={() => onPhotoSelect(index)}
+              testID={`${testID}Thumbnail${index + 1}Pressable`}>
               <Thumbnail
                 source={{uri: photo}}
                 style={[
@@ -72,6 +75,7 @@ export const PhotoGallery = ({
                   index === activePhotoIndex && styles.activeThumbnail,
                 ]}
                 resizeMode="cover"
+                testID={`${testID}Thumbnail${index + 1}Thumbnail`}
               />
             </PressableBase>
           ))}
@@ -82,7 +86,8 @@ export const PhotoGallery = ({
         <Row
           gap="xs"
           paddingTop="md"
-          center>
+          center
+          testID={`${testID}IndicatorsRow`}>
           {photos.map((photo, index) => (
             <Box
               key={photo}
@@ -90,6 +95,7 @@ export const PhotoGallery = ({
                 styles.indicator,
                 index === activePhotoIndex && styles.activeIndicator,
               ]}
+              testID={`${testID}Indicator${index + 1}Box`}
             />
           ))}
         </Row>

@@ -5,13 +5,18 @@ import type {ParagraphProps} from '../typography/Paragraph'
 import {PressableBase, type PressableBaseProps} from './PressableBase'
 
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * LinkButtonProps
  * Props for the LinkButton component
  */
-export type LinkButtonProps = Omit<PressableBaseProps, 'style' | 'children'> &
-  Omit<ParagraphProps, 'style' | 'children'> & {
+export type LinkButtonProps = Omit<
+  PressableBaseProps,
+  'style' | 'children' | 'testID'
+> &
+  Omit<ParagraphProps, 'style' | 'children' | 'testID'> &
+  TestProps<'LinkButton'> & {
     /**
      * label - Text content of the link button
      */
@@ -35,17 +40,20 @@ export const LinkButton = ({
   disabled,
   textVariant = 'Paragraph',
   variant = 'body',
+  testID,
   ...rest
 }: LinkButtonProps): React.JSX.Element => {
   const TextComponent = Text[textVariant]
 
   return (
     <PressableBase
+      testID={`${testID}Pressable` as `${string}Pressable`}
       disabled={disabled}
       style={({pressed}) => [pressed && styles.pressed]}
       accessibilityRole="button"
       {...rest}>
       <TextComponent
+        testID={`${testID}Text` as `${string}Text`}
         color="link"
         variant={variant}
         style={!!disabled && styles.disabledText}>

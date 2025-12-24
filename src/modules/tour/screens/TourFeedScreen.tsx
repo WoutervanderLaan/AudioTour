@@ -47,6 +47,7 @@ export const TourFeedScreen = (): React.JSX.Element => {
         onPress={() =>
           navigate(TourRouteName.objectDetail, {feedItemId: item.id})
         }
+        testID={`TourFeedScreen${item.id}FeedItem`}
       />
     ),
     [navigate],
@@ -67,23 +68,39 @@ export const TourFeedScreen = (): React.JSX.Element => {
    *
    * @returns Spacer component
    */
-  const ItemSeparatorComponent = useCallback(() => <Spacer size="md" />, [])
+  const ItemSeparatorComponent = useCallback(
+    () => (
+      <Spacer
+        size="md"
+        testID="TourFeedScreenItemSpacer"
+      />
+    ),
+    [],
+  )
 
   return (
-    <Screen.Static includeNavigationPadding={['tab']}>
-      <Box flex={1}>
+    <Screen.Static
+      includeNavigationPadding={['tab']}
+      testID="TourFeedScreen">
+      <Box
+        flex={1}
+        testID="TourFeedScreenContainerBox">
         <FlatList
           ListEmptyComponent={
             <Box
               center
-              paddingTop="xxl">
+              paddingTop="xxl"
+              testID="TourFeedScreenEmptyStateBox">
               <Column
                 justifyContent="flex-end"
-                center>
+                center
+                testID="TourFeedScreenEmptyStateContentColumn">
                 {isLoadingTour ? (
-                  <Text.Paragraph>Initializing tour...</Text.Paragraph>
+                  <Text.Paragraph testID="TourFeedScreenLoadingText">
+                    Initializing tour...
+                  </Text.Paragraph>
                 ) : (
-                  <Text.Paragraph>
+                  <Text.Paragraph testID="TourFeedScreenEmptyText">
                     Add a first Artwork to start the tour
                   </Text.Paragraph>
                 )}
@@ -107,8 +124,12 @@ export const TourFeedScreen = (): React.JSX.Element => {
 
         <Column
           padding="md"
-          paddingBottom="xl">
-          <AddArtworkButton disabled={feedLoading} />
+          paddingBottom="xl"
+          testID="TourFeedScreenAddArtworkContainerColumn">
+          <AddArtworkButton
+            disabled={feedLoading}
+            testID="TourFeedScreenAddArtworkButton"
+          />
         </Column>
       </Box>
     </Screen.Static>

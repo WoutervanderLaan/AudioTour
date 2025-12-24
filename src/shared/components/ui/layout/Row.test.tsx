@@ -11,7 +11,7 @@ describe('Row', () => {
   describe('Rendering', () => {
     it('should render children correctly', () => {
       render(
-        <Row>
+        <Row testID="TestRow">
           <Text>Row content</Text>
         </Row>,
       )
@@ -20,7 +20,7 @@ describe('Row', () => {
 
     it('should render multiple children horizontally', () => {
       render(
-        <Row>
+        <Row testID="TestRow">
           <Text>First</Text>
           <Text>Second</Text>
           <Text>Third</Text>
@@ -32,15 +32,15 @@ describe('Row', () => {
     })
 
     it('should render with testID', () => {
-      render(<Row testID="test-row" />)
-      expect(screen.getByTestId('test-row')).toBeTruthy()
+      render(<Row testID="TestRow" />)
+      expect(screen.getByTestId('TestRowBox')).toBeTruthy()
     })
   })
 
   describe('Layout Direction', () => {
     it('should apply row flex direction', () => {
-      render(<Row testID="row" />)
-      const view = screen.getByTestId('row')
+      render(<Row testID="TestRow" />)
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'row'}),
@@ -50,11 +50,11 @@ describe('Row', () => {
 
     it('should always use row direction even without explicit row prop', () => {
       render(
-        <Row testID="row">
+        <Row testID="TestRow">
           <Text>Content</Text>
         </Row>,
       )
-      const view = screen.getByTestId('row')
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'row'}),
@@ -67,11 +67,11 @@ describe('Row', () => {
     it('should accept flex prop', () => {
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           flex={1}
         />,
       )
-      const view = screen.getByTestId('row')
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 1})]),
       )
@@ -80,11 +80,11 @@ describe('Row', () => {
     it('should accept center prop', () => {
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           center
         />,
       )
-      const view = screen.getByTestId('row')
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -98,31 +98,31 @@ describe('Row', () => {
     it('should accept gap prop', () => {
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           gap="md"
         />,
       )
-      expect(screen.getByTestId('row')).toBeTruthy()
+      expect(screen.getByTestId('TestRowBox')).toBeTruthy()
     })
 
     it('should accept padding prop', () => {
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           padding="lg"
         />,
       )
-      expect(screen.getByTestId('row')).toBeTruthy()
+      expect(screen.getByTestId('TestRowBox')).toBeTruthy()
     })
 
     it('should accept justifyContent prop', () => {
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           justifyContent="space-between"
         />,
       )
-      const view = screen.getByTestId('row')
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'space-between'}),
@@ -133,11 +133,11 @@ describe('Row', () => {
     it('should accept alignItems prop', () => {
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           alignItems="flex-start"
         />,
       )
-      const view = screen.getByTestId('row')
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'flex-start'}),
@@ -148,11 +148,11 @@ describe('Row', () => {
     it('should accept wrap prop', () => {
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           wrap="wrap"
         />,
       )
-      const view = screen.getByTestId('row')
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexWrap: 'wrap'})]),
       )
@@ -164,11 +164,11 @@ describe('Row', () => {
       const customStyle = {backgroundColor: 'blue'}
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           style={customStyle}
         />,
       )
-      const view = screen.getByTestId('row')
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining(customStyle)]),
       )
@@ -178,12 +178,12 @@ describe('Row', () => {
       const customStyle = {borderWidth: 1}
       render(
         <Row
-          testID="row"
+          testID="TestRow"
           gap="sm"
           style={customStyle}
         />,
       )
-      const view = screen.getByTestId('row')
+      const view = screen.getByTestId('TestRowBox')
       expect(view.props.style).toEqual(expect.arrayContaining([customStyle]))
     })
   })
@@ -192,6 +192,7 @@ describe('Row', () => {
     it('should create a horizontal navigation row', () => {
       render(
         <Row
+          testID="TestRow"
           gap="md"
           justifyContent="space-around">
           <Text>Home</Text>
@@ -207,6 +208,7 @@ describe('Row', () => {
     it('should create a form row with label and input', () => {
       render(
         <Row
+          testID="TestRow"
           gap="sm"
           alignItems="center">
           <Text>Label:</Text>
@@ -220,6 +222,7 @@ describe('Row', () => {
     it('should create a card row with icon and text', () => {
       render(
         <Row
+          testID="TestRow"
           gap="md"
           paddingH="lg"
           alignItems="center">
@@ -234,6 +237,7 @@ describe('Row', () => {
     it('should create a wrapping row for tags', () => {
       render(
         <Row
+          testID="TestRow"
           wrap="wrap"
           gap="xs">
           <Text>Tag1</Text>
@@ -249,18 +253,18 @@ describe('Row', () => {
 
   describe('Edge Cases', () => {
     it('should render with no props', () => {
-      const {root} = render(<Row />)
+      const {root} = render(<Row testID="TestRow" />)
       expect(root).toBeTruthy()
     })
 
     it('should render with empty children', () => {
-      render(<Row testID="row">{null}</Row>)
-      expect(screen.getByTestId('row')).toBeTruthy()
+      render(<Row testID="TestRow">{null}</Row>)
+      expect(screen.getByTestId('TestRowBox')).toBeTruthy()
     })
 
     it('should render with single child', () => {
       render(
-        <Row>
+        <Row testID="TestRow">
           <Text>Single</Text>
         </Row>,
       )
@@ -270,7 +274,7 @@ describe('Row', () => {
     it('should render with conditional children', () => {
       const showExtra = false
       render(
-        <Row>
+        <Row testID="TestRow">
           <Text>Always</Text>
           {showExtra && <Text>Conditional</Text>}
         </Row>,

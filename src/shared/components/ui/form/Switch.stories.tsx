@@ -22,6 +22,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     label: 'Enable notifications',
+    testID: 'StorySwitch',
   },
 }
 
@@ -29,6 +30,7 @@ export const On: Story = {
   args: {
     label: 'Dark mode',
     value: true,
+    testID: 'StorySwitch',
   },
 }
 
@@ -36,18 +38,21 @@ export const Required: Story = {
   args: {
     label: 'Accept terms and conditions',
     required: true,
+    testID: 'StorySwitch',
   },
 }
 
 export const WithHint: Story = {
   args: {
     label: 'Auto-save',
+    testID: 'StorySwitch',
   },
 }
 
 export const WithError: Story = {
   args: {
     label: 'Enable location services',
+    testID: 'StorySwitch',
   },
 }
 
@@ -55,6 +60,7 @@ export const Disabled: Story = {
   args: {
     label: 'This option is not available',
     disabled: true,
+    testID: 'StorySwitch',
   },
 }
 
@@ -63,12 +69,14 @@ export const DisabledOn: Story = {
     label: 'This option is already enabled',
     value: true,
     disabled: true,
+    testID: 'StorySwitch',
   },
 }
 
 export const NoLabel: Story = {
   args: {
     accessibilityLabel: 'Toggle feature',
+    testID: 'StorySwitch',
   },
 }
 
@@ -80,21 +88,30 @@ export const NoLabel: Story = {
  */
 const AllStatesExample = (): React.JSX.Element => {
   return (
-    <Column gap="lg">
-      <Switch label="Default (off)" />
+    <Column
+      testID="StoryColumn"
+      gap="lg">
       <Switch
+        testID="StorySwitch"
+        label="Default (off)"
+      />
+      <Switch
+        testID="StorySwitch"
         label="On"
         value={true}
       />
       <Switch
+        testID="StorySwitch"
         label="Required"
         required={true}
       />
       <Switch
+        testID="StorySwitch"
         label="Disabled (off)"
         disabled={true}
       />
       <Switch
+        testID="StorySwitch"
         label="Disabled (on)"
         value={true}
         disabled={true}
@@ -103,6 +120,6 @@ const AllStatesExample = (): React.JSX.Element => {
   )
 }
 
-export const AllStates: Story = {
+export const AllStates = {
   render: (): React.JSX.Element => <AllStatesExample />,
 }

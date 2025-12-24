@@ -111,10 +111,10 @@ export const SwitchControlled = <T extends FieldValues>({
         fieldState: {error},
       }): React.JSX.Element => (
         <FormField
+          testID={`${testID}FormField`}
           error={error?.message}
           hint={hint}
-          disabled={disabled}
-          testID={testID}>
+          disabled={disabled}>
           <Switch
             value={value as boolean}
             onChange={onChange}

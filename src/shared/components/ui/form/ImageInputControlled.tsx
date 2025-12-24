@@ -122,26 +122,29 @@ export const ImageInputControlled = <T extends FieldValues>({
 
         return (
           <FormField
+            testID={`${testID}FormField`}
             label={label}
             error={error?.message}
             hint={hint}
             disabled={disabled}
             required={required}
-            testID={testID}
             renderLabel={
               // eslint-disable-next-line react/jsx-no-leaked-render
               label
                 ? ({label, labelId, disabled, required}): React.JSX.Element => (
                     <Row
+                      testID={`${testID}LabelRow`}
                       gap="xs"
                       center>
                       <Text.Label
+                        testID={`${testID}LabelText`}
                         nativeID={labelId}
                         color={disabled ? 'secondary' : 'default'}
                         accessibilityRole="text">
                         {label}
                         {!!required && (
                           <Text.Label
+                            testID={`${testID}RequiredText`}
                             color="warning"
                             accessibilityLabel="required">
                             {' '}
@@ -149,7 +152,9 @@ export const ImageInputControlled = <T extends FieldValues>({
                           </Text.Label>
                         )}
                       </Text.Label>
-                      <Text.Label color="secondary">
+                      <Text.Label
+                        testID={`${testID}CountText`}
+                        color="secondary">
                         {images.length} / {maxImages}
                       </Text.Label>
                     </Row>

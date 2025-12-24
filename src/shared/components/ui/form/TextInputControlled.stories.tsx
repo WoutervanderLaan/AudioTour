@@ -57,8 +57,11 @@ const SimpleFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <TextInputControlled
+        testID="StoryTextInput"
         control={control}
         name="email"
         label="Email Address"
@@ -69,6 +72,7 @@ const SimpleFormExample = (): React.JSX.Element => {
         required={true}
       />
       <Button
+        testID="StoryButton"
         label="Submit"
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
@@ -146,10 +150,13 @@ const ComplexFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
-      <Text.Label>Sign Up Form</Text.Label>
+    <Column
+      testID="StoryColumn"
+      gap="md">
+      <Text.Label testID="StoryText">Sign Up Form</Text.Label>
 
       <TextInputControlled
+        testID="StoryTextInput"
         control={control}
         name="username"
         label="Username"
@@ -161,6 +168,7 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <TextInputControlled
+        testID="StoryTextInput"
         control={control}
         name="email"
         label="Email"
@@ -172,6 +180,7 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <TextInputControlled
+        testID="StoryTextInput"
         control={control}
         name="password"
         label="Password"
@@ -183,6 +192,7 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <TextInputControlled
+        testID="StoryTextInput"
         control={control}
         name="confirmPassword"
         label="Confirm Password"
@@ -193,6 +203,7 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <TextInputControlled
+        testID="StoryTextInput"
         control={control}
         name="bio"
         label="Bio"
@@ -204,15 +215,20 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <Button
+        testID="StoryButton"
         label={formState.isSubmitting ? 'Submitting...' : 'Create Account'}
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid || formState.isSubmitting}
       />
 
-      <Text.Label color="secondary">
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Form Valid: {formState.isValid ? 'Yes' : 'No'}
       </Text.Label>
-      <Text.Label color="secondary">
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Errors:{' '}
         {Object.keys(formState.errors).length > 0
           ? Object.keys(formState.errors).join(', ')
@@ -267,8 +283,11 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <TextInputControlled
+        testID="StoryTextInput"
         control={control}
         name="name"
         label="Full Name"
@@ -276,6 +295,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
       />
 
       <TextInputControlled
+        testID="StoryTextInput"
         control={control}
         name="email"
         label="Email"
@@ -284,6 +304,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
       />
 
       <Button
+        testID="StoryButton"
         label="Update Profile"
         onPress={handleSubmit(onSubmit)}
       />

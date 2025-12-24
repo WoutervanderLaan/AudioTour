@@ -5,6 +5,7 @@ import type {FeedItem} from '../types'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * ObjectMetadataProps
@@ -15,7 +16,7 @@ export type ObjectMetadataProps = {
    * Object metadata
    */
   metadata?: FeedItem['metadata']
-}
+} & TestProps<'ObjectMetadata'>
 
 /**
  * ObjectMetadata
@@ -26,6 +27,7 @@ export type ObjectMetadataProps = {
  */
 export const ObjectMetadata = ({
   metadata,
+  testID,
 }: ObjectMetadataProps): React.JSX.Element | null => {
   if (!metadata) {
     return null
@@ -35,24 +37,33 @@ export const ObjectMetadata = ({
     metadata.year !== undefined || metadata.material !== undefined
 
   return (
-    <Column gap="lg">
+    <Column
+      gap="lg"
+      testID={`${testID}ContainerColumn`}>
       {metadata.title !== undefined && (
-        <Text.Title>{metadata.title}</Text.Title>
+        <Text.Title testID={`${testID}TitleText`}>{metadata.title}</Text.Title>
       )}
 
       {metadata.artist !== undefined && (
-        <Text.Paragraph>{metadata.artist}</Text.Paragraph>
+        <Text.Paragraph testID={`${testID}ArtistText`}>
+          {metadata.artist}
+        </Text.Paragraph>
       )}
 
       {!!hasYearOrMaterial && (
         <Row
           gap="md"
-          wrap="wrap">
+          wrap="wrap"
+          testID={`${testID}DetailsRow`}>
           {metadata.year !== undefined && (
-            <Text.Label>{metadata.year}</Text.Label>
+            <Text.Label testID={`${testID}YearText`}>
+              {metadata.year}
+            </Text.Label>
           )}
           {metadata.material !== undefined && (
-            <Text.Label>{metadata.material}</Text.Label>
+            <Text.Label testID={`${testID}MaterialText`}>
+              {metadata.material}
+            </Text.Label>
           )}
         </Row>
       )}

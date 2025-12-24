@@ -26,6 +26,7 @@ export default meta
 export const Small = {
   render: (): React.JSX.Element => (
     <Thumbnail
+      testID="StorySmallThumbnail"
       size="sm"
       source={{uri: 'https://picsum.photos/200/200'}}
     />
@@ -35,6 +36,7 @@ export const Small = {
 export const Medium = {
   render: (): React.JSX.Element => (
     <Thumbnail
+      testID="StoryMediumThumbnail"
       size="md"
       source={{uri: 'https://picsum.photos/200/200'}}
     />
@@ -44,6 +46,7 @@ export const Medium = {
 export const Large = {
   render: (): React.JSX.Element => (
     <Thumbnail
+      testID="StoryLargeThumbnail"
       size="lg"
       source={{uri: 'https://picsum.photos/200/200'}}
     />
@@ -53,6 +56,7 @@ export const Large = {
 export const WithDelete = {
   render: (): React.JSX.Element => (
     <Thumbnail
+      testID="StoryWithDeleteThumbnail"
       size="md"
       source={{uri: 'https://picsum.photos/200/200'}}
       deletable

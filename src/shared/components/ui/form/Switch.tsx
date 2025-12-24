@@ -7,6 +7,7 @@ import {useUnistyles} from 'react-native-unistyles'
 
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * SwitchProps
@@ -14,27 +15,26 @@ import {Text} from '@/shared/components/ui/typography'
  */
 export type SwitchProps = Omit<
   RNSwitchProps,
-  'value' | 'onValueChange' | 'onChange'
-> & {
-  /** Accessible label for the switch */
-  label?: string
-  /** Whether the switch is disabled */
-  disabled?: boolean
-  /** Whether the switch is required (adds asterisk to label) */
-  required?: boolean
-  /** Whether the switch has an error (for styling) */
-  hasError?: boolean
-  /** Whether the switch is on (controlled) */
-  value?: boolean
-  /** Callback when switch state changes */
-  onChange?: (value: boolean) => void
-  /** Test identifier for automated testing */
-  testID?: string
-  /** Accessible label override */
-  accessibilityLabel?: string
-  /** Accessible hint override */
-  accessibilityHint?: string
-}
+  'value' | 'onValueChange' | 'onChange' | 'testID'
+> &
+  TestProps<'Switch'> & {
+    /** Accessible label for the switch */
+    label?: string
+    /** Whether the switch is disabled */
+    disabled?: boolean
+    /** Whether the switch is required (adds asterisk to label) */
+    required?: boolean
+    /** Whether the switch has an error (for styling) */
+    hasError?: boolean
+    /** Whether the switch is on (controlled) */
+    value?: boolean
+    /** Callback when switch state changes */
+    onChange?: (value: boolean) => void
+    /** Accessible label override */
+    accessibilityLabel?: string
+    /** Accessible hint override */
+    accessibilityHint?: string
+  }
 
 /**
  * SwitchLabelProps
@@ -49,6 +49,10 @@ type SwitchLabelProps = {
   disabled: boolean
   /** Whether the field is required */
   required: boolean
+  /**
+   * testID
+   */
+  testID: SwitchProps['testID']
 }
 
 /**
@@ -63,15 +67,18 @@ const SwitchLabel = ({
   labelId,
   disabled,
   required,
+  testID,
 }: SwitchLabelProps): React.JSX.Element => (
-  <Row>
+  <Row testID={`${testID}LabelRow`}>
     <Text.Label
+      testID={`${testID}LabelText`}
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
       accessibilityRole="text">
       {label}
       {!!required && (
         <Text.Label
+          testID={`${testID}RequiredText`}
           color="warning"
           accessibilityLabel="required">
           {' '}
@@ -148,6 +155,7 @@ export const Switch = ({
 
   return (
     <Row
+      testID={`${testID}ContainerRow`}
       alignItems="center"
       gap="sm">
       <RNSwitch
@@ -175,6 +183,7 @@ export const Switch = ({
       />
       {!!label && (
         <SwitchLabel
+          testID={testID}
           label={label}
           labelId={labelId}
           disabled={disabled}

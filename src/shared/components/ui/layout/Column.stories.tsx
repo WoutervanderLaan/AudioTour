@@ -33,18 +33,21 @@ export const Default: Story = {
         <Box
           padding="sm"
           flex={1}
+          testID="StoryBox"
           style={styles.demoBox}>
           This is a Column (1)
         </Box>
         <Box
           padding="sm"
           flex={1}
+          testID="StoryBox"
           style={styles.demoBox}>
           This is a Column (2)
         </Box>
         <Box
           padding="sm"
           flex={1}
+          testID="StoryBox"
           style={styles.demoBox}>
           This is a Column (3)
         </Box>
@@ -52,6 +55,7 @@ export const Default: Story = {
     ),
     padding: 'sm',
     gap: 'sm',
+    testID: 'StoryColumn',
     style: styles.demoBox,
   },
 }

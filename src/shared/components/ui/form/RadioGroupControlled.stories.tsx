@@ -61,8 +61,11 @@ const FormWrapper = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <RadioGroupControlled
+        testID="StoryRadioGroup"
         control={control}
         name="theme"
         label="Theme Preference"
@@ -71,11 +74,14 @@ const FormWrapper = (): React.JSX.Element => {
         hint="Choose your preferred color scheme"
       />
       <Button
+        testID="StoryButton"
         label="Submit"
         onPress={handleSubmit(onSubmit)}
       />
       {!!formState.errors.theme && (
-        <Text.Paragraph color="warning">
+        <Text.Paragraph
+          testID="StoryText"
+          color="warning">
           Validation triggered: {formState.errors.theme.message}
         </Text.Paragraph>
       )}
@@ -124,8 +130,11 @@ const PreferencesFormWrapper = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <RadioGroupControlled
+        testID="StoryRadioGroup"
         control={control}
         name="notifications"
         label="Notification Settings"
@@ -148,6 +157,7 @@ const PreferencesFormWrapper = (): React.JSX.Element => {
         ]}
       />
       <Button
+        testID="StoryButton"
         label="Save Preferences"
         onPress={handleSubmit(onSubmit)}
       />

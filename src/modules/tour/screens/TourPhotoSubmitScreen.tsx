@@ -81,27 +81,42 @@ export const TourPhotoSubmitScreen = ({
 
   return (
     <FormProvider {...form}>
-      <Screen.Scrollable keyboardAvoiding>
+      <Screen.Scrollable
+        keyboardAvoiding
+        testID="TourPhotoSubmitScreen">
         <Box
           paddingH="md"
-          paddingBottom="xl">
-          <Column gap="lg">
-            <TourPhotoSubmitFormInputs />
+          paddingBottom="xl"
+          testID="TourPhotoSubmitScreenContainerBox">
+          <Column
+            gap="lg"
+            testID="TourPhotoSubmitScreenContentColumn">
+            <TourPhotoSubmitFormInputs testID="TourPhotoSubmitScreenTourPhotoSubmitFormInputs" />
 
-            {!!submitError && <Text.Paragraph>{submitError}</Text.Paragraph>}
+            {!!submitError && (
+              <Text.Paragraph testID="TourPhotoSubmitScreenErrorText">
+                {submitError}
+              </Text.Paragraph>
+            )}
 
-            <Column gap="sm">
+            <Column
+              gap="sm"
+              testID="TourPhotoSubmitScreenActionsColumn">
               <Button
                 label={isLoading ? 'Submitting...' : 'Submit'}
                 onPress={handleSubmit(onSubmit)}
                 disabled={isLoading}
+                testID="TourPhotoSubmitScreenSubmitButton"
               />
               {!!isLoading && (
                 <Row
                   gap="sm"
-                  center>
+                  center
+                  testID="TourPhotoSubmitScreenLoadingRow">
                   <ActivityIndicator size="small" />
-                  <Text.Label>Processing photos...</Text.Label>
+                  <Text.Label testID="TourPhotoSubmitScreenLoadingText">
+                    Processing photos...
+                  </Text.Label>
                 </Row>
               )}
               <Button
@@ -109,6 +124,7 @@ export const TourPhotoSubmitScreen = ({
                 onPress={goBack}
                 variant="secondary"
                 disabled={isLoading}
+                testID="TourPhotoSubmitScreenCancelButton"
               />
             </Column>
           </Column>

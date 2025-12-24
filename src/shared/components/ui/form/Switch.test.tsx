@@ -8,61 +8,66 @@ import {Switch} from './Switch'
 describe('Switch', () => {
   describe('Rendering', () => {
     it('should render correctly', () => {
-      render(<Switch testID="switch" />)
-      expect(screen.getByTestId('switch')).toBeTruthy()
+      render(<Switch testID="TestSwitch" />)
+      expect(screen.getByTestId('TestSwitch')).toBeTruthy()
     })
 
     it('should render with testID', () => {
-      render(<Switch testID="test-switch" />)
-      expect(screen.getByTestId('test-switch')).toBeTruthy()
+      render(<Switch testID="TestSwitch" />)
+      expect(screen.getByTestId('TestSwitch')).toBeTruthy()
     })
 
     it('should render with label', () => {
-      render(<Switch label="Enable notifications" />)
+      render(
+        <Switch
+          testID="TestSwitch"
+          label="Enable notifications"
+        />,
+      )
       expect(screen.getByText('Enable notifications')).toBeTruthy()
     })
 
     it('should render without label', () => {
-      render(<Switch testID="switch" />)
-      expect(screen.getByTestId('switch')).toBeTruthy()
+      render(<Switch testID="TestSwitch" />)
+      expect(screen.getByTestId('TestSwitch')).toBeTruthy()
     })
   })
 
   describe('Value State', () => {
     it('should render off by default', () => {
-      render(<Switch testID="switch" />)
-      const switchComponent = screen.getByTestId('switch')
+      render(<Switch testID="TestSwitch" />)
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(false)
     })
 
     it('should render on when value is true', () => {
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value
         />,
       )
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(true)
     })
 
     it('should toggle value state', () => {
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value={false}
         />,
       )
-      let switchComponent = screen.getByTestId('switch')
+      let switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(false)
 
       rerender(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value
         />,
       )
-      switchComponent = screen.getByTestId('switch')
+      switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(true)
     })
   })
@@ -72,13 +77,13 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value={false}
           onChange={onChange}
         />,
       )
 
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(false)
       fireEvent(switchComponent, 'valueChange', true)
       expect(onChange).toHaveBeenCalledWith(true)
@@ -88,13 +93,13 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value
           onChange={onChange}
         />,
       )
 
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(true)
       fireEvent(switchComponent, 'valueChange', false)
       expect(onChange).toHaveBeenCalledWith(false)
@@ -104,13 +109,13 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           onChange={onChange}
           disabled
         />,
       )
 
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.disabled).toBe(true)
       expect(switchComponent.props.accessibilityState.disabled).toBe(true)
 
@@ -122,12 +127,12 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           onChange={onChange}
         />,
       )
 
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       fireEvent(switchComponent, 'valueChange', true)
       fireEvent(switchComponent, 'valueChange', false)
       fireEvent(switchComponent, 'valueChange', true)
@@ -140,39 +145,39 @@ describe('Switch', () => {
     it('should render when disabled', () => {
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           disabled
         />,
       )
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.disabled).toBe(true)
     })
 
     it('should not be disabled by default', () => {
-      render(<Switch testID="switch" />)
-      const switchComponent = screen.getByTestId('switch')
+      render(<Switch testID="TestSwitch" />)
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.disabled).toBe(false)
     })
 
     it('should maintain disabled state when toggling value', () => {
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value={false}
           disabled
         />,
       )
-      let switchComponent = screen.getByTestId('switch')
+      let switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.disabled).toBe(true)
 
       rerender(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value
           disabled
         />,
       )
-      switchComponent = screen.getByTestId('switch')
+      switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.disabled).toBe(true)
     })
   })
@@ -181,6 +186,7 @@ describe('Switch', () => {
     it('should show asterisk when required', () => {
       render(
         <Switch
+          testID="TestSwitch"
           label="Required field"
           required
         />,
@@ -190,7 +196,12 @@ describe('Switch', () => {
     })
 
     it('should not show asterisk when not required', () => {
-      render(<Switch label="Optional field" />)
+      render(
+        <Switch
+          testID="TestSwitch"
+          label="Optional field"
+        />,
+      )
       expect(screen.getByText('Optional field')).toBeTruthy()
       expect(screen.queryByText('*')).toBeNull()
     })
@@ -198,6 +209,7 @@ describe('Switch', () => {
     it('should have required accessibility label on asterisk', () => {
       render(
         <Switch
+          testID="TestSwitch"
           label="Required"
           required
         />,
@@ -210,47 +222,53 @@ describe('Switch', () => {
     it('should render with error state', () => {
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           hasError
         />,
       )
-      expect(screen.getByTestId('switch')).toBeTruthy()
+      expect(screen.getByTestId('TestSwitch')).toBeTruthy()
     })
 
     it('should toggle error state', () => {
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           hasError={false}
         />,
       )
-      expect(screen.getByTestId('switch')).toBeTruthy()
+      expect(screen.getByTestId('TestSwitch')).toBeTruthy()
 
       rerender(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           hasError
         />,
       )
-      expect(screen.getByTestId('switch')).toBeTruthy()
+      expect(screen.getByTestId('TestSwitch')).toBeTruthy()
     })
   })
 
   describe('Accessibility', () => {
     it('should have switch accessibility role', () => {
-      render(<Switch testID="switch" />)
-      const switchComponent = screen.getByTestId('switch')
+      render(<Switch testID="TestSwitch" />)
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.accessibilityRole).toBe('switch')
     })
 
     it('should use label as accessibilityLabel', () => {
-      render(<Switch label="Enable feature" />)
+      render(
+        <Switch
+          testID="TestSwitch"
+          label="Enable feature"
+        />,
+      )
       expect(screen.getByLabelText('Enable feature')).toBeTruthy()
     })
 
     it('should accept custom accessibilityLabel', () => {
       render(
         <Switch
+          testID="TestSwitch"
           label="Notifications"
           accessibilityLabel="Enable push notifications"
         />,
@@ -263,11 +281,11 @@ describe('Switch', () => {
     it('should accept accessibilityHint', () => {
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           accessibilityHint="Toggle to enable or disable"
         />,
       )
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.accessibilityHint).toBe(
         'Toggle to enable or disable',
       )
@@ -276,22 +294,22 @@ describe('Switch', () => {
     it('should have checked state in accessibility', () => {
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value
         />,
       )
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.accessibilityState.checked).toBe(true)
     })
 
     it('should have disabled state in accessibility', () => {
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           disabled
         />,
       )
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.accessibilityState.disabled).toBe(true)
     })
   })
@@ -301,13 +319,13 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           label="Enable notifications"
           onChange={onChange}
         />,
       )
 
-      fireEvent(screen.getByTestId('switch'), 'valueChange', true)
+      fireEvent(screen.getByTestId('TestSwitch'), 'valueChange', true)
       expect(onChange).toHaveBeenCalledWith(true)
     })
 
@@ -315,14 +333,14 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           label="Dark mode"
           value={false}
           onChange={onChange}
         />,
       )
 
-      fireEvent(screen.getByTestId('switch'), 'valueChange', true)
+      fireEvent(screen.getByTestId('TestSwitch'), 'valueChange', true)
       expect(onChange).toHaveBeenCalledWith(true)
     })
 
@@ -330,40 +348,55 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           label="Make profile private"
           onChange={onChange}
         />,
       )
 
-      fireEvent(screen.getByTestId('switch'), 'valueChange', true)
+      fireEvent(screen.getByTestId('TestSwitch'), 'valueChange', true)
       expect(onChange).toHaveBeenCalled()
     })
   })
 
   describe('Label Variants', () => {
     it('should render with short label', () => {
-      render(<Switch label="On" />)
+      render(
+        <Switch
+          testID="TestSwitch"
+          label="On"
+        />,
+      )
       expect(screen.getByText('On')).toBeTruthy()
     })
 
     it('should render with long label', () => {
       const longLabel =
         'Enable automatic updates and notifications for new features'
-      render(<Switch label={longLabel} />)
+      render(
+        <Switch
+          testID="TestSwitch"
+          label={longLabel}
+        />,
+      )
       expect(screen.getByText(longLabel)).toBeTruthy()
     })
 
     it('should render with label containing special characters', () => {
-      render(<Switch label="Push & Email Notifications" />)
+      render(
+        <Switch
+          testID="TestSwitch"
+          label="Push & Email Notifications"
+        />,
+      )
       expect(screen.getByText('Push & Email Notifications')).toBeTruthy()
     })
   })
 
   describe('Track Colors', () => {
     it('should apply track colors', () => {
-      render(<Switch testID="switch" />)
-      const switchComponent = screen.getByTestId('switch')
+      render(<Switch testID="TestSwitch" />)
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.tintColor).toBeDefined()
       expect(switchComponent.props.thumbTintColor).toBeDefined()
       expect(switchComponent.props.onTintColor).toBeDefined()
@@ -372,11 +405,11 @@ describe('Switch', () => {
     it('should apply error color to track when hasError is true', () => {
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           hasError
         />,
       )
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.tintColor).toBeDefined()
     })
   })
@@ -386,13 +419,13 @@ describe('Switch', () => {
       const onChange = jest.fn()
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value={false}
           onChange={onChange}
         />,
       )
 
-      let switchComponent = screen.getByTestId('switch')
+      let switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(false)
 
       // Simulate user interaction - notifies parent of desired change
@@ -402,13 +435,13 @@ describe('Switch', () => {
       // Parent component controls state and updates the value prop
       rerender(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value
           onChange={onChange}
         />,
       )
 
-      switchComponent = screen.getByTestId('switch')
+      switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(true)
     })
 
@@ -416,13 +449,13 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value={false}
           onChange={onChange}
         />,
       )
 
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(false)
 
       // User toggles switch - onChange fires but component doesn't self-update
@@ -436,27 +469,27 @@ describe('Switch', () => {
     it('should only update when value prop changes', () => {
       const {rerender} = render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value
         />,
       )
 
-      let switchComponent = screen.getByTestId('switch')
+      let switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(true)
 
       // Toggle doesn't change state without parent updating prop
       fireEvent(switchComponent, 'valueChange', false)
-      switchComponent = screen.getByTestId('switch')
+      switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(true)
 
       // State only changes when parent updates prop
       rerender(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           value={false}
         />,
       )
-      switchComponent = screen.getByTestId('switch')
+      switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(false)
     })
   })
@@ -466,12 +499,12 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           onChange={onChange}
         />,
       )
 
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       for (let i = 0; i < 5; i++) {
         fireEvent(switchComponent, 'valueChange', i % 2 === 0)
       }
@@ -486,8 +519,8 @@ describe('Switch', () => {
     })
 
     it('should work without onChange handler', () => {
-      render(<Switch testID="switch" />)
-      const switchComponent = screen.getByTestId('switch')
+      render(<Switch testID="TestSwitch" />)
+      const switchComponent = screen.getByTestId('TestSwitch')
 
       expect(() =>
         fireEvent(switchComponent, 'valueChange', true),
@@ -498,7 +531,7 @@ describe('Switch', () => {
       const onChange = jest.fn()
       render(
         <Switch
-          testID="switch"
+          testID="TestSwitch"
           label="Complex switch"
           value
           required
@@ -509,7 +542,7 @@ describe('Switch', () => {
         />,
       )
 
-      const switchComponent = screen.getByTestId('switch')
+      const switchComponent = screen.getByTestId('TestSwitch')
       expect(switchComponent.props.value).toBe(true)
       expect(switchComponent.props.accessibilityState.checked).toBe(true)
       expect(switchComponent.props.accessibilityLabel).toBe('Complex')

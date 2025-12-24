@@ -48,30 +48,35 @@ const notificationOptions: RadioOption[] = [
 export const Default: Story = {
   args: {
     options: themeOptions,
+    testID: 'StoryRadioGroup',
   },
 }
 
 export const WithDescriptions: Story = {
   args: {
     options: notificationOptions,
+    testID: 'StoryRadioGroup',
   },
 }
 
 export const WithHint: Story = {
   args: {
     options: themeOptions,
+    testID: 'StoryRadioGroup',
   },
 }
 
 export const WithError: Story = {
   args: {
     options: themeOptions,
+    testID: 'StoryRadioGroup',
   },
 }
 
 export const Required: Story = {
   args: {
     options: themeOptions,
+    testID: 'StoryRadioGroup',
   },
 }
 
@@ -80,6 +85,7 @@ export const Disabled: Story = {
     options: themeOptions,
     disabled: true,
     value: 'dark',
+    testID: 'StoryRadioGroup',
   },
 }
 
@@ -90,6 +96,7 @@ export const WithDisabledOption: Story = {
       {value: 'dark', label: 'Dark', disabled: true},
       {value: 'auto', label: 'Auto'},
     ],
+    testID: 'StoryRadioGroup',
   },
 }
 
@@ -103,13 +110,16 @@ const InteractiveWrapper = (): React.JSX.Element => {
   const [value, setValue] = useState<string>()
 
   return (
-    <Column gap="md">
+    <Column
+      gap="md"
+      testID="StoryColumn">
       <RadioGroup
+        testID="StoryRadioGroup"
         options={themeOptions}
         value={value}
         onChange={setValue}
       />
-      {!!value && <Text.Label>Selected: {value}</Text.Label>}
+      {!!value && <Text.Label testID="StoryText">Selected: {value}</Text.Label>}
     </Column>
   )
 }

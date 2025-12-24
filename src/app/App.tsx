@@ -29,7 +29,7 @@ registerModules()
  */
 export const App = (): React.JSX.Element => (
   <RootProviders>
-    <ErrorBoundary>
+    <ErrorBoundary testID="AppErrorBoundary">
       <ThemedStatusBar />
       <Init>
         <RootNavigator

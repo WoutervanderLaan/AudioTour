@@ -9,17 +9,20 @@ import {
 } from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
+import type {TestProps} from '@/shared/types/TestProps'
+
 /**
  * PressableBaseProps
  * Base props for the Pressable component with accessibility features
  */
-export type PressableBaseProps = Omit<RNPressableProps, 'style'> & {
-  /**
-   * children - Content to display inside the pressable
-   */
-  // children?: React.ReactNode
-  style?: (state: PressableStateCallbackType) => StyleProp<ViewStyle>
-}
+export type PressableBaseProps = Omit<RNPressableProps, 'style' | 'testID'> &
+  TestProps<'Pressable'> & {
+    /**
+     * children - Content to display inside the pressable
+     */
+    // children?: React.ReactNode
+    style?: (state: PressableStateCallbackType) => StyleProp<ViewStyle>
+  }
 
 /**
  * PressableBase
@@ -34,10 +37,12 @@ export const PressableBase = ({
   accessible = true,
   accessibilityRole = 'button',
   style,
+  testID,
   ...rest
 }: PressableBaseProps): React.JSX.Element => {
   return (
     <RNPressable
+      testID={testID}
       accessible={accessible}
       accessibilityRole={accessibilityRole}
       style={state => [styles.pressable, style?.(state)]}

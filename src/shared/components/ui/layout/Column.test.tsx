@@ -11,7 +11,7 @@ describe('Column', () => {
   describe('Rendering', () => {
     it('should render children correctly', () => {
       render(
-        <Column>
+        <Column testID="TestColumn">
           <Text>Column content</Text>
         </Column>,
       )
@@ -20,7 +20,7 @@ describe('Column', () => {
 
     it('should render multiple children vertically', () => {
       render(
-        <Column>
+        <Column testID="TestColumn">
           <Text>First</Text>
           <Text>Second</Text>
           <Text>Third</Text>
@@ -32,15 +32,15 @@ describe('Column', () => {
     })
 
     it('should render with testID', () => {
-      render(<Column testID="test-column" />)
-      expect(screen.getByTestId('test-column')).toBeTruthy()
+      render(<Column testID="TestColumn" />)
+      expect(screen.getByTestId('TestColumnBox')).toBeTruthy()
     })
   })
 
   describe('Layout Direction', () => {
     it('should apply column flex direction', () => {
-      render(<Column testID="column" />)
-      const view = screen.getByTestId('column')
+      render(<Column testID="TestColumn" />)
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'column'}),
@@ -50,11 +50,11 @@ describe('Column', () => {
 
     it('should always use column direction even without explicit column prop', () => {
       render(
-        <Column testID="column">
+        <Column testID="TestColumn">
           <Text>Content</Text>
         </Column>,
       )
-      const view = screen.getByTestId('column')
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'column'}),
@@ -67,11 +67,11 @@ describe('Column', () => {
     it('should accept flex prop', () => {
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           flex={1}
         />,
       )
-      const view = screen.getByTestId('column')
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 1})]),
       )
@@ -80,11 +80,11 @@ describe('Column', () => {
     it('should accept center prop', () => {
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           center
         />,
       )
-      const view = screen.getByTestId('column')
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -98,31 +98,31 @@ describe('Column', () => {
     it('should accept gap prop', () => {
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           gap="md"
         />,
       )
-      expect(screen.getByTestId('column')).toBeTruthy()
+      expect(screen.getByTestId('TestColumnBox')).toBeTruthy()
     })
 
     it('should accept padding prop', () => {
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           padding="lg"
         />,
       )
-      expect(screen.getByTestId('column')).toBeTruthy()
+      expect(screen.getByTestId('TestColumnBox')).toBeTruthy()
     })
 
     it('should accept justifyContent prop', () => {
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           justifyContent="space-evenly"
         />,
       )
-      const view = screen.getByTestId('column')
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'space-evenly'}),
@@ -133,11 +133,11 @@ describe('Column', () => {
     it('should accept alignItems prop', () => {
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           alignItems="flex-end"
         />,
       )
-      const view = screen.getByTestId('column')
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'flex-end'}),
@@ -148,11 +148,11 @@ describe('Column', () => {
     it('should accept stretch prop', () => {
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           stretch
         />,
       )
-      const view = screen.getByTestId('column')
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignSelf: 'stretch'}),
@@ -166,11 +166,11 @@ describe('Column', () => {
       const customStyle = {backgroundColor: 'green'}
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           style={customStyle}
         />,
       )
-      const view = screen.getByTestId('column')
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining(customStyle)]),
       )
@@ -180,12 +180,12 @@ describe('Column', () => {
       const customStyle = {borderRadius: 8}
       render(
         <Column
-          testID="column"
+          testID="TestColumn"
           gap="sm"
           style={customStyle}
         />,
       )
-      const view = screen.getByTestId('column')
+      const view = screen.getByTestId('TestColumnBox')
       expect(view.props.style).toEqual(expect.arrayContaining([customStyle]))
     })
   })
@@ -194,6 +194,7 @@ describe('Column', () => {
     it('should create a vertical menu', () => {
       render(
         <Column
+          testID="TestColumn"
           gap="md"
           paddingV="lg">
           <Text>Option 1</Text>
@@ -208,7 +209,9 @@ describe('Column', () => {
 
     it('should create a form column with fields', () => {
       render(
-        <Column gap="lg">
+        <Column
+          testID="TestColumn"
+          gap="lg">
           <Text>Name Field</Text>
           <Text>Email Field</Text>
           <Text>Password Field</Text>
@@ -222,6 +225,7 @@ describe('Column', () => {
     it('should create a card column with header, body, and footer', () => {
       render(
         <Column
+          testID="TestColumn"
           gap="md"
           padding="lg">
           <Text>Header</Text>
@@ -237,6 +241,7 @@ describe('Column', () => {
     it('should create a centered content column', () => {
       render(
         <Column
+          testID="TestColumn"
           flex={1}
           center
           gap="xl">
@@ -251,18 +256,18 @@ describe('Column', () => {
 
   describe('Edge Cases', () => {
     it('should render with no props', () => {
-      const {root} = render(<Column />)
+      const {root} = render(<Column testID="TestColumn" />)
       expect(root).toBeTruthy()
     })
 
     it('should render with empty children', () => {
-      render(<Column testID="column">{null}</Column>)
-      expect(screen.getByTestId('column')).toBeTruthy()
+      render(<Column testID="TestColumn">{null}</Column>)
+      expect(screen.getByTestId('TestColumnBox')).toBeTruthy()
     })
 
     it('should render with single child', () => {
       render(
-        <Column>
+        <Column testID="TestColumn">
           <Text>Single</Text>
         </Column>,
       )
@@ -272,7 +277,7 @@ describe('Column', () => {
     it('should render with conditional children', () => {
       const showMiddle = true
       render(
-        <Column>
+        <Column testID="TestColumn">
           <Text>Top</Text>
           {showMiddle && <Text>Middle</Text>}
           <Text>Bottom</Text>

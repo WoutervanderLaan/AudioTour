@@ -23,8 +23,11 @@ const meta = {
   component: Spacer,
   decorators: [
     (Story): React.JSX.Element => (
-      <Column style={styles.container}>
+      <Column
+        testID="StoryColumn"
+        style={styles.container}>
         <Box
+          testID="StoryBox"
           padding="sm"
           style={styles.demoBox}
           center>
@@ -32,6 +35,7 @@ const meta = {
         </Box>
         <Story />
         <Box
+          testID="StoryBox"
           padding="sm"
           style={styles.demoBox}
           center>
@@ -54,5 +58,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     size: 'xxl',
+    testID: 'StorySpacer',
   },
 }

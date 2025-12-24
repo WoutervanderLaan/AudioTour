@@ -117,11 +117,11 @@ export const CheckboxControlled = <T extends FieldValues>({
         fieldState: {error},
       }): React.JSX.Element => (
         <FormField
+          testID={`${testID}FormField`}
           error={error?.message}
           hint={hint}
           disabled={disabled}
-          label={label}
-          testID={testID}>
+          label={label}>
           <Checkbox
             checked={value as boolean}
             onChange={onChange}

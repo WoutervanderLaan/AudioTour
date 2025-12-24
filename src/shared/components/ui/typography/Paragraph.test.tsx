@@ -8,85 +8,155 @@ import {Paragraph} from './Paragraph'
 describe('Paragraph', () => {
   describe('Rendering', () => {
     it('should render children correctly', () => {
-      render(<Paragraph>Paragraph text</Paragraph>)
+      render(<Paragraph testID="ParagraphText">Paragraph text</Paragraph>)
       expect(screen.getByText('Paragraph text')).toBeTruthy()
     })
 
     it('should render with default body variant', () => {
-      render(<Paragraph>Default body text</Paragraph>)
+      render(<Paragraph testID="ParagraphText">Default body text</Paragraph>)
       expect(screen.getByText('Default body text')).toBeTruthy()
     })
 
     it('should render with default regular font family', () => {
-      render(<Paragraph>Regular text</Paragraph>)
+      render(<Paragraph testID="ParagraphText">Regular text</Paragraph>)
       expect(screen.getByText('Regular text')).toBeTruthy()
     })
   })
 
   describe('Variants', () => {
     it('should render body variant', () => {
-      render(<Paragraph variant="body">Body text</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          variant="body">
+          Body text
+        </Paragraph>,
+      )
       expect(screen.getByText('Body text')).toBeTruthy()
     })
 
     it('should render intro variant', () => {
-      render(<Paragraph variant="intro">Intro text</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          variant="intro">
+          Intro text
+        </Paragraph>,
+      )
       expect(screen.getByText('Intro text')).toBeTruthy()
     })
 
     it('should render quote variant', () => {
-      render(<Paragraph variant="quote">Quote text</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          variant="quote">
+          Quote text
+        </Paragraph>,
+      )
       expect(screen.getByText('Quote text')).toBeTruthy()
     })
 
     it('should render small variant', () => {
-      render(<Paragraph variant="small">Small text</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          variant="small">
+          Small text
+        </Paragraph>,
+      )
       expect(screen.getByText('Small text')).toBeTruthy()
     })
 
     it('should render extraSmall variant', () => {
-      render(<Paragraph variant="extraSmall">Extra small text</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          variant="extraSmall">
+          Extra small text
+        </Paragraph>,
+      )
       expect(screen.getByText('Extra small text')).toBeTruthy()
     })
   })
 
   describe('Font Family', () => {
     it('should accept custom fontFamily prop', () => {
-      render(<Paragraph fontFamily="bold">Bold paragraph</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          fontFamily="bold">
+          Bold paragraph
+        </Paragraph>,
+      )
       expect(screen.getByText('Bold paragraph')).toBeTruthy()
     })
 
     it('should accept semiBold font family', () => {
-      render(<Paragraph fontFamily="semiBold">SemiBold paragraph</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          fontFamily="semiBold">
+          SemiBold paragraph
+        </Paragraph>,
+      )
       expect(screen.getByText('SemiBold paragraph')).toBeTruthy()
     })
 
     it('should accept italic font family', () => {
-      render(<Paragraph fontFamily="bold">Italic paragraph</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          fontFamily="bold">
+          Italic paragraph
+        </Paragraph>,
+      )
       expect(screen.getByText('Italic paragraph')).toBeTruthy()
     })
   })
 
   describe('Styling', () => {
     it('should accept custom color prop', () => {
-      render(<Paragraph color="link">Colored text</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          color="link">
+          Colored text
+        </Paragraph>,
+      )
       expect(screen.getByText('Colored text')).toBeTruthy()
     })
 
     it('should accept align prop for center alignment', () => {
-      render(<Paragraph align="center">Centered paragraph</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          align="center">
+          Centered paragraph
+        </Paragraph>,
+      )
       expect(screen.getByText('Centered paragraph')).toBeTruthy()
     })
 
     it('should accept align prop for right alignment', () => {
-      render(<Paragraph align="right">Right aligned paragraph</Paragraph>)
+      render(
+        <Paragraph
+          testID="ParagraphText"
+          align="right">
+          Right aligned paragraph
+        </Paragraph>,
+      )
       expect(screen.getByText('Right aligned paragraph')).toBeTruthy()
     })
 
     it('should accept custom style prop', () => {
       const customStyle = {marginTop: 10}
       const {getByText} = render(
-        <Paragraph style={customStyle}>Styled paragraph</Paragraph>,
+        <Paragraph
+          testID="ParagraphText"
+          style={customStyle}>
+          Styled paragraph
+        </Paragraph>,
       )
       expect(getByText('Styled paragraph')).toBeTruthy()
     })
@@ -94,20 +164,26 @@ describe('Paragraph', () => {
 
   describe('Accessibility', () => {
     it('should be accessible by default', () => {
-      const {getByText} = render(<Paragraph>Accessible text</Paragraph>)
+      const {getByText} = render(
+        <Paragraph testID="ParagraphText">Accessible text</Paragraph>,
+      )
       const paragraph = getByText('Accessible text')
       expect(paragraph.props.accessible).toBe(true)
     })
 
     it('should have text accessibility role', () => {
-      const {getByText} = render(<Paragraph>Text with role</Paragraph>)
+      const {getByText} = render(
+        <Paragraph testID="ParagraphText">Text with role</Paragraph>,
+      )
       const paragraph = getByText('Text with role')
       expect(paragraph.props.accessibilityRole).toBe('text')
     })
 
     it('should accept accessibilityLabel prop', () => {
       const {getByLabelText} = render(
-        <Paragraph accessibilityLabel="Custom Paragraph Label">
+        <Paragraph
+          testID="ParagraphText"
+          accessibilityLabel="Custom Paragraph Label">
           Content
         </Paragraph>,
       )
@@ -116,7 +192,11 @@ describe('Paragraph', () => {
 
     it('should accept accessibilityHint prop', () => {
       const {getByText} = render(
-        <Paragraph accessibilityHint="Additional info">Text</Paragraph>,
+        <Paragraph
+          testID="ParagraphText"
+          accessibilityHint="Additional info">
+          Text
+        </Paragraph>,
       )
       const paragraph = getByText('Text')
       expect(paragraph.props.accessibilityHint).toBe('Additional info')
@@ -125,13 +205,15 @@ describe('Paragraph', () => {
 
   describe('Props Forwarding', () => {
     it('should forward testID prop', () => {
-      render(<Paragraph testID="test-paragraph">Test paragraph</Paragraph>)
-      expect(screen.getByTestId('test-paragraph')).toBeTruthy()
+      render(<Paragraph testID="ParagraphText">Test paragraph</Paragraph>)
+      expect(screen.getByTestId('ParagraphText')).toBeTruthy()
     })
 
     it('should forward numberOfLines prop', () => {
       const {getByText} = render(
-        <Paragraph numberOfLines={3}>
+        <Paragraph
+          testID="ParagraphText"
+          numberOfLines={3}>
           Long paragraph text that should be truncated after three lines
         </Paragraph>,
       )
@@ -144,6 +226,7 @@ describe('Paragraph', () => {
     it('should forward ellipsizeMode prop', () => {
       const {getByText} = render(
         <Paragraph
+          testID="ParagraphText"
           numberOfLines={2}
           ellipsizeMode="tail">
           Paragraph with ellipsis at the end
@@ -156,7 +239,11 @@ describe('Paragraph', () => {
     it('should forward onPress prop', () => {
       const onPress = jest.fn()
       const {getByText} = render(
-        <Paragraph onPress={onPress}>Pressable paragraph</Paragraph>,
+        <Paragraph
+          testID="ParagraphText"
+          onPress={onPress}>
+          Pressable paragraph
+        </Paragraph>,
       )
       const paragraph = getByText('Pressable paragraph')
       expect(paragraph.props.onPress).toBe(onPress)
@@ -165,22 +252,26 @@ describe('Paragraph', () => {
 
   describe('Edge Cases', () => {
     it('should render with empty children', () => {
-      const {root} = render(<Paragraph />)
+      const {root} = render(<Paragraph testID="ParagraphText" />)
       expect(root).toBeTruthy()
     })
 
     it('should render with null children', () => {
-      const {root} = render(<Paragraph>{null}</Paragraph>)
+      const {root} = render(
+        <Paragraph testID="ParagraphText">{null}</Paragraph>,
+      )
       expect(root).toBeTruthy()
     })
 
     it('should render with number children', () => {
-      render(<Paragraph>{999}</Paragraph>)
+      render(<Paragraph testID="ParagraphText">{999}</Paragraph>)
       expect(screen.getByText('999')).toBeTruthy()
     })
 
     it('should render with boolean converted to string', () => {
-      render(<Paragraph>Status: {String(true)}</Paragraph>)
+      render(
+        <Paragraph testID="ParagraphText">Status: {String(true)}</Paragraph>,
+      )
       expect(screen.getByText('Status: true')).toBeTruthy()
     })
   })

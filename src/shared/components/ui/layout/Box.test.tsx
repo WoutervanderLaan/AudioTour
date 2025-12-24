@@ -11,7 +11,7 @@ describe('Box', () => {
   describe('Rendering', () => {
     it('should render children correctly', () => {
       render(
-        <Box>
+        <Box testID="TestBox">
           <Text>Child content</Text>
         </Box>,
       )
@@ -20,7 +20,7 @@ describe('Box', () => {
 
     it('should render multiple children', () => {
       render(
-        <Box>
+        <Box testID="TestBox">
           <Text>First</Text>
           <Text>Second</Text>
           <Text>Third</Text>
@@ -32,8 +32,8 @@ describe('Box', () => {
     })
 
     it('should render with testID', () => {
-      render(<Box testID="test-box" />)
-      expect(screen.getByTestId('test-box')).toBeTruthy()
+      render(<Box testID="TestBox" />)
+      expect(screen.getByTestId('TestBox')).toBeTruthy()
     })
   })
 
@@ -41,11 +41,11 @@ describe('Box', () => {
     it('should apply row direction when row prop is true', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           row
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'row'}),
@@ -56,11 +56,11 @@ describe('Box', () => {
     it('should apply column direction when column prop is true', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           column
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({flexDirection: 'column'}),
@@ -69,8 +69,8 @@ describe('Box', () => {
     })
 
     it('should not apply flex direction by default', () => {
-      render(<Box testID="box" />)
-      const view = screen.getByTestId('box')
+      render(<Box testID="TestBox" />)
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.not.objectContaining({flexDirection: expect.anything()}),
@@ -83,11 +83,11 @@ describe('Box', () => {
     it('should apply flex when flex prop is provided', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           flex={1}
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 1})]),
       )
@@ -96,30 +96,30 @@ describe('Box', () => {
     it('should apply different flex values', () => {
       const {rerender} = render(
         <Box
-          testID="box"
+          testID="TestBox"
           flex={2}
         />,
       )
-      let view = screen.getByTestId('box')
+      let view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 2})]),
       )
 
       rerender(
         <Box
-          testID="box"
+          testID="TestBox"
           flex={0}
         />,
       )
-      view = screen.getByTestId('box')
+      view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flex: 0})]),
       )
     })
 
     it('should apply flexShrink 0 when flex is undefined', () => {
-      render(<Box testID="box" />)
-      const view = screen.getByTestId('box')
+      render(<Box testID="TestBox" />)
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexShrink: 0})]),
       )
@@ -130,11 +130,11 @@ describe('Box', () => {
     it('should center content when center prop is true', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           center
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -148,11 +148,11 @@ describe('Box', () => {
     it('should center horizontally when centerX prop is true', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           centerX
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'center'}),
@@ -163,11 +163,11 @@ describe('Box', () => {
     it('should center vertically when centerY prop is true', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           centerY
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'center'}),
@@ -178,11 +178,11 @@ describe('Box', () => {
     it('should apply custom justifyContent', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           justifyContent="space-between"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({justifyContent: 'space-between'}),
@@ -193,11 +193,11 @@ describe('Box', () => {
     it('should apply custom alignItems', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           alignItems="flex-end"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignItems: 'flex-end'}),
@@ -208,11 +208,11 @@ describe('Box', () => {
     it('should stretch when stretch prop is true', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           stretch
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({alignSelf: 'stretch'}),
@@ -225,11 +225,11 @@ describe('Box', () => {
     it('should apply gap from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           gap="md"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({gap: expect.any(Number)}),
@@ -240,11 +240,11 @@ describe('Box', () => {
     it('should render with different gap sizes from theme', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           gap="lg"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({gap: expect.any(Number)}),
@@ -253,8 +253,8 @@ describe('Box', () => {
     })
 
     it('should not apply gap when gap prop is not provided', () => {
-      render(<Box testID="box" />)
-      const view = screen.getByTestId('box')
+      render(<Box testID="TestBox" />)
+      const view = screen.getByTestId('TestBox')
       const styles = Array.isArray(view.props.style)
         ? view.props.style
         : [view.props.style]
@@ -275,11 +275,11 @@ describe('Box', () => {
     it('should apply uniform padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           padding="md"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({padding: expect.any(Number)}),
@@ -290,11 +290,11 @@ describe('Box', () => {
     it('should apply horizontal padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           paddingH="lg"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingHorizontal: expect.any(Number)}),
@@ -305,11 +305,11 @@ describe('Box', () => {
     it('should apply vertical padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           paddingV="sm"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingVertical: expect.any(Number)}),
@@ -320,11 +320,11 @@ describe('Box', () => {
     it('should apply top padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           paddingTop="xl"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingTop: expect.any(Number)}),
@@ -335,11 +335,11 @@ describe('Box', () => {
     it('should apply right padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           paddingRight="md"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingRight: expect.any(Number)}),
@@ -350,11 +350,11 @@ describe('Box', () => {
     it('should apply bottom padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           paddingBottom="sm"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingBottom: expect.any(Number)}),
@@ -365,11 +365,11 @@ describe('Box', () => {
     it('should apply left padding from theme tokens', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           paddingLeft="lg"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({paddingLeft: expect.any(Number)}),
@@ -382,11 +382,11 @@ describe('Box', () => {
     it('should apply flexWrap when wrap prop is provided', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           wrap="wrap"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexWrap: 'wrap'})]),
       )
@@ -395,11 +395,11 @@ describe('Box', () => {
     it('should apply nowrap', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           wrap="nowrap"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining({flexWrap: 'nowrap'})]),
       )
@@ -411,11 +411,11 @@ describe('Box', () => {
       const customStyle = {backgroundColor: 'red'}
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           style={customStyle}
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([expect.objectContaining(customStyle)]),
       )
@@ -425,12 +425,12 @@ describe('Box', () => {
       const customStyle = {opacity: 0.5}
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           flex={1}
           style={customStyle}
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(expect.arrayContaining([customStyle]))
     })
   })
@@ -439,13 +439,13 @@ describe('Box', () => {
     it('should create a centered flex container', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           flex={1}
           center>
           <Text>Centered</Text>
         </Box>,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -460,6 +460,7 @@ describe('Box', () => {
     it('should create a row with gap and padding', () => {
       render(
         <Box
+          testID="TestBox"
           row
           gap="md"
           padding="lg">
@@ -474,6 +475,7 @@ describe('Box', () => {
     it('should create a column with justified content', () => {
       render(
         <Box
+          testID="TestBox"
           column
           justifyContent="space-between"
           paddingV="md">
@@ -490,12 +492,12 @@ describe('Box', () => {
     it('should combine gap and padding correctly', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           gap="md"
           padding="lg"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -509,12 +511,12 @@ describe('Box', () => {
     it('should combine paddingH and paddingV correctly', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           paddingH="md"
           paddingV="lg"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -528,14 +530,14 @@ describe('Box', () => {
     it('should combine individual padding props correctly', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           paddingTop="sm"
           paddingRight="md"
           paddingBottom="lg"
           paddingLeft="xl"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -551,13 +553,13 @@ describe('Box', () => {
     it('should combine flex direction with gap and padding', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           row
           gap="md"
           paddingH="lg"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -572,12 +574,12 @@ describe('Box', () => {
     it('should combine alignment with padding', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           center
           padding="md"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -592,13 +594,13 @@ describe('Box', () => {
     it('should combine flex with wrap and gap', () => {
       render(
         <Box
-          testID="box"
+          testID="TestBox"
           flex={1}
           wrap="wrap"
           gap="sm"
         />,
       )
-      const view = screen.getByTestId('box')
+      const view = screen.getByTestId('TestBox')
       expect(view.props.style).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -613,18 +615,20 @@ describe('Box', () => {
 
   describe('Edge Cases', () => {
     it('should render with no props', () => {
-      const {root} = render(<Box />)
+      const {root} = render(<Box testID="TestBox" />)
       expect(root).toBeTruthy()
     })
 
     it('should render with empty children', () => {
-      render(<Box testID="box">{null}</Box>)
-      expect(screen.getByTestId('box')).toBeTruthy()
+      render(<Box testID="TestBox">{null}</Box>)
+      expect(screen.getByTestId('TestBox')).toBeTruthy()
     })
 
     it('should render with conditional children', () => {
       const showContent = true
-      render(<Box>{showContent && <Text>Conditional</Text>}</Box>)
+      render(
+        <Box testID="TestBox">{showContent && <Text>Conditional</Text>}</Box>,
+      )
       expect(screen.getByText('Conditional')).toBeTruthy()
     })
   })

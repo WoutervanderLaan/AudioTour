@@ -9,6 +9,7 @@ import {PermissionBenefit} from './PermissionBenefit'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * PermissionContentProps
@@ -19,7 +20,7 @@ export type PermissionContentProps = {
    * Permission content configuration
    */
   content: PermissionContentType
-}
+} & TestProps<'PermissionContent'>
 
 /**
  * PermissionContent
@@ -30,34 +31,44 @@ export type PermissionContentProps = {
  */
 export const PermissionContent = ({
   content,
+  testID,
 }: PermissionContentProps): React.JSX.Element => {
   return (
     <Column
       gap="md"
-      centerX>
+      centerX
+      testID={`${testID}ContainerColumn`}>
       <MaterialIcons
         name={content.icon}
         size={80}
         color={styles.icon.color}
       />
 
-      <Spacer />
+      <Spacer testID={`${testID}Spacer`} />
 
-      <Text.Title align="center">{content.title}</Text.Title>
+      <Text.Title
+        align="center"
+        testID={`${testID}TitleText`}>
+        {content.title}
+      </Text.Title>
 
       <Text.Paragraph
         color="secondary"
-        align="center">
+        align="center"
+        testID={`${testID}DescriptionText`}>
         {content.description}
       </Text.Paragraph>
 
-      <Column gap="sm">
-        {content.benefits.map(benefit => (
+      <Column
+        gap="sm"
+        testID={`${testID}BenefitsColumn`}>
+        {content.benefits.map((benefit, index) => (
           <PermissionBenefit
             key={`${benefit.icon}-${benefit.title}`}
             icon={benefit.icon}
             title={benefit.title}
             description={benefit.description}
+            testID={`${testID}${index + 1}PermissionBenefit`}
           />
         ))}
       </Column>

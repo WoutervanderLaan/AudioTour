@@ -33,6 +33,7 @@ export const Default: Story = {
     onPhotoSelect: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryPhotoGallery',
   },
 }
 
@@ -47,6 +48,7 @@ const InteractivePhotoGallery = (): React.JSX.Element => {
 
   return (
     <PhotoGallery
+      testID="StoryPhotoGallery"
       photos={[mockPhoto1, mockPhoto2, mockPhoto3, mockPhoto4, mockPhoto5]}
       activePhotoIndex={activeIndex}
       onPhotoSelect={i => setActiveIndex(i)}

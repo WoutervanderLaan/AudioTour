@@ -5,12 +5,13 @@ import {Text} from './ui/typography'
 
 import {logger} from '@/core/lib/logger/logger'
 import {Button} from '@/shared/components/ui/pressable/Button'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * ErrorBoundaryProps
  * Props for the ErrorBoundary component.
  */
-type ErrorBoundaryProps = {
+type ErrorBoundaryProps = TestProps<'ErrorBoundary'> & {
   /**
    * Child components to be wrapped and protected by the error boundary
    */
@@ -122,26 +123,36 @@ export class ErrorBoundary extends Component<
 
       return (
         <Column
+          testID={`${this.props.testID}Column`}
           paddingV="lg"
           flex={1}
           center
           paddingH="md"
           gap="md">
-          <Text.Title align="center">Something went wrong</Text.Title>
-          <Text.Paragraph align="center">
+          <Text.Title
+            testID={`${this.props.testID}TitleText`}
+            align="center">
+            Something went wrong
+          </Text.Title>
+          <Text.Paragraph
+            testID={`${this.props.testID}MessageText`}
+            align="center">
             We encountered an unexpected error. Please try restarting the app.
           </Text.Paragraph>
           {!!__DEV__ && !!this.state.error && (
             <Column
+              testID={`${this.props.testID}ErrorDetailsColumn`}
               padding="lg"
               gap="sm">
               <Text.Label
+                testID={`${this.props.testID}ErrorMessageText`}
                 color="warning"
                 fontFamily="bold">
                 {this.state.error.message}
               </Text.Label>
               {!!this.state.error.stack && (
                 <Text.Paragraph
+                  testID={`${this.props.testID}ErrorStackText`}
                   numberOfLines={10}
                   variant="extraSmall">
                   {this.state.error.stack}
@@ -150,6 +161,7 @@ export class ErrorBoundary extends Component<
             </Column>
           )}
           <Button
+            testID={`${this.props.testID}TryAgainButton`}
             label="Try Again"
             onPress={this.handleReset}
           />

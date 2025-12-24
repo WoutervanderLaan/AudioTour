@@ -3,12 +3,13 @@ import type React from 'react'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * FormFieldProps
  * Props for the FormField component
  */
-export type FormFieldProps = {
+export type FormFieldProps = TestProps<'FormField'> & {
   /**
    * children - The form input element to wrap
    */
@@ -46,10 +47,6 @@ export type FormFieldProps = {
    */
   gap?: 'xs' | 'sm' | 'md' | 'lg'
   /**
-   * testID - Test identifier for automated testing
-   */
-  testID?: string
-  /**
    * renderLabel - Optional custom label renderer for complex labels
    */
   renderLabel?: (props: {
@@ -81,6 +78,10 @@ type FormFieldLabelProps = {
    * required - Whether the field is required
    */
   required: boolean
+  /**
+   * testID - Test ID for the label
+   */
+  testID?: string
 }
 
 /**
@@ -95,15 +96,18 @@ const FormFieldLabel = ({
   labelId,
   disabled,
   required,
+  testID,
 }: FormFieldLabelProps): React.JSX.Element => (
-  <Row>
+  <Row testID={`${testID}LabelRow`}>
     <Text.Label
+      testID={`${testID}LabelText`}
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
       accessibilityRole="text">
       {label}
       {!!required && (
         <Text.Label
+          testID={`${testID}RequiredText`}
           color="warning"
           accessibilityLabel="required">
           {' '}
@@ -131,6 +135,10 @@ type FormFieldHelpTextProps = {
    * hasError - Whether this is an error message
    */
   hasError: boolean
+  /**
+   * testID - Test ID for the help text
+   */
+  testID?: string
 }
 
 /**
@@ -144,8 +152,10 @@ const FormFieldHelpText = ({
   text,
   helpTextId,
   hasError,
+  testID,
 }: FormFieldHelpTextProps): React.JSX.Element => (
   <Text.Label
+    testID={`${testID}HelpText`}
     nativeID={helpTextId}
     color={hasError ? 'warning' : 'secondary'}
     accessibilityRole="text"
@@ -208,7 +218,7 @@ export const FormField = ({
     <Column
       gap={gap}
       alignItems="flex-start"
-      testID={testID}>
+      testID={`${testID}ContainerColumn`}>
       {!!label &&
         (renderLabel ? (
           renderLabel({label, labelId, disabled, required})
@@ -218,6 +228,7 @@ export const FormField = ({
             labelId={labelId}
             disabled={disabled}
             required={required}
+            testID={testID}
           />
         ))}
       {children}
@@ -226,6 +237,7 @@ export const FormField = ({
           text={helpText}
           helpTextId={helpTextId}
           hasError={hasError}
+          testID={testID}
         />
       )}
     </Column>

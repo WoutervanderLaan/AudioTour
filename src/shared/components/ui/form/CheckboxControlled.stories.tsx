@@ -63,8 +63,11 @@ const SimpleFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      gap="md"
+      testID="StoryColumn">
       <CheckboxControlled
+        testID="StoryCheckbox"
         control={control}
         name="acceptTerms"
         checkboxLabel="I accept the terms and conditions"
@@ -73,6 +76,7 @@ const SimpleFormExample = (): React.JSX.Element => {
         required={true}
       />
       <Button
+        testID="StoryButton"
         label="Submit"
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
@@ -156,11 +160,16 @@ const ComplexFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
-      <Text.Label>Sign Up Form</Text.Label>
+    <Column
+      testID="StoryColumn"
+      gap="md">
+      <Text.Label testID="StoryText">Sign Up Form</Text.Label>
 
-      <Column gap="sm">
+      <Column
+        testID="StoryColumn"
+        gap="sm">
         <CheckboxControlled
+          testID="StoryCheckbox"
           control={control}
           name="acceptTerms"
           checkboxLabel="I accept the terms and conditions"
@@ -168,6 +177,7 @@ const ComplexFormExample = (): React.JSX.Element => {
         />
 
         <CheckboxControlled
+          testID="StoryCheckbox"
           control={control}
           name="acceptPrivacy"
           checkboxLabel="I accept the privacy policy"
@@ -175,6 +185,7 @@ const ComplexFormExample = (): React.JSX.Element => {
         />
 
         <CheckboxControlled
+          testID="StoryCheckbox"
           control={control}
           name="over18"
           checkboxLabel="I am over 18 years old"
@@ -182,12 +193,15 @@ const ComplexFormExample = (): React.JSX.Element => {
         />
       </Column>
 
-      <Spacer />
+      <Spacer testID="StorySpacer" />
 
-      <Text.Label>Preferences (Optional)</Text.Label>
+      <Text.Label testID="StoryText">Preferences (Optional)</Text.Label>
 
-      <Column gap="sm">
+      <Column
+        testID="StoryColumn"
+        gap="sm">
         <CheckboxControlled
+          testID="StoryCheckbox"
           control={control}
           name="subscribeNewsletter"
           checkboxLabel="Subscribe to our newsletter"
@@ -195,6 +209,7 @@ const ComplexFormExample = (): React.JSX.Element => {
         />
 
         <CheckboxControlled
+          testID="StoryCheckbox"
           control={control}
           name="enableNotifications"
           checkboxLabel="Enable notifications"
@@ -202,6 +217,7 @@ const ComplexFormExample = (): React.JSX.Element => {
         />
 
         <CheckboxControlled
+          testID="StoryCheckbox"
           control={control}
           name="enableSms"
           checkboxLabel="Enable SMS notifications"
@@ -211,16 +227,21 @@ const ComplexFormExample = (): React.JSX.Element => {
       </Column>
 
       <Button
+        testID="StoryButton"
         label={formState.isSubmitting ? 'Submitting...' : 'Create Account'}
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid || formState.isSubmitting}
       />
 
-      <Spacer />
-      <Text.Label color="secondary">
+      <Spacer testID="StorySpacer" />
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Form Valid: {formState.isValid ? 'Yes' : 'No'}
       </Text.Label>
-      <Text.Label color="secondary">
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Errors:{' '}
         {Object.keys(formState.errors).length > 0
           ? Object.keys(formState.errors).join(', ')
@@ -275,8 +296,11 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <CheckboxControlled
+        testID="StoryCheckbox"
         control={control}
         name="subscribeNewsletter"
         checkboxLabel="Subscribe to newsletter"
@@ -284,6 +308,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
       />
 
       <CheckboxControlled
+        testID="StoryCheckbox"
         control={control}
         name="enableNotifications"
         checkboxLabel="Enable notifications"
@@ -291,6 +316,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
       />
 
       <Button
+        testID="StoryButton"
         label="Update Preferences"
         onPress={handleSubmit(onSubmit)}
       />
@@ -361,10 +387,13 @@ const ConditionalValidationExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
-      <Text.Label>Checkout</Text.Label>
+    <Column
+      testID="StoryColumn"
+      gap="md">
+      <Text.Label testID="StoryText">Checkout</Text.Label>
 
       <CheckboxControlled
+        testID="StoryCheckbox"
         control={control}
         name="hasPromoCode"
         checkboxLabel="I have a promo code"
@@ -372,6 +401,7 @@ const ConditionalValidationExample = (): React.JSX.Element => {
 
       {!!hasPromoCode && (
         <CheckboxControlled
+          testID="StoryCheckbox"
           control={control}
           name="promoCodeAccepted"
           checkboxLabel="I accept the promo code terms and conditions"
@@ -380,14 +410,17 @@ const ConditionalValidationExample = (): React.JSX.Element => {
       )}
 
       <Button
+        testID="StoryButton"
         label="Complete Order"
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
       />
 
-      <Spacer />
+      <Spacer testID="StorySpacer" />
 
-      <Text.Label color="secondary">
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Form Valid: {formState.isValid ? 'Yes' : 'No'}
       </Text.Label>
     </Column>

@@ -9,12 +9,13 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {IconButton} from '@/shared/components/ui/pressable/IconButton'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * StickyBannerProps
  * Props for the StickyBanner component
  */
-export type StickyBannerProps = {
+export type StickyBannerProps = TestProps<'StickyBanner'> & {
   /**
    * title - Main title text for the banner
    */
@@ -39,10 +40,6 @@ export type StickyBannerProps = {
    * variant - Visual variant of the banner
    */
   variant?: 'info' | 'warning' | 'success'
-  /**
-   * testID - Test identifier for automated testing
-   */
-  testID?: string
 }
 
 /**
@@ -99,9 +96,10 @@ export const StickyBanner = ({
 
   return (
     <Column
-      testID={testID}
+      testID={`${testID}ContainerColumn`}
       style={[styles.container, styles[variant]]}>
       <Row
+        testID={`${testID}ContentRow`}
         gap="sm"
         centerY>
         <MaterialIcons
@@ -110,11 +108,13 @@ export const StickyBanner = ({
           style={styles.icon}
         />
         <Column
+          testID={`${testID}TextColumn`}
           gap="xxs"
           flex={1}>
-          <Text.Label>{title}</Text.Label>
+          <Text.Label testID={`${testID}TitleText`}>{title}</Text.Label>
           {!!message && (
             <Text.Paragraph
+              testID={`${testID}MessageText`}
               variant="small"
               color="secondary">
               {message}
@@ -123,6 +123,7 @@ export const StickyBanner = ({
         </Column>
         {!!onDismiss && (
           <IconButton
+            testID={`${testID}DismissIconButton`}
             name="close"
             size="sm"
             onPress={handleDismiss}
@@ -132,6 +133,7 @@ export const StickyBanner = ({
       </Row>
       {!!ctaLabel && !!onCtaPress && (
         <PressableBase
+          testID={`${testID}CtaPressable`}
           onPress={handleCtaPress}
           style={({pressed}) => [
             styles.ctaButton,
@@ -139,7 +141,7 @@ export const StickyBanner = ({
           ]}
           accessibilityRole="button"
           accessibilityLabel={ctaLabel}>
-          <Text.Label>{ctaLabel}</Text.Label>
+          <Text.Label testID={`${testID}CtaText`}>{ctaLabel}</Text.Label>
           <MaterialIcons
             name="chevron-right"
             size={20}

@@ -3,10 +3,12 @@ import {ViewStyle} from 'react-native'
 
 import {LinearGradient, type LinearGradientProps} from 'expo-linear-gradient'
 
+import type {TestProps} from '@/shared/types/TestProps'
+
 /**
  * Props for the GradientBackground component
  */
-type GradientBackgroundProps = {
+type GradientBackgroundProps = TestProps<'GradientBackground'> & {
   /**
    * Child components to render on top of the gradient background
    */
@@ -41,12 +43,14 @@ type GradientBackgroundProps = {
 export const GradientBackground: React.FC<GradientBackgroundProps> = ({
   children,
   style,
+  testID,
   colors = ['#1e3a8a', '#3b82f6', '#60a5fa'], // Deep blue to lighter blue
   start = {x: 0, y: 0},
   end = {x: 0, y: 1},
 }) => {
   return (
     <LinearGradient
+      testID={testID}
       colors={colors}
       start={start}
       end={end}

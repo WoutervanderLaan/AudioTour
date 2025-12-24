@@ -124,14 +124,14 @@ export const TextInputControlled = <T extends FieldValues>({
         fieldState: {error},
       }): React.JSX.Element => (
         <FormField
+          testID={`${testID}FormField`}
           label={label}
           error={error?.message}
           hint={hint}
           disabled={disabled}
           required={required}
           labelId={labelId}
-          helpTextId={helpTextId}
-          testID={testID}>
+          helpTextId={helpTextId}>
           <TextInput
             value={value as string}
             onChangeText={onChange}

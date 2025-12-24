@@ -19,24 +19,31 @@ export default meta
  * @returns {*} describe return value
  */
 const AllSteps = () => (
-  <Column gap="md">
+  <Column
+    testID="StoryProgressContainerColumn"
+    gap="md">
     <ProgressIndicator
+      testID="StoryStep1ProgressIndicator"
       currentStep={1}
       totalSteps={5}
     />
     <ProgressIndicator
+      testID="StoryStep2ProgressIndicator"
       currentStep={2}
       totalSteps={5}
     />
     <ProgressIndicator
+      testID="StoryStep3ProgressIndicator"
       currentStep={3}
       totalSteps={5}
     />
     <ProgressIndicator
+      testID="StoryStep4ProgressIndicator"
       currentStep={4}
       totalSteps={5}
     />
     <ProgressIndicator
+      testID="StoryStep5ProgressIndicator"
       currentStep={5}
       totalSteps={5}
     />

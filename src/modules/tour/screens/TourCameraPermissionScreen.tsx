@@ -59,13 +59,17 @@ export const TourCameraPermissionScreen = ({
   }
 
   return (
-    <Screen.Scrollable>
+    <Screen.Scrollable testID="TourCameraPermissionScreen">
       <Column
         flex={1}
         paddingH="md"
         paddingBottom="xl"
-        gap="lg">
-        <PermissionContent content={content} />
+        gap="lg"
+        testID="TourCameraPermissionScreenContainerColumn">
+        <PermissionContent
+          content={content}
+          testID="TourCameraPermissionScreenPermissionContent"
+        />
 
         <PermissionActions
           primaryButtonLabel={content.primaryButtonLabel}
@@ -73,6 +77,7 @@ export const TourCameraPermissionScreen = ({
           onPrimaryAction={handleRequestPermission}
           onSkip={skip}
           onOpenSettings={openSettings}
+          testID="TourCameraPermissionScreenPermissionActions"
         />
       </Column>
     </Screen.Scrollable>

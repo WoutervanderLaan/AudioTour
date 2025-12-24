@@ -120,12 +120,12 @@ export const RadioGroupControlled = <
         fieldState: {error},
       }): React.JSX.Element => (
         <FormField
+          testID={`${testID}FormField`}
           label={label}
           error={error?.message}
           hint={hint}
           disabled={disabled}
-          required={required}
-          testID={testID}>
+          required={required}>
           <RadioGroup
             value={value as TValue}
             onChange={onChange as (value: TValue) => void}

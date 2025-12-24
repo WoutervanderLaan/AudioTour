@@ -8,12 +8,13 @@ import {logger} from '@/core/lib/logger/logger'
 import {AddPhoto} from '@/shared/components/features/add-photo/AddPhoto'
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
 import {Row} from '@/shared/components/ui/layout/Row'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * ImageInputProps
  * Props for the ImageInput component
  */
-export type ImageInputProps = {
+export type ImageInputProps = TestProps<'ImageInput'> & {
   /**
    * disabled - Whether the input is disabled
    */
@@ -34,10 +35,6 @@ export type ImageInputProps = {
    * thumbnailSize - Size of thumbnail images (default: 'md')
    */
   thumbnailSize?: 'sm' | 'md' | 'lg'
-  /**
-   * testID - Test identifier for automated testing
-   */
-  testID?: string
 }
 
 /**
@@ -158,10 +155,11 @@ export const ImageInput = ({
       gap="sm"
       justifyContent="flex-start"
       wrap="wrap"
-      testID={testID}>
+      testID={`${testID}ContainerRow`}>
       {value.map((imageUri, index) => (
         <Thumbnail
           key={`image-${index + 1}`}
+          testID={`${testID}-${index + 1}-Thumbnail`}
           source={{uri: imageUri}}
           deletable
           size={thumbnailSize}
@@ -173,6 +171,7 @@ export const ImageInput = ({
 
       {!!canAddMore && (
         <AddPhoto
+          testID={`${testID}AddPhoto`}
           onPress={handleInitImageAdd}
           size={thumbnailSize}
           accessibilityLabel={`Add image, ${value.length} of ${maxImages} selected`}

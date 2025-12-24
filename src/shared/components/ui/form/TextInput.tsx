@@ -6,32 +6,31 @@ import {
 } from 'react-native'
 import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
+import type {TestProps} from '@/shared/types/TestProps'
+
 /**
  * TextInputProps
  * Props for the TextInput component
  */
-export type TextInputProps = Omit<RNTextInputProps, 'editable'> & {
-  /**
-   * disabled - Whether the input is disabled
-   */
-  disabled?: boolean
-  /**
-   * hasError - Whether the input has an error (for styling)
-   */
-  hasError?: boolean
-  /**
-   * testID - Test identifier for automated testing
-   */
-  testID?: string
-  /**
-   * inputId - Native ID for the input element
-   */
-  inputId?: string
-  /**
-   * labelId - Native ID for the associated label element
-   */
-  labelId?: string
-}
+export type TextInputProps = Omit<RNTextInputProps, 'editable' | 'testID'> &
+  TestProps<'TextInput'> & {
+    /**
+     * disabled - Whether the input is disabled
+     */
+    disabled?: boolean
+    /**
+     * hasError - Whether the input has an error (for styling)
+     */
+    hasError?: boolean
+    /**
+     * inputId - Native ID for the input element
+     */
+    inputId?: string
+    /**
+     * labelId - Native ID for the associated label element
+     */
+    labelId?: string
+  }
 
 /**
  * TextInput

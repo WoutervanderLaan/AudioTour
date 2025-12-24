@@ -45,14 +45,21 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
   }
 
   return (
-    <Screen.Scrollable>
+    <Screen.Scrollable testID="NotificationSettingsScreen">
       <Column
         flex={1}
         padding="md"
-        gap="lg">
-        <Column gap="sm">
-          <Text.Title>Push Notifications</Text.Title>
-          <Text.Paragraph color="secondary">
+        gap="lg"
+        testID="NotificationSettingsScreenContentColumn">
+        <Column
+          gap="sm"
+          testID="NotificationSettingsScreenHeaderColumn">
+          <Text.Title testID="NotificationSettingsScreenTitleText">
+            Push Notifications
+          </Text.Title>
+          <Text.Paragraph
+            color="secondary"
+            testID="NotificationSettingsScreenDescriptionText">
             Manage your notification preferences to stay updated on tours, new
             narratives, and recommendations.
           </Text.Paragraph>
@@ -63,13 +70,14 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
             preferences.pushEnabled
               ? 'You will receive push notifications'
               : 'Push notifications are disabled'
-          }>
+          }
+          testID="NotificationSettingsScreenPushEnabledFormField">
           <Switch
             label="Enable Push Notifications"
             value={preferences.pushEnabled}
             onChange={handleToggleNotifications}
             disabled={toggleMutation.isPending}
-            testID="push-notifications-toggle"
+            testID="NotificationSettingsScreenPushEnabledSwitch"
           />
         </FormField>
       </Column>
