@@ -21,22 +21,25 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: <Text.Label>Press me</Text.Label>,
+    children: <Text.Label testID="StoryText">Press me</Text.Label>,
+    testID: 'StoryPressable',
   },
 }
 
 export const WithOnPress: Story = {
   args: {
-    children: <Text.Label>Tap to log</Text.Label>,
+    children: <Text.Label testID="StoryText">Tap to log</Text.Label>,
     onPress: (): void => {
       logger.debug('Pressed!')
     },
+    testID: 'StoryPressable',
   },
 }
 
 export const Disabled: Story = {
   args: {
-    children: <Text.Label>Disabled</Text.Label>,
+    children: <Text.Label testID="StoryText">Disabled</Text.Label>,
     disabled: true,
+    testID: 'StoryPressable',
   },
 }

@@ -40,7 +40,7 @@ export const ProfileHeaderButton = (): React.JSX.Element => {
 
   return (
     <IconButton
-      testId="ProfileHeaderIconButton"
+      testID="ProfileHeaderIconButton"
       name="person"
       size="md"
       onPress={handlePress}

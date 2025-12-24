@@ -6,7 +6,7 @@ import {useNotificationStore} from '../store/useNotificationStore'
 
 import {FormField, Switch} from '@/shared/components/ui/form'
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
@@ -45,21 +45,21 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
   }
 
   return (
-    <Screen.Scrollable testId="NotificationSettingsScreen">
+    <Screen.Scrollable testID="NotificationSettingsScreen">
       <Column
         flex={1}
         padding="md"
         gap="lg"
-        testId="NotificationSettingsScreenContentView">
+        testID="NotificationSettingsScreenContentColumn">
         <Column
           gap="sm"
-          testId="NotificationSettingsScreenHeaderView">
-          <Text.Title testId="NotificationSettingsScreenTitleText">
+          testID="NotificationSettingsScreenHeaderColumn">
+          <Text.Title testID="NotificationSettingsScreenTitleText">
             Push Notifications
           </Text.Title>
           <Text.Paragraph
             color="secondary"
-            testId="NotificationSettingsScreenDescriptionText">
+            testID="NotificationSettingsScreenDescriptionText">
             Manage your notification preferences to stay updated on tours, new
             narratives, and recommendations.
           </Text.Paragraph>
@@ -71,13 +71,13 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
               ? 'You will receive push notifications'
               : 'Push notifications are disabled'
           }
-          testId="NotificationSettingsScreenPushEnabledFormFieldView">
+          testID="NotificationSettingsScreenPushEnabledFormField">
           <Switch
             label="Enable Push Notifications"
             value={preferences.pushEnabled}
             onChange={handleToggleNotifications}
             disabled={toggleMutation.isPending}
-            testId="NotificationSettingsScreenPushEnabledSwitch"
+            testID="NotificationSettingsScreenPushEnabledSwitch"
           />
         </FormField>
       </Column>

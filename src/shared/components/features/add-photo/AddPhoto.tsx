@@ -1,12 +1,13 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Column} from '@/shared/components/ui/layout/Column'
+import {Box} from '@/shared/components/ui/layout/Box'
 import {
   PressableBase,
   type PressableBaseProps,
 } from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 enum AddPhotoSize {
   small = 60,
@@ -23,7 +24,8 @@ type AddPhotoProps = {
    * Size variant for the add photo button (default: 'md')
    */
   size?: 'sm' | 'md' | 'lg'
-} & Omit<PressableBaseProps, 'style'>
+} & Omit<PressableBaseProps, 'style' | 'testID'> &
+  TestProps<'AddPhoto'>
 
 /**
  * AddPhoto
@@ -37,19 +39,19 @@ type AddPhotoProps = {
 export const AddPhoto = ({
   onPress,
   size = 'md',
-  testId,
+  testID,
   ...pressableProps
 }: AddPhotoProps): React.JSX.Element => (
   <PressableBase
-    testId={testId}
+    testID={`${testID}ContainerPressable`}
     onPress={onPress}
     {...pressableProps}>
-    <Column
-      testId={`${testId}View` as `${string}View`}
+    <Box
+      testID={`${testID}PaddingBox`}
       center
       style={[styles.container, styles[size]]}>
-      <Text.Title testId={`${testId}Text` as `${string}Text`}>+</Text.Title>
-    </Column>
+      <Text.Title testID={`${testID}Text`}>+</Text.Title>
+    </Box>
   </PressableBase>
 )
 

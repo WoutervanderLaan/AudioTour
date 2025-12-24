@@ -5,7 +5,7 @@ import {TourRouteName} from '../routes.types'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable/Button'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
@@ -20,24 +20,24 @@ export const TourHomeScreen = (): React.JSX.Element => {
   const {navigate} = useNavigation()
 
   return (
-    <Screen.Static testId="TourHomeScreen">
+    <Screen.Static testID="TourHomeScreen">
       <Box
         flex={1}
         center
         paddingH="lg"
-        testId="TourHomeScreenContainerView">
+        testID="TourHomeScreenContainerBox">
         <Column
           gap="xl"
           center
-          testId="TourHomeScreenContentView">
+          testID="TourHomeScreenContentColumn">
           <Column
             gap="md"
             center
-            testId="TourHomeScreenHeaderView">
-            <Text.Title testId="TourHomeScreenTitleText">AudioTour</Text.Title>
+            testID="TourHomeScreenHeaderColumn">
+            <Text.Title testID="TourHomeScreenTitleText">AudioTour</Text.Title>
             <Text.Paragraph
               align="center"
-              testId="TourHomeScreenDescriptionText">
+              testID="TourHomeScreenDescriptionText">
               Discover museum treasures with personalized audio narratives
             </Text.Paragraph>
           </Column>
@@ -45,7 +45,7 @@ export const TourHomeScreen = (): React.JSX.Element => {
           <Button
             label="Start new tour"
             onPress={() => navigate(TourRouteName.feed, {})}
-            testId="TourHomeScreenStartButton"
+            testID="TourHomeScreenStartButton"
           />
         </Column>
       </Box>

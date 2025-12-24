@@ -14,7 +14,7 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {LinkButton} from '@/shared/components/ui/pressable/LinkButton'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
@@ -60,29 +60,29 @@ export const LoginScreen = (): React.JSX.Element => {
   return (
     <Screen.Static
       keyboardAvoiding
-      testId="LoginScreen">
+      testID="LoginScreen">
       <Column
         gap="md"
         center
         flex={1}
         padding="md"
-        testId="LoginScreenContainerView">
-        <Text.Title testId="LoginScreenTitleText">Login</Text.Title>
-        <Text.Paragraph testId="LoginScreenSubtitleText">
+        testID="LoginScreenContainerColumn">
+        <Text.Title testID="LoginScreenTitleText">Login</Text.Title>
+        <Text.Paragraph testID="LoginScreenSubtitleText">
           Sign in to your account
         </Text.Paragraph>
 
         <Column
           gap="lg"
           stretch
-          testId="LoginScreenFormView">
+          testID="LoginScreenFormColumn">
           <TextInputControlled<LoginForm>
             placeholder="Email"
             name="email"
             control={control}
             autoCapitalize="none"
             keyboardType="email-address"
-            testId="LoginScreenEmailTextInput"
+            testID="LoginScreenEmailTextInput"
           />
 
           <TextInputControlled<LoginForm>
@@ -90,14 +90,14 @@ export const LoginScreen = (): React.JSX.Element => {
             control={control}
             placeholder="Password"
             secureTextEntry
-            testId="LoginScreenPasswordTextInput"
+            testID="LoginScreenPasswordTextInput"
           />
 
           {!!loginError && (
             <Text.Paragraph
               variant="small"
               color="warning"
-              testId="LoginScreenErrorText">
+              testID="LoginScreenErrorText">
               {loginError.message || 'Something went wrong...'}
             </Text.Paragraph>
           )}
@@ -106,7 +106,7 @@ export const LoginScreen = (): React.JSX.Element => {
             label={isLoggingIn ? 'Logging in...' : 'Login'}
             onPress={handleSubmit(handleLogin)}
             disabled={isLoggingIn || isLoading}
-            testId="LoginScreenSubmitButton"
+            testID="LoginScreenSubmitButton"
           />
 
           {!!(isLoggingIn || isLoading) && <ActivityIndicator />}
@@ -115,17 +115,17 @@ export const LoginScreen = (): React.JSX.Element => {
         <Row
           gap="xs"
           centerY
-          testId="LoginScreenSignUpPromptView">
+          testID="LoginScreenSignUpPromptRow">
           <Text.Paragraph
             variant="small"
-            testId="LoginScreenSignUpPromptText">
+            testID="LoginScreenSignUpPromptText">
             Don&apos;t have an account?
           </Text.Paragraph>
           <LinkButton
             label="Sign up"
             variant="small"
             onPress={handleSignUpPress}
-            testId="LoginScreenSignUpLinkButton"
+            testID="LoginScreenSignUpLinkButton"
           />
         </Row>
       </Column>

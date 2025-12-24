@@ -3,7 +3,7 @@ import type React from 'react'
 import {Text as RNText, type TextProps as RNTextProps} from 'react-native'
 import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 import type {Theme} from '@/themes/types'
 
 /**
@@ -62,7 +62,7 @@ export const TextBase = ({
   lineHeight,
   accessible = true,
   accessibilityRole = 'text',
-  testId,
+  testID,
   ...rest
 }: TextProps): React.JSX.Element => {
   const {theme} = useUnistyles()
@@ -77,7 +77,7 @@ export const TextBase = ({
 
   return (
     <RNText
-      testID={testId}
+      testID={testID}
       accessible={accessible}
       accessibilityRole={accessibilityRole}
       style={[styles.text, dynamicStyle, style]}

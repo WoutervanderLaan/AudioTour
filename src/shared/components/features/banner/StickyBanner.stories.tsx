@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>
 
 export const Info: Story = {
   args: {
-    testId: 'StoryInfoStickyBanner',
+    testID: 'StoryInfoStickyBanner',
     title: 'Complete your profile',
     message: 'Answer a few questions to personalize your experience',
     ctaLabel: 'Get Started',
@@ -35,7 +35,7 @@ export const Info: Story = {
 
 export const Warning: Story = {
   args: {
-    testId: 'StoryWarningStickyBanner',
+    testID: 'StoryWarningStickyBanner',
     title: 'Action Required',
     message: 'Please verify your email address',
     ctaLabel: 'Verify Now',
@@ -48,7 +48,7 @@ export const Warning: Story = {
 
 export const Success: Story = {
   args: {
-    testId: 'StorySuccessStickyBanner',
+    testID: 'StorySuccessStickyBanner',
     title: 'Profile Updated',
     message: 'Your changes have been saved successfully',
     variant: 'success',
@@ -60,7 +60,7 @@ export const Success: Story = {
 
 export const WithoutMessage: Story = {
   args: {
-    testId: 'StoryWithoutMessageStickyBanner',
+    testID: 'StoryWithoutMessageStickyBanner',
     title: 'New feature available!',
     ctaLabel: 'Learn More',
     onCtaPress: (): void => {
@@ -71,7 +71,7 @@ export const WithoutMessage: Story = {
 
 export const WithoutCTA: Story = {
   args: {
-    testId: 'StoryWithoutCTAStickyBanner',
+    testID: 'StoryWithoutCTAStickyBanner',
     title: 'System Maintenance',
     message: 'We will be performing maintenance tonight from 2-4 AM',
     onDismiss: (): void => {
@@ -82,7 +82,7 @@ export const WithoutCTA: Story = {
 
 export const NotDismissible: Story = {
   args: {
-    testId: 'StoryNotDismissibleStickyBanner',
+    testID: 'StoryNotDismissibleStickyBanner',
     title: 'Complete Onboarding',
     message: 'You must complete onboarding to continue',
     ctaLabel: 'Start Onboarding',

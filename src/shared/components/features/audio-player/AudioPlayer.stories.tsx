@@ -24,28 +24,28 @@ const mockAudioUrl2 =
 
 export const Default: Story = {
   args: {
-    testId: 'StoryDefaultAudioPlayer',
+    testID: 'StoryDefaultAudioPlayer',
     src: mockAudioUrl,
   },
 }
 
 export const DifferentAudioSource: Story = {
   args: {
-    testId: 'StoryDifferentSourceAudioPlayer',
+    testID: 'StoryDifferentSourceAudioPlayer',
     src: mockAudioUrl2,
   },
 }
 
 export const InvalidUrl: Story = {
   args: {
-    testId: 'StoryInvalidUrlAudioPlayer',
+    testID: 'StoryInvalidUrlAudioPlayer',
     src: 'https://invalid-url-that-does-not-exist.com/audio.mp3',
   },
 }
 
 export const LocalFileUrl: Story = {
   args: {
-    testId: 'StoryLocalFileAudioPlayer',
+    testID: 'StoryLocalFileAudioPlayer',
     src: 'file:///path/to/local/audio.mp3',
   },
 }

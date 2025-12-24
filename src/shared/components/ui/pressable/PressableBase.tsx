@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * PressableBaseProps
@@ -37,12 +37,12 @@ export const PressableBase = ({
   accessible = true,
   accessibilityRole = 'button',
   style,
-  testId,
+  testID,
   ...rest
 }: PressableBaseProps): React.JSX.Element => {
   return (
     <RNPressable
-      testID={testId}
+      testID={testID}
       accessible={accessible}
       accessibilityRole={accessibilityRole}
       style={state => [styles.pressable, style?.(state)]}

@@ -19,20 +19,27 @@ export default meta
  */
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const Default = {
   render: () => (
     <FormField
+      testID="StoryFormField"
       label="Email"
       hint="Enter your email address">
-      <TextInput placeholder="Enter your email" />
+      <TextInput
+        testID="StoryTextInput"
+        placeholder="Enter your email"
+      />
     </FormField>
   ),
 }
 
-export const WithValue: Story = {
+export const WithValue = {
   render: () => (
-    <FormField label="Username">
+    <FormField
+      testID="StoryFormField"
+      label="Username">
       <TextInput
+        testID="StoryTextInput"
         placeholder="Enter username"
         value="john.doe"
       />
@@ -40,12 +47,14 @@ export const WithValue: Story = {
   ),
 }
 
-export const Required: Story = {
+export const Required = {
   render: () => (
     <FormField
+      testID="StoryFormField"
       label="Password"
       required={true}>
       <TextInput
+        testID="StoryTextInput"
         placeholder="Enter password"
         secureTextEntry={true}
       />
@@ -53,22 +62,28 @@ export const Required: Story = {
   ),
 }
 
-export const WithHint: Story = {
+export const WithHint = {
   render: () => (
     <FormField
+      testID="StoryFormField"
       label="Phone Number"
       hint="Enter your phone number with country code">
-      <TextInput placeholder="+1 (555) 123-4567" />
+      <TextInput
+        testID="StoryTextInput"
+        placeholder="+1 (555) 123-4567"
+      />
     </FormField>
   ),
 }
 
-export const WithError: Story = {
+export const WithError = {
   render: () => (
     <FormField
+      testID="StoryFormField"
       label="Email"
       error="Please enter a valid email address">
       <TextInput
+        testID="StoryTextInput"
         placeholder="Enter your email"
         value="invalid-email"
         hasError={true}
@@ -77,12 +92,14 @@ export const WithError: Story = {
   ),
 }
 
-export const Disabled: Story = {
+export const Disabled = {
   render: () => (
     <FormField
+      testID="StoryFormField"
       label="Disabled Field"
       disabled={true}>
       <TextInput
+        testID="StoryTextInput"
         placeholder="Cannot edit this"
         value="Read-only value"
         disabled={true}
@@ -91,10 +108,13 @@ export const Disabled: Story = {
   ),
 }
 
-export const Multiline: Story = {
+export const Multiline = {
   render: () => (
-    <FormField label="Description">
+    <FormField
+      testID="StoryFormField"
+      label="Description">
       <TextInput
+        testID="StoryTextInput"
         placeholder="Enter a description"
         multiline={true}
         numberOfLines={4}
@@ -104,9 +124,10 @@ export const Multiline: Story = {
   ),
 }
 
-export const NoLabel: Story = {
+export const NoLabel = {
   render: () => (
     <TextInput
+      testID="StoryTextInput"
       placeholder="Search..."
       accessibilityLabel="Search input"
     />
@@ -135,11 +156,13 @@ const InteractiveExample = (): React.JSX.Element => {
 
   return (
     <FormField
+      testID="StoryFormField"
       label="Email Address"
       error={error}
       hint={!error ? 'We will never share your email' : undefined}
       required={true}>
       <TextInput
+        testID="StoryTextInput"
         placeholder="you@example.com"
         value={value}
         onChangeText={handleChange}
@@ -152,7 +175,7 @@ const InteractiveExample = (): React.JSX.Element => {
   )
 }
 
-export const Interactive: Story = {
+export const Interactive = {
   render: (): React.JSX.Element => <InteractiveExample />,
 }
 
@@ -164,37 +187,60 @@ export const Interactive: Story = {
  */
 const AllStatesExample = (): React.JSX.Element => {
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <FormField
+        testID="StoryFormField"
         label="Default"
         hint="Default state">
-        <TextInput placeholder="Default state" />
-      </FormField>
-      <FormField label="With Value">
-        <TextInput value="Sample text" />
+        <TextInput
+          testID="StoryTextInput"
+          placeholder="Default state"
+        />
       </FormField>
       <FormField
+        testID="StoryFormField"
+        label="With Value">
+        <TextInput
+          testID="StoryTextInput"
+          value="Sample text"
+        />
+      </FormField>
+      <FormField
+        testID="StoryFormField"
         label="Required"
         required={true}>
-        <TextInput placeholder="Required field" />
+        <TextInput
+          testID="StoryTextInput"
+          placeholder="Required field"
+        />
       </FormField>
       <FormField
+        testID="StoryFormField"
         label="With Hint"
         hint="This is a helpful hint">
-        <TextInput placeholder="Helpful input" />
+        <TextInput
+          testID="StoryTextInput"
+          placeholder="Helpful input"
+        />
       </FormField>
       <FormField
+        testID="StoryFormField"
         label="With Error"
         error="This field has an error">
         <TextInput
+          testID="StoryTextInput"
           value="invalid"
           hasError={true}
         />
       </FormField>
       <FormField
+        testID="StoryFormField"
         label="Disabled"
         disabled={true}>
         <TextInput
+          testID="StoryTextInput"
           value="Cannot edit"
           disabled={true}
         />
@@ -203,6 +249,6 @@ const AllStatesExample = (): React.JSX.Element => {
   )
 }
 
-export const AllStates: Story = {
+export const AllStates = {
   render: (): React.JSX.Element => <AllStatesExample />,
 }

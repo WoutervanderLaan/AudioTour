@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {IconButton} from '@/shared/components/ui/pressable/IconButton'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * WithDelete
@@ -48,20 +48,20 @@ export const Thumbnail = ({
   deletable,
   size = 'md',
   onDelete,
-  testId,
+  testID,
   ...image
 }: ThumbnailProps): React.JSX.Element => {
   return (
-    <Column testId={`${testId}View` as `${string}View`}>
+    <Column testID={`${testID}ContainerColumn`}>
       <Image
         {...image}
-        testID={testId}
+        testID={testID}
         style={styles[size]}
         resizeMode="cover"
       />
       {!!deletable && (
         <IconButton
-          testId={`${testId}DeleteIconButton` as `${string}IconButton`}
+          testID={`${testID}DeleteIconButton`}
           name="cancel"
           onPress={onDelete}
         />

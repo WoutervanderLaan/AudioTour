@@ -11,7 +11,7 @@ import {
 import type {IconName} from '@/core/navigation/types'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * NavItemProps
@@ -19,7 +19,7 @@ import type {TestProps} from '@/shared/types/test'
  */
 export type NavItemProps = Omit<
   PressableBaseProps,
-  'children' | 'style' | 'testId'
+  'children' | 'style' | 'testID'
 > &
   TestProps<'NavItem'> & {
     /**
@@ -44,21 +44,21 @@ export const NavItem = ({
   label,
   icon,
   disabled,
-  testId,
+  testID,
   ...rest
 }: NavItemProps): React.JSX.Element => {
   return (
     <PressableBase
-      testId={`${testId}Pressable` as `${string}Pressable`}
+      testID={`${testID}Pressable`}
       disabled={disabled}
       style={({pressed}) => [styles.container({pressed, disabled: !!disabled})]}
       {...rest}>
       <Row
-        testId={`${testId}ContainerRowView` as `${string}View`}
+        testID={`${testID}ContainerRow`}
         justifyContent="space-between"
         padding="md">
         <Row
-          testId={`${testId}ContentRowView` as `${string}View`}
+          testID={`${testID}ContentRow`}
           gap="md"
           centerX>
           {!!icon && (
@@ -68,7 +68,11 @@ export const NavItem = ({
               color={styles.icon.color}
             />
           )}
-          <Text.Paragraph testId={`${testId}LabelText` as `${string}Text`} variant="small">{label}</Text.Paragraph>
+          <Text.Paragraph
+            testID={`${testID}LabelText`}
+            variant="small">
+            {label}
+          </Text.Paragraph>
         </Row>
         <MaterialIcons
           name="chevron-right"

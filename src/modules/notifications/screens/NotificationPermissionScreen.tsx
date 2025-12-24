@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
@@ -11,7 +12,7 @@ import {logger} from '@/core/lib/logger/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable/Button'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
@@ -89,18 +90,18 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
   const isPending = isRequesting || toggleMutation.isPending
 
   return (
-    <Screen.Static testId="NotificationPermissionScreen">
+    <Screen.Static testID="NotificationPermissionScreen">
       <Column
         flex={1}
         padding="lg"
         paddingTop="xl"
         gap="lg"
-        testId="NotificationPermissionScreenContainerView">
+        testID="NotificationPermissionScreenContainerColumn">
         <Column
           flex={1}
           gap="md"
           centerX
-          testId="NotificationPermissionScreenContentView">
+          testID="NotificationPermissionScreenContentColumn">
           <MaterialIcons
             name="notifications-active"
             size={80}
@@ -109,18 +110,19 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
 
           <Spacer
             size="md"
-            testId="NotificationPermissionScreenTopSpacerView" />
+            testID="NotificationPermissionScreenTopSpacer"
+          />
 
           <Text.Title
             align="center"
-            testId="NotificationPermissionScreenTitleText">
+            testID="NotificationPermissionScreenTitleText">
             Stay Updated
           </Text.Title>
 
           <Text.Paragraph
             color="secondary"
             align="center"
-            testId="NotificationPermissionScreenDescriptionText">
+            testID="NotificationPermissionScreenDescriptionText">
             Enable push notifications to receive updates about your audio tours,
             new narratives for your collected objects, and personalized
             recommendations.
@@ -128,54 +130,55 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
 
           <Spacer
             size="lg"
-            testId="NotificationPermissionScreenMiddleSpacerView" />
+            testID="NotificationPermissionScreenMiddleSpacer"
+          />
 
           <Column
             gap="sm"
-            testId="NotificationPermissionScreenBenefitsView">
+            testID="NotificationPermissionScreenBenefitsColumn">
             <NotificationBenefit
               icon="tour"
               title="Tour Updates"
               description="Get notified when you complete tours and earn achievements"
-              testId="NotificationPermissionScreenTourUpdatesBenefit"
+              testID="NotificationPermissionScreenTourUpdatesBenefit"
             />
             <NotificationBenefit
               icon="auto-stories"
               title="New Narratives"
               description="Discover new stories about museum objects you've captured"
-              testId="NotificationPermissionScreenNewNarrativesBenefit"
+              testID="NotificationPermissionScreenNewNarrativesBenefit"
             />
             <NotificationBenefit
               icon="recommend"
               title="Recommendations"
               description="Receive personalized suggestions based on your interests"
-              testId="NotificationPermissionScreenRecommendationsBenefit"
+              testID="NotificationPermissionScreenRecommendationsBenefit"
             />
           </Column>
         </Column>
 
         <Column
           gap="sm"
-          testId="NotificationPermissionScreenActionsView">
+          testID="NotificationPermissionScreenActionsColumn">
           <Button
             label="Enable Notifications"
             onPress={handleEnableNotifications}
             disabled={isPending}
-            testId="NotificationPermissionScreenEnableButton"
+            testID="NotificationPermissionScreenEnableButton"
           />
           <Button
             label="Not Now"
             variant="secondary"
             onPress={handleSkip}
             disabled={isPending}
-            testId="NotificationPermissionScreenNotNowButton"
+            testID="NotificationPermissionScreenNotNowButton"
           />
           <Button
             label="Open Settings"
             variant="secondary"
             onPress={handleOpenSettings}
             disabled={isPending}
-            testId="NotificationPermissionScreenOpenSettingsButton"
+            testID="NotificationPermissionScreenOpenSettingsButton"
           />
         </Column>
       </Column>
@@ -203,7 +206,7 @@ type NotificationBenefitProps = {
   /**
    * Test ID for the benefit component
    */
-  testId?: string
+  testID?: string
 }
 
 /**
@@ -217,17 +220,17 @@ const NotificationBenefit = ({
   icon,
   title,
   description,
-  testId,
+  testID,
 }: NotificationBenefitProps): React.JSX.Element => {
   return (
     <Column
       gap="xs"
       style={styles.benefitContainer}
-      testId={`${testId}View`}>
+      testID={`${testID}Column`}>
       <Column
         gap="sm"
         style={styles.benefitRow}
-        testId={`${testId}ContentView`}>
+        testID={`${testID}ContentColumn`}>
         <MaterialIcons
           name={icon}
           size={24}
@@ -236,12 +239,12 @@ const NotificationBenefit = ({
         <Column
           flex={1}
           gap="xs"
-          testId={`${testId}TextContainerView`}>
-          <Text.Label testId={`${testId}TitleText`}>{title}</Text.Label>
+          testID={`${testID}TextContainerColumn`}>
+          <Text.Label testID={`${testID}TitleText`}>{title}</Text.Label>
           <Text.Paragraph
             variant="small"
             color="secondary"
-            testId={`${testId}DescriptionText`}>
+            testID={`${testID}DescriptionText`}>
             {description}
           </Text.Paragraph>
         </Column>

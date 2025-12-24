@@ -12,17 +12,13 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * TourPhotoSubmitFormInputsProps
  * Props for the TourPhotoSubmitFormInputs component
  */
-type TourPhotoSubmitFormInputsProps = {
-  /**
-   * Test ID for the component
-   */
-  testId?: string
-}
+type TourPhotoSubmitFormInputsProps = TestProps<'TourPhotoSubmitFormInputs'>
 
 /**
  * TourPhotoSubmitFormInputs
@@ -36,14 +32,14 @@ type TourPhotoSubmitFormInputsProps = {
  * @returns React element containing the complete photo submission form inputs
  */
 export const TourPhotoSubmitFormInputs = ({
-  testId = 'TourPhotoSubmitFormInputs',
+  testID,
 }: TourPhotoSubmitFormInputsProps): React.JSX.Element => {
   const {control} = useFormContext<PhotoSubmitForm>()
 
   return (
     <Column
       gap="md"
-      testId={`${testId}ContainerView`}>
+      testID={`${testID}ContainerColumn`}>
       <ImageInputControlled
         control={control}
         name="photos"
@@ -51,10 +47,10 @@ export const TourPhotoSubmitFormInputs = ({
         maxImages={MAX_PHOTOS}
         required={true}
         hint="Upload 1-5 photos of the museum object"
-        testId={`${testId}PhotosImageInput`}
+        testID={`${testID}PhotosImageInput`}
       />
 
-      <Text.Title testId={`${testId}SectionTitleText`}>
+      <Text.Title testID={`${testID}SectionTitleText`}>
         Object Details (Optional)
       </Text.Title>
 
@@ -63,7 +59,7 @@ export const TourPhotoSubmitFormInputs = ({
         name="title"
         label="Title"
         placeholder="e.g., The Starry Night"
-        testId={`${testId}TitleTextInput`}
+        testID={`${testID}TitleTextInput`}
       />
 
       <TextInputControlled
@@ -71,33 +67,33 @@ export const TourPhotoSubmitFormInputs = ({
         name="artist"
         label="Artist"
         placeholder="e.g., Vincent van Gogh"
-        testId={`${testId}ArtistTextInput`}
+        testID={`${testID}ArtistTextInput`}
       />
 
       <Row
         gap="md"
-        testId={`${testId}YearMaterialView`}>
+        testID={`${testID}YearMaterialRow`}>
         <Box
           flex={1}
-          testId={`${testId}YearContainerView`}>
+          testID={`${testID}YearContainerBox`}>
           <TextInputControlled
             control={control}
             name="year"
             label="Year"
             placeholder="e.g., 1889"
             keyboardType="numeric"
-            testId={`${testId}YearTextInput`}
+            testID={`${testID}YearTextInput`}
           />
         </Box>
         <Box
           flex={1}
-          testId={`${testId}MaterialContainerView`}>
+          testID={`${testID}MaterialContainerBox`}>
           <TextInputControlled
             control={control}
             name="material"
             label="Material"
             placeholder="e.g., Oil on canvas"
-            testId={`${testId}MaterialTextInput`}
+            testID={`${testID}MaterialTextInput`}
           />
         </Box>
       </Row>
@@ -109,7 +105,7 @@ export const TourPhotoSubmitFormInputs = ({
         placeholder="Add any additional notes..."
         multiline
         numberOfLines={4}
-        testId={`${testId}DescriptionTextInput`}
+        testID={`${testID}DescriptionTextInput`}
       />
     </Column>
   )

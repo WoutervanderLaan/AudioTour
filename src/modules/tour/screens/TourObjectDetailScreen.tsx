@@ -11,7 +11,7 @@ import type {TourRouteName, TourStackParams} from '../routes.types'
 import {useFeedItem} from '../store/selectors'
 
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 
 /**
  * TourObjectDetailScreenProps
@@ -42,29 +42,30 @@ export const TourObjectDetailScreen = ({
   const feedItem = useFeedItem(feedItemId)
 
   if (!feedItem) {
-    return <ObjectNotFound testId="TourObjectDetailScreenNotFound" />
+    return <ObjectNotFound testID="TourObjectDetailScreenObjectNotFound" />
   }
 
   return (
-    <Screen.Scrollable testId="TourObjectDetailScreen">
+    <Screen.Scrollable testID="TourObjectDetailScreen">
       <Column
         gap="lg"
-        testId="TourObjectDetailScreenContainerView">
+        testID="TourObjectDetailScreenContainerColumn">
         <PhotoGallery
           photos={feedItem.photos}
           activePhotoIndex={activePhotoIndex}
           onPhotoSelect={setActivePhotoIndex}
-          testId="TourObjectDetailScreenPhotoGallery"
+          testID="TourObjectDetailScreenPhotoGallery"
         />
 
         <Column
           paddingH="md"
           paddingBottom="xl"
           gap="lg"
-          testId="TourObjectDetailScreenContentView">
+          testID="TourObjectDetailScreenContentColumn">
           <ObjectMetadata
             metadata={feedItem.metadata}
-            testId="TourObjectDetailScreenMetadata" />
+            testID="TourObjectDetailScreenObjectMetadata"
+          />
 
           <ObjectDetails
             description={feedItem.metadata?.description}
@@ -74,7 +75,7 @@ export const TourObjectDetailScreen = ({
             audioUrl={feedItem.audioUrl}
             status={feedItem.status}
             error={feedItem.error}
-            testId="TourObjectDetailScreenDetails"
+            testID="TourObjectDetailScreenObjectDetails"
           />
         </Column>
       </Column>

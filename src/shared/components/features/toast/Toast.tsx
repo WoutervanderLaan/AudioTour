@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Text} from '@/shared/components/ui/typography'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 export enum ToastType {
   SUCCESS = 'success',
@@ -38,23 +38,21 @@ type Props = Readonly<
 export const Toast = ({
   message,
   type = ToastType.INFO,
-  testId,
+  testID,
 }: Props): React.JSX.Element => {
   const {top} = useSafeAreaInsets()
 
   return (
     <Box
-      testId={`${testId}ContainerView` as `${string}View`}
+      testID={`${testID}ContainerBox`}
       padding="md"
       style={styles.absolute}>
       <Box
-        testId={`${testId}View` as `${string}View`}
+        testID={`${testID}InnerBox`}
         style={[styles.toast, styles[type], {top: top + 20}]}
         center
         padding="md">
-        <Text.Label testId={`${testId}MessageText` as `${string}Text`}>
-          {message}
-        </Text.Label>
+        <Text.Label testID={`${testID}MessageText`}>{message}</Text.Label>
       </Box>
     </Box>
   )

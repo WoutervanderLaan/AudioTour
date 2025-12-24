@@ -11,10 +11,12 @@ const meta = {
   decorators: [
     Story => (
       <Column
+        testID="StoryColumn"
         style={{
           backgroundColor: 'rgba(0,0,0,0.1)',
         }}>
         <Box
+          testID="StoryBox"
           padding="sm"
           style={{
             borderWidth: 2,
@@ -26,6 +28,7 @@ const meta = {
         </Box>
         <Story />
         <Box
+          testID="StoryBox"
           padding="sm"
           style={{
             borderWidth: 2,
@@ -52,5 +55,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     size: 'xxl',
+    testID: 'StorySpacer',
   },
 }

@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * TextInputProps
@@ -68,7 +68,7 @@ export type TextInputProps = Omit<RNTextInputProps, 'editable' | 'testID'> &
 export const TextInput = ({
   disabled = false,
   hasError = false,
-  testId,
+  testID,
   inputId,
   labelId,
   style,
@@ -104,7 +104,7 @@ export const TextInput = ({
   }
 
   const editable = !disabled
-  const nativeId = inputId || testId || 'text-input'
+  const nativeId = inputId || testID || 'text-input'
 
   const inputStyles = [
     styles.input,
@@ -116,7 +116,7 @@ export const TextInput = ({
 
   return (
     <RNTextInput
-      testID={testId}
+      testID={testID}
       nativeID={nativeId}
       editable={editable}
       style={inputStyles}

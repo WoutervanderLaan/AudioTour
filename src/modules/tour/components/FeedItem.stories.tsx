@@ -45,6 +45,7 @@ export const Uploading: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -57,6 +58,7 @@ export const Processing: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -73,6 +75,7 @@ export const GeneratingNarrative: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -91,6 +94,7 @@ export const GeneratingAudio: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -111,6 +115,7 @@ export const Ready: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -124,6 +129,7 @@ export const Error: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -143,6 +149,7 @@ export const MultiplePhotos: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -162,6 +169,7 @@ export const MoreThanFourPhotos: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -176,6 +184,7 @@ export const WithoutMetadata: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }
 
@@ -194,5 +203,6 @@ export const ReadyWithoutAudio: Story = {
     onPress: (): void => {
       logger.debug('Feed item pressed')
     },
+    testID: 'StoryFeedItem',
   },
 }

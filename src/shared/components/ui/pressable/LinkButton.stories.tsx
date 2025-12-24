@@ -20,6 +20,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     label: 'Sign up',
+    testID: 'StoryLinkButton',
   },
 }
 
@@ -27,6 +28,7 @@ export const Disabled: Story = {
   args: {
     label: 'Sign up',
     disabled: true,
+    testID: 'StoryLinkButton',
   },
 }
 
@@ -36,5 +38,6 @@ export const WithOnPress: Story = {
     onPress: (): void => {
       logger.debug('LinkButton pressed!')
     },
+    testID: 'StoryLinkButton',
   },
 }

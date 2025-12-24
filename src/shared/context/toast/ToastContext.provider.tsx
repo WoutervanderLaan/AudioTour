@@ -75,7 +75,7 @@ export const ToastProvider = ({
       {!!toast && (
         <Toast
           key={toast.id}
-          testId={`${toast.id || 'Toast'}Toast` as `${string}Toast`}
+          testID={`${toast.id || 'Toast'}Toast` as `${string}Toast`}
           {...toast}
         />
       )}

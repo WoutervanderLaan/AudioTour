@@ -21,6 +21,7 @@ export const Primary: Story = {
   args: {
     variant: 'primary',
     label: 'Primary Button',
+    testID: 'StoryButton',
   },
 }
 
@@ -28,6 +29,7 @@ export const Secondary: Story = {
   args: {
     variant: 'secondary',
     label: 'Secondary Button',
+    testID: 'StoryButton',
   },
 }
 
@@ -36,6 +38,7 @@ export const Disabled: Story = {
     variant: 'primary',
     label: 'Disabled Button',
     disabled: true,
+    testID: 'StoryButton',
   },
 }
 
@@ -46,5 +49,6 @@ export const WithOnPress: Story = {
     onPress: (): void => {
       logger.debug('Button pressed!')
     },
+    testID: 'StoryButton',
   },
 }

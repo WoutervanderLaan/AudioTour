@@ -29,13 +29,17 @@ type Story = StoryObj<typeof meta>
  * @returns {React.JSX.Element} Simple input component
  */
 const SimpleInput = (): React.JSX.Element => (
-  <TextInput placeholder="Enter text..." />
+  <TextInput
+    testID="StoryTextInput"
+    placeholder="Enter text..."
+  />
 )
 
 export const Default: Story = {
   args: {
     label: 'Email Address',
     children: <SimpleInput />,
+    testID: 'StoryFormField',
   },
 }
 
@@ -44,6 +48,7 @@ export const WithHint: Story = {
     label: 'Username',
     hint: 'Choose a unique username',
     children: <SimpleInput />,
+    testID: 'StoryFormField',
   },
 }
 
@@ -51,6 +56,7 @@ export const WithError: Story = {
   args: {
     label: 'Password',
     error: 'Password must be at least 8 characters',
+    testID: 'StoryFormField',
     children: <SimpleInput />,
   },
 }
@@ -61,6 +67,7 @@ export const Required: Story = {
     required: true,
     hint: 'Enter your first and last name',
     children: <SimpleInput />,
+    testID: 'StoryFormField',
   },
 }
 
@@ -70,6 +77,7 @@ export const Disabled: Story = {
     disabled: true,
     hint: 'This field cannot be edited',
     children: <SimpleInput />,
+    testID: 'StoryFormField',
   },
 }
 
@@ -77,6 +85,7 @@ export const WithoutLabel: Story = {
   args: {
     hint: 'Search for items...',
     children: <SimpleInput />,
+    testID: 'StoryFormField',
   },
 }
 
@@ -86,6 +95,7 @@ export const CustomGap: Story = {
     hint: 'Provide a detailed description',
     gap: 'md',
     children: <SimpleInput />,
+    testID: 'StoryFormField',
   },
 }
 
@@ -110,11 +120,13 @@ const InteractiveExample = (): React.JSX.Element => {
 
   return (
     <FormField
+      testID="StoryFormField"
       label="Email Address"
       error={error}
       hint={!error ? 'We will never share your email' : undefined}
       required={true}>
       <TextInput
+        testID="StoryTextInput"
         placeholder="you@example.com"
         value={value}
         onChangeText={handleChange}
@@ -137,14 +149,27 @@ export const Interactive = {
  */
 const CustomLabelExample = (): React.JSX.Element => (
   <FormField
+    testID="StoryFormField"
     label="Custom Label"
     required
     hint="This field has a custom label with extra styling"
     renderLabel={({label, required}) => (
-      <GradientBackground>
-        <Row padding="md">
-          <Text.Title color="inverse">{label}</Text.Title>
-          {required && <Text.Title color="warning">*</Text.Title>}
+      <GradientBackground testID="StoryGradientBackground">
+        <Row
+          testID="StoryRow"
+          padding="md">
+          <Text.Title
+            testID="StoryText"
+            color="inverse">
+            {label}
+          </Text.Title>
+          {required && (
+            <Text.Title
+              testID="StoryText"
+              color="warning">
+              *
+            </Text.Title>
+          )}
         </Row>
       </GradientBackground>
     )}>
@@ -164,33 +189,43 @@ export const CustomLabel = {
  */
 const AllStatesExample = (): React.JSX.Element => {
   return (
-    <Column gap="lg">
-      <FormField label="Default">
+    <Column
+      testID="StoryColumn"
+      gap="lg">
+      <FormField
+        testID="StoryFormField"
+        label="Default">
         <SimpleInput />
       </FormField>
       <FormField
+        testID="StoryFormField"
         label="With Hint"
         hint="This is a helpful hint">
         <SimpleInput />
       </FormField>
       <FormField
+        testID="StoryFormField"
         label="With Error"
         error="This field has an error">
         <SimpleInput />
       </FormField>
       <FormField
+        testID="StoryFormField"
         label="Required"
         required
         hint="This field is required">
         <SimpleInput />
       </FormField>
       <FormField
+        testID="StoryFormField"
         label="Disabled"
         disabled
         hint="This field is disabled">
         <SimpleInput />
       </FormField>
-      <FormField hint="Without label">
+      <FormField
+        testID="StoryFormField"
+        hint="Without label">
         <SimpleInput />
       </FormField>
     </Column>

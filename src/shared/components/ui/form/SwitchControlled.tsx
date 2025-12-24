@@ -9,34 +9,31 @@ import {
 import {FormField} from './FormField'
 import {Switch, type SwitchProps} from './Switch'
 
-import type {TestProps} from '@/shared/types/test'
-
 /**
  * SwitchControlledProps
  * Props for the SwitchControlled component
  */
 export type SwitchControlledProps<T extends FieldValues> = Omit<
   SwitchProps,
-  'value' | 'onChange' | 'hasError' | 'testId'
-> &
-  TestProps<'Switch'> & {
-    /**
-     * control - React Hook Form control object
-     */
-    control: Control<T>
-    /**
-     * name - Field name in the form (must be a valid path in the form data)
-     */
-    name: Path<T>
-    /**
-     * defaultValue - Default value for the field
-     */
-    defaultValue?: boolean
-    /**
-     * hint - Helper text to display when no error
-     */
-    hint?: string
-  }
+  'value' | 'onChange' | 'hasError'
+> & {
+  /**
+   * control - React Hook Form control object
+   */
+  control: Control<T>
+  /**
+   * name - Field name in the form (must be a valid path in the form data)
+   */
+  name: Path<T>
+  /**
+   * defaultValue - Default value for the field
+   */
+  defaultValue?: boolean
+  /**
+   * hint - Helper text to display when no error
+   */
+  hint?: string
+}
 
 /**
  * SwitchControlled
@@ -101,7 +98,7 @@ export const SwitchControlled = <T extends FieldValues>({
   defaultValue,
   hint,
   disabled,
-  testId,
+  testID,
   ...rest
 }: SwitchControlledProps<T>): React.JSX.Element => {
   return (
@@ -114,7 +111,7 @@ export const SwitchControlled = <T extends FieldValues>({
         fieldState: {error},
       }): React.JSX.Element => (
         <FormField
-          testId={`${testId}View` as `${string}View`}
+          testID={`${testID}FormField`}
           error={error?.message}
           hint={hint}
           disabled={disabled}>
@@ -123,7 +120,7 @@ export const SwitchControlled = <T extends FieldValues>({
             onChange={onChange}
             hasError={!!error}
             disabled={disabled}
-            testId={testId}
+            testID={testID}
             {...rest}
           />
         </FormField>

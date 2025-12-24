@@ -51,8 +51,11 @@ const SimpleFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="lg">
+    <Column
+      testID="StoryColumn"
+      gap="lg">
       <ImageInputControlled
+        testID="StoryImageInput"
         control={control}
         name="photos"
         label="Upload Photos"
@@ -61,15 +64,20 @@ const SimpleFormExample = (): React.JSX.Element => {
         required={true}
       />
       <Button
+        testID="StoryButton"
         label="Submit"
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
       />
 
-      <Text.Label color="secondary">
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Form Valid: {formState.isValid ? 'Yes' : 'No'}
       </Text.Label>
-      <Text.Label color="secondary">
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Errors:{' '}
         {Object.keys(formState.errors).length > 0
           ? Object.keys(formState.errors).join(', ')
@@ -115,8 +123,11 @@ const SingleImageFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <ImageInputControlled
+        testID="StoryImageInput"
         control={control}
         name="profilePhoto"
         label="Profile Photo"
@@ -126,6 +137,7 @@ const SingleImageFormExample = (): React.JSX.Element => {
         thumbnailSize="lg"
       />
       <Button
+        testID="StoryButton"
         label="Save Profile"
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid}
@@ -182,10 +194,13 @@ const ComplexFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
-      <Text.Title>Create Gallery</Text.Title>
+    <Column
+      testID="StoryColumn"
+      gap="md">
+      <Text.Title testID="StoryText">Create Gallery</Text.Title>
 
       <ImageInputControlled
+        testID="StoryImageInput"
         control={control}
         name="coverPhoto"
         label="Cover Photo"
@@ -196,6 +211,7 @@ const ComplexFormExample = (): React.JSX.Element => {
       />
 
       <ImageInputControlled
+        testID="StoryImageInput"
         control={control}
         name="photos"
         label="Gallery Photos"
@@ -204,19 +220,28 @@ const ComplexFormExample = (): React.JSX.Element => {
         required={true}
       />
 
-      <Text.Label>Cover Photo: {coverPhoto.length} selected</Text.Label>
-      <Text.Label>Gallery Photos: {photos.length} selected</Text.Label>
+      <Text.Label testID="StoryText">
+        Cover Photo: {coverPhoto.length} selected
+      </Text.Label>
+      <Text.Label testID="StoryText">
+        Gallery Photos: {photos.length} selected
+      </Text.Label>
 
       <Button
+        testID="StoryButton"
         label={formState.isSubmitting ? 'Creating...' : 'Create Gallery'}
         onPress={handleSubmit(onSubmit)}
         disabled={!formState.isValid || formState.isSubmitting}
       />
 
-      <Text.Label color="secondary">
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Form Valid: {formState.isValid ? 'Yes' : 'No'}
       </Text.Label>
-      <Text.Label color="secondary">
+      <Text.Label
+        testID="StoryText"
+        color="secondary">
         Errors:{' '}
         {Object.keys(formState.errors).length > 0
           ? Object.keys(formState.errors).join(', ')
@@ -264,8 +289,11 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <ImageInputControlled
+        testID="StoryImageInput"
         control={control}
         name="photos"
         label="Update Photos"
@@ -275,6 +303,7 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
       />
 
       <Button
+        testID="StoryButton"
         label="Update"
         onPress={handleSubmit(onSubmit)}
       />
@@ -314,8 +343,11 @@ const SmallThumbnailsFormExample = (): React.JSX.Element => {
   }
 
   return (
-    <Column gap="md">
+    <Column
+      testID="StoryColumn"
+      gap="md">
       <ImageInputControlled
+        testID="StoryImageInput"
         control={control}
         name="photos"
         label="Small Thumbnails"
@@ -326,6 +358,7 @@ const SmallThumbnailsFormExample = (): React.JSX.Element => {
       />
 
       <Button
+        testID="StoryButton"
         label="Submit"
         onPress={handleSubmit(onSubmit)}
       />

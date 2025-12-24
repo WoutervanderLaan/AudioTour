@@ -6,6 +6,7 @@ import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 import {capitalizeFirstLetter} from '@/shared/utils/capitalizeFirstLetter'
 
 /**
@@ -41,11 +42,7 @@ export type ObjectDetailsProps = {
    * Error message if any
    */
   error?: string
-  /**
-   * Test ID for the component
-   */
-  testId?: string
-}
+} & TestProps<'ObjectDetails'>
 
 /**
  * ObjectDetails
@@ -62,20 +59,20 @@ export const ObjectDetails = ({
   audioUrl,
   status,
   error,
-  testId = 'ObjectDetails',
+  testID,
 }: ObjectDetailsProps): React.JSX.Element => {
   return (
     <Column
       gap="lg"
-      testId={`${testId}ContainerView`}>
+      testID={`${testID}ContainerColumn`}>
       {description !== undefined && (
         <Column
           gap="xs"
-          testId={`${testId}DescriptionView`}>
-          <Text.Label testId={`${testId}DescriptionLabelText`}>
+          testID={`${testID}DescriptionColumn`}>
+          <Text.Label testID={`${testID}DescriptionLabelText`}>
             Description
           </Text.Label>
-          <Text.Paragraph testId={`${testId}DescriptionText`}>
+          <Text.Paragraph testID={`${testID}DescriptionText`}>
             {description}
           </Text.Paragraph>
         </Column>
@@ -84,15 +81,15 @@ export const ObjectDetails = ({
       {recognitionConfidence !== undefined && (
         <Column
           gap="xs"
-          testId={`${testId}RecognitionView`}>
-          <Text.Label testId={`${testId}RecognitionLabelText`}>
+          testID={`${testID}RecognitionColumn`}>
+          <Text.Label testID={`${testID}RecognitionLabelText`}>
             Recognition
           </Text.Label>
-          <Text.Label testId={`${testId}RecognitionConfidenceText`}>
+          <Text.Label testID={`${testID}RecognitionConfidenceText`}>
             Confidence: {recognitionConfidence.toFixed(1)}%
           </Text.Label>
           {objectId !== undefined && (
-            <Text.Label testId={`${testId}RecognitionObjectIdText`}>
+            <Text.Label testID={`${testID}RecognitionObjectIdText`}>
               Object ID: {objectId}
             </Text.Label>
           )}
@@ -102,11 +99,11 @@ export const ObjectDetails = ({
       {narrativeText !== undefined && (
         <Column
           gap="xs"
-          testId={`${testId}NarrativeView`}>
-          <Text.Label testId={`${testId}NarrativeLabelText`}>
+          testID={`${testID}NarrativeColumn`}>
+          <Text.Label testID={`${testID}NarrativeLabelText`}>
             Narrative
           </Text.Label>
-          <Text.Paragraph testId={`${testId}NarrativeText`}>
+          <Text.Paragraph testID={`${testID}NarrativeText`}>
             {narrativeText}
           </Text.Paragraph>
         </Column>
@@ -115,27 +112,28 @@ export const ObjectDetails = ({
       {audioUrl !== undefined && (
         <Column
           gap="xs"
-          testId={`${testId}AudioView`}>
-          <Text.Label testId={`${testId}AudioLabelText`}>Audio Tour</Text.Label>
+          testID={`${testID}AudioColumn`}>
+          <Text.Label testID={`${testID}AudioLabelText`}>Audio Tour</Text.Label>
           <AudioPlayer
             src={audioUrl}
-            testId={`${testId}AudioPlayer`} />
+            testID={`${testID}AudioPlayer`}
+          />
         </Column>
       )}
 
       {status !== 'ready' && (
-        <Box testId={`${testId}StatusView`}>
-          <Text.Label testId={`${testId}StatusText`}>
+        <Box testID={`${testID}StatusBox`}>
+          <Text.Label testID={`${testID}StatusText`}>
             Status: {capitalizeFirstLetter(status.replaceAll('_', ' '))}
           </Text.Label>
         </Box>
       )}
 
       {error !== undefined && (
-        <Box testId={`${testId}ErrorView`}>
+        <Box testID={`${testID}ErrorBox`}>
           <Text.Label
             color="warning"
-            testId={`${testId}ErrorText`}>
+            testID={`${testID}ErrorText`}>
             Error: {error}
           </Text.Label>
         </Box>

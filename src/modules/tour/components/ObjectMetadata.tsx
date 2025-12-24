@@ -5,6 +5,7 @@ import type {FeedItem} from '../types'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * ObjectMetadataProps
@@ -15,11 +16,7 @@ export type ObjectMetadataProps = {
    * Object metadata
    */
   metadata?: FeedItem['metadata']
-  /**
-   * Test ID for the component
-   */
-  testId?: string
-}
+} & TestProps<'ObjectMetadata'>
 
 /**
  * ObjectMetadata
@@ -30,7 +27,7 @@ export type ObjectMetadataProps = {
  */
 export const ObjectMetadata = ({
   metadata,
-  testId = 'ObjectMetadata',
+  testID,
 }: ObjectMetadataProps): React.JSX.Element | null => {
   if (!metadata) {
     return null
@@ -42,15 +39,13 @@ export const ObjectMetadata = ({
   return (
     <Column
       gap="lg"
-      testId={`${testId}ContainerView`}>
+      testID={`${testID}ContainerColumn`}>
       {metadata.title !== undefined && (
-        <Text.Title testId={`${testId}TitleText`}>
-          {metadata.title}
-        </Text.Title>
+        <Text.Title testID={`${testID}TitleText`}>{metadata.title}</Text.Title>
       )}
 
       {metadata.artist !== undefined && (
-        <Text.Paragraph testId={`${testId}ArtistText`}>
+        <Text.Paragraph testID={`${testID}ArtistText`}>
           {metadata.artist}
         </Text.Paragraph>
       )}
@@ -59,14 +54,14 @@ export const ObjectMetadata = ({
         <Row
           gap="md"
           wrap="wrap"
-          testId={`${testId}DetailsView`}>
+          testID={`${testID}DetailsRow`}>
           {metadata.year !== undefined && (
-            <Text.Label testId={`${testId}YearText`}>
+            <Text.Label testID={`${testID}YearText`}>
               {metadata.year}
             </Text.Label>
           )}
           {metadata.material !== undefined && (
-            <Text.Label testId={`${testId}MaterialText`}>
+            <Text.Label testID={`${testID}MaterialText`}>
               {metadata.material}
             </Text.Label>
           )}

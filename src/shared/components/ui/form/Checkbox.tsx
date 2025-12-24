@@ -8,7 +8,7 @@ import {PressableBase} from '../pressable/PressableBase'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Text} from '@/shared/components/ui/typography'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * CHECKBOX_SIZE
@@ -53,7 +53,7 @@ type CheckboxLabelProps = {
   /** Whether the field is required */
   required: boolean
   /** Test ID for the label */
-  testId: string
+  testID: string
 }
 
 /**
@@ -68,17 +68,17 @@ const CheckboxLabel = ({
   labelId,
   disabled,
   required,
-  testId,
+  testID,
 }: CheckboxLabelProps): React.JSX.Element => (
   <Text.Label
-    testId={`${testId}LabelText` as `${string}Text`}
+    testID={`${testID}LabelText`}
     nativeID={labelId}
     color={disabled ? 'secondary' : 'default'}
     accessibilityRole="text">
     {label}
     {!!required && (
       <Text.Label
-        testId={`${testId}RequiredText` as `${string}Text`}
+        testID={`${testID}RequiredText`}
         color="warning"
         accessibilityLabel="required">
         {' '}
@@ -112,7 +112,7 @@ const CheckIndicator = (): React.JSX.Element => (
  * @param {boolean} props.checked - Whether the checkbox is checked
  * @param {boolean} props.hasError - Whether there is an error
  * @param {boolean} props.disabled - Whether the checkbox is disabled
- * @param {string} props.testId - Test ID for the checkbox box
+ * @param {string} props.testID - Test ID for the checkbox box
  * @returns {React.JSX.Element} Rendered checkbox box
  */
 const CheckboxBox = ({
@@ -120,16 +120,16 @@ const CheckboxBox = ({
   checked,
   hasError,
   disabled,
-  testId,
+  testID,
 }: {
   checkboxId: string
   checked: boolean
   hasError: boolean
   disabled: boolean
-  testId: string
+  testID: string
 }): React.JSX.Element => (
   <Box
-    testId={`${testId}BoxView` as `${string}View`}
+    testID={`${testID}ContainerBox`}
     nativeID={checkboxId}
     center
     style={[
@@ -182,7 +182,7 @@ export const Checkbox = ({
   hasError = false,
   checked = false,
   onChange,
-  testId,
+  testID,
   accessibilityLabel,
   accessibilityHint,
 }: CheckboxProps): React.JSX.Element => {
@@ -197,14 +197,14 @@ export const Checkbox = ({
     onChange?.(!checked)
   }
 
-  const checkboxId = testId || 'checkbox'
+  const checkboxId = testID || 'checkbox'
   const labelId = `${checkboxId}-label`
 
   return (
     <PressableBase
       accessible
       accessibilityRole="checkbox"
-      testId={`${testId}Pressable` as `${string}Pressable`}
+      testID={`${testID}ContainerPressable`}
       onPress={handlePress}
       disabled={disabled}
       style={({pressed}) => [pressed && styles.checkboxRowPressed]}
@@ -213,7 +213,7 @@ export const Checkbox = ({
       accessibilityState={{checked, disabled}}
       accessibilityLabelledBy={labelId}>
       <Row
-        testId={`${testId}View` as `${string}View`}
+        testID={`${testID}Row`}
         gap="sm"
         center>
         <CheckboxBox
@@ -221,7 +221,7 @@ export const Checkbox = ({
           checked={checked}
           hasError={hasError}
           disabled={disabled}
-          testId={testId}
+          testID={testID}
         />
         {!!label && (
           <CheckboxLabel
@@ -229,7 +229,7 @@ export const Checkbox = ({
             labelId={labelId}
             disabled={disabled}
             required={required}
-            testId={testId}
+            testID={testID}
           />
         )}
       </Row>

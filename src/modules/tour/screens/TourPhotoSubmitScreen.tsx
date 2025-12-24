@@ -14,7 +14,7 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable/Button'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
@@ -83,38 +83,38 @@ export const TourPhotoSubmitScreen = ({
     <FormProvider {...form}>
       <Screen.Scrollable
         keyboardAvoiding
-        testId="TourPhotoSubmitScreen">
+        testID="TourPhotoSubmitScreen">
         <Box
           paddingH="md"
           paddingBottom="xl"
-          testId="TourPhotoSubmitScreenContainerView">
+          testID="TourPhotoSubmitScreenContainerBox">
           <Column
             gap="lg"
-            testId="TourPhotoSubmitScreenContentView">
-            <TourPhotoSubmitFormInputs testId="TourPhotoSubmitScreenFormInputs" />
+            testID="TourPhotoSubmitScreenContentColumn">
+            <TourPhotoSubmitFormInputs testID="TourPhotoSubmitScreenTourPhotoSubmitFormInputs" />
 
             {!!submitError && (
-              <Text.Paragraph testId="TourPhotoSubmitScreenErrorText">
+              <Text.Paragraph testID="TourPhotoSubmitScreenErrorText">
                 {submitError}
               </Text.Paragraph>
             )}
 
             <Column
               gap="sm"
-              testId="TourPhotoSubmitScreenActionsView">
+              testID="TourPhotoSubmitScreenActionsColumn">
               <Button
                 label={isLoading ? 'Submitting...' : 'Submit'}
                 onPress={handleSubmit(onSubmit)}
                 disabled={isLoading}
-                testId="TourPhotoSubmitScreenSubmitButton"
+                testID="TourPhotoSubmitScreenSubmitButton"
               />
               {!!isLoading && (
                 <Row
                   gap="sm"
                   center
-                  testId="TourPhotoSubmitScreenLoadingView">
+                  testID="TourPhotoSubmitScreenLoadingRow">
                   <ActivityIndicator size="small" />
-                  <Text.Label testId="TourPhotoSubmitScreenLoadingText">
+                  <Text.Label testID="TourPhotoSubmitScreenLoadingText">
                     Processing photos...
                   </Text.Label>
                 </Row>
@@ -124,7 +124,7 @@ export const TourPhotoSubmitScreen = ({
                 onPress={goBack}
                 variant="secondary"
                 disabled={isLoading}
-                testId="TourPhotoSubmitScreenCancelButton"
+                testID="TourPhotoSubmitScreenCancelButton"
               />
             </Column>
           </Column>

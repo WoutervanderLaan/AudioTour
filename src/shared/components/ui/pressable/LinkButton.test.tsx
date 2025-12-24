@@ -9,35 +9,51 @@ import {LinkButton} from './LinkButton'
 describe('LinkButton', () => {
   describe('Rendering', () => {
     it('should render label correctly', () => {
-      render(<LinkButton label="Click here" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Click here"
+        />,
+      )
       expect(screen.getByText('Click here')).toBeTruthy()
     })
 
     it('should render with testID', () => {
       render(
         <LinkButton
-          testId="test-link"
+          testID="TestLinkButton"
           label="Test Link"
         />,
       )
-      expect(screen.getByTestId('test-link')).toBeTruthy()
+      expect(screen.getByTestId('TestLinkButtonPressable')).toBeTruthy()
     })
 
     it('should render with default props', () => {
-      render(<LinkButton label="Link" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Link"
+        />,
+      )
       expect(screen.getByText('Link')).toBeTruthy()
     })
   })
 
   describe('Text Variants', () => {
     it('should render with default Paragraph variant', () => {
-      render(<LinkButton label="Paragraph Link" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Paragraph Link"
+        />,
+      )
       expect(screen.getByText('Paragraph Link')).toBeTruthy()
     })
 
     it('should accept Label text variant', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Label Link"
           textVariant="Label"
         />,
@@ -48,6 +64,7 @@ describe('LinkButton', () => {
     it('should accept Title text variant', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Title Link"
           textVariant="Title"
         />,
@@ -58,13 +75,19 @@ describe('LinkButton', () => {
 
   describe('Paragraph Variants', () => {
     it('should render with default body variant', () => {
-      render(<LinkButton label="Body Link" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Body Link"
+        />,
+      )
       expect(screen.getByText('Body Link')).toBeTruthy()
     })
 
     it('should render with small variant', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Small Link"
           variant="small"
         />,
@@ -75,6 +98,7 @@ describe('LinkButton', () => {
     it('should render with extraSmall variant', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Extra Small Link"
           variant="extraSmall"
         />,
@@ -85,6 +109,7 @@ describe('LinkButton', () => {
     it('should render with intro variant', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Intro Link"
           variant="intro"
         />,
@@ -95,6 +120,7 @@ describe('LinkButton', () => {
     it('should render with quote variant', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Quote Link"
           variant="quote"
         />,
@@ -108,13 +134,13 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testId="link"
+          testID="TestLinkButton"
           label="Press me"
           onPress={onPress}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('link'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onPress).toHaveBeenCalledTimes(1)
     })
 
@@ -122,14 +148,14 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testId="link"
+          testID="TestLinkButton"
           label="Disabled Link"
           onPress={onPress}
           disabled
         />,
       )
 
-      fireEvent.press(screen.getByTestId('link'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onPress).not.toHaveBeenCalled()
     })
 
@@ -137,13 +163,13 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testId="link"
+          testID="TestLinkButton"
           label="Multi press"
           onPress={onPress}
         />,
       )
 
-      const link = screen.getByTestId('link')
+      const link = screen.getByTestId('TestLinkButtonPressable')
       fireEvent.press(link)
       fireEvent.press(link)
       fireEvent.press(link)
@@ -156,6 +182,7 @@ describe('LinkButton', () => {
     it('should render when disabled', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Disabled Link"
           disabled
         />,
@@ -167,20 +194,21 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testId="link"
+          testID="TestLinkButton"
           label="Disabled"
           onPress={onPress}
           disabled
         />,
       )
 
-      fireEvent.press(screen.getByTestId('link'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onPress).not.toHaveBeenCalled()
     })
 
     it('should maintain disabled state across variant changes', () => {
       const {rerender} = render(
         <LinkButton
+          testID="TestLinkButton"
           label="Link"
           variant="body"
           disabled
@@ -190,6 +218,7 @@ describe('LinkButton', () => {
 
       rerender(
         <LinkButton
+          testID="TestLinkButton"
           label="Link"
           variant="small"
           disabled
@@ -201,13 +230,19 @@ describe('LinkButton', () => {
 
   describe('Accessibility', () => {
     it('should have button accessibility role', () => {
-      render(<LinkButton label="Accessible Link" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Accessible Link"
+        />,
+      )
       expect(screen.getByText('Accessible Link')).toBeTruthy()
     })
 
     it('should accept accessibilityLabel', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Sign up"
           accessibilityLabel="Sign up for an account"
         />,
@@ -218,12 +253,12 @@ describe('LinkButton', () => {
     it('should accept accessibilityHint', () => {
       render(
         <LinkButton
-          testId="link"
+          testID="TestLinkButton"
           label="Learn more"
           accessibilityHint="Opens details page"
         />,
       )
-      expect(screen.getByTestId('link')).toBeTruthy()
+      expect(screen.getByTestId('TestLinkButtonPressable')).toBeTruthy()
     })
   })
 
@@ -232,13 +267,13 @@ describe('LinkButton', () => {
       const onSignUp = jest.fn()
       render(
         <LinkButton
-          testId="signup"
+          testID="TestLinkButton"
           label="Sign up"
           onPress={onSignUp}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('signup'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onSignUp).toHaveBeenCalled()
     })
 
@@ -246,14 +281,14 @@ describe('LinkButton', () => {
       const onForgotPassword = jest.fn()
       render(
         <LinkButton
-          testId="forgot-password"
+          testID="TestLinkButton"
           label="Forgot password?"
           variant="small"
           onPress={onForgotPassword}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('forgot-password'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onForgotPassword).toHaveBeenCalled()
     })
 
@@ -261,14 +296,14 @@ describe('LinkButton', () => {
       const onTerms = jest.fn()
       render(
         <LinkButton
-          testId="terms"
+          testID="TestLinkButton"
           label="Terms and Conditions"
           variant="extraSmall"
           onPress={onTerms}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('terms'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onTerms).toHaveBeenCalled()
     })
 
@@ -276,13 +311,13 @@ describe('LinkButton', () => {
       const onNavigate = jest.fn()
       render(
         <LinkButton
-          testId="nav-link"
+          testID="TestLinkButton"
           label="Go to profile"
           onPress={onNavigate}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('nav-link'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onNavigate).toHaveBeenCalled()
     })
 
@@ -290,26 +325,32 @@ describe('LinkButton', () => {
       const onLearnMore = jest.fn()
       render(
         <LinkButton
-          testId="learn-more"
+          testID="TestLinkButton"
           label="Learn more →"
           onPress={onLearnMore}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('learn-more'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onLearnMore).toHaveBeenCalled()
     })
   })
 
   describe('Text Styling', () => {
     it('should use link color by default', () => {
-      render(<LinkButton label="Link Color" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Link Color"
+        />,
+      )
       expect(screen.getByText('Link Color')).toBeTruthy()
     })
 
     it('should apply custom color from props', () => {
       render(
         <LinkButton
+          testID="TestLinkButton"
           label="Custom Color"
           color="link"
         />,
@@ -321,17 +362,32 @@ describe('LinkButton', () => {
   describe('Long Labels', () => {
     it('should render with long label', () => {
       const longLabel = 'This is a very long link label that might wrap'
-      render(<LinkButton label={longLabel} />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label={longLabel}
+        />,
+      )
       expect(screen.getByText(longLabel)).toBeTruthy()
     })
 
     it('should render with single word label', () => {
-      render(<LinkButton label="Link" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Link"
+        />,
+      )
       expect(screen.getByText('Link')).toBeTruthy()
     })
 
     it('should render with empty string label', () => {
-      render(<LinkButton label="" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label=""
+        />,
+      )
       expect(screen.queryByText('')).toBeTruthy()
     })
   })
@@ -341,7 +397,7 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testId="full-props"
+          testID="TestLinkButton"
           label="Full Props Link"
           textVariant="Paragraph"
           variant="small"
@@ -351,24 +407,39 @@ describe('LinkButton', () => {
         />,
       )
 
-      fireEvent.press(screen.getByTestId('full-props'))
+      fireEvent.press(screen.getByTestId('TestLinkButtonPressable'))
       expect(onPress).toHaveBeenCalled()
     })
   })
 
   describe('Edge Cases', () => {
     it('should render with special characters in label', () => {
-      render(<LinkButton label="Terms & Conditions" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Terms & Conditions"
+        />,
+      )
       expect(screen.getByText('Terms & Conditions')).toBeTruthy()
     })
 
     it('should render with emoji in label', () => {
-      render(<LinkButton label="Learn more →" />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label="Learn more →"
+        />,
+      )
       expect(screen.getByText('Learn more →')).toBeTruthy()
     })
 
     it('should render with number label', () => {
-      render(<LinkButton label={String(123)} />)
+      render(
+        <LinkButton
+          testID="TestLinkButton"
+          label={String(123)}
+        />,
+      )
       expect(screen.getByText('123')).toBeTruthy()
     })
 
@@ -376,13 +447,13 @@ describe('LinkButton', () => {
       const onPress = jest.fn()
       render(
         <LinkButton
-          testId="link"
+          testID="TestLinkButton"
           label="Rapid"
           onPress={onPress}
         />,
       )
 
-      const link = screen.getByTestId('link')
+      const link = screen.getByTestId('TestLinkButtonPressable')
       for (let i = 0; i < 5; i++) {
         fireEvent.press(link)
       }

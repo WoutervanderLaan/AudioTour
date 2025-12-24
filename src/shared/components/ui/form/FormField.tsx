@@ -3,13 +3,13 @@ import type React from 'react'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * FormFieldProps
  * Props for the FormField component
  */
-export type FormFieldProps = TestProps<'View'> & {
+export type FormFieldProps = TestProps<'FormField'> & {
   /**
    * children - The form input element to wrap
    */
@@ -79,9 +79,9 @@ type FormFieldLabelProps = {
    */
   required: boolean
   /**
-   * testId - Test ID for the label
+   * testID - Test ID for the label
    */
-  testId?: string
+  testID?: string
 }
 
 /**
@@ -96,18 +96,18 @@ const FormFieldLabel = ({
   labelId,
   disabled,
   required,
-  testId,
+  testID,
 }: FormFieldLabelProps): React.JSX.Element => (
-  <Row testId={(`${testId || 'FormField'}LabelRowView` as `${string}View`)}>
+  <Row testID={`${testID}LabelRow`}>
     <Text.Label
-      testId={(`${testId || 'FormField'}LabelText` as `${string}Text`)}
+      testID={`${testID}LabelText`}
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
       accessibilityRole="text">
       {label}
       {!!required && (
         <Text.Label
-          testId={(`${testId || 'FormField'}RequiredText` as `${string}Text`)}
+          testID={`${testID}RequiredText`}
           color="warning"
           accessibilityLabel="required">
           {' '}
@@ -136,9 +136,9 @@ type FormFieldHelpTextProps = {
    */
   hasError: boolean
   /**
-   * testId - Test ID for the help text
+   * testID - Test ID for the help text
    */
-  testId?: string
+  testID?: string
 }
 
 /**
@@ -152,10 +152,10 @@ const FormFieldHelpText = ({
   text,
   helpTextId,
   hasError,
-  testId,
+  testID,
 }: FormFieldHelpTextProps): React.JSX.Element => (
   <Text.Label
-    testId={(`${testId || 'FormField'}HelpText` as `${string}Text`)}
+    testID={`${testID}HelpText`}
     nativeID={helpTextId}
     color={hasError ? 'warning' : 'secondary'}
     accessibilityRole="text"
@@ -208,7 +208,7 @@ export const FormField = ({
   labelId,
   helpTextId,
   gap = 'xs',
-  testId,
+  testID,
   renderLabel,
 }: FormFieldProps): React.JSX.Element => {
   const hasError = Boolean(error)
@@ -218,7 +218,7 @@ export const FormField = ({
     <Column
       gap={gap}
       alignItems="flex-start"
-      testId={testId}>
+      testID={`${testID}ContainerColumn`}>
       {!!label &&
         (renderLabel ? (
           renderLabel({label, labelId, disabled, required})
@@ -228,7 +228,7 @@ export const FormField = ({
             labelId={labelId}
             disabled={disabled}
             required={required}
-            testId={testId}
+            testID={testID}
           />
         ))}
       {children}
@@ -237,7 +237,7 @@ export const FormField = ({
           text={helpText}
           helpTextId={helpTextId}
           hasError={hasError}
-          testId={testId}
+          testID={testID}
         />
       )}
     </Column>

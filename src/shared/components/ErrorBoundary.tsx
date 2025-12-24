@@ -5,7 +5,7 @@ import {Text} from './ui/typography'
 
 import {logger} from '@/core/lib/logger/logger'
 import {Button} from '@/shared/components/ui/pressable/Button'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * ErrorBoundaryProps
@@ -123,36 +123,36 @@ export class ErrorBoundary extends Component<
 
       return (
         <Column
-          testId={`${this.props.testId}View` as `${string}View`}
+          testID={`${this.props.testID}Column`}
           paddingV="lg"
           flex={1}
           center
           paddingH="md"
           gap="md">
           <Text.Title
-            testId={`${this.props.testId}TitleText` as `${string}Text`}
+            testID={`${this.props.testID}TitleText`}
             align="center">
             Something went wrong
           </Text.Title>
           <Text.Paragraph
-            testId={`${this.props.testId}MessageText` as `${string}Text`}
+            testID={`${this.props.testID}MessageText`}
             align="center">
             We encountered an unexpected error. Please try restarting the app.
           </Text.Paragraph>
           {!!__DEV__ && !!this.state.error && (
             <Column
-              testId={`${this.props.testId}ErrorDetailsView` as `${string}View`}
+              testID={`${this.props.testID}ErrorDetailsColumn`}
               padding="lg"
               gap="sm">
               <Text.Label
-                testId={`${this.props.testId}ErrorMessageText` as `${string}Text`}
+                testID={`${this.props.testID}ErrorMessageText`}
                 color="warning"
                 fontFamily="bold">
                 {this.state.error.message}
               </Text.Label>
               {!!this.state.error.stack && (
                 <Text.Paragraph
-                  testId={`${this.props.testId}ErrorStackText` as `${string}Text`}
+                  testID={`${this.props.testID}ErrorStackText`}
                   numberOfLines={10}
                   variant="extraSmall">
                   {this.state.error.stack}
@@ -161,7 +161,7 @@ export class ErrorBoundary extends Component<
             </Column>
           )}
           <Button
-            testId={`${this.props.testId}TryAgainButton` as `${string}Button`}
+            testID={`${this.props.testID}TryAgainButton`}
             label="Try Again"
             onPress={this.handleReset}
           />

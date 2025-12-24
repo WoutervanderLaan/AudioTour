@@ -14,7 +14,7 @@ type OnboardingBannerProps = {
   /**
    * Test ID for the banner
    */
-  testId?: string
+  testID?: string
 }
 
 /**
@@ -28,7 +28,7 @@ type OnboardingBannerProps = {
  * @returns {React.JSX.Element | null} Returns null (banner is managed via context)
  */
 export const OnboardingBanner = ({
-  testId = 'OnboardingBannerStickyBanner',
+  testID = 'OnboardingBannerStickyBanner',
 }: OnboardingBannerProps): React.JSX.Element | null => {
   const navigation = useNavigation()
   const {completed, dismissed, dismissBanner} = useOnboardingStore()
@@ -49,7 +49,7 @@ export const OnboardingBanner = ({
           hideBanner()
         },
         variant: 'info',
-        testId: testId as `${string}StickyBanner`,
+        testID: testID as `${string}StickyBanner`,
       })
     } else {
       // Hide banner if conditions no longer met
@@ -62,7 +62,7 @@ export const OnboardingBanner = ({
     hideBanner,
     navigation,
     dismissBanner,
-    testId,
+    testID,
   ])
 
   return null

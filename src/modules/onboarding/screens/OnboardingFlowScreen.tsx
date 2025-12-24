@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import type React from 'react'
 import {useEffect} from 'react'
 import {useForm} from 'react-hook-form'
@@ -18,7 +19,7 @@ import {
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable/Button'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 
 /**
@@ -79,7 +80,7 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
             name={currentStep.id}
             options={currentStep.options || []}
             required={currentStep.required}
-            testId="OnboardingFlowScreenStepRadioGroup"
+            testID="OnboardingFlowScreenStepRadioGroup"
           />
         )
       case OnboardingStepType.TOGGLE:
@@ -89,7 +90,7 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
             name={currentStep.id}
             label={currentStep.label ?? 'Enable this option'}
             hint={currentStep.hint}
-            testId="OnboardingFlowScreenStepSwitch"
+            testID="OnboardingFlowScreenStepSwitch"
           />
         )
       case OnboardingStepType.TEXT:
@@ -99,7 +100,7 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
             name={currentStep.id}
             placeholder={currentStep.placeholder}
             required={currentStep.required}
-            testId="OnboardingFlowScreenStepTextInput"
+            testID="OnboardingFlowScreenStepTextInput"
           />
         )
       default:
@@ -110,32 +111,32 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
   return (
     <Screen.Scrollable
       keyboardAvoiding
-      testId="OnboardingFlowScreen">
+      testID="OnboardingFlowScreen">
       <Column
         flex={1}
         padding="md"
         paddingBottom="xl"
         gap="lg"
-        testId="OnboardingFlowScreenContainerView">
+        testID="OnboardingFlowScreenContainerColumn">
         <ProgressIndicator
           currentStep={currentStepIndex + 1}
           totalSteps={ONBOARDING_STEPS.length}
-          testId="OnboardingFlowScreenProgressIndicator"
+          testID="OnboardingFlowScreenProgressIndicator"
         />
 
         <Column
           flex={1}
           gap="md"
-          testId="OnboardingFlowScreenContentView">
+          testID="OnboardingFlowScreenContentColumn">
           <Column
             gap="sm"
-            testId="OnboardingFlowScreenHeaderView">
-            <Text.Title testId="OnboardingFlowScreenTitleText">
+            testID="OnboardingFlowScreenHeaderColumn">
+            <Text.Title testID="OnboardingFlowScreenTitleText">
               {currentStep.title}
             </Text.Title>
             <Text.Paragraph
               color="secondary"
-              testId="OnboardingFlowScreenDescriptionText">
+              testID="OnboardingFlowScreenDescriptionText">
               {currentStep.description}
             </Text.Paragraph>
           </Column>
@@ -145,27 +146,28 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
 
         <Column
           gap="sm"
-          testId="OnboardingFlowScreenActionsView">
+          testID="OnboardingFlowScreenActionsColumn">
           <Button
             label={isLastStep ? 'Complete' : 'Next'}
             onPress={handleSubmit(handleNext)}
             disabled={formState.isSubmitting}
-            testId="OnboardingFlowScreenNextButton"
+            testID="OnboardingFlowScreenNextButton"
           />
           <Button
             label="Back"
             variant="secondary"
             onPress={handleBack}
-            testId="OnboardingFlowScreenBackButton"
+            testID="OnboardingFlowScreenBackButton"
           />
           <Spacer
             size="sm"
-            testId="OnboardingFlowScreenSpacerView" />
+            testID="OnboardingFlowScreenSpacerSpacer"
+          />
           <Button
             label="Skip"
             onPress={handleSkip}
             disabled={formState.isSubmitting || isLastStep}
-            testId="OnboardingFlowScreenSkipButton"
+            testID="OnboardingFlowScreenSkipButton"
           />
         </Column>
       </Column>

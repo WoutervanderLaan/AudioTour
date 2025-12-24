@@ -24,13 +24,17 @@ export const Default: Story = {
   args: {
     colors: ['#ff0000', '#5eff00'],
     children: (
-      <Box padding="xl">
+      <Box
+        padding="xl"
+        testID="StoryBox">
         <Text.Title
+          testID="StoryText"
           align="center"
           color="inverse">
           Gradient Background
         </Text.Title>
       </Box>
     ),
+    testID: 'StoryGradientBackground',
   },
 }

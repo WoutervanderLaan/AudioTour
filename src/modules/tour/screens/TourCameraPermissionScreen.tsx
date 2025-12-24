@@ -10,7 +10,7 @@ import type {TourModalName, TourModalParams} from '../routes.types'
 import {getPermissionContent} from '../utils/permissionContent'
 
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 
 /**
  * TourCameraPermissionScreenProps
@@ -59,16 +59,17 @@ export const TourCameraPermissionScreen = ({
   }
 
   return (
-    <Screen.Scrollable testId="TourCameraPermissionScreen">
+    <Screen.Scrollable testID="TourCameraPermissionScreen">
       <Column
         flex={1}
         paddingH="md"
         paddingBottom="xl"
         gap="lg"
-        testId="TourCameraPermissionScreenContainerView">
+        testID="TourCameraPermissionScreenContainerColumn">
         <PermissionContent
           content={content}
-          testId="TourCameraPermissionScreenContent" />
+          testID="TourCameraPermissionScreenPermissionContent"
+        />
 
         <PermissionActions
           primaryButtonLabel={content.primaryButtonLabel}
@@ -76,7 +77,7 @@ export const TourCameraPermissionScreen = ({
           onPrimaryAction={handleRequestPermission}
           onSkip={skip}
           onOpenSettings={openSettings}
-          testId="TourCameraPermissionScreenActions"
+          testID="TourCameraPermissionScreenPermissionActions"
         />
       </Column>
     </Screen.Scrollable>

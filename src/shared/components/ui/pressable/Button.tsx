@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 import {PressableBase, type PressableBaseProps} from './PressableBase'
 
 import {Text} from '@/shared/components/ui/typography'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * ButtonVariant
@@ -18,7 +18,7 @@ export type ButtonVariant = 'primary' | 'secondary'
  */
 export type ButtonProps = Omit<
   PressableBaseProps,
-  'style' | 'children' | 'testId'
+  'style' | 'children' | 'testID'
 > &
   TestProps<'Button'> & {
     /**
@@ -43,11 +43,11 @@ export const Button = ({
   variant = 'primary',
   label,
   disabled,
-  testId,
+  testID,
   ...rest
 }: ButtonProps): React.JSX.Element => (
   <PressableBase
-    testId={`${testId}Pressable` as `${string}Pressable`}
+    testID={`${testID}Pressable`}
     disabled={disabled}
     style={({pressed}) => [
       styles.base({pressed, disabled: !!disabled}),
@@ -55,7 +55,7 @@ export const Button = ({
     ]}
     {...rest}>
     <Text.Paragraph
-      testId={`${testId}LabelText` as `${string}Text`}
+      testID={`${testID}LabelText`}
       variant="small"
       style={styles.label(variant)}>
       {label}

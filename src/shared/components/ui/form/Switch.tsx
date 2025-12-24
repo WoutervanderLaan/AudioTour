@@ -7,7 +7,7 @@ import {useUnistyles} from 'react-native-unistyles'
 
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * SwitchProps
@@ -49,6 +49,10 @@ type SwitchLabelProps = {
   disabled: boolean
   /** Whether the field is required */
   required: boolean
+  /**
+   * testID
+   */
+  testID: SwitchProps['testID']
 }
 
 /**
@@ -63,17 +67,18 @@ const SwitchLabel = ({
   labelId,
   disabled,
   required,
+  testID,
 }: SwitchLabelProps): React.JSX.Element => (
-  <Row testId="SwitchLabelRowView">
+  <Row testID={`${testID}LabelRow`}>
     <Text.Label
-      testId="SwitchLabelText"
+      testID={`${testID}LabelText`}
       nativeID={labelId}
       color={disabled ? 'secondary' : 'default'}
       accessibilityRole="text">
       {label}
       {!!required && (
         <Text.Label
-          testId="SwitchRequiredText"
+          testID={`${testID}RequiredText`}
           color="warning"
           accessibilityLabel="required">
           {' '}
@@ -123,7 +128,7 @@ export const Switch = ({
   hasError = false,
   value = false,
   onChange,
-  testId,
+  testID,
   accessibilityLabel,
   accessibilityHint,
   ...rest
@@ -144,17 +149,17 @@ export const Switch = ({
     onChange?.(newValue)
   }
 
-  const switchId = testId || 'switch'
+  const switchId = testID || 'switch'
   const labelId = `${switchId}-label`
   const a11yLabel = accessibilityLabel || label
 
   return (
     <Row
-      testId={`${testId}RowView` as `${string}View`}
+      testID={`${testID}ContainerRow`}
       alignItems="center"
       gap="sm">
       <RNSwitch
-        testID={testId}
+        testID={testID}
         nativeID={switchId}
         value={value}
         onValueChange={handleValueChange}
@@ -178,6 +183,7 @@ export const Switch = ({
       />
       {!!label && (
         <SwitchLabel
+          testID={testID}
           label={label}
           labelId={labelId}
           disabled={disabled}

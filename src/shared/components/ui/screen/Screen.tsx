@@ -16,7 +16,7 @@ import {
   type NavigationInset,
   useNavigationInsets,
 } from '@/shared/hooks/useNavigationInsets'
-import type {TestProps} from '@/shared/types/test'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * Base props shared by all Screen variants.
@@ -97,7 +97,7 @@ const Static = ({
   keyboardAvoiding = false,
   extraPadding = 0,
   animated = true,
-  testId,
+  testID,
 }: StaticScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
   const {top, bottom} = useNavigationInsets(
@@ -116,7 +116,7 @@ const Static = ({
   if (!keyboardAvoiding) {
     return (
       <View
-        testID={testId}
+        testID={testID}
         style={[
           styles.container,
           {paddingTop: top, paddingBottom: bottom},
@@ -132,7 +132,7 @@ const Static = ({
   if (animated) {
     return (
       <Animated.View
-        testID={testId}
+        testID={testID}
         style={[
           styles.container,
           {paddingTop: top},
@@ -150,7 +150,7 @@ const Static = ({
   // Keyboard avoiding without animation
   return (
     <View
-      testID={testId}
+      testID={testID}
       style={[
         styles.container,
         {paddingTop: top},
@@ -180,7 +180,7 @@ const Scrollable = ({
   animated = true,
   showsVerticalScrollIndicator = false,
   scrollViewProps,
-  testId,
+  testID,
 }: ScrollableScreenProps): React.JSX.Element => {
   const {keyboardHeight, animatedKeyboardHeight} = useKeyboard()
   const {top, bottom} = useNavigationInsets(
@@ -212,7 +212,7 @@ const Scrollable = ({
 
   return (
     <Component
-      testID={testId}
+      testID={testID}
       alwaysBounceVertical={false}
       style={[styles.container, style]}
       contentContainerStyle={[

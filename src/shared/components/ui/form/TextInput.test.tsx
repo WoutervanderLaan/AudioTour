@@ -9,22 +9,32 @@ import {TextInput} from './TextInput'
 describe('TextInput', () => {
   describe('Rendering', () => {
     it('should render correctly', () => {
-      render(<TextInput testId="text-input" />)
-      expect(screen.queryByTestId('text-input')).toBeTruthy()
+      render(<TextInput testID="TestTextInput" />)
+      expect(screen.queryByTestId('TestTextInput')).toBeTruthy()
     })
 
     it('should render with testID', () => {
-      render(<TextInput testId="test-input" />)
-      expect(screen.getByTestId('test-input')).toBeTruthy()
+      render(<TextInput testID="TestTextInput" />)
+      expect(screen.getByTestId('TestTextInput')).toBeTruthy()
     })
 
     it('should render with placeholder', () => {
-      render(<TextInput placeholder="Enter text" />)
+      render(
+        <TextInput
+          testID="TestTextInput"
+          placeholder="Enter text"
+        />,
+      )
       expect(screen.getByPlaceholderText('Enter text')).toBeTruthy()
     })
 
     it('should render with value', () => {
-      render(<TextInput value="Test value" />)
+      render(
+        <TextInput
+          testID="TestTextInput"
+          value="Test value"
+        />,
+      )
       expect(screen.getByDisplayValue('Test value')).toBeTruthy()
     })
   })
@@ -34,25 +44,40 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           onChangeText={onChangeText}
         />,
       )
 
-      fireEvent.changeText(screen.getByTestId('input'), 'new text')
+      fireEvent.changeText(screen.getByTestId('TestTextInput'), 'new text')
       expect(onChangeText).toHaveBeenCalledWith('new text')
     })
 
     it('should update value when changed', () => {
-      const {rerender} = render(<TextInput value="initial" />)
+      const {rerender} = render(
+        <TextInput
+          testID="TestTextInput"
+          value="initial"
+        />,
+      )
       expect(screen.getByDisplayValue('initial')).toBeTruthy()
 
-      rerender(<TextInput value="updated" />)
+      rerender(
+        <TextInput
+          testID="TestTextInput"
+          value="updated"
+        />,
+      )
       expect(screen.getByDisplayValue('updated')).toBeTruthy()
     })
 
     it('should handle empty string value', () => {
-      render(<TextInput value="" />)
+      render(
+        <TextInput
+          testID="TestTextInput"
+          value=""
+        />,
+      )
       expect(screen.queryByDisplayValue('')).toBeTruthy()
     })
   })
@@ -62,12 +87,12 @@ describe('TextInput', () => {
       const onFocus = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           onFocus={onFocus}
         />,
       )
 
-      fireEvent(screen.getByTestId('input'), 'focus')
+      fireEvent(screen.getByTestId('TestTextInput'), 'focus')
       expect(onFocus).toHaveBeenCalled()
     })
 
@@ -75,12 +100,12 @@ describe('TextInput', () => {
       const onBlur = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           onBlur={onBlur}
         />,
       )
 
-      fireEvent(screen.getByTestId('input'), 'blur')
+      fireEvent(screen.getByTestId('TestTextInput'), 'blur')
       expect(onBlur).toHaveBeenCalled()
     })
 
@@ -89,13 +114,13 @@ describe('TextInput', () => {
       const onBlur = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           onFocus={onFocus}
           onBlur={onBlur}
         />,
       )
 
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       fireEvent(input, 'focus')
       expect(onFocus).toHaveBeenCalledTimes(1)
 
@@ -108,27 +133,27 @@ describe('TextInput', () => {
     it('should render when disabled', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           disabled
         />,
       )
-      expect(screen.getByTestId('input')).toBeTruthy()
+      expect(screen.getByTestId('TestTextInput')).toBeTruthy()
     })
 
     it('should not be editable when disabled', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           disabled
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.editable).toBe(false)
     })
 
     it('should be editable by default', () => {
-      render(<TextInput testId="input" />)
-      const input = screen.getByTestId('input')
+      render(<TextInput testID="TestTextInput" />)
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.editable).toBe(true)
     })
   })
@@ -137,11 +162,11 @@ describe('TextInput', () => {
     it('should render with error state', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           hasError
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       // Error state is applied through styling, verify component renders
       expect(input).toBeTruthy()
     })
@@ -149,11 +174,11 @@ describe('TextInput', () => {
     it('should apply error styling when hasError is true', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           hasError
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       // Verify input has styles applied (error styles are in the style array)
       expect(input.props.style).toBeDefined()
       expect(Array.isArray(input.props.style)).toBe(true)
@@ -162,20 +187,20 @@ describe('TextInput', () => {
     it('should toggle error state', () => {
       const {rerender} = render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           hasError={false}
         />,
       )
-      let input = screen.getByTestId('input')
+      let input = screen.getByTestId('TestTextInput')
       expect(input.props.style).toBeDefined()
 
       rerender(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           hasError
         />,
       )
-      input = screen.getByTestId('input')
+      input = screen.getByTestId('TestTextInput')
       // Style array length may change when error state is toggled
       expect(input.props.style).toBeDefined()
     })
@@ -185,33 +210,33 @@ describe('TextInput', () => {
     it('should accept email-address keyboard type', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           keyboardType="email-address"
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.keyboardType).toBe('email-address')
     })
 
     it('should accept numeric keyboard type', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           keyboardType="numeric"
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.keyboardType).toBe('numeric')
     })
 
     it('should accept phone-pad keyboard type', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           keyboardType="phone-pad"
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.keyboardType).toBe('phone-pad')
     })
   })
@@ -220,31 +245,31 @@ describe('TextInput', () => {
     it('should support secure text entry', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           secureTextEntry
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.secureTextEntry).toBe(true)
     })
 
     it('should toggle secure text entry', () => {
       const {rerender} = render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           secureTextEntry={false}
         />,
       )
-      let input = screen.getByTestId('input')
+      let input = screen.getByTestId('TestTextInput')
       expect(input.props.secureTextEntry).toBe(false)
 
       rerender(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           secureTextEntry
         />,
       )
-      input = screen.getByTestId('input')
+      input = screen.getByTestId('TestTextInput')
       expect(input.props.secureTextEntry).toBe(true)
     })
   })
@@ -253,38 +278,38 @@ describe('TextInput', () => {
     it('should support multiline input', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           multiline
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.multiline).toBe(true)
     })
 
     it('should accept numberOfLines prop', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           multiline
           numberOfLines={4}
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.numberOfLines).toBe(4)
     })
   })
 
   describe('Accessibility', () => {
     it('should be accessible by default', () => {
-      render(<TextInput testId="input" />)
-      const input = screen.getByTestId('input')
+      render(<TextInput testID="TestTextInput" />)
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.accessible).toBe(true)
     })
 
     it('should accept accessibilityLabel', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           accessibilityLabel="Email input"
         />,
       )
@@ -294,22 +319,22 @@ describe('TextInput', () => {
     it('should accept accessibilityHint', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           accessibilityHint="Enter your email address"
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.accessibilityHint).toBe('Enter your email address')
     })
 
     it('should have disabled state in accessibility', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           disabled
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.accessibilityState.disabled).toBe(true)
     })
   })
@@ -318,44 +343,44 @@ describe('TextInput', () => {
     it('should forward maxLength prop', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           maxLength={10}
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.maxLength).toBe(10)
     })
 
     it('should forward autoCapitalize prop', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           autoCapitalize="none"
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.autoCapitalize).toBe('none')
     })
 
     it('should forward autoCorrect prop', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           autoCorrect={false}
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.autoCorrect).toBe(false)
     })
 
     it('should forward autoComplete prop', () => {
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           autoComplete="email"
         />,
       )
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       expect(input.props.autoComplete).toBe('email')
     })
   })
@@ -365,7 +390,7 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       const {rerender} = render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           value=""
           onChangeText={onChangeText}
         />,
@@ -374,13 +399,13 @@ describe('TextInput', () => {
       expect(screen.getByDisplayValue('')).toBeTruthy()
 
       // Simulate user interaction - notifies parent of desired change
-      fireEvent.changeText(screen.getByTestId('input'), 'hello')
+      fireEvent.changeText(screen.getByTestId('TestTextInput'), 'hello')
       expect(onChangeText).toHaveBeenCalledWith('hello')
 
       // Parent component controls state and updates the value prop
       rerender(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           value="hello"
           onChangeText={onChangeText}
         />,
@@ -393,14 +418,14 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           value=""
           onChangeText={onChangeText}
         />,
       )
 
       // User types - onChangeText fires but component doesn't self-update
-      fireEvent.changeText(screen.getByTestId('input'), 'test')
+      fireEvent.changeText(screen.getByTestId('TestTextInput'), 'test')
       expect(onChangeText).toHaveBeenCalledWith('test')
 
       // Value unchanged because parent hasn't updated the prop
@@ -410,7 +435,7 @@ describe('TextInput', () => {
     it('should only update when value prop changes', () => {
       const {rerender} = render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           value="initial"
         />,
       )
@@ -418,13 +443,13 @@ describe('TextInput', () => {
       expect(screen.getByDisplayValue('initial')).toBeTruthy()
 
       // Text change doesn't update value without parent updating prop
-      fireEvent.changeText(screen.getByTestId('input'), 'changed')
+      fireEvent.changeText(screen.getByTestId('TestTextInput'), 'changed')
       expect(screen.getByDisplayValue('initial')).toBeTruthy()
 
       // Value only changes when parent updates prop
       rerender(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           value="updated"
         />,
       )
@@ -437,12 +462,12 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           onChangeText={onChangeText}
         />,
       )
 
-      const input = screen.getByTestId('input')
+      const input = screen.getByTestId('TestTextInput')
       fireEvent.changeText(input, 'a')
       fireEvent.changeText(input, 'ab')
       fireEvent.changeText(input, 'abc')
@@ -458,12 +483,12 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           onChangeText={onChangeText}
         />,
       )
 
-      fireEvent.changeText(screen.getByTestId('input'), longText)
+      fireEvent.changeText(screen.getByTestId('TestTextInput'), longText)
       expect(onChangeText).toHaveBeenCalledWith(longText)
     })
 
@@ -471,12 +496,12 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           onChangeText={onChangeText}
         />,
       )
 
-      fireEvent.changeText(screen.getByTestId('input'), '@#$%^&*()')
+      fireEvent.changeText(screen.getByTestId('TestTextInput'), '@#$%^&*()')
       expect(onChangeText).toHaveBeenCalledWith('@#$%^&*()')
     })
 
@@ -484,12 +509,15 @@ describe('TextInput', () => {
       const onChangeText = jest.fn()
       render(
         <TextInput
-          testId="input"
+          testID="TestTextInput"
           onChangeText={onChangeText}
         />,
       )
 
-      fireEvent.changeText(screen.getByTestId('input'), '🎵 音楽 Музыка')
+      fireEvent.changeText(
+        screen.getByTestId('TestTextInput'),
+        '🎵 音楽 Музыка',
+      )
       expect(onChangeText).toHaveBeenCalledWith('🎵 音楽 Музыка')
     })
   })

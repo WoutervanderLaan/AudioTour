@@ -2,6 +2,7 @@ import React from 'react'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable/Button'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * PermissionActionsProps
@@ -28,11 +29,7 @@ export type PermissionActionsProps = {
    * Handler for opening settings
    */
   onOpenSettings: () => void
-  /**
-   * Test ID for the component
-   */
-  testId?: string
-}
+} & TestProps<'PermissionActions'>
 
 /**
  * PermissionActions
@@ -47,31 +44,31 @@ export const PermissionActions = ({
   onPrimaryAction,
   onSkip,
   onOpenSettings,
-  testId = 'PermissionActions',
+  testID,
 }: PermissionActionsProps): React.JSX.Element => {
   return (
     <Column
       gap="sm"
-      testId={`${testId}ContainerView`}>
+      testID={`${testID}ContainerColumn`}>
       <Button
         label={primaryButtonLabel}
         onPress={onPrimaryAction}
         disabled={isDisabled}
-        testId={`${testId}PrimaryButton`}
+        testID={`${testID}PrimaryButton`}
       />
       <Button
         label="Not Now"
         variant="secondary"
         onPress={onSkip}
         disabled={isDisabled}
-        testId={`${testId}NotNowButton`}
+        testID={`${testID}NotNowButton`}
       />
       <Button
         label="Open Settings"
         variant="secondary"
         onPress={onOpenSettings}
         disabled={isDisabled}
-        testId={`${testId}OpenSettingsButton`}
+        testID={`${testID}OpenSettingsButton`}
       />
     </Column>
   )

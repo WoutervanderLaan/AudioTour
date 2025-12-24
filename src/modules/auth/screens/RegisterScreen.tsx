@@ -14,7 +14,7 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {LinkButton} from '@/shared/components/ui/pressable/LinkButton'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
@@ -60,28 +60,28 @@ export const RegisterScreen = (): React.JSX.Element => {
   return (
     <Screen.Static
       keyboardAvoiding
-      testId="RegisterScreen">
+      testID="RegisterScreen">
       <Column
         gap="md"
         center
         flex={1}
         padding="md"
-        testId="RegisterScreenContainerView">
-        <Text.Title testId="RegisterScreenTitleText">Register</Text.Title>
-        <Text.Paragraph testId="RegisterScreenSubtitleText">
+        testID="RegisterScreenContainerColumn">
+        <Text.Title testID="RegisterScreenTitleText">Register</Text.Title>
+        <Text.Paragraph testID="RegisterScreenSubtitleText">
           Create your account
         </Text.Paragraph>
 
         <Column
           stretch
           gap="lg"
-          testId="RegisterScreenFormView">
+          testID="RegisterScreenFormColumn">
           <TextInputControlled<RegisterForm>
             placeholder="Name"
             name="name"
             control={control}
             autoCapitalize="words"
-            testId="RegisterScreenNameTextInput"
+            testID="RegisterScreenNameTextInput"
           />
 
           <TextInputControlled<RegisterForm>
@@ -90,7 +90,7 @@ export const RegisterScreen = (): React.JSX.Element => {
             control={control}
             autoCapitalize="none"
             keyboardType="email-address"
-            testId="RegisterScreenEmailTextInput"
+            testID="RegisterScreenEmailTextInput"
           />
 
           <TextInputControlled<RegisterForm>
@@ -98,14 +98,14 @@ export const RegisterScreen = (): React.JSX.Element => {
             control={control}
             placeholder="Password"
             secureTextEntry
-            testId="RegisterScreenPasswordTextInput"
+            testID="RegisterScreenPasswordTextInput"
           />
 
           {!!registerError && (
             <Text.Paragraph
               variant="small"
               color="warning"
-              testId="RegisterScreenErrorText">
+              testID="RegisterScreenErrorText">
               {registerError.message || 'Something went wrong...'}
             </Text.Paragraph>
           )}
@@ -114,7 +114,7 @@ export const RegisterScreen = (): React.JSX.Element => {
             label={isRegistering ? 'Creating account...' : 'Register'}
             onPress={handleSubmit(handleRegister)}
             disabled={isRegistering || isLoading}
-            testId="RegisterScreenSubmitButton"
+            testID="RegisterScreenSubmitButton"
           />
 
           {!!(isRegistering || isLoading) && <ActivityIndicator />}
@@ -123,17 +123,17 @@ export const RegisterScreen = (): React.JSX.Element => {
         <Row
           gap="xs"
           centerY
-          testId="RegisterScreenSignInPromptView">
+          testID="RegisterScreenSignInPromptRow">
           <Text.Paragraph
             variant="small"
-            testId="RegisterScreenSignInPromptText">
+            testID="RegisterScreenSignInPromptText">
             Already have an account?
           </Text.Paragraph>
           <LinkButton
             label="Sign in"
             variant="small"
             onPress={handleSignInPress}
-            testId="RegisterScreenSignInLinkButton"
+            testID="RegisterScreenSignInLinkButton"
           />
         </Row>
       </Column>

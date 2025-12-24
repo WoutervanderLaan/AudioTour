@@ -11,7 +11,7 @@ import type {FeedItem as FeedItemType} from '@/modules/tour/types'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
@@ -47,7 +47,7 @@ export const TourFeedScreen = (): React.JSX.Element => {
         onPress={() =>
           navigate(TourRouteName.objectDetail, {feedItemId: item.id})
         }
-        testId={`TourFeedScreenFeedItem-${item.id}`}
+        testID={`TourFeedScreen${item.id}FeedItem`}
       />
     ),
     [navigate],
@@ -69,33 +69,38 @@ export const TourFeedScreen = (): React.JSX.Element => {
    * @returns Spacer component
    */
   const ItemSeparatorComponent = useCallback(
-    () => <Spacer size="md" testId="TourFeedScreenItemSeparatorView" />,
+    () => (
+      <Spacer
+        size="md"
+        testID="TourFeedScreenItemSpacer"
+      />
+    ),
     [],
   )
 
   return (
     <Screen.Static
       includeNavigationPadding={['tab']}
-      testId="TourFeedScreen">
+      testID="TourFeedScreen">
       <Box
         flex={1}
-        testId="TourFeedScreenContainerView">
+        testID="TourFeedScreenContainerBox">
         <FlatList
           ListEmptyComponent={
             <Box
               center
               paddingTop="xxl"
-              testId="TourFeedScreenEmptyStateView">
+              testID="TourFeedScreenEmptyStateBox">
               <Column
                 justifyContent="flex-end"
                 center
-                testId="TourFeedScreenEmptyStateContentView">
+                testID="TourFeedScreenEmptyStateContentColumn">
                 {isLoadingTour ? (
-                  <Text.Paragraph testId="TourFeedScreenLoadingText">
+                  <Text.Paragraph testID="TourFeedScreenLoadingText">
                     Initializing tour...
                   </Text.Paragraph>
                 ) : (
-                  <Text.Paragraph testId="TourFeedScreenEmptyText">
+                  <Text.Paragraph testID="TourFeedScreenEmptyText">
                     Add a first Artwork to start the tour
                   </Text.Paragraph>
                 )}
@@ -120,10 +125,11 @@ export const TourFeedScreen = (): React.JSX.Element => {
         <Column
           padding="md"
           paddingBottom="xl"
-          testId="TourFeedScreenAddArtworkContainerView">
+          testID="TourFeedScreenAddArtworkContainerColumn">
           <AddArtworkButton
             disabled={feedLoading}
-            testId="TourFeedScreenAddArtworkButton" />
+            testID="TourFeedScreenAddArtworkButton"
+          />
         </Column>
       </Box>
     </Screen.Static>

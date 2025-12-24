@@ -21,6 +21,7 @@ export const Default: Story = {
   args: {
     name: 'person',
     size: 'md',
+    testID: 'StoryIconButton',
   },
 }
 
@@ -28,6 +29,7 @@ export const Small: Story = {
   args: {
     name: 'settings',
     size: 'sm',
+    testID: 'StoryIconButton',
   },
 }
 
@@ -35,6 +37,7 @@ export const Large: Story = {
   args: {
     name: 'menu',
     size: 'lg',
+    testID: 'StoryIconButton',
   },
 }
 
@@ -43,6 +46,7 @@ export const Disabled: Story = {
     name: 'person',
     size: 'md',
     disabled: true,
+    testID: 'StoryIconButton',
   },
 }
 
@@ -53,5 +57,6 @@ export const WithOnPress: Story = {
     onPress: (): void => {
       logger.debug('IconButton pressed!')
     },
+    testID: 'StoryIconButton',
   },
 }

@@ -6,6 +6,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * PermissionBenefitProps
@@ -24,11 +25,7 @@ export type PermissionBenefitProps = {
    * Benefit description
    */
   description: string
-  /**
-   * Test ID for the component
-   */
-  testId?: string
-}
+} & TestProps<'PermissionBenefit'>
 
 /**
  * PermissionBenefit
@@ -41,29 +38,29 @@ export const PermissionBenefit = ({
   icon,
   title,
   description,
-  testId = 'PermissionBenefit',
+  testID = 'PermissionBenefit',
 }: PermissionBenefitProps): React.JSX.Element => {
   return (
     <Column
       gap="xs"
       paddingV="md"
-      testId={`${testId}ContainerView`}>
+      testID={`${testID}ContainerColumn`}>
       <Row
         gap="sm"
         stretch
         wrap="wrap"
         centerX
-        testId={`${testId}TitleView`}>
+        testID={`${testID}TitleRow`}>
         <MaterialIcons
           name={icon}
           size={24}
           color={styles.benefitIcon.color}
         />
-        <Text.Label testId={`${testId}TitleText`}>{title}</Text.Label>
+        <Text.Label testID={`${testID}TitleText`}>{title}</Text.Label>
       </Row>
       <Text.Label
         color="secondary"
-        testId={`${testId}DescriptionText`}>
+        testID={`${testID}DescriptionText`}>
         {description}
       </Text.Label>
     </Column>

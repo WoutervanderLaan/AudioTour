@@ -4,8 +4,8 @@ import React from 'react'
 import {StyleProp, View, type ViewProps, ViewStyle} from 'react-native'
 import {useUnistyles} from 'react-native-unistyles'
 
+import type {TestProps} from '@/shared/types/TestProps'
 import type {ApplyExclusivityPair} from '@/shared/types/utils/ApplyExclusivityPair'
-import type {TestProps} from '@/shared/types/test'
 import type {Theme} from '@/themes/types'
 
 /**
@@ -13,7 +13,7 @@ import type {Theme} from '@/themes/types'
  * Base props for the Box component including layout, alignment, spacing, and padding options.
  */
 export type BoxPropsBase = Omit<ViewProps, 'testID'> &
-  TestProps<'View'> & {
+  TestProps<'Box'> & {
     /**
      * Child elements to render inside the Box container
      */
@@ -143,7 +143,7 @@ export const Box = ({
   paddingLeft,
   stretch,
   wrap,
-  testId,
+  testID,
   ...rest
 }: BoxProps): React.JSX.Element => {
   const {theme} = useUnistyles()
@@ -168,7 +168,7 @@ export const Box = ({
 
   return (
     <View
-      testID={testId}
+      testID={testID}
       style={[dynamic, style]}
       {...rest}>
       {children}

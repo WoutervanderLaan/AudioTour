@@ -4,8 +4,8 @@ import {NotificationRouteName} from '@/modules/notifications/routes.types'
 import {OnboardingBanner} from '@/modules/onboarding/components/OnboardingBanner'
 import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {Column} from '@/shared/components/ui/layout/Column'
-import {NavItem} from '@/shared/components/ui/navigation'
-import {Screen} from '@/shared/components/ui/screen'
+import {NavItem} from '@/shared/components/ui/navigation/NavItem'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**
@@ -19,25 +19,25 @@ export const ProfileScreen = (): React.JSX.Element => {
   const navigation = useNavigation()
 
   return (
-    <Screen.Scrollable testId="ProfileScreen">
-      <OnboardingBanner testId="ProfileScreenOnboardingBanner" />
+    <Screen.Scrollable testID="ProfileScreen">
+      <OnboardingBanner testID="ProfileScreenOnboardingBanner" />
 
       <Column
         gap="xs"
         flex={1}
         padding="md"
-        testId="ProfileScreenContentView">
+        testID="ProfileScreenContentColumn">
         <NavItem
           label="Preferences"
           icon="tune"
           onPress={() => navigation.navigate(OnboardingRouteName.flow)}
-          testId="ProfileScreenPreferencesNavItem"
+          testID="ProfileScreenPreferencesNavItem"
         />
         <NavItem
           label="Push Notifications"
           icon="notifications"
           onPress={() => navigation.navigate(NotificationRouteName.settings)}
-          testId="ProfileScreenPushNotificationsNavItem"
+          testID="ProfileScreenPushNotificationsNavItem"
         />
       </Column>
     </Screen.Scrollable>

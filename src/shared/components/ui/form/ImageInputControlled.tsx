@@ -11,7 +11,6 @@ import {ImageInput, type ImageInputProps} from './ImageInput'
 
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography'
-import type {TestProps} from '@/shared/types/test'
 
 /**
  * ImageInputControlledProps
@@ -19,34 +18,33 @@ import type {TestProps} from '@/shared/types/test'
  */
 export type ImageInputControlledProps<T extends FieldValues> = Omit<
   ImageInputProps,
-  'value' | 'onChange' | 'testId'
-> &
-  TestProps<'ImageInput'> & {
-    /**
-     * control - React Hook Form control object
-     */
-    control: Control<T>
-    /**
-     * name - Field name in the form (must be a valid path in the form data)
-     */
-    name: Path<T>
-    /**
-     * defaultValue - Default value for the field
-     */
-    defaultValue?: string[]
-    /**
-     * label - Label text for the input field
-     */
-    label?: string
-    /**
-     * hint - Helper text to display when no error
-     */
-    hint?: string
-    /**
-     * required - Whether the field is required (adds asterisk to label)
-     */
-    required?: boolean
-  }
+  'value' | 'onChange'
+> & {
+  /**
+   * control - React Hook Form control object
+   */
+  control: Control<T>
+  /**
+   * name - Field name in the form (must be a valid path in the form data)
+   */
+  name: Path<T>
+  /**
+   * defaultValue - Default value for the field
+   */
+  defaultValue?: string[]
+  /**
+   * label - Label text for the input field
+   */
+  label?: string
+  /**
+   * hint - Helper text to display when no error
+   */
+  hint?: string
+  /**
+   * required - Whether the field is required (adds asterisk to label)
+   */
+  required?: boolean
+}
 
 /**
  * ImageInputControlled
@@ -108,7 +106,7 @@ export const ImageInputControlled = <T extends FieldValues>({
   required,
   disabled,
   maxImages = 5,
-  testId,
+  testID,
   ...rest
 }: ImageInputControlledProps<T>): React.JSX.Element => {
   return (
@@ -124,7 +122,7 @@ export const ImageInputControlled = <T extends FieldValues>({
 
         return (
           <FormField
-            testId={`${testId}View` as `${string}View`}
+            testID={`${testID}FormField`}
             label={label}
             error={error?.message}
             hint={hint}
@@ -135,18 +133,18 @@ export const ImageInputControlled = <T extends FieldValues>({
               label
                 ? ({label, labelId, disabled, required}): React.JSX.Element => (
                     <Row
-                      testId="ImageInputLabelRowView"
+                      testID={`${testID}LabelRow`}
                       gap="xs"
                       center>
                       <Text.Label
-                        testId="ImageInputLabelText"
+                        testID={`${testID}LabelText`}
                         nativeID={labelId}
                         color={disabled ? 'secondary' : 'default'}
                         accessibilityRole="text">
                         {label}
                         {!!required && (
                           <Text.Label
-                            testId="ImageInputRequiredText"
+                            testID={`${testID}RequiredText`}
                             color="warning"
                             accessibilityLabel="required">
                             {' '}
@@ -154,7 +152,9 @@ export const ImageInputControlled = <T extends FieldValues>({
                           </Text.Label>
                         )}
                       </Text.Label>
-                      <Text.Label testId="ImageInputCountText" color="secondary">
+                      <Text.Label
+                        testID={`${testID}CountText`}
+                        color="secondary">
                         {images.length} / {maxImages}
                       </Text.Label>
                     </Row>
@@ -166,7 +166,7 @@ export const ImageInputControlled = <T extends FieldValues>({
               onChange={onChange}
               maxImages={maxImages}
               disabled={disabled}
-              testId={testId}
+              testID={testID}
               {...rest}
             />
           </FormField>

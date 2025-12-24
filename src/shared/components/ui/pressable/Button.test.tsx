@@ -9,35 +9,51 @@ import {Button} from './Button'
 describe('Button', () => {
   describe('Rendering', () => {
     it('should render label correctly', () => {
-      render(<Button label="Click me" />)
+      render(
+        <Button
+          testID="TestButton"
+          label="Click me"
+        />,
+      )
       expect(screen.getByText('Click me')).toBeTruthy()
     })
 
     it('should render with testID', () => {
       render(
         <Button
-          testId="test-button"
+          testID="TestButton"
           label="Test"
         />,
       )
-      expect(screen.getByTestId('test-button')).toBeTruthy()
+      expect(screen.getByTestId('TestButtonPressable')).toBeTruthy()
     })
 
     it('should render with default primary variant', () => {
-      render(<Button label="Primary" />)
+      render(
+        <Button
+          testID="TestButton"
+          label="Primary"
+        />,
+      )
       expect(screen.getByText('Primary')).toBeTruthy()
     })
   })
 
   describe('Variants', () => {
     it('should render primary variant', () => {
-      render(<Button label="Primary Button" />)
+      render(
+        <Button
+          testID="TestButton"
+          label="Primary Button"
+        />,
+      )
       expect(screen.getByText('Primary Button')).toBeTruthy()
     })
 
     it('should render secondary variant', () => {
       render(
         <Button
+          testID="TestButton"
           variant="secondary"
           label="Secondary Button"
         />,
@@ -46,11 +62,17 @@ describe('Button', () => {
     })
 
     it('should switch between variants', () => {
-      const {rerender} = render(<Button label="Button" />)
+      const {rerender} = render(
+        <Button
+          testID="TestButton"
+          label="Button"
+        />,
+      )
       expect(screen.getByText('Button')).toBeTruthy()
 
       rerender(
         <Button
+          testID="TestButton"
           variant="secondary"
           label="Button"
         />,
@@ -64,13 +86,13 @@ describe('Button', () => {
       const onPress = jest.fn()
       render(
         <Button
-          testId="button"
+          testID="TestButton"
           label="Press me"
           onPress={onPress}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('button'))
+      fireEvent.press(screen.getByTestId('TestButtonPressable'))
       expect(onPress).toHaveBeenCalledTimes(1)
     })
 
@@ -78,14 +100,14 @@ describe('Button', () => {
       const onPress = jest.fn()
       render(
         <Button
-          testId="button"
+          testID="TestButton"
           label="Disabled"
           onPress={onPress}
           disabled
         />,
       )
 
-      fireEvent.press(screen.getByTestId('button'))
+      fireEvent.press(screen.getByTestId('TestButtonPressable'))
       expect(onPress).not.toHaveBeenCalled()
     })
 
@@ -93,13 +115,13 @@ describe('Button', () => {
       const onPress = jest.fn()
       render(
         <Button
-          testId="button"
+          testID="TestButton"
           label="Multi press"
           onPress={onPress}
         />,
       )
 
-      const button = screen.getByTestId('button')
+      const button = screen.getByTestId('TestButtonPressable')
       fireEvent.press(button)
       fireEvent.press(button)
       fireEvent.press(button)
@@ -112,6 +134,7 @@ describe('Button', () => {
     it('should render when disabled', () => {
       render(
         <Button
+          testID="TestButton"
           label="Disabled Button"
           disabled
         />,
@@ -123,20 +146,21 @@ describe('Button', () => {
       const onPress = jest.fn()
       render(
         <Button
-          testId="button"
+          testID="TestButton"
           label="Disabled"
           onPress={onPress}
           disabled
         />,
       )
 
-      fireEvent.press(screen.getByTestId('button'))
+      fireEvent.press(screen.getByTestId('TestButtonPressable'))
       expect(onPress).not.toHaveBeenCalled()
     })
 
     it('should maintain disabled state across variant changes', () => {
       const {rerender} = render(
         <Button
+          testID="TestButton"
           label="Button"
           disabled
         />,
@@ -145,6 +169,7 @@ describe('Button', () => {
 
       rerender(
         <Button
+          testID="TestButton"
           variant="secondary"
           label="Button"
           disabled
@@ -156,13 +181,19 @@ describe('Button', () => {
 
   describe('Accessibility', () => {
     it('should have button accessibility role', () => {
-      render(<Button label="Accessible" />)
+      render(
+        <Button
+          testID="TestButton"
+          label="Accessible"
+        />,
+      )
       expect(screen.getByText('Accessible')).toBeTruthy()
     })
 
     it('should accept accessibilityLabel', () => {
       render(
         <Button
+          testID="TestButton"
           label="Submit"
           accessibilityLabel="Submit form"
         />,
@@ -173,29 +204,44 @@ describe('Button', () => {
     it('should accept accessibilityHint', () => {
       render(
         <Button
-          testId="button"
+          testID="TestButton"
           label="Next"
           accessibilityHint="Navigate to next page"
         />,
       )
-      expect(screen.getByTestId('button')).toBeTruthy()
+      expect(screen.getByTestId('TestButtonPressable')).toBeTruthy()
     })
   })
 
   describe('Long Labels', () => {
     it('should render with long label', () => {
       const longLabel = 'This is a very long button label that might wrap'
-      render(<Button label={longLabel} />)
+      render(
+        <Button
+          testID="TestButton"
+          label={longLabel}
+        />,
+      )
       expect(screen.getByText(longLabel)).toBeTruthy()
     })
 
     it('should render with single word label', () => {
-      render(<Button label="OK" />)
+      render(
+        <Button
+          testID="TestButton"
+          label="OK"
+        />,
+      )
       expect(screen.getByText('OK')).toBeTruthy()
     })
 
     it('should render with empty string label', () => {
-      render(<Button label="" />)
+      render(
+        <Button
+          testID="TestButton"
+          label=""
+        />,
+      )
       expect(screen.queryByText('')).toBeTruthy()
     })
   })
@@ -205,13 +251,13 @@ describe('Button', () => {
       const onSubmit = jest.fn()
       render(
         <Button
-          testId="submit"
+          testID="TestButton"
           label="Submit"
           onPress={onSubmit}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('submit'))
+      fireEvent.press(screen.getByText('Submit'))
       expect(onSubmit).toHaveBeenCalled()
     })
 
@@ -219,14 +265,14 @@ describe('Button', () => {
       const onCancel = jest.fn()
       render(
         <Button
-          testId="cancel"
+          testID="TestButton"
           variant="secondary"
           label="Cancel"
           onPress={onCancel}
         />,
       )
 
-      fireEvent.press(screen.getByTestId('cancel'))
+      fireEvent.press(screen.getByTestId('TestButtonPressable'))
       expect(onCancel).toHaveBeenCalled()
     })
 
@@ -234,6 +280,7 @@ describe('Button', () => {
       const isLoading = true
       render(
         <Button
+          testID="TestButton"
           label={isLoading ? 'Loading...' : 'Submit'}
           disabled={isLoading}
         />,
@@ -247,12 +294,12 @@ describe('Button', () => {
       render(
         <>
           <Button
-            testId="submit"
+            testID="Test1Button"
             label="Submit"
             onPress={onSubmit}
           />
           <Button
-            testId="cancel"
+            testID="Test2Button"
             variant="secondary"
             label="Cancel"
             onPress={onCancel}
@@ -260,24 +307,39 @@ describe('Button', () => {
         </>,
       )
 
-      expect(screen.getByTestId('submit')).toBeTruthy()
-      expect(screen.getByTestId('cancel')).toBeTruthy()
+      expect(screen.getByText('Submit')).toBeTruthy()
+      expect(screen.getByText('Cancel')).toBeTruthy()
     })
   })
 
   describe('Edge Cases', () => {
     it('should render with special characters in label', () => {
-      render(<Button label="Save & Continue →" />)
+      render(
+        <Button
+          testID="TestButton"
+          label="Save & Continue →"
+        />,
+      )
       expect(screen.getByText('Save & Continue →')).toBeTruthy()
     })
 
     it('should render with emoji in label', () => {
-      render(<Button label="✓ Done" />)
+      render(
+        <Button
+          testID="TestButton"
+          label="✓ Done"
+        />,
+      )
       expect(screen.getByText('✓ Done')).toBeTruthy()
     })
 
     it('should render with number label', () => {
-      render(<Button label={String(123)} />)
+      render(
+        <Button
+          testID="TestButton"
+          label={String(123)}
+        />,
+      )
       expect(screen.getByText('123')).toBeTruthy()
     })
   })

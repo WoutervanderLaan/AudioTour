@@ -12,6 +12,7 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * FeedItemProps
@@ -26,11 +27,7 @@ type FeedItemProps = {
    * Callback when item is pressed to view details
    */
   onPress: () => void
-  /**
-   * Test ID for the component
-   */
-  testId?: string
-}
+} & TestProps<'FeedItem'>
 
 /**
  * FeedItem
@@ -43,7 +40,7 @@ type FeedItemProps = {
 export const FeedItem = ({
   item,
   onPress,
-  testId = 'FeedItem',
+  testID = 'FeedItem',
 }: FeedItemProps): React.JSX.Element => {
   const isLoading = !['ready', 'error'].includes(item.status)
   const showAudio = item.status === 'ready' && item.audioUrl
@@ -51,29 +48,29 @@ export const FeedItem = ({
   return (
     <PressableBase
       onPress={onPress}
-      testId={`${testId}Pressable`}>
+      testID={`${testID}Pressable`}>
       <Column
         gap="sm"
         padding="md"
-        testId={`${testId}ContainerView`}>
+        testID={`${testID}ContainerColumn`}>
         {item.photos.length > 0 && (
           <Row
             gap="xs"
             wrap="wrap"
-            testId={`${testId}PhotosView`}>
+            testID={`${testID}PhotosRow`}>
             {item.photos.slice(0, MAX_PHOTOS).map((photo, index) => (
               <Thumbnail
                 key={`photo-${index + 1}`}
                 source={{uri: photo}}
                 resizeMode="cover"
-                testId={`${testId}Photo${index + 1}Thumbnail`}
+                testID={`${testID}Photo${index + 1}Thumbnail`}
               />
             ))}
             {item.photos.length > MAX_PHOTOS && (
-              <Box testId={`${testId}MorePhotosView`}>
+              <Box testID={`${testID}MorePhotosBox`}>
                 <Text.Label
                   color="secondary"
-                  testId={`${testId}MorePhotosText`}>
+                  testID={`${testID}MorePhotosText`}>
                   +{item.photos.length - MAX_PHOTOS}
                 </Text.Label>
               </Box>
@@ -84,7 +81,7 @@ export const FeedItem = ({
         {!!item.metadata?.title && (
           <Text.Paragraph
             numberOfLines={2}
-            testId={`${testId}TitleText`}>
+            testID={`${testID}TitleText`}>
             {item.metadata.title}
           </Text.Paragraph>
         )}
@@ -92,7 +89,7 @@ export const FeedItem = ({
         {!!item.metadata?.artist && (
           <Text.Label
             numberOfLines={1}
-            testId={`${testId}ArtistText`}>
+            testID={`${testID}ArtistText`}>
             {item.metadata.artist}
           </Text.Label>
         )}
@@ -101,9 +98,9 @@ export const FeedItem = ({
           <Row
             gap="sm"
             center
-            testId={`${testId}LoadingView`}>
+            testID={`${testID}LoadingRow`}>
             <ActivityIndicator size="small" />
-            <Text.Label testId={`${testId}LoadingText`}>
+            <Text.Label testID={`${testID}LoadingText`}>
               {getFeedItemStatusText(item.status)}
             </Text.Label>
           </Row>
@@ -112,7 +109,7 @@ export const FeedItem = ({
         {item.status === 'error' && (
           <Text.Label
             color="warning"
-            testId={`${testId}ErrorText`}>
+            testID={`${testID}ErrorText`}>
             {item.error || 'An error occurred'}
           </Text.Label>
         )}
@@ -120,7 +117,7 @@ export const FeedItem = ({
         {!!item.narrativeText && (
           <Text.Paragraph
             numberOfLines={3}
-            testId={`${testId}NarrativeText`}>
+            testID={`${testID}NarrativeText`}>
             {item.narrativeText}
           </Text.Paragraph>
         )}
@@ -128,7 +125,8 @@ export const FeedItem = ({
         {Boolean(showAudio) && (
           <AudioPlayer
             src={item.audioUrl!}
-            testId={`${testId}AudioPlayer`} />
+            testID={`${testID}AudioPlayer`}
+          />
         )}
       </Column>
     </PressableBase>

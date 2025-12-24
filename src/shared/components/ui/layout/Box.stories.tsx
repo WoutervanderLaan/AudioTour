@@ -22,5 +22,6 @@ export const Default: Story = {
     flex: 1,
     padding: 'xxl',
     style: {borderWidth: 2, borderColor: 'black'},
+    testID: 'StoryBox',
   },
 }

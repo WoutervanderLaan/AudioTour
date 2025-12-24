@@ -13,30 +13,30 @@ export default meta
 
 const AllSteps = () => (
   <Column
-    testId="StoryProgressContainerView"
+    testID="StoryProgressContainerColumn"
     gap="md">
     <ProgressIndicator
-      testId="StoryStep1ProgressIndicator"
+      testID="StoryStep1ProgressIndicator"
       currentStep={1}
       totalSteps={5}
     />
     <ProgressIndicator
-      testId="StoryStep2ProgressIndicator"
+      testID="StoryStep2ProgressIndicator"
       currentStep={2}
       totalSteps={5}
     />
     <ProgressIndicator
-      testId="StoryStep3ProgressIndicator"
+      testID="StoryStep3ProgressIndicator"
       currentStep={3}
       totalSteps={5}
     />
     <ProgressIndicator
-      testId="StoryStep4ProgressIndicator"
+      testID="StoryStep4ProgressIndicator"
       currentStep={4}
       totalSteps={5}
     />
     <ProgressIndicator
-      testId="StoryStep5ProgressIndicator"
+      testID="StoryStep5ProgressIndicator"
       currentStep={5}
       totalSteps={5}
     />

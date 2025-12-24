@@ -2,6 +2,8 @@ import React, {type ReactNode} from 'react'
 
 import {Box, BoxProps} from './Box'
 
+import type {TestProps} from '@/shared/types/TestProps'
+
 /**
  * Row
  * Layout component that renders children in a horizontal row using flexbox direction.
@@ -9,8 +11,14 @@ import {Box, BoxProps} from './Box'
  * @param props - Box props excluding row and column since row direction is enforced
  * @returns Row layout component
  */
-export const Row = (props: Omit<BoxProps, 'row' | 'column'>): ReactNode => {
-  const boxProps = {...props, row: true} as BoxProps
+export const Row = (
+  props: Omit<BoxProps, 'row' | 'column' | 'testID'> & TestProps<'Row'>,
+): ReactNode => {
+  const boxProps = {
+    ...props,
+    testID: `${props.testID}Box`,
+    row: true,
+  } as BoxProps
 
   return <Box {...boxProps} />
 }

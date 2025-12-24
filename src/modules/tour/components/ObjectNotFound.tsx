@@ -1,19 +1,15 @@
 import React from 'react'
 
 import {Box} from '@/shared/components/ui/layout/Box'
-import {Screen} from '@/shared/components/ui/screen'
+import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography'
+import type {TestProps} from '@/shared/types/TestProps'
 
 /**
  * ObjectNotFoundProps
  * Props for the ObjectNotFound component
  */
-type ObjectNotFoundProps = {
-  /**
-   * Test ID for the component
-   */
-  testId?: string
-}
+type ObjectNotFoundProps = TestProps<'ObjectNotFound'>
 
 /**
  * ObjectNotFound
@@ -23,15 +19,15 @@ type ObjectNotFoundProps = {
  * @returns Object not found screen
  */
 export const ObjectNotFound = ({
-  testId = 'ObjectNotFound',
+  testID,
 }: ObjectNotFoundProps): React.JSX.Element => {
   return (
-    <Screen.Static testId={`${testId}Screen`}>
+    <Screen.Static testID={`${testID}Screen`}>
       <Box
         flex={1}
         center
-        testId={`${testId}ContainerView`}>
-        <Text.Paragraph testId={`${testId}MessageText`}>
+        testID={`${testID}ContainerBox`}>
+        <Text.Paragraph testID={`${testID}MessageText`}>
           Object not found
         </Text.Paragraph>
       </Box>
