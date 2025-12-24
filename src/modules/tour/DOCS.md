@@ -47,7 +47,7 @@ Modal screen for submitting captured photos with optional metadata. Features:
 - Form fields: title, artist, year, material, description
 - Submit and cancel actions
 
-**Route**: `TourRouteName.photoSubmit` (modal)
+**Route**: `TourModalName.photoSubmit` (modal)
 
 ### TourObjectDetailScreen
 
