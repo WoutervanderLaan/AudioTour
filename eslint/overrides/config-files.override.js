@@ -5,12 +5,7 @@ import globals from 'globals'
  * @returns {import('eslint').Linter.Config}
  */
 export const configFilesOverride = () => ({
-  files: [
-    'eslint-rules/**/*.{js,ts}',
-    '*.config.js',
-    '.rnstorybook/**',
-    '.jest/**',
-  ],
+  files: ['eslint-rules/**/*.{js,ts}', '*.config.js', '.jest/**', 'eslint/**'],
   languageOptions: {
     globals: {
       ...globals.node,

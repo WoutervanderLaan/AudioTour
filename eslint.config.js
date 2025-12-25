@@ -15,12 +15,11 @@ import {
   testsOverride,
 } from './eslint/overrides/index.js'
 
-// eslint-disable-next-line import/no-default-export
 export default [
   js.configs.recommended,
   ...storybook.configs['flat/recommended'],
   createMainConfig(),
   configFilesOverride(),
-  storybookOverride(),
+  ...storybookOverride(),
   testsOverride(),
 ]

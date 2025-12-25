@@ -1,8 +1,3 @@
-import {configFilesOverride} from './config-files.override.js'
-import {storybookOverride} from './storybook.override.js'
-import {testsOverride} from './tests.override.js'
-
-/**
- * Exports all override configurations
- */
-export {configFilesOverride, storybookOverride, testsOverride}
+export {configFilesOverride} from './config-files.override.js'
+export {storybookOverride} from './storybook.override.js'
+export {testsOverride} from './tests.override.js'
