@@ -148,15 +148,14 @@ Hook for accessing user's current geographic location.
 
 **Returns**:
 
-- `location`: Coordinates object with latitude and longitude, or null if unavailable
-- `error`: Error message if location access failed
-- `requestLocation()`: Function to manually request location
-- `haversineDistanceMeters()`: Utility function to calculate distance between two coordinates
+- `coords`: Coordinates object with latitude and longitude, or undefined if unavailable
+- `permissionStatus`: Current permission status ('granted', 'denied', or 'undetermined')
+- `error`: Error message if location access failed, or undefined
 
 **Usage**:
 
 ```typescript
-const {location, error, requestLocation} = useUserLocation()
+const {coords, permissionStatus, error} = useUserLocation()
 ```
 
 **Location**: `src/shared/hooks/useUserLocation.ts`
