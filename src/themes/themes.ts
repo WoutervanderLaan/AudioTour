@@ -3,6 +3,7 @@ import {zIndexTokens} from './tokens/zIndex'
 import {type Theme, ThemeVariant} from './types'
 
 import {sizeTokens} from '@/themes/tokens/size'
+import {createStyleTokens} from '@/themes/tokens/styles'
 import {textTokens} from '@/themes/tokens/text'
 import {darkColorTokens} from '@/themes/tokens/themeDark'
 import {lightColorTokens} from '@/themes/tokens/themeLight'
@@ -23,6 +24,7 @@ export const lightTheme: Theme = {
   id: ThemeVariant.light,
   ...baseTheme,
   color: lightColorTokens,
+  styles: createStyleTokens(lightColorTokens, sizeTokens),
 }
 
 /**
@@ -34,6 +36,7 @@ export const darkTheme: Theme = {
   id: ThemeVariant.dark,
   ...baseTheme,
   color: darkColorTokens,
+  styles: createStyleTokens(darkColorTokens, sizeTokens),
 }
 
 /**

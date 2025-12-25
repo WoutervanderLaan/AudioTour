@@ -1,6 +1,7 @@
 import type {themes} from './themes'
 import type {opacityTokens} from './tokens/opacity'
 import type {sizeTokens} from './tokens/size'
+import type {StyleTokens} from './tokens/styles'
 import type {TextTokens} from './tokens/text'
 import type {zIndexTokens} from './tokens/zIndex'
 
@@ -101,7 +102,7 @@ export type ZIndexTokens = typeof zIndexTokens
 
 /**
  * Theme
- * Complete theme object containing all design tokens including colors, sizes, text styles, and theme metadata.
+ * Complete theme object containing all design tokens including colors, sizes, text styles, style combinations, and theme metadata.
  */
 export type Theme = {
   /**
@@ -109,23 +110,27 @@ export type Theme = {
    */
   color: ColorTokens
   /**
-   * duration
+   * id
    */
   id: string
+  /**
+   * opacity
+   */
+  opacity: OpacityTokens
   /**
    * size
    */
   size: SizeTokens
   /**
+   * styles - Reusable style combinations (borders, shadows, cards, inputs)
+   */
+  styles: StyleTokens
+  /**
    * text
    */
   text: TextTokens
   /**
-   * text
-   */
-  opacity: OpacityTokens
-  /**
-   * text
+   * zIndex
    */
   zIndex: ZIndexTokens
 }
