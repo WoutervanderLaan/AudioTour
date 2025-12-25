@@ -6,6 +6,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 An AI-powered React Native app that generates dynamic audio tours based on museum objects photographed by users. The app combines object recognition, contextual narrative generation, and personalized story sequences to offer engaging and interactive museum experiences.
 
+### Core Principles
+
+The codebase must remain:
+- **Clean**: Well-organized with clear separation of concerns
+- **Modular**: Self-contained features with minimal coupling
+- **Explainable**: Comprehensive documentation and clear code
+- **Well-tested**: Thorough test coverage for core functionality
+
+For detailed project documentation, consult the [README](./README.md) and the [project handbook](./handbook).
+
 ## Development Commands
 
 ### Running the App
@@ -83,6 +93,8 @@ src/
     └── tokens/      # Individual theme tokens
 ```
 
+For detailed folder structure documentation, consult the handbook: [Folder Structure](./handbook/folder_structure.md)
+
 ### Import Rules (Enforced by ESLint)
 
 - **app/** can import from: shared, modules, store, themes
@@ -124,9 +136,47 @@ Modular navigation system with TypeScript safety:
 - Each module defines its own routes via route type files (e.g., `routes.types.ts`) and `screenConfig.ts` files
 - Modules export Stack components that are composed into the RootNavigator
 
-### Code Quality
+### Styling System
 
-The project has strict ESLint rules enforcing:
+Uses react-native-unistyles with a custom theme system:
+
+- Theme tokens defined in src/themes/tokens/
+- Configured in src/themes/unistyles.ts with adaptive themes enabled
+- Never use inline styles (ESLint warning)
+- Never use color literals (ESLint warning)
+- Use StyleSheet.create with theme callback for accessing theme tokens
+
+### TypeScript Configuration
+
+- Strict mode enabled
+- Base URL set to `./` with path alias `@/*` for src imports
+- Module resolution: bundler
+- Includes: src, index.tsx, config files
+
+## Code Quality Standards
+
+### JSDoc Documentation (Enforced)
+
+Every function, class, hook, and utility **must have complete JSDoc documentation**.
+
+All JSDoc comments must include:
+- Clear description of purpose
+- `@param` for each parameter with type and description
+- `@returns` with return type and description
+- Edge cases and important behavior notes where applicable
+
+### Folder Documentation (Enforced)
+
+Every folder **must include a DOCS.md file** documenting:
+- The folder's purpose and responsibilities
+- Key files and their roles
+- Usage guidelines and patterns
+
+This requirement is enforced by ESLint and applies to all modules and feature directories.
+
+### ESLint Rules (Strictly Enforced)
+
+The project has strict ESLint rules that **must pass without suppression**:
 
 - Function documentation comments (JSDoc style)
 - Type documentation comments
@@ -139,30 +189,61 @@ The project has strict ESLint rules enforcing:
 - Strict boolean expressions
 - No `any` types (warning)
 - Custom rules for folder structure and feature boundaries
+- Boundaries rules for module isolation
+- Unused imports enforcement
+- Consistent type usage
 
-### Styling System
+**Always run `npm run lint:fix` before finalizing code.** Do not use ESLint suppressions or disable rules.
 
-Uses react-native-unistyles with a custom theme system:
+### Pre-commit Validation (Husky)
 
-- Theme tokens defined in src/themes/tokens/
-- Configured in src/themes/unistyles.ts with adaptive themes enabled
-- Never use inline styles (ESLint warning)
-- Never use color literals (ESLint warning)
-- Use StyleSheet.create with theme callback for accessing theme tokens
+Pre-commit hooks validate:
+- Code formatting (Prettier)
+- Lint rules (ESLint)
+- Type checking (TypeScript)
 
-### Testing Strategy
+All code must pass these checks before committing. If hooks fail, fix the issues before proceeding.
 
-- Jest configured with jest-expo preset
-- Test setup in .jest/jest-init.js
-- MSW for API mocking (currently commented out but configured)
-- Transform ignores for React Native, Expo, and MSW packages
+## Testing Requirements
 
-### TypeScript Configuration
+**CRITICAL**: For any added or modified functionality, you **must** create or update tests.
 
-- Strict mode enabled
-- Base URL set to `./` with path alias `@/*` for src imports
-- Module resolution: bundler
-- Includes: src, index.tsx, config files
+### When to Write Tests
+
+Tests are **required** for:
+- **Utility functions** - All functions in `src/shared/utils/` and `src/core/lib/`
+- **Custom hooks** - All hooks in `src/shared/hooks/` and module-specific hooks
+- **Services** - API clients, authentication services, data transformations
+- **Core functionality** - State management, navigation logic, business logic
+- **Components with logic** - Components with conditional rendering, state management, or complex interactions
+
+### Testing Guidelines
+
+- Match existing test patterns in the codebase
+- Use Jest with jest-expo preset
+- Mock external dependencies appropriately
+- Test edge cases and error handling
+- Ensure tests are deterministic and don't rely on external state
+- If tests fail, **iterate until the suite passes** - do not commit failing tests
+
+### Running Tests
+
+```bash
+npm test              # Run tests in watch mode
+npm run test:ci       # Run all tests once (if configured)
+```
+
+## Code Style Guidelines
+
+Follow these principles when writing code:
+
+- **Functional patterns**: Prefer functional, composable patterns over imperative code
+- **Small functions**: Keep functions focused and modular (max 120 lines)
+- **Avoid side effects**: Pure functions where possible
+- **Strong typing**: Leverage TypeScript for type safety
+- **No unused exports**: Remove unused code and imports
+- **Clear naming**: Use descriptive, self-documenting names
+- **Clean components**: Keep React components simple and focused
 
 ## Module Development
 
@@ -180,6 +261,69 @@ When adding new Modules:
 2. Modules must only import from src/shared/ and src/store/
 3. Each module exports a configuration object that plugs into the ModuleRegistry
 4. Follow the existing pattern in the auth/ module
+
+## Git Workflow
+
+### Commit Style
+
+Use **conventional commits** format:
+
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `refactor:` - Code refactoring without behavior change
+- `docs:` - Documentation updates
+- `test:` - Test additions or modifications
+- `chore:` - Internal updates, dependency updates, tooling
+
+Examples:
+```
+feat: add audio playback controls to tour screen
+fix: resolve crash when loading artwork without metadata
+refactor: simplify navigation module registry
+docs: update testing requirements in CLAUDE.md
+test: add unit tests for artwork utilities
+```
+
+### Pull Requests
+
+When creating a pull request, ensure it includes:
+
+- **Clear title** using conventional commit format
+- **Description** explaining what changed and why
+- **List of files** added or modified
+- **Testing notes** describing how the changes were tested
+- **Breaking changes** noted if applicable
+
+## Agent Workflow
+
+When assigned a task, follow this workflow:
+
+1. **Analyze** the repository and understand existing patterns
+2. **Search** for relevant files using Glob/Grep tools
+3. **Read** relevant code to understand context
+4. **Plan** the implementation approach
+5. **Implement** changes following all code quality standards
+6. **Write or update tests** for modified functionality
+7. **Run validation** - lint, typecheck, and tests must pass
+8. **Commit** changes in logical chunks with clear messages
+9. **Create PR** with comprehensive description
+10. **Stop** after PR creation - do not merge
+
+If requirements are unclear, infer the intent based on existing codebase patterns and architecture.
+
+## Do Not
+
+The following practices are **strictly prohibited**:
+
+- ❌ Do not disable linting rules or use ESLint suppressions
+- ❌ Do not skip tests for new functionality
+- ❌ Do not create undocumented folders (missing DOCS.md)
+- ❌ Do not leave TODO comments without explanation
+- ❌ Do not introduce breaking changes without migration notes
+- ❌ Do not use inline styles or color literals
+- ❌ Do not use parent imports (`../`) - use absolute imports
+- ❌ Do not use `any` type unless absolutely necessary
+- ❌ Do not commit code that fails lint, typecheck, or tests
 
 ## Documentation
 
