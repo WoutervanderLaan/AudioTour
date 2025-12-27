@@ -31,25 +31,29 @@ This shared feature provides a reusable search component and filtering logic tha
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/shared/components/ui/form/TextInput.tsx`
 - `src/shared/components/ui/pressable/IconButton.tsx`
 
 **Location:** `src/shared/components/ui/form/SearchInput.tsx`
 
 **Subtasks:**
+
 - [ ] Create `src/shared/components/ui/form/SearchInput.tsx`
 - [ ] Props interface:
+
 ```typescript
 type SearchInputProps = {
   value: string
   onChangeText: (text: string) => void
   placeholder?: string
-  debounceMs?: number          // Default: 300ms
+  debounceMs?: number // Default: 300ms
   onClear?: () => void
   autoFocus?: boolean
   testID?: string
 }
 ```
+
 - [ ] Implement with:
   - Search icon on left (magnifying glass)
   - Clear button on right (appears when text present)
@@ -61,6 +65,7 @@ type SearchInputProps = {
 - [ ] Write unit tests
 
 **Implementation:**
+
 ```tsx
 export const SearchInput = ({
   value,
@@ -71,11 +76,11 @@ export const SearchInput = ({
   autoFocus = false,
   testID,
 }: SearchInputProps): ReactElement => {
-  const { styles } = useStyles(stylesheet)
+  const {styles} = useStyles(stylesheet)
 
   const debouncedOnChange = useDebouncedCallback(
     (text: string) => onChangeText(text),
-    debounceMs
+    debounceMs,
   )
 
   const [localValue, setLocalValue] = useState(value)
@@ -92,8 +97,11 @@ export const SearchInput = ({
   }
 
   return (
-    <View style={styles.container}>
-      <Icon name="search" style={styles.searchIcon} />
+    <Row>
+      <Icon
+        name="search"
+        style={styles.searchIcon}
+      />
       <TextInput
         value={localValue}
         onChangeText={handleChange}
@@ -110,7 +118,7 @@ export const SearchInput = ({
           accessibilityLabel="Clear search"
         />
       )}
-    </View>
+    </Row>
   )
 }
 ```
@@ -127,29 +135,33 @@ export const SearchInput = ({
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/shared/components/ui/pressable/Button.tsx`
 - `src/shared/components/ui/layout/Row.tsx`
 
 **Location:** `src/shared/components/ui/form/FilterChips.tsx`
 
 **Subtasks:**
+
 - [ ] Create `src/shared/components/ui/form/FilterChips.tsx`
 - [ ] Props interface:
+
 ```typescript
 type FilterChip = {
   id: string
   label: string
-  icon?: string              // Optional Material Icon name
+  icon?: string // Optional Material Icon name
 }
 
 type FilterChipsProps = {
   chips: FilterChip[]
   selectedIds: string[]
   onSelectionChange: (selectedIds: string[]) => void
-  multiSelect?: boolean      // Default: true
+  multiSelect?: boolean // Default: true
   testID?: string
 }
 ```
+
 - [ ] Implement with:
   - Horizontal `ScrollView` for overflow
   - Chip components with selected/unselected states
@@ -172,14 +184,17 @@ type FilterChipsProps = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - TASK-4.1 (SearchInput)
 - TASK-4.2 (FilterChips)
 
 **Location:** `src/shared/components/features/search-bar/SearchBar.tsx`
 
 **Subtasks:**
+
 - [ ] Create folder `src/shared/components/features/search-bar/`
 - [ ] Create `SearchBar.tsx`:
+
 ```typescript
 type SearchBarProps = {
   searchValue: string
@@ -195,9 +210,9 @@ type SearchBarProps = {
   testID?: string
 }
 ```
+
 - [ ] Layout: SearchInput on top, FilterChips below (if provided)
 - [ ] Add DOCS.md for the folder
-- [ ] Export from `src/shared/components/features/index.ts`
 - [ ] Add JSDoc documentation
 
 📐 **Pattern:** Composite component with optional sections
@@ -214,33 +229,37 @@ type SearchBarProps = {
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/shared/hooks/` (hook patterns)
 
 **Location:** `src/shared/hooks/useSearch.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/shared/hooks/useSearch.ts`
 - [ ] Hook interface:
+
 ```typescript
 type UseSearchOptions<T> = {
   data: T[]
-  searchFields: (keyof T)[]         // Fields to search
+  searchFields: (keyof T)[] // Fields to search
   initialQuery?: string
-  caseSensitive?: boolean           // Default: false
+  caseSensitive?: boolean // Default: false
 }
 
 type UseSearchResult<T> = {
   query: string
   setQuery: (query: string) => void
   results: T[]
-  isSearching: boolean              // True while query is non-empty
+  isSearching: boolean // True while query is non-empty
   clearSearch: () => void
 }
 
 function useSearch<T extends Record<string, unknown>>(
-  options: UseSearchOptions<T>
+  options: UseSearchOptions<T>,
 ): UseSearchResult<T>
 ```
+
 - [ ] Implement filtering logic:
   - Case-insensitive by default
   - Match any of the specified fields
@@ -262,18 +281,21 @@ function useSearch<T extends Record<string, unknown>>(
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - TASK-4.4 (useSearch)
 
 **Location:** `src/shared/hooks/useSearchWithFilters.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/shared/hooks/useSearchWithFilters.ts`
 - [ ] Hook interface:
+
 ```typescript
 type FilterConfig<T> = {
   id: string
   label: string
-  predicate: (item: T) => boolean   // Filter function
+  predicate: (item: T) => boolean // Filter function
 }
 
 type UseSearchWithFiltersOptions<T> = {
@@ -295,6 +317,7 @@ type UseSearchWithFiltersResult<T> = {
   clearAll: () => void
 }
 ```
+
 - [ ] Implement combined filtering:
   - Apply text search first
   - Then apply selected filter predicates (AND logic)
@@ -316,20 +339,24 @@ type UseSearchWithFiltersResult<T> = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - [02-history-module.md#TASK-2.4] (HistoryScreen)
 - TASK-4.3 (SearchBar)
 - TASK-4.4 (useSearch)
 
 **Subtasks:**
+
 - [ ] Import `SearchBar` component in `HistoryScreen.tsx`
 - [ ] Use `useSearch` hook with history data:
+
 ```typescript
-const { tours } = useTourHistoryStore()
-const { query, setQuery, results } = useSearch({
+const {tours} = useTourHistoryStore()
+const {query, setQuery, results} = useSearch({
   data: tours,
   searchFields: ['title', 'description', 'museumName'],
 })
 ```
+
 - [ ] Pass `results` to the FlatList instead of raw `tours`
 - [ ] Add optional filter chips:
   - "This Week", "This Month", "Older"
@@ -352,28 +379,32 @@ const { query, setQuery, results } = useSearch({
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - [03-community-tours-module.md#TASK-3.6] (CommunityScreen)
 - TASK-4.3 (SearchBar)
 - TASK-4.5 (useSearchWithFilters)
 
 **Subtasks:**
+
 - [ ] Import `SearchBar` component in `CommunityScreen.tsx`
 - [ ] Use `useSearchWithFilters` hook:
+
 ```typescript
 const filters: FilterConfig<CommunityTourSummary>[] = [
-  { id: '3-stars', label: '3+ Stars', predicate: t => t.communityRating >= 3 },
-  { id: '4-stars', label: '4+ Stars', predicate: t => t.communityRating >= 4 },
-  { id: '5-stars', label: '5 Stars', predicate: t => t.communityRating === 5 },
-  { id: 'official', label: 'Official', predicate: t => t.isOfficial },
+  {id: '3-stars', label: '3+ Stars', predicate: t => t.communityRating >= 3},
+  {id: '4-stars', label: '4+ Stars', predicate: t => t.communityRating >= 4},
+  {id: '5-stars', label: '5 Stars', predicate: t => t.communityRating === 5},
+  {id: 'official', label: 'Official', predicate: t => t.isOfficial},
 ]
 
-const { query, setQuery, selectedFilters, setSelectedFilters, results } =
+const {query, setQuery, selectedFilters, setSelectedFilters, results} =
   useSearchWithFilters({
     data: tours,
     searchFields: ['title', 'description', 'museumName'],
     filters,
   })
 ```
+
 - [ ] Pass `results` to the tour list
 - [ ] Include filter chips in SearchBar
 - [ ] For API-based filtering, pass filters to query params instead

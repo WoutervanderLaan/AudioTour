@@ -34,6 +34,7 @@ The History module provides users with access to their personal audio tour histo
 📁 **Reference:** `src/modules/tour/` (module structure template)
 
 **Folder Structure:**
+
 ```
 src/modules/history/
 ├── api/
@@ -64,6 +65,7 @@ src/modules/history/
 ```
 
 **Subtasks:**
+
 - [ ] Create folder structure as shown above
 - [ ] Create all DOCS.md files with purpose descriptions
 - [ ] Add `history` to `ModuleSlug` enum in `src/modules/slugs.ts`
@@ -82,11 +84,14 @@ src/modules/history/
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/modules/tour/routes.types.ts`
 - `src/modules/tour/screenConfig.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/routes.types.ts`:
+
 ```typescript
 export enum HistoryRouteName {
   list = 'HistoryList',
@@ -99,13 +104,14 @@ export enum HistoryTabName {
 
 export type HistoryStackParams = {
   [HistoryRouteName.list]: undefined
-  [HistoryRouteName.detail]: { tourId: string }
+  [HistoryRouteName.detail]: {tourId: string}
 }
 
 export type HistoryTabParams = {
   [HistoryTabName.history]: undefined
 }
 ```
+
 - [ ] Create `src/modules/history/screenConfig.ts` with:
   - Tab config for History tab (icon: 'history' from Material Icons)
   - Stack screen for detail view
@@ -125,15 +131,18 @@ export type HistoryTabParams = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/modules/modules.ts`
 - `src/modules/tour/index.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/index.ts`:
+
 ```typescript
-import { ModuleConfig } from '@/modules/types'
-import { ModuleSlug } from '@/modules/slugs'
-import { historyStacks, historyTabs } from './screenConfig'
+import {ModuleConfig} from '@/modules/types'
+import {ModuleSlug} from '@/modules/slugs'
+import {historyStacks, historyTabs} from './screenConfig'
 
 export const historyModule: ModuleConfig = {
   name: ModuleSlug.history,
@@ -153,12 +162,15 @@ export const historyModule: ModuleConfig = {
   },
 }
 ```
+
 - [ ] Register module in `src/modules/modules.ts`:
+
 ```typescript
-import { historyModule } from './history'
+import {historyModule} from './history'
 // In registerModules():
 moduleRegistry.register(historyModule)
 ```
+
 - [ ] Verify tab appears in bottom navigation
 
 📐 **Pattern:** Standard module registration flow
@@ -175,10 +187,12 @@ moduleRegistry.register(historyModule)
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/tour/screens/TourFeedScreen.tsx` (list pattern)
 - `src/shared/components/ui/screen/Screen.tsx`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/screens/HistoryScreen.tsx`
 - [ ] Implement using `Screen` component with `preset="scroll"` or `FlatList`
 - [ ] Add search bar at top (→ See [04-shared-search.md#TASK-4.2])
@@ -189,12 +203,13 @@ moduleRegistry.register(historyModule)
 - [ ] Handle error states gracefully
 
 **Component Structure:**
+
 ```tsx
 <Screen preset="fixed">
   <HistorySearchBar onSearch={handleSearch} />
   <FlatList
     data={filteredTours}
-    renderItem={({ item }) => (
+    renderItem={({item}) => (
       <HistoryTourCard
         tour={item}
         onPress={() => navigateToDetail(item.id)}
@@ -221,10 +236,12 @@ moduleRegistry.register(historyModule)
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/tour/screens/TourFeedScreen.tsx` (existing feed)
 - `src/modules/tour/components/FeedItem.tsx`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/screens/HistoryDetailScreen.tsx`
 - [ ] Receive `tourId` from route params
 - [ ] Fetch tour from `tourHistoryStore` using `getTour(id)`
@@ -235,6 +252,7 @@ moduleRegistry.register(historyModule)
 - [ ] Handle tour not found error
 
 **Layout:**
+
 ```
 ┌─────────────────────────────────────┐
 │ ← Back                    [Edit] ⋮  │  Header
@@ -274,10 +292,12 @@ moduleRegistry.register(historyModule)
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/tour/hooks/useTourInitialization.ts`
 - `src/store/slices/tourHistoryStore.ts` (from TASK-1.2)
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/hooks/useHistoryTours.ts`
 - [ ] Return all tours from `tourHistoryStore`
 - [ ] Implement filtering by search query:
@@ -294,6 +314,7 @@ moduleRegistry.register(historyModule)
 - [ ] Write unit tests
 
 **Hook Interface:**
+
 ```typescript
 type UseHistoryToursOptions = {
   searchQuery?: string
@@ -307,7 +328,9 @@ type UseHistoryToursResult = {
   refetch: () => void
 }
 
-function useHistoryTours(options?: UseHistoryToursOptions): UseHistoryToursResult
+function useHistoryTours(
+  options?: UseHistoryToursOptions,
+): UseHistoryToursResult
 ```
 
 📐 **Pattern:** Composable hook with options object
@@ -324,11 +347,13 @@ function useHistoryTours(options?: UseHistoryToursOptions): UseHistoryToursResul
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/profile/screens/ProfileEditScreen.tsx` (edit pattern)
 - `src/shared/components/ui/form/` (form components)
 - `react-hook-form` usage patterns
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/screens/HistoryEditScreen.tsx` or modal
 - [ ] Use `react-hook-form` with Zod validation schema
 - [ ] Form fields:
@@ -356,22 +381,26 @@ function useHistoryTours(options?: UseHistoryToursOptions): UseHistoryToursResul
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/shared/hooks/useBanner.ts` (feedback pattern)
 - `Alert` from React Native
 
 **Subtasks:**
+
 - [ ] Add delete action to `useTourActions` hook
 - [ ] Implement confirmation dialog using `Alert.alert`:
+
 ```typescript
 Alert.alert(
   'Delete Tour',
   'Are you sure you want to delete this tour? This cannot be undone.',
   [
-    { text: 'Cancel', style: 'cancel' },
-    { text: 'Delete', style: 'destructive', onPress: confirmDelete },
-  ]
+    {text: 'Cancel', style: 'cancel'},
+    {text: 'Delete', style: 'destructive', onPress: confirmDelete},
+  ],
 )
 ```
+
 - [ ] Call `tourHistoryStore.deleteTour(id)` on confirm
 - [ ] Show success toast/banner after deletion
 - [ ] Navigate back to list if on detail screen
@@ -391,10 +420,12 @@ Alert.alert(
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/shared/components/ui/` (component patterns)
 - Existing empty states in the app
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/components/HistoryEmptyState.tsx`
 - [ ] Display friendly message: "No tours yet"
 - [ ] Add illustration or icon (use Material Icons)
@@ -403,13 +434,23 @@ Alert.alert(
 - [ ] Style with theme tokens
 
 **Component:**
+
 ```tsx
-<Column align="center" padding="xl">
-  <Icon name="museum" size={64} color={theme.colors.textSecondary} />
+<Column
+  align="center"
+  padding="xl">
+  <Icon
+    name="museum"
+    size={64}
+    color={theme.colors.textSecondary}
+  />
   <Spacer size="md" />
   <Text variant="heading">No Tours Yet</Text>
   <Spacer size="sm" />
-  <Text variant="body" color="textSecondary" align="center">
+  <Text
+    variant="body"
+    color="textSecondary"
+    align="center">
     Start exploring museums and create your first audio tour!
   </Text>
   <Spacer size="lg" />

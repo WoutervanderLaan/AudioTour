@@ -1,7 +1,48 @@
 import {create} from 'zustand'
 import {immer} from 'zustand/middleware/immer'
 
-import type {ObjectItem} from '@/shared/types/types'
+/**
+ * ObjectItem
+ * Represents a museum object with metadata including name, artist, date, and generated content such as narrative text and audio.
+ */
+export type ObjectItem = {
+  /**
+   * id
+   */
+  id: string
+  /**
+   * name
+   */
+  name: string
+  /**
+   * artist
+   */
+  artist?: string
+  /**
+   * date
+   */
+  date?: string
+  /**
+   * museumIdd
+   */
+  museumIdd?: string
+  /**
+   * image_url
+   */
+  imageUrl?: string
+  /**
+   * generated_text
+   */
+  generatedText?: string
+  /**
+   * generated_audio
+   */
+  generatedAudio?: string
+  /**
+   * metadata
+   */
+  metadata?: Record<string, unknown>
+}
 
 /**
  * MuseumState

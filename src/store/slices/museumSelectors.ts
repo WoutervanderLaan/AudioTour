@@ -1,8 +1,6 @@
 import {useShallow} from 'zustand/shallow'
 
-import {useMuseumStore} from './museumStore'
-
-import type {ObjectItem} from '@/shared/types/types'
+import {type ObjectItem, useMuseumStore} from './museumStore'
 
 /**
  * useCurrentMuseumId

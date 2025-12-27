@@ -1,6 +1,7 @@
-import type {ColorTokens} from '@/themes/types'
-
+/* eslint-disable max-lines-per-function */
 import type {sizeTokens} from './size'
+
+import type {ColorTokens} from '@/themes/types'
 
 /**
  * Style combination tokens for consistent, reusable styling patterns.

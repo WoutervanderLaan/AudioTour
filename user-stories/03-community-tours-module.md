@@ -35,6 +35,7 @@ The Community Tours module allows users to discover and play pre-made (official)
 📁 **Reference:** `src/modules/tour/` and `src/modules/history/` (module structure templates)
 
 **Folder Structure:**
+
 ```
 src/modules/community/
 ├── api/
@@ -70,6 +71,7 @@ src/modules/community/
 ```
 
 **Subtasks:**
+
 - [ ] Create folder structure as shown above
 - [ ] Create all DOCS.md files with purpose descriptions
 - [ ] Add `community` to `ModuleSlug` enum in `src/modules/slugs.ts`
@@ -88,13 +90,16 @@ src/modules/community/
 **Estimated Complexity:** Low
 
 📁 **Reference:**
-- `src/shared/types/tour.ts` (from [01-tour-persistence.md#TASK-1.1])
+
+- `src/modules/history/types.ts` (from [01-tour-persistence.md#TASK-1.1])
 - `src/modules/community/types.ts`
 
 **Subtasks:**
+
 - [ ] Create community-specific types in `src/modules/community/types.ts`:
+
 ```typescript
-import { PersistedTour, TourSummary } from '@/shared/types/tour'
+import {PersistedTour, TourSummary} from '@/shared/types/tour'
 
 // Extended community tour with author info
 type CommunityTour = PersistedTour & {
@@ -103,13 +108,13 @@ type CommunityTour = PersistedTour & {
     displayName: string
     avatarUrl?: string
   }
-  isOfficial: boolean      // Admin-created pre-made tour
-  downloadCount: number    // Times tour has been started
-  tags: string[]           // For discovery/filtering
+  isOfficial: boolean // Admin-created pre-made tour
+  downloadCount: number // Times tour has been started
+  tags: string[] // For discovery/filtering
 }
 
 type CommunityTourSummary = TourSummary & {
-  author: { displayName: string }
+  author: {displayName: string}
   isOfficial: boolean
   downloadCount: number
 }
@@ -119,7 +124,7 @@ type TourRating = {
   id: string
   tourId: string
   userId: string
-  rating: number           // 1-5
+  rating?: number // 1-5
   createdAt: number
 }
 
@@ -127,11 +132,12 @@ type TourRating = {
 type CommunityFilterOptions = {
   query?: string
   museumId?: string
-  minRating?: number       // 1-5
+  minRating?: number // 1-5
   isOfficial?: boolean
   sortBy?: 'rating' | 'recent' | 'popular' | 'distance'
 }
 ```
+
 - [ ] Add JSDoc documentation for all types
 - [ ] Export types from module index
 
@@ -149,11 +155,14 @@ type CommunityFilterOptions = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/modules/history/routes.types.ts`
 - `src/modules/history/screenConfig.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/routes.types.ts`:
+
 ```typescript
 export enum CommunityRouteName {
   browse = 'CommunityBrowse',
@@ -166,13 +175,14 @@ export enum CommunityTabName {
 
 export type CommunityStackParams = {
   [CommunityRouteName.browse]: undefined
-  [CommunityRouteName.detail]: { tourId: string }
+  [CommunityRouteName.detail]: {tourId: string}
 }
 
 export type CommunityTabParams = {
   [CommunityTabName.explore]: undefined
 }
 ```
+
 - [ ] Create `src/modules/community/screenConfig.ts` with:
   - Tab config for Explore tab (icon: 'explore' from Material Icons)
   - Stack screen for detail view
@@ -192,15 +202,18 @@ export type CommunityTabParams = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/modules/modules.ts`
 - `src/modules/history/index.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/index.ts`:
+
 ```typescript
-import { ModuleConfig } from '@/modules/types'
-import { ModuleSlug } from '@/modules/slugs'
-import { communityStacks, communityTabs } from './screenConfig'
+import {ModuleConfig} from '@/modules/types'
+import {ModuleSlug} from '@/modules/slugs'
+import {communityStacks, communityTabs} from './screenConfig'
 
 export const communityModule: ModuleConfig = {
   name: ModuleSlug.community,
@@ -220,12 +233,15 @@ export const communityModule: ModuleConfig = {
   },
 }
 ```
+
 - [ ] Register module in `src/modules/modules.ts`:
+
 ```typescript
-import { communityModule } from './community'
+import {communityModule} from './community'
 // In registerModules():
 moduleRegistry.register(communityModule)
 ```
+
 - [ ] Verify tab appears in bottom navigation (should be 3rd tab)
 
 📐 **Pattern:** Standard module registration flow
@@ -242,12 +258,15 @@ moduleRegistry.register(communityModule)
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/tour/api/mutations.ts`
 - `src/modules/tour/api/queries.ts`
 - `src/core/api/client.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/api/keys.ts`:
+
 ```typescript
 export const communityKeys = {
   all: ['community'] as const,
@@ -258,6 +277,7 @@ export const communityKeys = {
     [...communityKeys.all, 'nearby', lat, lng] as const,
 }
 ```
+
 - [ ] Create `src/modules/community/api/queries.ts`:
   - `useCommunityTours(filters)` - GET `/community/tours`
   - `useCommunityTour(id)` - GET `/community/tours/:id`
@@ -282,12 +302,15 @@ export const communityKeys = {
 **Estimated Complexity:** High
 
 📁 **Reference:**
+
 - `src/modules/tour/screens/TourFeedScreen.tsx` (list pattern)
 - `src/modules/history/screens/HistoryScreen.tsx`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/screens/CommunityScreen.tsx`
 - [ ] Implement screen layout:
+
 ```
 ┌─────────────────────────────────────┐
 │ Search Bar + Filters                │
@@ -308,6 +331,7 @@ export const communityKeys = {
 │ └─────────────────────────────────┘ │
 └─────────────────────────────────────┘
 ```
+
 - [ ] Add toggle for Recommended vs Nearby at top
 - [ ] Use horizontal `FlatList` for featured section
 - [ ] Use `SectionList` or nested `FlatList` for full list
@@ -329,10 +353,12 @@ export const communityKeys = {
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/store/slices/tourHistoryStore.ts` (user history)
 - `src/store/slices/userSessionStore.ts` (user preferences)
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/hooks/useRecommendedTours.ts`
 - [ ] Recommendation factors:
   - Museums user has previously visited
@@ -359,11 +385,13 @@ export const communityKeys = {
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/shared/hooks/useUserLocation.ts`
 - `src/shared/constants/museums.ts` (museum locations)
 - `src/modules/tour/hooks/useTourInitialization.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/hooks/useNearbyTours.ts`
 - [ ] Use `useUserLocation()` to get current coordinates
 - [ ] Call API: GET `/community/tours/nearby?lat=X&lng=Y&radius=10km`
@@ -388,10 +416,12 @@ export const communityKeys = {
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/history/screens/HistoryDetailScreen.tsx` (similar pattern)
 - `src/modules/tour/components/FeedItem.tsx`
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/screens/CommunityDetailScreen.tsx`
 - [ ] Fetch tour via `useCommunityTour(id)` query
 - [ ] Display:
@@ -410,6 +440,7 @@ export const communityKeys = {
 - [ ] Handle loading and error states
 
 **Layout:**
+
 ```
 ┌─────────────────────────────────────┐
 │ ← Back                        Share │
@@ -458,9 +489,11 @@ export const communityKeys = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/shared/components/ui/` (component patterns)
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/components/RatingDisplay.tsx`
 - [ ] Props: `rating: number` (0-5), `count?: number`, `size?: 'sm' | 'md' | 'lg'`
 - [ ] Display filled/half/empty stars using Material Icons
@@ -469,8 +502,13 @@ export const communityKeys = {
 - [ ] Add JSDoc documentation
 
 **Component:**
+
 ```tsx
-<RatingDisplay rating={4.2} count={128} size="md" />
+<RatingDisplay
+  rating={4.2}
+  count={128}
+  size="md"
+/>
 // Renders: ⭐⭐⭐⭐☆ 4.2 (128)
 ```
 
@@ -486,10 +524,12 @@ export const communityKeys = {
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/community/api/mutations.ts` (rating mutation)
 - `src/shared/components/ui/pressable/` (pressable components)
 
 **Subtasks:**
+
 - [ ] Create `src/modules/community/components/RatingInput.tsx`
 - [ ] Props: `tourId: string`, `existingRating?: number`, `onRated?: () => void`
 - [ ] Display 5 tappable stars
@@ -514,10 +554,12 @@ export const communityKeys = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - [04-shared-search.md] (shared search)
 - `src/modules/community/types.ts` (filter options)
 
 **Subtasks:**
+
 - [ ] Extend shared search to accept filter chips
 - [ ] Create filter chip options for rating:
   - "3+ Stars", "4+ Stars", "5 Stars"

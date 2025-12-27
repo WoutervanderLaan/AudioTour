@@ -32,16 +32,19 @@ This shared feature provides a reusable card component for displaying tour summa
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/shared/types/tour.ts` (TourSummary type from TASK-1.1)
 - `src/modules/tour/components/FeedItem.tsx` (existing card pattern)
 
 **Location:** `src/shared/components/features/tour-card/types.ts`
 
 **Subtasks:**
+
 - [ ] Create folder `src/shared/components/features/tour-card/`
 - [ ] Create `types.ts` with:
+
 ```typescript
-import { TourSummary } from '@/shared/types/tour'
+import {TourSummary} from '@/shared/types/tour'
 
 type TourCardVariant = 'full' | 'compact' | 'horizontal'
 
@@ -63,6 +66,7 @@ type TourCardProps = {
   testID?: string
 }
 ```
+
 - [ ] Add JSDoc documentation for all types
 
 📐 **Pattern:** Flexible props with sensible defaults
@@ -79,6 +83,7 @@ type TourCardProps = {
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/tour/components/FeedItem.tsx`
 - `src/shared/components/features/thumbnail/Thumbnail.tsx`
 - `src/shared/components/ui/layout/` (layout components)
@@ -86,10 +91,12 @@ type TourCardProps = {
 **Location:** `src/shared/components/features/tour-card/TourCard.tsx`
 
 **Subtasks:**
+
 - [ ] Create `TourCard.tsx`
 - [ ] Implement three variants:
 
 **Full Variant (for lists):**
+
 ```
 ┌─────────────────────────────────────┐
 │ ┌─────────────────────────────────┐ │
@@ -104,6 +111,7 @@ type TourCardProps = {
 ```
 
 **Compact Variant (for grids/carousels):**
+
 ```
 ┌───────────────────┐
 │ ┌───────────────┐ │
@@ -116,6 +124,7 @@ type TourCardProps = {
 ```
 
 **Horizontal Variant (for featured sections):**
+
 ```
 ┌─────────────────────────────────┐
 │ ┌──────┐                        │
@@ -146,12 +155,14 @@ type TourCardProps = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/shared/components/features/thumbnail/Thumbnail.tsx`
 - `expo-image` or React Native Image
 
 **Location:** `src/shared/components/features/tour-card/TourCardImage.tsx`
 
 **Subtasks:**
+
 - [ ] Create `TourCardImage.tsx`
 - [ ] Props: `uri: string`, `aspectRatio: '16:9' | '1:1'`, `fallbackIcon?: string`
 - [ ] Features:
@@ -175,23 +186,27 @@ type TourCardProps = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/shared/components/ui/typography/Text.tsx`
 - `src/shared/components/ui/layout/Row.tsx`
 
 **Location:** `src/shared/components/features/tour-card/TourCardMeta.tsx`
 
 **Subtasks:**
+
 - [ ] Create `TourCardMeta.tsx`
 - [ ] Props:
+
 ```typescript
 type TourCardMetaProps = {
   location?: string
-  date?: number              // Timestamp
+  date?: number // Timestamp
   rating?: number
   ratingCount?: number
   variant?: 'full' | 'compact'
 }
 ```
+
 - [ ] Display with icons:
   - 📍 Location (location-on icon)
   - 📅 Date (formatted: "Dec 25, 2025")
@@ -212,13 +227,16 @@ type TourCardMetaProps = {
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/shared/components/ui/pressable/IconButton.tsx`
 
 **Location:** `src/shared/components/features/tour-card/TourCardActions.tsx`
 
 **Subtasks:**
+
 - [ ] Create `TourCardActions.tsx`
 - [ ] Props:
+
 ```typescript
 type TourCardActionsProps = {
   onEdit?: () => void
@@ -227,6 +245,7 @@ type TourCardActionsProps = {
   position?: 'top-right' | 'bottom-right'
 }
 ```
+
 - [ ] Display as:
   - Icon buttons in corner (three-dot menu or individual icons)
   - Or dropdown menu on press
@@ -247,13 +266,16 @@ type TourCardActionsProps = {
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/shared/utils/` (utility patterns)
 
 **Location:** `src/shared/utils/dateFormatter.ts`
 
 **Subtasks:**
+
 - [ ] Create `src/shared/utils/dateFormatter.ts`
 - [ ] Functions:
+
 ```typescript
 /**
  * Formats a timestamp as a relative or absolute date string
@@ -269,6 +291,7 @@ function formatTourDate(timestamp: number): string
  */
 function getRelativeDate(timestamp: number): string
 ```
+
 - [ ] Relative dates for within 7 days
 - [ ] Absolute dates beyond 7 days
 - [ ] Support for different locales (future enhancement)
@@ -286,36 +309,42 @@ function getRelativeDate(timestamp: number): string
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/shared/components/features/` (existing feature exports)
 
-**Subtasks:**
-- [ ] Create `src/shared/components/features/tour-card/index.ts`:
 ```typescript
-export { TourCard } from './TourCard'
-export type { TourCardProps, TourCardVariant, TourCardActions } from './types'
+export {TourCard} from './TourCard'
+export type {TourCardProps, TourCardVariant, TourCardActions} from './types'
 ```
+
 - [ ] Create `src/shared/components/features/tour-card/DOCS.md`:
+
 ```markdown
 # Tour Card Component
 
 ## Purpose
+
 Reusable card component for displaying tour summaries in lists and grids.
 
 ## Usage
+
 Used by History and Community modules for tour listings.
 
 ## Variants
+
 - `full`: Full-width card for vertical lists
 - `compact`: Square card for grids and carousels
 - `horizontal`: Wide card for featured sections
 
 ## Key Files
+
 - TourCard.tsx - Main component
 - TourCardImage.tsx - Image with loading states
 - TourCardMeta.tsx - Metadata display
 - TourCardActions.tsx - Action buttons
 - types.ts - TypeScript definitions
 ```
+
 - [ ] Update `src/shared/components/features/index.ts` to include tour-card
 
 📐 **Pattern:** Standard feature folder documentation
@@ -330,11 +359,14 @@ Used by History and Community modules for tour listings.
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - [02-history-module.md#TASK-2.4] (HistoryScreen)
 
 **Subtasks:**
+
 - [ ] Import `TourCard` in `HistoryScreen.tsx`
 - [ ] Configure for history use:
+
 ```tsx
 <TourCard
   tour={tourSummary}
@@ -350,6 +382,7 @@ Used by History and Community modules for tour listings.
   }}
 />
 ```
+
 - [ ] Test rendering and interactions
 
 📐 **Pattern:** Consume shared component
@@ -368,11 +401,14 @@ Used by History and Community modules for tour listings.
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - [03-community-tours-module.md#TASK-3.6] (CommunityScreen)
 
 **Subtasks:**
+
 - [ ] Import `TourCard` in `CommunityScreen.tsx`
 - [ ] Configure for community use:
+
 ```tsx
 <TourCard
   tour={tourSummary}
@@ -380,12 +416,13 @@ Used by History and Community modules for tour listings.
   showRating={true}
   showDate={true}
   showLocation={true}
-  showActions={false}  // No edit/delete for community
+  showActions={false} // No edit/delete for community
   actions={{
     onPress: () => navigateToDetail(tour.id),
   }}
 />
 ```
+
 - [ ] Use `compact` variant for featured section carousel
 - [ ] Use `horizontal` variant for nearby tours section
 - [ ] Test rendering and interactions

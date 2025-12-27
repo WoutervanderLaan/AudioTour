@@ -5,9 +5,7 @@ import {
   useMuseumActions,
   useMuseumObjects,
 } from './museumSelectors'
-import {useMuseumStore} from './museumStore'
-
-import type {ObjectItem} from '@/shared/types/types'
+import {useMuseumStore, type ObjectItem} from './museumStore'
 
 describe('museumSelectors', () => {
   beforeEach(() => {

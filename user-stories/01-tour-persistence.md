@@ -39,42 +39,49 @@ type PersistedTour = {
   updatedAt: number
 
   // Tour metadata
-  title: string                    // Auto-generated or user-customized
-  description: string              // Auto-generated or user-customized
-  heroImageUri: string             // First photo or user-selected
+  title: string // Auto-generated or user-customized
+  description: string // Auto-generated or user-customized
+  heroImageUri: string // First photo or user-selected
 
   // Location context
-  museumId: string | null          // From KNOWN_MUSEUMS or null if unknown
-  museumName: string               // Museum name or 'Unknown Location'
-  coordinates: Coordinates | null  // Lat/lng of tour start
+  museumId: string | null // From KNOWN_MUSEUMS or null if unknown
+  museumName: string // Museum name or 'Unknown Location'
+  coordinates: Coordinates | null // Lat/lng of tour start
 
   // Tour content
-  feedItems: FeedItem[]            // All artwork entries from the tour
+  feedItems: FeedItem[] // All artwork entries from the tour
 
   // User & session
-  userId: string | null            // For future auth integration
-  sessionId: string                // From userSessionStore
+  userId: string | null // For future auth integration
+  sessionId: string // From userSessionStore
 
   // Sharing & community
-  isShared: boolean                // Whether tour is shared publicly
-  isOfficial: boolean              // Admin-created pre-made tour
-  communityRating: number          // 0-5 stars average
-  ratingCount: number              // Number of ratings
+  isShared: boolean // Whether tour is shared publicly
+  isOfficial: boolean // Admin-created pre-made tour
+  communityRating: number // 0-5 stars average
+  ratingCount: number // Number of ratings
 }
 
-type TourSummary = Pick<PersistedTour,
-  'id' | 'title' | 'description' | 'heroImageUri' |
-  'museumName' | 'createdAt' | 'communityRating' | 'ratingCount'
+type TourSummary = Pick<
+  PersistedTour,
+  | 'id'
+  | 'title'
+  | 'description'
+  | 'heroImageUri'
+  | 'museumName'
+  | 'createdAt'
+  | 'communityRating'
+  | 'ratingCount'
 >
 ```
 
 **Subtasks:**
-- [ ] Create `src/shared/types/tour.ts` with `PersistedTour` and `TourSummary` types
+
+- [ ] Create `src/modules/history/types.ts` with `PersistedTour` and `TourSummary` types
 - [ ] Create `Coordinates` re-export from `useUserLocation` types
 - [ ] Add JSDoc documentation for all types
-- [ ] Export types from `src/shared/types/index.ts`
 
-📐 **Pattern:** Follow existing type organization in `src/shared/types/`
+📐 **Pattern:** Follow existing type organization in `src/modules/tour/types.ts`
 
 ---
 
@@ -86,12 +93,14 @@ type TourSummary = Pick<PersistedTour,
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/auth/store/useAuthStore.ts` (persistence pattern)
 - `src/modules/tour/store/useTourStore.ts` (store structure)
 - `src/store/createStore.ts` (store factory)
 
 **Subtasks:**
-- [ ] Create `src/store/slices/tourHistoryStore.ts`
+
+- [ ] Create `src/modules/history/store/useHistoryStore.ts`
 - [ ] Implement state: `tours: PersistedTour[]`, `isLoading: boolean`
 - [ ] Implement actions:
   - `saveTour(tour: PersistedTour): void`
@@ -100,9 +109,9 @@ type TourSummary = Pick<PersistedTour,
   - `getTour(id: string): PersistedTour | undefined`
   - `getTours(): PersistedTour[]`
 - [ ] Use `createModuleStore` with `persist: true` for AsyncStorage
-- [ ] Add selectors for filtered views (by date, museum, etc.)
-- [ ] Create `src/store/slices/DOCS.md` update for new store
-- [ ] Write unit tests in `src/store/slices/__tests__/tourHistoryStore.test.ts`
+- [ ] Add selectors in `src/modules/history/store/selectors.ts`
+- [ ] Create `src/modules/history/store/DOCS.md` update for new store
+- [ ] Write unit tests in `src/modules/history/store/useHistoryStore.test.ts` and `src/modules/history/store/selectors.test.ts`
 
 📐 **Pattern:** Use `immer` middleware for immutable updates (see `useTourStore.ts`)
 
@@ -116,11 +125,13 @@ type TourSummary = Pick<PersistedTour,
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/tour/hooks/useTourInitialization.ts` (tour lifecycle)
 - `src/modules/tour/store/useTourStore.ts` (current tour state)
 - `src/store/slices/museumStore.ts` (museum context)
 
 **Subtasks:**
+
 - [ ] Create `src/modules/tour/hooks/useTourPersistence.ts`
 - [ ] Implement `saveTourToHistory()` function that:
   - Collects all `feedItems` from `useTourStore`
@@ -149,18 +160,20 @@ type TourSummary = Pick<PersistedTour,
 **Estimated Complexity:** Low
 
 📁 **Reference:**
+
 - `src/core/lib/` (utility organization)
 - `src/modules/tour/types.ts` (FeedItem structure)
 
 **Subtasks:**
-- [ ] Create `src/shared/utils/tourTitleGenerator.ts`
+
+- [ ] Create `src/modules/history/utils/tourTitleGenerator.ts`
 - [ ] Implement `generateTourTitle(items: FeedItem[], museum: string): string`
   - Pattern: "{Museum} Tour" or "Tour at {Location}" or "Art Tour - {Date}"
   - Include artwork count or notable piece if available
 - [ ] Implement `generateTourDescription(items: FeedItem[]): string`
   - Combine first few artwork descriptions
   - Limit to 150 characters
-- [ ] Add unit tests in `src/shared/utils/__tests__/tourTitleGenerator.test.ts`
+- [ ] Add unit tests in `src/modules/history/utils/tourTitleGenerator.test.ts`
 
 📐 **Pattern:** Pure utility functions with comprehensive tests
 
@@ -174,18 +187,20 @@ type TourSummary = Pick<PersistedTour,
 **Estimated Complexity:** Medium
 
 📁 **Reference:**
+
 - `src/modules/tour/api/mutations.ts` (mutation pattern)
 - `src/modules/tour/api/keys.ts` (query key organization)
 - `src/core/api/client.ts` (API client usage)
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/api/mutations.ts` (can be created early in history module)
 - [ ] Implement mutations:
   - `useSaveTourToCloud()` - POST `/tours`
   - `useUpdateCloudTour()` - PATCH `/tours/:id`
   - `useDeleteCloudTour()` - DELETE `/tours/:id`
 - [ ] Create `src/modules/history/api/queries.ts`
-  - `useMyTours()` - GET `/tours/mine`
+  - `useMyTours()` - GET `/tours`
   - `useTourById()` - GET `/tours/:id`
 - [ ] Create MSW mocks in `src/modules/history/api/mocks.ts`
 - [ ] Add query keys in `src/modules/history/api/keys.ts`
@@ -204,10 +219,12 @@ type TourSummary = Pick<PersistedTour,
 **Estimated Complexity:** High
 
 📁 **Reference:**
-- `src/store/slices/tourHistoryStore.ts` (local storage - from TASK-1.2)
+
+- `src/modules/history/store/useHistoryStore.ts` (local storage - from TASK-1.2)
 - `src/modules/history/api/` (API layer - from TASK-1.5)
 
 **Subtasks:**
+
 - [ ] Create `src/modules/history/hooks/useTourSync.ts`
 - [ ] Implement sync strategy:
   - On app start: fetch cloud tours, merge with local
