@@ -191,7 +191,7 @@ Answers are stored as a flat key-value record:
 ### Internal Dependencies
 
 - `@/shared/components/ui/form`: Form input components
-- `@/shared/components/ui/banner`: Banner UI component
+- `@/shared/context/banner`: Banner context provider (useBanner hook)
 - `@/shared/components/ui/navigation`: Navigation components
 - `@/store/createStore`: Store creation utility
 
