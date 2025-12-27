@@ -11,11 +11,9 @@ import {OnboardingStepType} from '../types'
 import type {StepFormData} from '../utils/createStepSchema'
 
 import {ProgressIndicator} from '@/shared/components/features/progress-indicator/ProgressIndicator'
-import {
-  RadioGroupControlled,
-  SwitchControlled,
-  TextInputControlled,
-} from '@/shared/components/ui/form'
+import {RadioGroupControlled} from '@/shared/components/ui/form/RadioGroupControlled'
+import {SwitchControlled} from '@/shared/components/ui/form/SwitchControlled'
+import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable/Button'

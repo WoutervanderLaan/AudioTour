@@ -9,7 +9,7 @@ import {AuthRouteName} from '../routes.types'
 import {type RegisterForm, registerSchema} from '../schema'
 
 import {logger} from '@/core/lib/logger/logger'
-import {TextInputControlled} from '@/shared/components/ui/form'
+import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable/Button'

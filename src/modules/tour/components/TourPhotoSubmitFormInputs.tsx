@@ -4,10 +4,8 @@ import {useFormContext} from 'react-hook-form'
 import {MAX_PHOTOS} from '../constants'
 import type {PhotoSubmitForm} from '../schema'
 
-import {
-  ImageInputControlled,
-  TextInputControlled,
-} from '@/shared/components/ui/form'
+import {ImageInputControlled} from '@/shared/components/ui/form/ImageInputControlled'
+import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
