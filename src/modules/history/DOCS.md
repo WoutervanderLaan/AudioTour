@@ -16,7 +16,7 @@ History module handling tour persistence, retrieval, and synchronization with th
 
 ## Purpose
 
-Provides tour persistence functionality including automatic saving of completed tours, local storage with AsyncStorage, and optional cloud synchronization. This module serves as the foundation for both the History tab (user's own tours) and Community Tours module (shared tours).
+Provides tour persistence functionality including automatic saving of completed tours, local storage with AsyncStorage, and optional cloud synchronization. This module serves as the foundation for the History tab (user's own tours). It is also designed to support the planned Community Tours module (shared tours) in the future.
 
 ## Key Types
 

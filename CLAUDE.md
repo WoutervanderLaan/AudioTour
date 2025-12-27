@@ -84,6 +84,7 @@ src/
 │   └── utils/       # Utility functions
 ├── modules/          # Self-contained feature modules
 │   ├── auth/        # Authentication module
+│   ├── history/     # Tour history and persistence module
 │   ├── onboarding/  # User onboarding module
 │   ├── notifications/  # Push notification module
 │   ├── profile/     # User profile module
@@ -235,7 +236,6 @@ Tests are **required** for:
 
 ```bash
 npm test              # Run tests in watch mode
-npm run test:ci       # Run all tests once (if configured)
 ```
 
 ## Code Style Guidelines
