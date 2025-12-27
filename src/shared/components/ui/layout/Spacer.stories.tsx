@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {Text} from '../typography'
+import {Text} from '../typography/Text'
 import {Box} from './Box'
 import {Column} from './Column'
 import {Spacer} from './Spacer'

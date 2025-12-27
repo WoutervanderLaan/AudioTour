@@ -6,7 +6,7 @@ import {
   PressableBase,
   type PressableBaseProps,
 } from '@/shared/components/ui/pressable/PressableBase'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 enum AddPhotoSize {

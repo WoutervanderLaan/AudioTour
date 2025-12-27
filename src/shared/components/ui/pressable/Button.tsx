@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native-unistyles'
 import {PressableBase, type PressableBaseProps} from './PressableBase'
 
 import {Box} from '@/shared/components/ui/layout/Box'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**

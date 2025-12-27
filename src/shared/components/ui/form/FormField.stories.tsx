@@ -5,7 +5,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {GradientBackground} from '../gradient/GradientBackground'
 import {Column} from '../layout/Column'
 import {Row} from '../layout/Row'
-import {Text} from '../typography'
+import {Text} from '../typography/Text'
 import {FormField} from './FormField'
 import {TextInput} from './TextInput'
 

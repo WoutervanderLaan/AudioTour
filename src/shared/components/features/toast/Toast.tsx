@@ -3,7 +3,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Box} from '@/shared/components/ui/layout/Box'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {ToastProps} from '@/shared/context/toast/ToastContext.types'
 import type {TestProps} from '@/shared/types/TestProps'
 

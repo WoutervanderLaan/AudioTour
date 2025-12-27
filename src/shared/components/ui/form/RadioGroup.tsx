@@ -5,7 +5,7 @@ import {Box} from '../layout/Box'
 import {Column} from '../layout/Column'
 import {Row} from '../layout/Row'
 import {PressableBase} from '../pressable/PressableBase'
-import {Text} from '../typography'
+import {Text} from '../typography/Text'
 
 import type {TestProps} from '@/shared/types/TestProps'
 

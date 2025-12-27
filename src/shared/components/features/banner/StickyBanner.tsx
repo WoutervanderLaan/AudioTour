@@ -8,7 +8,7 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {NavItem} from '@/shared/components/ui/navigation/NavItem'
 import {IconButton} from '@/shared/components/ui/pressable/IconButton'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**

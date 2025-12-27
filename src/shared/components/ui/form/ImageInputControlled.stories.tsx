@@ -10,7 +10,7 @@ import {ImageInputControlled} from './ImageInputControlled'
 
 import {logger} from '@/core/lib/logger/logger'
 import {Button} from '@/shared/components/ui/pressable/Button'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 
 const meta = {
   title: 'Form/ImageInputControlled',

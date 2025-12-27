@@ -4,7 +4,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
 import {Box} from './Box'
 
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 
 const meta = {
   title: 'Layout/Box',

@@ -12,7 +12,7 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Screen} from '@/shared/components/ui/screen/Screen'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
 

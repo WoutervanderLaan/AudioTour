@@ -10,7 +10,7 @@ import {
 
 import type {IconName} from '@/core/navigation/types'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**

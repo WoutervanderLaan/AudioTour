@@ -5,7 +5,7 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {Column} from '../layout/Column'
 import {RadioGroup, type RadioOption} from './RadioGroup'
 
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 
 const meta = {
   title: 'Form/RadioGroup',

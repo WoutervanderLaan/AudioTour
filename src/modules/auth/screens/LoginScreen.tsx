@@ -15,7 +15,7 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {LinkButton} from '@/shared/components/ui/pressable/LinkButton'
 import {Screen} from '@/shared/components/ui/screen/Screen'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**

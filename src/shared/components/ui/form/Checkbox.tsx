@@ -7,7 +7,7 @@ import {Row} from '../layout/Row'
 import {PressableBase} from '../pressable/PressableBase'
 
 import {Box} from '@/shared/components/ui/layout/Box'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**
