@@ -140,11 +140,36 @@ const {activePhotoIndex, setActivePhotoIndex} = usePhotoGallery()
 
 **Location**: `src/modules/tour/hooks/usePhotoGallery.ts`
 
+### useTourPersistence.ts
+
+Hook for managing tour persistence, saving the current tour session to history.
+
+**Purpose**: Collects tour data from various stores (tour, museum, session) and saves it to the history store with auto-generated metadata (title, description, hero image).
+
+**Returns**:
+
+- `saveTourToHistory`: Function to save the current tour, returns tour ID or null
+- `canSaveTour`: Function to check if tour has enough content to save
+- `isSaved`: Boolean indicating if tour has already been saved
+
+**Usage**:
+
+```typescript
+const {saveTourToHistory, canSaveTour, isSaved} = useTourPersistence()
+
+if (canSaveTour() && !isSaved) {
+  const tourId = saveTourToHistory(userCoordinates)
+}
+```
+
+**Location**: `src/modules/tour/hooks/useTourPersistence.ts`
+
 ## Integration
 
 These hooks integrate with:
 
 - Tour API mutations (`src/modules/tour/api/mutations.ts`)
 - Tour store actions (`src/modules/tour/store/useTourStore.ts`)
+- History store (`src/modules/history/store/useHistoryStore.ts`)
 - Camera service (`src/modules/tour/services/cameraService.ts`)
 - Global store slices (museum, user session)
