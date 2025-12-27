@@ -54,9 +54,6 @@ type UseTourPersistenceReturn = {
 export function useTourPersistence(): UseTourPersistenceReturn {
   const savedTourIdRef = useRef<string | null>(null)
 
-  // Tour store
-  const feedItems = useTourStore(state => state.feedItems)
-
   // Museum store
   const currentMuseumId = useMuseumStore(state => state.currentMuseumId)
 
@@ -66,20 +63,23 @@ export function useTourPersistence(): UseTourPersistenceReturn {
 
   // History store
   const saveTour = useHistoryStore(state => state.saveTour)
+  const updateTour = useHistoryStore(state => state.updateTour)
 
   /**
    * canSaveTour
    * Checks if the current tour has enough content to be saved.
+   * Reads feedItems directly from store to get latest state.
    *
    * @returns Boolean indicating if tour can be saved
    */
   const canSaveTour = useCallback((): boolean => {
-    // Only save tours with at least one feed item
+    // Read feedItems directly from store to get latest state
+    const feedItems = useTourStore.getState().feedItems
     const readyItems = feedItems.filter(
       item => item.status === 'ready' || item.status === 'error',
     )
     return readyItems.length >= MIN_ITEMS_TO_SAVE
-  }, [feedItems])
+  }, [])
 
   /**
    * saveTourToHistory
@@ -91,16 +91,13 @@ export function useTourPersistence(): UseTourPersistenceReturn {
    */
   const saveTourToHistory = useCallback(
     (coordinates?: Coordinates | null): string | null => {
-      // Prevent duplicate saves
-      if (savedTourIdRef.current) {
-        logger.debug('[TourPersistence] Tour already saved, skipping')
-        return savedTourIdRef.current
-      }
-
       if (!canSaveTour()) {
         logger.debug('[TourPersistence] No content to save')
         return null
       }
+
+      // Read feedItems directly from store to get latest state
+      const feedItems = useTourStore.getState().feedItems
 
       // Get museum info
       const museum = currentMuseumId
@@ -115,6 +112,24 @@ export function useTourPersistence(): UseTourPersistenceReturn {
       const description = generateTourDescription(feedItems)
       const heroImageUri = getHeroImageUri(feedItems)
 
+      // If tour already exists, update it with new items
+      if (savedTourIdRef.current) {
+        logger.debug('[TourPersistence] Updating existing tour:', {
+          tourId: savedTourIdRef.current,
+          itemCount: feedItems.length,
+        })
+
+        updateTour(savedTourIdRef.current, {
+          title,
+          description,
+          heroImageUri,
+          feedItems: [...feedItems],
+        })
+
+        return savedTourIdRef.current
+      }
+
+      // Create new tour
       const tourParams: CreatePersistedTourParams = {
         title,
         description,
@@ -127,7 +142,7 @@ export function useTourPersistence(): UseTourPersistenceReturn {
         sessionId,
       }
 
-      logger.debug('[TourPersistence] Saving tour:', {
+      logger.debug('[TourPersistence] Saving new tour:', {
         title,
         itemCount: feedItems.length,
         museumName,
@@ -140,7 +155,7 @@ export function useTourPersistence(): UseTourPersistenceReturn {
 
       return tourId
     },
-    [canSaveTour, currentMuseumId, feedItems, userId, sessionId, saveTour],
+    [canSaveTour, currentMuseumId, userId, sessionId, saveTour, updateTour],
   )
 
   return {

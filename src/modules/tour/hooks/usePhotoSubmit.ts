@@ -6,6 +6,7 @@ import {
 import type {FeedItemMetadata} from '../types'
 
 import {logger} from '@/core/lib/logger/logger'
+import {useTourPersistence} from '@/modules/tour/hooks/useTourPersistence'
 import {useTourActions} from '@/modules/tour/store/selectors'
 
 /**
@@ -38,6 +39,7 @@ export const usePhotoSubmit = (): {
   isLoading: boolean
 } => {
   const {addFeedItem, updateFeedItem, setFeedLoading} = useTourActions()
+  const {saveTourToHistory} = useTourPersistence()
 
   const processArtwork = useProcessArtwork()
   const generateNarrative = useGenerateNarrative()
@@ -101,6 +103,10 @@ export const usePhotoSubmit = (): {
         status: 'ready',
         audioUrl: audioResult.audio_url,
       })
+
+      // Step 6: Persist tour to history (creates or updates)
+      const tourId = saveTourToHistory()
+      logger.debug('[TourPhotoSubmit] Tour persisted:', {tourId})
 
       logger.debug('[TourPhotoSubmit] Submission complete')
       return [{feedItemId}, undefined]

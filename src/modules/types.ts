@@ -5,6 +5,7 @@ import type {
   AuthStackParams,
   AuthTabParams,
 } from './auth/routes.types'
+import type {HistoryStackParams, HistoryTabParams} from './history/routes.types'
 import type {
   NotificationModalParams,
   NotificationStackParams,
@@ -114,6 +115,7 @@ export type ModuleConfig = {
  * StackParams - Combined type of all module stack screen parameters
  */
 export type StackParams = AuthStackParams &
+  HistoryStackParams &
   NotificationStackParams &
   OnboardingStackParams &
   TourStackParams &
@@ -132,4 +134,7 @@ export type ModalParams =
 /**
  * TabParams - Combined type of all module tab screen parameters
  */
-export type TabParams = AuthTabParams & ProfileTabParams & TourTabParams
+export type TabParams = HistoryTabParams &
+  AuthTabParams &
+  ProfileTabParams &
+  TourTabParams

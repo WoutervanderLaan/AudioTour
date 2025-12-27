@@ -1,13 +1,79 @@
-# src/modules/history/screens
+# History Screens
 
-Screen components for the history module.
+This folder contains screen components for the History module.
 
-## Planned Screens
+## Screens
 
-- **HistoryScreen** - List view showing all user's saved tours with TourCard components
-- **TourDetailScreen** - Full tour details with playback controls and artwork list
+### HistoryScreen
 
-## Note
+Main history interface displaying a scrollable list of saved tours.
 
-Screen implementation is planned for the History Module user story (02-history-module.md).
-This folder currently serves as a placeholder for the module structure.
+**Features:**
+
+- FlatList with tour cards
+- Pull-to-refresh support
+- Empty state when no tours exist
+- Loading indicator during data fetch
+- Optimized rendering with memoization
+
+**Navigation:**
+
+- Tab: HistoryTab (bottom navigation)
+- Pressing a tour card navigates to HistoryDetail
+
+### HistoryDetailScreen
+
+Full tour detail view with metadata and feed items.
+
+**Route Params:**
+
+- `tourId` - ID of the tour to display
+
+**Features:**
+
+- Hero image display
+- Tour metadata (title, museum, date, description)
+- Artwork count label
+- Full list of FeedItem components
+- Audio playback for each artwork
+- Reuses FeedItem component from tour module
+
+**Layout:**
+
+```text
+┌─────────────────────────────────────┐
+│ ← Back                    [Edit] ⋮  │  Header
+├─────────────────────────────────────┤
+│ ┌─────────────────────────────────┐ │
+│ │        Hero Image               │ │
+│ └─────────────────────────────────┘ │
+│ Tour Title                          │
+│ Museum Name · Date                  │
+│ Description text...                 │
+├─────────────────────────────────────┤
+│ ┌─────────────────────────────────┐ │
+│ │      FeedItem 1                 │ │
+│ │      [Audio Player]             │ │
+│ └─────────────────────────────────┘ │
+│ ...                                 │
+└─────────────────────────────────────┘
+```
+
+## Navigation Configuration
+
+Screens are configured in `screenConfig.ts`:
+
+- `HistoryRouteName.list` - Main history list (also tab screen)
+- `HistoryRouteName.detail` - Tour detail view
+
+## Usage
+
+Screens are registered automatically through the module registry. Navigation is handled via the `useNavigation` hook.
+
+```tsx
+import {useNavigation} from '@/shared/hooks/useNavigation'
+import {HistoryRouteName} from '@/modules/history/routes.types'
+
+const {navigate} = useNavigation()
+navigate(HistoryRouteName.detail, {tourId: 'tour-123'})
+```

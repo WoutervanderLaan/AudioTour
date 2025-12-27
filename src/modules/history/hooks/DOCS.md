@@ -1,11 +1,60 @@
 # src/modules/history/hooks
 
-Hooks for the history module, handling tour sync and persistence operations.
+Hooks for the history module, handling tour sync, persistence, and UI operations.
 
 ## Files
 
+- **useHistoryTours.ts** - Hook for fetching and filtering tour history
+- **useTourActions.ts** - Hook for tour edit/delete actions
 - **useTourSync.ts** - Hook for syncing tours between local storage and backend API
 - **useTourSync.test.ts** - Unit tests for the sync hook
+
+## useHistoryTours
+
+Provides access to the user's tour history with filtering and sorting.
+
+**Options:**
+
+- `searchQuery` - Filter tours by title, description, or museum name
+- `sortBy` - Sort order: 'date-desc', 'date-asc', or 'title'
+
+**Returns:**
+
+- `tours` - Filtered and sorted tour summaries
+- `isLoading` - Loading state
+- `isEmpty` - Whether the filtered list is empty
+- `refetch` - Function to refresh data
+
+**Example:**
+
+```typescript
+const {tours, isLoading, isEmpty} = useHistoryTours({
+  searchQuery: 'Rijksmuseum',
+  sortBy: 'date-desc',
+})
+```
+
+## useTourActions
+
+Provides actions for managing saved tours.
+
+**Returns:**
+
+- `updateTour(id, updates)` - Updates tour metadata
+- `deleteTour(id)` - Deletes with confirmation dialog
+- `deleteTourDirect(id)` - Deletes without confirmation
+
+**Example:**
+
+```typescript
+const {updateTour, deleteTour} = useTourActions()
+
+// Update tour
+updateTour('tour-123', {title: 'New Title'})
+
+// Delete with confirmation
+deleteTour('tour-123')
+```
 
 ## useTourSync
 
@@ -17,14 +66,14 @@ Manages bidirectional sync between local AsyncStorage and cloud API:
 - Tracks retry attempts (max 3) for failed syncs
 - Provides manual sync controls for immediate synchronization
 
-### Returns
+**Returns:**
 
 - `syncAllTours()` - Syncs all pending tours
 - `syncTour(id)` - Syncs a specific tour
 - `isSyncing` - Whether any sync is in progress
 - `pendingCount` - Number of tours awaiting sync
 
-### Usage
+**Example:**
 
 ```typescript
 const {syncAllTours, syncTour, isSyncing, pendingCount} = useTourSync()
