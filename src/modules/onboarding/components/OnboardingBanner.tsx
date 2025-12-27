@@ -43,6 +43,8 @@ export const OnboardingBanner = ({
         ctaLabel: 'Get Started',
         onCtaPress: () => {
           navigation.navigate(OnboardingRouteName.flow)
+          dismissBanner()
+          hideBanner()
         },
         onDismiss: () => {
           dismissBanner()

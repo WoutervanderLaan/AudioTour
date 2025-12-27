@@ -3,7 +3,6 @@ import {
   // eslint-disable-next-line no-restricted-imports
   Pressable as RNPressable,
   type PressableProps as RNPressableProps,
-  type PressableStateCallbackType,
   type StyleProp,
   type ViewStyle,
 } from 'react-native'
@@ -21,7 +20,10 @@ export type PressableBaseProps = Omit<RNPressableProps, 'style' | 'testID'> &
      * children - Content to display inside the pressable
      */
     // children?: React.ReactNode
-    style?: (state: PressableStateCallbackType) => StyleProp<ViewStyle>
+    style?: (state: {
+      pressed: boolean
+      disabled?: boolean
+    }) => StyleProp<ViewStyle>
   }
 
 /**
@@ -45,15 +47,22 @@ export const PressableBase = ({
       testID={testID}
       accessible={accessible}
       accessibilityRole={accessibilityRole}
-      style={state => [styles.pressable, style?.(state)]}
+      style={state => [
+        state.pressed && styles.pressable,
+        rest.disabled && styles.disabled,
+        style?.({...state, disabled: rest.disabled || undefined}),
+      ]}
       {...rest}>
       {children}
     </RNPressable>
   )
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create(theme => ({
   pressable: {
-    // Base styles can be added here if needed
+    opacity: theme.opacity.pressed,
   },
-})
+  disabled: {
+    opacity: theme.opacity.disabled,
+  },
+}))

@@ -43,7 +43,6 @@ export const WithError: Story = {
   args: {
     testID: 'StoryWithErrorCheckbox',
     label: 'Accept terms and conditions',
-    hasError: true,
   },
 }
 

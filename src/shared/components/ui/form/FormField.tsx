@@ -217,7 +217,6 @@ export const FormField = ({
   return (
     <Column
       gap={gap}
-      alignItems="flex-start"
       testID={`${testID}ContainerColumn`}>
       {!!label &&
         (renderLabel ? (

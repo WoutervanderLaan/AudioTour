@@ -66,7 +66,6 @@ export const ProgressIndicator = ({
 const styles = StyleSheet.create(theme => ({
   progressBar: {
     height: 4,
-    backgroundColor: theme.color.textInput.container.background,
     borderRadius: 2,
     overflow: 'hidden',
   },

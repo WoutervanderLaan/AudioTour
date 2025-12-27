@@ -15,7 +15,7 @@ import {FormField} from './FormField'
  */
 export type CheckboxControlledProps<T extends FieldValues> = Omit<
   CheckboxProps,
-  'checked' | 'onChange' | 'hasError'
+  'checked' | 'onChange'
 > & {
   /**
    * control - React Hook Form control object
@@ -125,7 +125,6 @@ export const CheckboxControlled = <T extends FieldValues>({
           <Checkbox
             checked={value as boolean}
             onChange={onChange}
-            hasError={!!error}
             disabled={disabled}
             testID={testID}
             label={checkboxLabel}

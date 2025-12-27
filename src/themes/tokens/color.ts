@@ -16,8 +16,8 @@ export const color = {
     grey4: '#323232',
   },
   secondary: {
-    darkgreen: '#00a03c',
-    lightgreen: '#bed200',
+    darkGreen: '#00a03c',
+    lightGreen: '#bed200',
     orange: '#ff9100',
     magenta: '#e50082',
     purple: '#a00078',

@@ -9,6 +9,7 @@ An AI-powered React Native app that generates dynamic audio tours based on museu
 ### Core Principles
 
 The codebase must remain:
+
 - **Clean**: Well-organized with clear separation of concerns
 - **Modular**: Self-contained features with minimal coupling
 - **Explainable**: Comprehensive documentation and clear code
@@ -160,6 +161,7 @@ Uses react-native-unistyles with a custom theme system:
 Every function, class, hook, and utility **must have complete JSDoc documentation**.
 
 All JSDoc comments must include:
+
 - Clear description of purpose
 - `@param` for each parameter with type and description
 - `@returns` with return type and description
@@ -168,6 +170,7 @@ All JSDoc comments must include:
 ### Folder Documentation (Enforced)
 
 Every folder **must include a DOCS.md file** documenting:
+
 - The folder's purpose and responsibilities
 - Key files and their roles
 - Usage guidelines and patterns
@@ -198,6 +201,7 @@ The project has strict ESLint rules that **must pass without suppression**:
 ### Pre-commit Validation (Husky)
 
 Pre-commit hooks validate:
+
 - Code formatting (Prettier)
 - Lint rules (ESLint)
 - Type checking (TypeScript)
@@ -211,6 +215,7 @@ All code must pass these checks before committing. If hooks fail, fix the issues
 ### When to Write Tests
 
 Tests are **required** for:
+
 - **Utility functions** - All functions in `src/shared/utils/` and `src/core/lib/`
 - **Custom hooks** - All hooks in `src/shared/hooks/` and module-specific hooks
 - **Services** - API clients, authentication services, data transformations
@@ -276,6 +281,7 @@ Use **conventional commits** format:
 - `chore:` - Internal updates, dependency updates, tooling
 
 Examples:
+
 ```
 feat: add audio playback controls to tour screen
 fix: resolve crash when loading artwork without metadata

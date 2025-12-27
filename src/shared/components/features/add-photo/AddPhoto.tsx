@@ -72,8 +72,8 @@ const styles = StyleSheet.create(theme => ({
     borderRadius: theme.size.lg,
   },
   container: {
-    borderWidth: theme.size.xxs,
-    borderColor: theme.color.text.secondary,
+    ...theme.styles.border.default,
+    borderColor: theme.color.text.default,
     borderStyle: 'dashed',
   },
 }))

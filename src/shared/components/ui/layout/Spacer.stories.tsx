@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
+import {Text} from '../typography'
 import {Box} from './Box'
 import {Column} from './Column'
 import {Spacer} from './Spacer'
@@ -12,8 +13,7 @@ const styles = StyleSheet.create(theme => ({
     backgroundColor: theme.color.text.secondary,
   },
   demoBox: {
-    borderWidth: theme.size.xxs,
-    borderColor: theme.color.text.default,
+    ...theme.styles.border.sharp,
     backgroundColor: theme.color.screen.background.default,
   },
 }))
@@ -31,7 +31,7 @@ const meta = {
           padding="sm"
           style={styles.demoBox}
           center>
-          This is a Spacer
+          <Text.Label testID="StoryText">This is a Spacer</Text.Label>
         </Box>
         <Story />
         <Box
@@ -39,7 +39,7 @@ const meta = {
           padding="sm"
           style={styles.demoBox}
           center>
-          This is a Spacer
+          <Text.Label testID="StoryText">This is a Spacer</Text.Label>
         </Box>
       </Column>
     ),

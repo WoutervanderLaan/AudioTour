@@ -50,9 +50,18 @@ export const TourPhotoSubmitFormInputs = ({
         testID={`${testID}PhotosImageInput`}
       />
 
-      <Text.Title testID={`${testID}SectionTitleText`}>
-        Object Details (Optional)
-      </Text.Title>
+      <Row
+        gap="sm"
+        testID={`${testID}SectionTitleTextRow`}>
+        <Text.Title testID={`${testID}SectionTitleText`}>
+          Object Details
+        </Text.Title>
+        <Text.Label
+          testID={`${testID}SectionTitleLabelText`}
+          color="secondary">
+          (Optional)
+        </Text.Label>
+      </Row>
 
       <TextInputControlled
         control={control}
