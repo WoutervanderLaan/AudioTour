@@ -66,14 +66,14 @@ export const PhotoGallery = ({
           {photos.map((photo, index) => (
             <PressableBase
               key={photo}
+              style={() => [
+                styles.thumbnail,
+                index === activePhotoIndex && styles.activeThumbnail,
+              ]}
               onTouchEnd={() => onPhotoSelect(index)}
               testID={`${testID}Thumbnail${index + 1}Pressable`}>
               <Thumbnail
                 source={{uri: photo}}
-                style={[
-                  styles.thumbnail,
-                  index === activePhotoIndex && styles.activeThumbnail,
-                ]}
                 resizeMode="cover"
                 testID={`${testID}Thumbnail${index + 1}Thumbnail`}
               />
@@ -125,8 +125,8 @@ const styles = StyleSheet.create(theme => ({
     gap: theme.size.sm,
   },
   thumbnail: {
-    borderWidth: theme.size.xxs,
-    borderColor: theme.color.transparent.full,
+    ...theme.styles.border.default,
+    borderColor: 'transparent',
   },
   activeThumbnail: {
     borderColor: theme.color.text.link,

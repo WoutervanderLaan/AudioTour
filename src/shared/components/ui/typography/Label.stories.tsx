@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {Text} from './index'
+import {Text} from './Text'
 
 const meta = {
   title: 'Typography/Label',

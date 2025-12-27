@@ -3,12 +3,13 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Box} from '@/shared/components/ui/layout/Box'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
+import type {ToastProps} from '@/shared/context/toast/ToastContext.types'
 import type {TestProps} from '@/shared/types/TestProps'
 
 export enum ToastType {
   SUCCESS = 'success',
-  ERROR = 'error',
+  WARNING = 'warning',
   INFO = 'info',
 }
 /**
@@ -46,29 +47,34 @@ export const Toast = ({
     <Box
       testID={`${testID}ContainerBox`}
       padding="md"
-      style={styles.absolute}>
+      style={styles.container}>
       <Box
         testID={`${testID}InnerBox`}
-        style={[styles.toast, styles[type], {top: top + 20}]}
+        style={[styles.toast(type), {top: top + 20}]}
         center
         padding="md">
-        <Text.Label testID={`${testID}MessageText`}>{message}</Text.Label>
+        <Text.Label
+          style={styles.text(type)}
+          testID={`${testID}MessageText`}>
+          {message}
+        </Text.Label>
       </Box>
     </Box>
   )
 }
 
 const styles = StyleSheet.create(theme => ({
-  absolute: {
+  container: {
     position: 'absolute',
     zIndex: theme.zIndex.toast,
+    left: 0,
+    right: 0,
+    ...theme.styles.shadow.md,
   },
-  toast: {
-    backgroundColor: theme.color.screen.background.default,
-    borderWidth: theme.size.xxs,
-  },
-
-  success: {borderColor: '#4BB543'},
-  error: {borderColor: '#FF3333'},
-  info: {borderColor: '#5f5f5f'},
+  toast: (type: ToastProps['type'] = ToastType.INFO): object => ({
+    backgroundColor: theme.color.toast[type].background,
+  }),
+  text: (type: ToastProps['type'] = ToastType.INFO): object => ({
+    color: theme.color.toast[type].text,
+  }),
 }))

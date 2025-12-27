@@ -4,10 +4,11 @@ import {useToggleNotificationsMutation} from '../api/mutations'
 import {NotificationModalName} from '../routes.types'
 import {useNotificationStore} from '../store/useNotificationStore'
 
-import {FormField, Switch} from '@/shared/components/ui/form'
+import {FormField} from '@/shared/components/ui/form/FormField'
+import {Switch} from '@/shared/components/ui/form/Switch'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Screen} from '@/shared/components/ui/screen/Screen'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**

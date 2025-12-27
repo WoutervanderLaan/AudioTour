@@ -28,7 +28,7 @@ export const Error: Story = {
   args: {
     testID: 'StoryErrorToast',
     message: 'Error: Something went wrong',
-    type: ToastType.ERROR,
+    type: ToastType.WARNING,
   },
 }
 

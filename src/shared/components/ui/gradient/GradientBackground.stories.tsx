@@ -3,7 +3,7 @@ import React from 'react'
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
 import {Box} from '../layout/Box'
-import {Text} from '../typography'
+import {Text} from '../typography/Text'
 import {GradientBackground} from './GradientBackground'
 
 const meta = {

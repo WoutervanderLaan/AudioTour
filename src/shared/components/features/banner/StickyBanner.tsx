@@ -6,9 +6,9 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
+import {NavItem} from '@/shared/components/ui/navigation/NavItem'
 import {IconButton} from '@/shared/components/ui/pressable/IconButton'
-import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**
@@ -96,27 +96,35 @@ export const StickyBanner = ({
 
   return (
     <Column
+      gap="md"
+      padding="md"
       testID={`${testID}ContainerColumn`}
-      style={[styles.container, styles[variant]]}>
+      style={styles.banner(variant)}>
       <Row
         testID={`${testID}ContentRow`}
-        gap="sm"
-        centerY>
+        gap="smd"
+        alignItems="flex-start">
         <MaterialIcons
           name={iconName}
           size={20}
-          style={styles.icon}
+          style={styles.text(variant)}
         />
         <Column
           testID={`${testID}TextColumn`}
-          gap="xxs"
+          gap="xs"
           flex={1}>
-          <Text.Label testID={`${testID}TitleText`}>{title}</Text.Label>
+          <Text.Title
+            level="h5"
+            style={styles.text(variant)}
+            fontFamily="headingSemiBold"
+            testID={`${testID}TitleText`}>
+            {title}
+          </Text.Title>
           {!!message && (
             <Text.Paragraph
+              style={styles.text(variant)}
               testID={`${testID}MessageText`}
-              variant="small"
-              color="secondary">
+              variant="small">
               {message}
             </Text.Paragraph>
           )}
@@ -126,70 +134,32 @@ export const StickyBanner = ({
             testID={`${testID}DismissIconButton`}
             name="close"
             size="sm"
+            color={styles.text(variant).color}
             onPress={handleDismiss}
             accessibilityLabel="Dismiss banner"
           />
         )}
       </Row>
       {!!ctaLabel && !!onCtaPress && (
-        <PressableBase
-          testID={`${testID}CtaPressable`}
+        <NavItem
+          testID={`${testID}CtaNavItem`}
+          label="Get Started"
           onPress={handleCtaPress}
-          style={({pressed}) => [
-            styles.ctaButton,
-            pressed && styles.ctaButtonPressed,
-          ]}
-          accessibilityRole="button"
-          accessibilityLabel={ctaLabel}>
-          <Text.Label testID={`${testID}CtaText`}>{ctaLabel}</Text.Label>
-          <MaterialIcons
-            name="chevron-right"
-            size={20}
-            style={styles.ctaIcon}
-          />
-        </PressableBase>
+        />
       )}
     </Column>
   )
 }
 
 const styles = StyleSheet.create(theme => ({
-  container: {
-    paddingVertical: theme.size.md,
-    paddingHorizontal: theme.size.md,
-    gap: theme.size.sm,
-    borderBottomWidth: theme.size.xxs,
-  },
-  info: {
-    backgroundColor: theme.color.pressable.primary.default.background,
-    borderBottomColor: theme.color.pressable.primary.default.border,
-  },
-  warning: {
-    backgroundColor: theme.color.text.warning,
-    borderBottomColor: theme.color.text.warning,
-  },
-  success: {
-    backgroundColor: theme.color.pressable.primary.default.background,
-    borderBottomColor: theme.color.pressable.primary.default.border,
-  },
-  icon: {
-    color: theme.color.text.default,
-  },
-  ctaButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: theme.size.xs,
-    paddingVertical: theme.size.sm,
-    paddingHorizontal: theme.size.md,
-    borderRadius: theme.size.sm,
-    backgroundColor: theme.color.pressable.secondary.default.background,
-    borderWidth: theme.size.xxs,
-    borderColor: theme.color.pressable.secondary.default.border,
-  },
-  ctaButtonPressed: {
-    opacity: theme.opacity.pressed,
-  },
-  ctaIcon: {
-    color: theme.color.text.default,
-  },
+  banner: (
+    variant: StickyBannerProps['variant'] = 'info',
+  ): Record<string, string> => ({
+    backgroundColor: theme.color.banner[variant].background,
+  }),
+  text: (
+    variant: StickyBannerProps['variant'] = 'info',
+  ): Record<'color', string> => ({
+    color: theme.color.banner[variant].text,
+  }),
 }))

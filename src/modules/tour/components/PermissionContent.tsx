@@ -8,7 +8,7 @@ import {PermissionBenefit} from './PermissionBenefit'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**

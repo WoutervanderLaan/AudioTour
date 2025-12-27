@@ -108,9 +108,9 @@ export const TextInput = ({
 
   const inputStyles = [
     styles.input,
-    isFocused && styles.inputFocused,
-    hasError && styles.inputError,
-    disabled && styles.inputDisabled,
+    isFocused && styles.focused,
+    hasError && styles.error,
+    disabled && styles.disabled,
     style,
   ]
 
@@ -133,26 +133,22 @@ export const TextInput = ({
 
 const styles = StyleSheet.create(theme => ({
   input: {
-    backgroundColor: theme.color.textInput.container.background,
-    borderWidth: theme.size.xxs,
-    borderColor: theme.color.transparent.full,
-    borderRadius: theme.size.sm,
-    paddingVertical: theme.size.smd,
+    // backgroundColor: theme.color.textInput.container.background,
     paddingHorizontal: theme.size.md,
-    fontSize: theme.text.fontSize.small,
+    paddingVertical: theme.size.smd,
     fontFamily: theme.text.fontFamily.regular,
     color: theme.color.text.default,
     includeFontPadding: false,
     textAlignVertical: 'center',
+    ...theme.styles.border.sharp,
   },
-  inputFocused: {
-    borderColor: theme.color.pressable.primary.default.background,
+  focused: {
+    // borderColor: theme.color.textInput.border,
   },
-  inputError: {
+  error: {
     borderColor: theme.color.text.warning,
   },
-  inputDisabled: {
+  disabled: {
     opacity: theme.opacity.disabled,
-    backgroundColor: theme.color.text.tertiary,
   },
 }))

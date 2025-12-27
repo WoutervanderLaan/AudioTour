@@ -5,6 +5,8 @@ import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 import {Box} from './Box'
 import {Column} from './Column'
 
+import {Text} from '@/shared/components/ui/typography/Text'
+
 const meta = {
   title: 'Layout/Column',
   component: Column,
@@ -21,8 +23,7 @@ type Story = StoryObj<typeof meta>
 
 const styles = StyleSheet.create(theme => ({
   demoBox: {
-    borderWidth: theme.size.xxs,
-    borderColor: theme.color.text.default,
+    ...theme.styles.border.sharp,
   },
 }))
 
@@ -31,25 +32,25 @@ export const Default: Story = {
     children: (
       <>
         <Box
-          padding="sm"
-          flex={1}
+          padding="md"
+          center
           testID="StoryBox"
           style={styles.demoBox}>
-          This is a Column (1)
+          <Text.Label testID="StoryText">This is a Column (1)</Text.Label>
         </Box>
         <Box
-          padding="sm"
-          flex={1}
+          padding="md"
+          center
           testID="StoryBox"
           style={styles.demoBox}>
-          This is a Column (2)
+          <Text.Label testID="StoryText">This is a Column (2)</Text.Label>
         </Box>
         <Box
-          padding="sm"
-          flex={1}
+          padding="md"
+          center
           testID="StoryBox"
           style={styles.demoBox}>
-          This is a Column (3)
+          <Text.Label testID="StoryText">This is a Column (3)</Text.Label>
         </Box>
       </>
     ),

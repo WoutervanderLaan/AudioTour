@@ -5,7 +5,7 @@ import {Box} from '../layout/Box'
 import {Column} from '../layout/Column'
 import {Row} from '../layout/Row'
 import {PressableBase} from '../pressable/PressableBase'
-import {Text} from '../typography'
+import {Text} from '../typography/Text'
 
 import type {TestProps} from '@/shared/types/TestProps'
 
@@ -164,15 +164,13 @@ export const RadioGroup = <T extends string = string>({
             testID={`${testID}Option${option.value}Pressable`}
             onPress={() => handleSelect(option.value)}
             disabled={isDisabled}
-            style={({pressed}) => [
-              styles.optionContainer({pressed, disabled: !!isDisabled}),
-            ]}
             accessibilityRole="radio"
             accessibilityState={{
               selected: isSelected,
               disabled: isDisabled,
             }}>
             <Row
+              style={styles.optionContainer}
               testID={`${testID}Option${option.value}Row`}
               gap="sm"
               padding="sm">
@@ -209,21 +207,14 @@ const RADIO_SIZE = 24
 const RADIO_INNER_SIZE = 12
 
 const styles = StyleSheet.create(theme => ({
-  optionContainer: (state: {pressed: boolean; disabled: boolean}): object => ({
-    borderRadius: theme.size.sm,
-    borderWidth: theme.size.xxs,
-    borderColor: theme.color.textInput.container.background,
-    backgroundColor: state.pressed
-      ? theme.color.pressable.secondary.pressed.background
-      : theme.color.textInput.container.background,
-  }),
+  optionContainer: {
+    ...theme.styles.border.sharp,
+  },
   radioCircle: {
     width: RADIO_SIZE,
     height: RADIO_SIZE,
-    borderRadius: RADIO_SIZE,
-    borderWidth: theme.size.xxs,
+    ...theme.styles.border.thick,
     borderColor: theme.color.text.tertiary,
-    backgroundColor: theme.color.textInput.container.background,
   },
   radioCircleError: {
     borderColor: theme.color.text.warning,

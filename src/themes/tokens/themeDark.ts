@@ -1,9 +1,11 @@
+import type {ColorTokens} from '../types'
+
 import {color} from '@/themes/tokens/color'
 
 /**
  * The dark color theme, the keys of the object should not contain any color name at all
  */
-export const darkColorTokens = {
+export const darkColorTokens: ColorTokens = {
   pressable: {
     primary: {
       default: {
@@ -21,7 +23,6 @@ export const darkColorTokens = {
       default: {
         background: color.neutral.grey4,
         border: color.primary.white,
-        icon: color.primary.blue,
         label: color.primary.blue,
       },
       pressed: {
@@ -39,23 +40,29 @@ export const darkColorTokens = {
   },
 
   text: {
-    confirm: color.secondary.lightgreen,
+    confirm: color.secondary.lightGreen,
     default: color.primary.white,
     inverse: color.primary.black,
-    link: color.secondary.lightgreen,
+    link: color.secondary.lightGreen,
     secondary: color.neutral.grey2,
     tertiary: color.neutral.grey3,
     warning: color.primary.red,
   },
-  border: {
-    default: color.neutral.grey4,
+  border: {default: color.primary.white},
+  banner: {
+    info: {background: color.secondary.purple, text: color.primary.white},
+    warning: {background: color.primary.red, text: color.primary.white},
+    success: {
+      background: color.secondary.darkGreen,
+      text: color.primary.white,
+    },
   },
-  transparent: {
-    full: color.transparent.full,
-  },
-  textInput: {
-    container: {
-      background: color.neutral.grey4,
+  toast: {
+    info: {background: color.secondary.purple, text: color.primary.white},
+    warning: {background: color.primary.red, text: color.primary.white},
+    success: {
+      background: color.secondary.darkGreen,
+      text: color.primary.white,
     },
   },
 }

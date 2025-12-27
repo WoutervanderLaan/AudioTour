@@ -10,7 +10,7 @@ import {
 
 import type {IconName} from '@/core/navigation/types'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**
@@ -30,6 +30,10 @@ export type NavItemProps = Omit<
      * icon - Optional icon name from MaterialIcons
      */
     icon?: IconName
+    /**
+     * small - Optional smaller variant
+     */
+    small?: boolean
   }
 
 /**
@@ -45,18 +49,20 @@ export const NavItem = ({
   icon,
   disabled,
   testID,
+  small = false,
   ...rest
 }: NavItemProps): React.JSX.Element => {
   return (
     <PressableBase
       testID={`${testID}Pressable`}
       disabled={disabled}
-      style={({pressed}) => [styles.container({pressed, disabled: !!disabled})]}
       {...rest}>
       <Row
         testID={`${testID}ContainerRow`}
         justifyContent="space-between"
-        padding="md">
+        padding="md"
+        style={styles.container}
+        paddingV={small ? 'md' : 'sm'}>
         <Row
           testID={`${testID}ContentRow`}
           gap="md"
@@ -85,12 +91,10 @@ export const NavItem = ({
 }
 
 const styles = StyleSheet.create(theme => ({
-  container: (state: {pressed: boolean; disabled: boolean}): object => ({
-    backgroundColor: state.pressed
-      ? theme.color.pressable.secondary.pressed.background
-      : theme.color.pressable.secondary.default.background,
-    opacity: state.disabled ? theme.opacity.disabled : theme.opacity.none,
-  }),
+  container: {
+    backgroundColor: theme.color.pressable.secondary.default.background,
+    ...theme.styles.border.sharp,
+  },
   icon: {
     color: theme.color.text.default,
   },

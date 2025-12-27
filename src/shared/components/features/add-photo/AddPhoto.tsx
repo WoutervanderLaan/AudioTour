@@ -6,7 +6,7 @@ import {
   PressableBase,
   type PressableBaseProps,
 } from '@/shared/components/ui/pressable/PressableBase'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 enum AddPhotoSize {
@@ -72,8 +72,8 @@ const styles = StyleSheet.create(theme => ({
     borderRadius: theme.size.lg,
   },
   container: {
-    borderWidth: theme.size.xxs,
-    borderColor: theme.color.text.secondary,
+    ...theme.styles.border.default,
+    borderColor: theme.color.text.default,
     borderStyle: 'dashed',
   },
 }))

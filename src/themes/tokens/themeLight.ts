@@ -36,9 +36,8 @@ export const lightColorTokens = {
       settings: color.custom.grey0,
     },
   },
-
   text: {
-    confirm: color.secondary.darkgreen,
+    confirm: color.secondary.darkGreen,
     default: color.primary.black,
     inverse: color.primary.white,
     link: color.primary.blue,
@@ -46,15 +45,21 @@ export const lightColorTokens = {
     tertiary: color.neutral.grey2,
     warning: color.primary.red,
   },
-  border: {
-    default: color.neutral.grey1,
-  },
-  transparent: {
-    full: color.transparent.full,
-  },
-  textInput: {
-    container: {
-      background: color.primary.white,
+  border: {default: color.primary.black},
+  banner: {
+    info: {background: color.secondary.lightBlue, text: color.primary.black},
+    warning: {background: color.primary.red, text: color.primary.white},
+    success: {
+      background: color.secondary.lightGreen,
+      text: color.primary.black,
     },
   },
-}
+  toast: {
+    info: {background: color.primary.white, text: color.primary.black},
+    warning: {background: color.primary.red, text: color.primary.white},
+    success: {
+      background: color.secondary.lightGreen,
+      text: color.primary.black,
+    },
+  },
+} as const

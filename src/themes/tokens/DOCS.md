@@ -21,8 +21,6 @@ Provides reusable style combination tokens that bundle multiple style properties
 
 - **Border styles**: `default`, `sharp`, `rounded`, `thick`, `none`
 - **Shadow styles**: `sm`, `md`, `lg`, `none`
-- **Card styles**: `default`, `elevated`, `outlined`, `flat`
-- **Input styles**: `default`, `focused`, `error`
 
 Style combinations are created via `createStyleTokens()` factory function, which generates theme-aware style objects based on color and size tokens.
 

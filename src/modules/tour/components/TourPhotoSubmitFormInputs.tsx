@@ -4,14 +4,12 @@ import {useFormContext} from 'react-hook-form'
 import {MAX_PHOTOS} from '../constants'
 import type {PhotoSubmitForm} from '../schema'
 
-import {
-  ImageInputControlled,
-  TextInputControlled,
-} from '@/shared/components/ui/form'
+import {ImageInputControlled} from '@/shared/components/ui/form/ImageInputControlled'
+import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**
@@ -50,9 +48,18 @@ export const TourPhotoSubmitFormInputs = ({
         testID={`${testID}PhotosImageInput`}
       />
 
-      <Text.Title testID={`${testID}SectionTitleText`}>
-        Object Details (Optional)
-      </Text.Title>
+      <Row
+        gap="sm"
+        testID={`${testID}SectionTitleTextRow`}>
+        <Text.Title testID={`${testID}SectionTitleText`}>
+          Object Details
+        </Text.Title>
+        <Text.Label
+          testID={`${testID}SectionTitleLabelText`}
+          color="secondary">
+          (Optional)
+        </Text.Label>
+      </Row>
 
       <TextInputControlled
         control={control}

@@ -234,36 +234,6 @@ describe('Checkbox', () => {
     })
   })
 
-  describe('Error State', () => {
-    it('should render with error state', () => {
-      render(
-        <Checkbox
-          testID="TestCheckbox"
-          hasError
-        />,
-      )
-      expect(screen.getByTestId('TestCheckboxContainerPressable')).toBeTruthy()
-    })
-
-    it('should toggle error state', () => {
-      const {rerender} = render(
-        <Checkbox
-          testID="TestCheckbox"
-          hasError={false}
-        />,
-      )
-      expect(screen.getByTestId('TestCheckboxContainerPressable')).toBeTruthy()
-
-      rerender(
-        <Checkbox
-          testID="TestCheckbox"
-          hasError
-        />,
-      )
-      expect(screen.getByTestId('TestCheckboxContainerPressable')).toBeTruthy()
-    })
-  })
-
   describe('Accessibility', () => {
     it('should have checkbox accessibility role', () => {
       render(<Checkbox testID="TestCheckbox" />)
@@ -609,7 +579,6 @@ describe('Checkbox', () => {
           label="Complex checkbox"
           checked
           required
-          hasError
           onChange={onChange}
           accessibilityLabel="Complex"
           accessibilityHint="Test all props"

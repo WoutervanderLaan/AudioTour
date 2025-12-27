@@ -1,7 +1,7 @@
 import React, {Component, type ErrorInfo, type ReactNode} from 'react'
 
 import {Column} from './ui/layout/Column'
-import {Text} from './ui/typography'
+import {Text} from './ui/typography/Text'
 
 import {logger} from '@/core/lib/logger/logger'
 import {Button} from '@/shared/components/ui/pressable/Button'

@@ -6,7 +6,7 @@ import {FormField} from './FormField'
 import {ImageInput} from './ImageInput'
 
 import {Row} from '@/shared/components/ui/layout/Row'
-import {Text} from '@/shared/components/ui/typography'
+import {Text} from '@/shared/components/ui/typography/Text'
 
 const meta = {
   title: 'Form/ImageInput',
