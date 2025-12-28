@@ -1,3 +1,4 @@
+import {TIME} from '../types/Time'
 import {wait} from './wait'
 
 describe('wait', () => {
@@ -10,12 +11,12 @@ describe('wait', () => {
   })
 
   it('should return a promise', () => {
-    const result = wait(100)
+    const result = wait(TIME.MILLISECOND * 100)
     expect(result).toBeInstanceOf(Promise)
   })
 
   it('should resolve after specified milliseconds', async () => {
-    const promise = wait(1000)
+    const promise = wait(TIME.SECOND)
 
     // Fast-forward time
     jest.advanceTimersByTime(1000)
@@ -25,7 +26,7 @@ describe('wait', () => {
 
   it('should not resolve before specified time', async () => {
     const callback = jest.fn()
-    const promise = wait(1000).then(callback)
+    const promise = wait(TIME.SECOND).then(callback)
 
     // Only advance 500ms
     jest.advanceTimersByTime(500)
@@ -41,8 +42,8 @@ describe('wait', () => {
   })
 
   it('should resolve with undefined', async () => {
-    const promise = wait(100)
-    jest.advanceTimersByTime(100)
+    const promise = wait(TIME.MILLISECOND * 100)
+    jest.advanceTimersByTime(TIME.MILLISECOND * 100)
 
     const result = await promise
     expect(result).toBeUndefined()
@@ -63,18 +64,18 @@ describe('wait', () => {
   })
 
   it('should handle large delays', async () => {
-    const promise = wait(10000)
-    jest.advanceTimersByTime(10000)
+    const promise = wait(TIME.SECOND * 10)
+    jest.advanceTimersByTime(TIME.SECOND * 10)
 
     await expect(promise).resolves.toBeUndefined()
   })
 
   it('should allow multiple concurrent waits', async () => {
-    const promise1 = wait(100)
-    const promise2 = wait(200)
-    const promise3 = wait(300)
+    const promise1 = wait(TIME.MILLISECOND * 100)
+    const promise2 = wait(TIME.MILLISECOND * 200)
+    const promise3 = wait(TIME.MILLISECOND * 300)
 
-    jest.advanceTimersByTime(300)
+    jest.advanceTimersByTime(TIME.MILLISECOND * 300)
 
     await expect(Promise.all([promise1, promise2, promise3])).resolves.toEqual([
       undefined,
@@ -86,37 +87,39 @@ describe('wait', () => {
   it('should actually call setTimeout with correct delay', () => {
     const setTimeoutSpy = jest.spyOn(globalThis, 'setTimeout')
 
-    wait(1000)
+    wait(TIME.SECOND)
 
     expect(setTimeoutSpy).toHaveBeenCalledTimes(1)
-    expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 1000)
+    expect(setTimeoutSpy).toHaveBeenCalledWith(
+      expect.any(Function),
+      TIME.SECOND,
+    )
 
     setTimeoutSpy.mockRestore()
   })
 
   it('should be chainable with other promises', async () => {
-    const result = wait(100)
+    const result = wait(TIME.MILLISECOND * 100)
       .then(() => 'first')
       .then(val => `${val}-second`)
 
-    jest.advanceTimersByTime(100)
+    jest.advanceTimersByTime(TIME.MILLISECOND * 100)
 
     await expect(result).resolves.toBe('first-second')
   })
 
   describe('edge cases', () => {
-    it('should handle negative numbers as zero', async () => {
-      // setTimeout treats negative numbers as 0
+    it('should convert negative numbers to asbolutes', async () => {
+      // setTimeout converts negative numbers to absolutes
       const promise = wait(-100)
-      jest.advanceTimersByTime(0)
+      jest.advanceTimersByTime(100)
 
       await expect(promise).resolves.toBeUndefined()
     })
 
-    it('should handle decimal milliseconds', async () => {
+    it('should round decimal milliseconds', async () => {
       const promise = wait(100.5)
       jest.advanceTimersByTime(101)
-
       await expect(promise).resolves.toBeUndefined()
     })
 

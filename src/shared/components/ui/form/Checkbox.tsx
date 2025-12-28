@@ -121,7 +121,7 @@ const CheckboxBox = ({
   testID: string
 }): React.JSX.Element => (
   <Box
-    testID={`${testID}ContainerBox`}
+    testID={`${testID}Container`}
     nativeID={checkboxId}
     center
     style={styles.checkboxBox}>

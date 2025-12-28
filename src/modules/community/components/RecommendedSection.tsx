@@ -95,9 +95,11 @@ export const RecommendedSection = ({
     return (
       <Box
         center
+        paddingH="md"
         paddingV="lg"
         testID={`${testID}EmptyBox`}>
         <Text.Paragraph
+          align="center"
           color="secondary"
           testID={`${testID}EmptyText`}>
           No recommendations yet. Explore more tours!
@@ -110,11 +112,15 @@ export const RecommendedSection = ({
     <Column
       gap="sm"
       testID={`${testID}Column`}>
-      <Text.Title
-        level="h4"
-        testID={`${testID}HeadingText`}>
-        Recommended for You
-      </Text.Title>
+      <Box
+        testID={`${testID}Box`}
+        paddingH="md">
+        <Text.Title
+          level="h4"
+          testID={`${testID}HeadingText`}>
+          Recommended for You
+        </Text.Title>
+      </Box>
 
       <FlatList
         data={tours}
@@ -133,5 +139,6 @@ export const RecommendedSection = ({
 const styles = StyleSheet.create(theme => ({
   listContent: {
     paddingVertical: theme.size.xs,
+    paddingHorizontal: theme.size.md,
   },
 }))

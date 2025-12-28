@@ -1,6 +1,5 @@
 import React, {useCallback, useState} from 'react'
 import {ActivityIndicator, FlatList, type ListRenderItem} from 'react-native'
-import {StyleSheet} from 'react-native-unistyles'
 
 import {CommunityEmptyState} from '../components/CommunityEmptyState'
 import {CommunityTourCard} from '../components/CommunityTourCard'
@@ -46,11 +45,15 @@ export const CommunityScreen = (): React.JSX.Element => {
 
   const renderItem: ListRenderItem<CommunityTourSummary> = useCallback(
     ({item}) => (
-      <CommunityTourCard
-        tour={item}
-        onPress={() => handleTourPress(item.id)}
-        testID={`CommunityScreen${item.id}CommunityTourCard`}
-      />
+      <Box
+        testID={`CommunityTourCard${item.id}Box`}
+        paddingH="md">
+        <CommunityTourCard
+          tour={item}
+          onPress={() => handleTourPress(item.id)}
+          testID={`CommunityScreen${item.id}CommunityTourCard`}
+        />
+      </Box>
     ),
     [handleTourPress],
   )
@@ -99,7 +102,7 @@ export const CommunityScreen = (): React.JSX.Element => {
       testID="CommunityScreenScreen">
       <Box
         flex={1}
-        testID="CommunityScreenContainerBox">
+        testID="CommunityScreenContainer">
         <FlatList
           data={tours}
           keyExtractor={keyExtractor}
@@ -107,10 +110,7 @@ export const CommunityScreen = (): React.JSX.Element => {
           ListHeaderComponent={ListHeaderComponent}
           ListEmptyComponent={ListEmptyComponent}
           ItemSeparatorComponent={ItemSeparatorComponent}
-          contentContainerStyle={[
-            {paddingTop: top, paddingBottom: bottom},
-            styles.container,
-          ]}
+          contentContainerStyle={[{paddingTop: top, paddingBottom: bottom}]}
           refreshing={isLoading}
           onRefresh={refetch}
           removeClippedSubviews={true}
@@ -124,9 +124,3 @@ export const CommunityScreen = (): React.JSX.Element => {
     </Screen.Static>
   )
 }
-
-const styles = StyleSheet.create(theme => ({
-  container: {
-    padding: theme.size.md,
-  },
-}))

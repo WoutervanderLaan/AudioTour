@@ -1,5 +1,7 @@
 import {QueryClient} from '@tanstack/react-query'
 
+import {TIME} from '@/shared/types/Time'
+
 /**
  * Global TanStack Query client instance with default configuration.
  *
@@ -13,8 +15,8 @@ import {QueryClient} from '@tanstack/react-query'
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      gcTime: 1000 * 60 * 10, // 10 minutes (formerly cacheTime)
+      staleTime: TIME.FIVE_MINUTES,
+      gcTime: TIME.TEN_MINUTES,
       retry: 1,
       refetchOnWindowFocus: false,
       refetchOnMount: false,

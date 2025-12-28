@@ -110,7 +110,7 @@ export const RatingDisplay = ({
         ))}
       </Row>
 
-      {showValue && (
+      {!!showValue && (
         <Text.Paragraph
           variant={size === 'sm' ? 'extraSmall' : 'small'}
           color="secondary"

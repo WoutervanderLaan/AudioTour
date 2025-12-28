@@ -111,8 +111,10 @@ export const NearbySection = ({
       <Box
         center
         paddingV="lg"
+        paddingH="md"
         testID={`${testID}EmptyBox`}>
         <Text.Paragraph
+          align="center"
           color="secondary"
           testID={`${testID}EmptyText`}>
           No tours found nearby
@@ -125,11 +127,15 @@ export const NearbySection = ({
     <Column
       gap="sm"
       testID={`${testID}Column`}>
-      <Text.Title
-        level="h4"
-        testID={`${testID}HeadingText`}>
-        Nearby Tours
-      </Text.Title>
+      <Box
+        testID={`${testID}Box`}
+        paddingH="md">
+        <Text.Title
+          level="h4"
+          testID={`${testID}HeadingText`}>
+          Nearby Tours
+        </Text.Title>
+      </Box>
 
       <FlatList
         data={tours}
@@ -148,5 +154,6 @@ export const NearbySection = ({
 const styles = StyleSheet.create(theme => ({
   listContent: {
     paddingVertical: theme.size.xs,
+    paddingHorizontal: theme.size.md,
   },
 }))

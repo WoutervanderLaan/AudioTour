@@ -37,7 +37,7 @@ export const PermissionContent = ({
     <Column
       gap="md"
       centerX
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       <MaterialIcons
         name={content.icon}
         size={80}

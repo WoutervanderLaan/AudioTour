@@ -98,7 +98,7 @@ export const StickyBanner = ({
     <Column
       gap="md"
       padding="md"
-      testID={`${testID}ContainerColumn`}
+      testID={`${testID}Container`}
       style={styles.banner(variant)}>
       <Row
         testID={`${testID}ContentRow`}

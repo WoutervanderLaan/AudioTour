@@ -4,12 +4,15 @@ import type {
   CommunityToursResponse,
   NearbyToursResponse,
   RecommendedToursResponse,
-} from './queries'
+} from './queries.types'
 
+import {createHandler} from '@/core/api/mock-config/createHandler'
+import {logger} from '@/core/lib/logger/logger'
 import type {
   CommunityTour,
   CommunityTourSummary,
 } from '@/modules/community/types'
+import {TIME} from '@/shared/types/Time'
 
 /**
  * Mock community tour data for development and testing.
@@ -22,7 +25,7 @@ const mockTourSummaries: CommunityTourSummary[] = [
       'Discover the most iconic masterpieces of Dutch Golden Age painting.',
     heroImageUri: 'https://picsum.photos/seed/tour1/400/300',
     museumName: 'Rijksmuseum',
-    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 7,
+    createdAt: Date.now() - TIME.WEEK,
     communityRating: 4.8,
     ratingCount: 156,
     artworkCount: 12,
@@ -37,7 +40,7 @@ const mockTourSummaries: CommunityTourSummary[] = [
     description: "A journey through Vincent van Gogh's most celebrated works.",
     heroImageUri: 'https://picsum.photos/seed/tour2/400/300',
     museumName: 'Van Gogh Museum',
-    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 14,
+    createdAt: Date.now() - TIME.WEEK * 2,
     communityRating: 4.9,
     ratingCount: 243,
     artworkCount: 15,
@@ -52,7 +55,7 @@ const mockTourSummaries: CommunityTourSummary[] = [
     description: 'Explore contemporary masterpieces and installations.',
     heroImageUri: 'https://picsum.photos/seed/tour3/400/300',
     museumName: 'Stedelijk Museum',
-    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 3,
+    createdAt: Date.now() - TIME.DAY * 3,
     communityRating: 4.5,
     ratingCount: 89,
     artworkCount: 8,
@@ -67,7 +70,7 @@ const mockTourSummaries: CommunityTourSummary[] = [
     description: 'Uncover lesser-known treasures in Amsterdam museums.',
     heroImageUri: 'https://picsum.photos/seed/tour4/400/300',
     museumName: 'Various Museums',
-    createdAt: Date.now() - 1000 * 60 * 60 * 24 * 21,
+    createdAt: Date.now() - TIME.WEEK * 3,
     communityRating: 4.6,
     ratingCount: 72,
     artworkCount: 10,
@@ -83,8 +86,8 @@ const mockTourSummaries: CommunityTourSummary[] = [
  */
 const mockFullTour: CommunityTour = {
   id: 'community-tour-1',
-  createdAt: Date.now() - 1000 * 60 * 60 * 24 * 7,
-  updatedAt: Date.now() - 1000 * 60 * 60 * 24,
+  createdAt: Date.now() - TIME.WEEK,
+  updatedAt: Date.now() - TIME.DAY,
   title: 'Highlights of the Rijksmuseum',
   description:
     "Discover the most iconic masterpieces of Dutch Golden Age painting. This tour takes you through the museum's finest collection, featuring works by Rembrandt, Vermeer, and other Dutch masters.",
@@ -104,7 +107,7 @@ const mockFullTour: CommunityTour = {
       },
       objectId: 'artwork-1',
       audioUrl: 'https://example.com/audio/night-watch.mp3',
-      createdAt: Date.now() - 1000 * 60 * 60,
+      createdAt: Date.now() - TIME.HOUR,
       status: 'ready',
     },
     {
@@ -118,7 +121,7 @@ const mockFullTour: CommunityTour = {
       },
       objectId: 'artwork-2',
       audioUrl: 'https://example.com/audio/milkmaid.mp3',
-      createdAt: Date.now() - 1000 * 60 * 30,
+      createdAt: Date.now() - TIME.HALF_HOUR,
       status: 'ready',
     },
   ],
@@ -139,13 +142,14 @@ const mockFullTour: CommunityTour = {
 }
 
 /**
- * MSW handlers for community module API endpoints.
+ * MSW (Mock Service Worker) handlers for community GET endpoints.
+ *
+ * Provides mock responses for:
+ * - GET /community/tours - Returns ...
+ * TODO: add mock endpoints
  */
-export const communityMockHandlers = [
-  /**
-   * GET /community/tours - List community tours with filters
-   */
-  http.get('*/community/tours', ({request}) => {
+const communityGetHandlers = [
+  http.get(createHandler('/community/tours'), ({request}) => {
     const url = new URL(request.url)
     const minRating = url.searchParams.get('minRating')
     const isOfficial = url.searchParams.get('isOfficial')
@@ -179,10 +183,7 @@ export const communityMockHandlers = [
     return HttpResponse.json(response)
   }),
 
-  /**
-   * GET /community/tours/recommended - Get personalized recommendations
-   */
-  http.get('*/community/tours/recommended', () => {
+  http.get(createHandler('/community/tours/recommended'), () => {
     const response: RecommendedToursResponse = {
       tours: mockTourSummaries.slice(0, 3),
     }
@@ -190,10 +191,7 @@ export const communityMockHandlers = [
     return HttpResponse.json(response)
   }),
 
-  /**
-   * GET /community/tours/nearby - Get nearby tours
-   */
-  http.get('*/community/tours/nearby', () => {
+  http.get(createHandler('/community/tours/nearby'), () => {
     const toursWithDistance = mockTourSummaries.map((tour, index) => ({
       ...tour,
       distanceMeters: (index + 1) * 500,
@@ -206,10 +204,7 @@ export const communityMockHandlers = [
     return HttpResponse.json(response)
   }),
 
-  /**
-   * GET /community/tours/:id - Get single tour details
-   */
-  http.get('*/community/tours/:id', ({params}) => {
+  http.get<{id: string}>(createHandler('/community/tours/:id'), ({params}) => {
     const {id} = params
 
     if (id === mockFullTour.id) {
@@ -233,41 +228,62 @@ export const communityMockHandlers = [
     return new HttpResponse(null, {status: 404})
   }),
 
-  /**
-   * GET /community/tours/:id/my-rating - Get user's rating for a tour
-   */
-  http.get('*/community/tours/:id/my-rating', () => {
-    // Return 404 to indicate no rating exists
-    return new HttpResponse(null, {status: 404})
-  }),
-
-  /**
-   * POST /community/tours/:id/rate - Submit a tour rating
-   */
-  http.post('*/community/tours/:id/rate', async ({request}) => {
-    const body = (await request.json()) as {rating: number}
-
-    return HttpResponse.json({
-      rating: {
-        id: `rating-${Date.now()}`,
-        tourId: 'tour-1',
+  http.get<{id: string}>(
+    createHandler('/community/tours/:id/my-rating'),
+    ({params}) => {
+      return HttpResponse.json({
+        id: `rating-${Math.random()}`,
+        tourId: params.id,
         userId: 'user-1',
-        rating: body.rating,
+        rating: 4,
         createdAt: Date.now(),
-      },
-      averageRating: 4.7,
-      ratingCount: 157,
-      message: 'Rating submitted successfully',
-    })
-  }),
+      })
+    },
+  ),
+]
 
-  /**
-   * POST /community/tours/:id/report - Report a tour
-   */
-  http.post('*/community/tours/:id/report', () => {
-    return HttpResponse.json({
-      reportId: `report-${Date.now()}`,
-      message: 'Report submitted successfully. We will review it shortly.',
-    })
-  }),
+/**
+ * MSW (Mock Service Worker) handlers for community POST endpoints.
+ *
+ * Provides mock responses for:
+ * - POST /community/tours/:id/rate - Returns ...
+ * TODO: add mock endpoints
+ */
+const communityPostHandlers = [
+  http.post<{id: string}>(
+    createHandler('/community/tours/:id/rate'),
+    async ({params, request}) => {
+      const body = (await request.json()) as {rating: number}
+
+      return HttpResponse.json({
+        rating: {
+          id: `rating-${Date.now()}`,
+          tourId: params.id,
+          userId: 'user-1',
+          rating: body.rating,
+          createdAt: Date.now(),
+        },
+        averageRating: 4.7,
+        ratingCount: 157,
+        message: 'Rating submitted successfully',
+      })
+    },
+  ),
+
+  http.post<{id: string}>(
+    createHandler('/community/tours/:id/report'),
+    ({params}) => {
+      logger.debug(params.id)
+
+      return HttpResponse.json({
+        reportId: `report-${Date.now()}`,
+        message: 'Report submitted successfully. We will review it shortly.',
+      })
+    },
+  ),
+]
+
+export const communityHandlers = [
+  ...communityGetHandlers,
+  ...communityPostHandlers,
 ]

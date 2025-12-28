@@ -3,6 +3,7 @@ import type {ModuleConfig} from '../types'
 import {communityStacks, communityTabs} from './screenConfig'
 
 import {logger} from '@/core/lib/logger/logger'
+import {TIME} from '@/shared/types/Time'
 
 /**
  * Community module configuration.
@@ -38,6 +39,6 @@ export const communityModule: ModuleConfig = {
   queries: {
     refetchOnMount: true,
     refetchOnWindowFocus: true,
-    staleTime: 1000 * 60 * 10,
+    staleTime: TIME.TEN_MINUTES,
   },
 }

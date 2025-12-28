@@ -112,7 +112,7 @@ export const HistoryScreen = (): React.JSX.Element => {
       testID="HistoryScreenScreen">
       <Box
         flex={1}
-        testID="HistoryScreenContainerBox">
+        testID="HistoryScreenContainer">
         <FlatList
           data={tours}
           keyExtractor={keyExtractor}

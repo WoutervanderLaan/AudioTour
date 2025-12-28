@@ -1,6 +1,5 @@
 import React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
-import {useUnistyles} from 'react-native-unistyles'
 
 import {MaterialIcons} from '@expo/vector-icons'
 
@@ -24,46 +23,41 @@ type CommunityEmptyStateProps = TestProps<'CommunityEmptyState'>
  */
 export const CommunityEmptyState = ({
   testID,
-}: CommunityEmptyStateProps): React.JSX.Element => {
-  const {theme} = useUnistyles()
+}: CommunityEmptyStateProps): React.JSX.Element => (
+  <Box
+    center
+    paddingV="xxl"
+    testID={`${testID}Box`}>
+    <Column
+      alignItems="center"
+      gap="md"
+      testID={`${testID}Column`}>
+      <MaterialIcons
+        name="explore"
+        size={64}
+        color={styles.icon.color}
+        testID={`${testID}Icon`}
+      />
 
-  return (
-    <Box
-      center
-      paddingV="xxl"
-      testID={`${testID}Box`}>
-      <Column
-        alignItems="center"
-        gap="md"
-        testID={`${testID}Column`}>
-        <MaterialIcons
-          name="explore"
-          size={64}
-          color={theme.color.text.secondary}
-          testID={`${testID}Icon`}
-        />
+      <Text.Title
+        level="h3"
+        testID={`${testID}TitleText`}>
+        No Tours Found
+      </Text.Title>
 
-        <Text.Title
-          level="h3"
-          testID={`${testID}TitleText`}>
-          No Tours Found
-        </Text.Title>
+      <Text.Paragraph
+        color="secondary"
+        align="center"
+        testID={`${testID}DescriptionText`}>
+        No community tours match your search criteria. Try adjusting your
+        filters or explore different categories.
+      </Text.Paragraph>
+    </Column>
+  </Box>
+)
 
-        <Text.Paragraph
-          color="secondary"
-          style={styles.description}
-          testID={`${testID}DescriptionText`}>
-          No community tours match your search criteria. Try adjusting your
-          filters or explore different categories.
-        </Text.Paragraph>
-      </Column>
-    </Box>
-  )
-}
-
-const styles = StyleSheet.create(() => ({
-  description: {
-    textAlign: 'center',
-    maxWidth: 280,
+const styles = StyleSheet.create(theme => ({
+  icon: {
+    color: theme.color.text.secondary,
   },
 }))

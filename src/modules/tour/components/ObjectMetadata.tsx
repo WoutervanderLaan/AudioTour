@@ -39,7 +39,7 @@ export const ObjectMetadata = ({
   return (
     <Column
       gap="lg"
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       {metadata.title !== undefined && (
         <Text.Title testID={`${testID}TitleText`}>{metadata.title}</Text.Title>
       )}

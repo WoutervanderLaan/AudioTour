@@ -217,7 +217,7 @@ export const FormField = ({
   return (
     <Column
       gap={gap}
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       {!!label &&
         (renderLabel ? (
           renderLabel({label, labelId, disabled, required})

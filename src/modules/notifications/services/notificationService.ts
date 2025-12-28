@@ -9,26 +9,11 @@ import notifee, {
   type Notification,
 } from '@notifee/react-native'
 
+import {NotificationChannelId, type PermissionStatus} from '../types'
+
 import {logger} from '@/core/lib/logger/logger'
+import {TIME} from '@/shared/types/Time'
 import {wait} from '@/shared/utils/wait'
-
-/**
- * NotificationChannelId
- * Android notification channel identifiers
- */
-export enum NotificationChannelId {
-  default = 'default',
-  tours = 'tours',
-  narratives = 'narratives',
-  recommendations = 'recommendations',
-  social = 'social',
-}
-
-/**
- * PermissionStatus
- * Possible permission states for notifications
- */
-export type PermissionStatus = 'granted' | 'denied' | 'not_determined'
 
 /**
  * NotificationServiceConfig
@@ -77,7 +62,7 @@ class NotificationService {
 
   async reset(): Promise<void> {
     //TODO: improve reset logic
-    await wait(100)
+    await wait(TIME.MILLISECOND * 100)
     this.isInitialized = false
   }
 

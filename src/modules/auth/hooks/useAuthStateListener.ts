@@ -70,7 +70,7 @@ export const useAuthStateListener = (): void => {
       }
     }
 
-    // TODO: You can implement a global error handler here
+    // TODO: A global error handler can be imolemented here
     // For now, errors are handled in the API client
   }, [isAuthenticated, logout, queryClient])
 }

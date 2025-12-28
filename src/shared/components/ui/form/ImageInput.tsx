@@ -155,7 +155,7 @@ export const ImageInput = ({
       gap="sm"
       justifyContent="flex-start"
       wrap="wrap"
-      testID={`${testID}ContainerRow`}>
+      testID={`${testID}Container`}>
       {value.map((imageUri, index) => (
         <Thumbnail
           key={`image-${index + 1}`}

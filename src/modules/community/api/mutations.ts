@@ -5,52 +5,11 @@ import {
 } from '@tanstack/react-query'
 
 import {communityKeys} from './keys'
+import type {RateTourResponse, ReportTourResponse} from './mutations.types'
 
 import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger/logger'
-import type {
-  RateTourParams,
-  ReportTourParams,
-  TourRating,
-} from '@/modules/community/types'
-
-/**
- * RateTourResponse
- * API response when rating a tour.
- */
-type RateTourResponse = {
-  /**
-   * The created or updated rating
-   */
-  rating: TourRating
-  /**
-   * Updated average rating for the tour
-   */
-  averageRating: number
-  /**
-   * Updated total rating count for the tour
-   */
-  ratingCount: number
-  /**
-   * Success message
-   */
-  message: string
-}
-
-/**
- * ReportTourResponse
- * API response when reporting a tour.
- */
-type ReportTourResponse = {
-  /**
-   * Report ID for tracking
-   */
-  reportId: string
-  /**
-   * Success message
-   */
-  message: string
-}
+import type {RateTourParams, ReportTourParams} from '@/modules/community/types'
 
 /**
  * useRateTour
@@ -86,7 +45,7 @@ export function useRateTour(): UseMutationResult<
       logger.debug('[CommunityAPI] Tour rated successfully')
       return response.data
     },
-    onSuccess: (data, variables) => {
+    onSuccess: (_, variables) => {
       // Invalidate tour detail to refresh rating display
       queryClient.invalidateQueries({
         queryKey: communityKeys.tour(variables.tourId),

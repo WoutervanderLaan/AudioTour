@@ -20,7 +20,7 @@ export default meta
  */
 const AllSteps = () => (
   <Column
-    testID="StoryProgressContainerColumn"
+    testID="StoryProgressContainer"
     gap="md">
     <ProgressIndicator
       testID="StoryStep1ProgressIndicator"

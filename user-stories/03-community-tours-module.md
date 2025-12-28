@@ -229,7 +229,7 @@ export const communityModule: ModuleConfig = {
   queries: {
     refetchOnMount: true,
     refetchOnWindowFocus: true,
-    staleTime: 1000 * 60 * 10, // 10 minutes
+    staleTime: TIME.TEN_MINUTES,
   },
 }
 ```

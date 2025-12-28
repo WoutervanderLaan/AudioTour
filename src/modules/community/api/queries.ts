@@ -5,57 +5,20 @@ import {
 } from '@tanstack/react-query'
 
 import {communityKeys} from './keys'
+import type {
+  CommunityToursResponse,
+  NearbyToursResponse,
+  RecommendedToursResponse,
+} from './queries.types'
 
 import {apiClient} from '@/core/api/client'
-import {
-  COMMUNITY_TOURS_STALE_TIME,
-  RECOMMENDED_TOURS_STALE_TIME,
-  TOUR_DETAIL_STALE_TIME,
-} from '@/modules/community/constants'
 import type {
   CommunityFilterOptions,
   CommunityTour,
-  CommunityTourSummary,
   NearbySearchParams,
   TourRating,
 } from '@/modules/community/types'
-
-/**
- * CommunityToursResponse
- * API response type for fetching community tours.
- */
-export type CommunityToursResponse = {
-  /**
-   * Array of community tour summaries
-   */
-  tours: CommunityTourSummary[]
-  /**
-   * Total count of matching tours
-   */
-  total: number
-}
-
-/**
- * RecommendedToursResponse
- * API response type for fetching recommended tours.
- */
-export type RecommendedToursResponse = {
-  /**
-   * Array of recommended tour summaries
-   */
-  tours: CommunityTourSummary[]
-}
-
-/**
- * NearbyToursResponse
- * API response type for fetching nearby tours.
- */
-export type NearbyToursResponse = {
-  /**
-   * Array of nearby tour summaries with distance info
-   */
-  tours: CommunityTourSummary[]
-}
+import {TIME} from '@/shared/types/Time'
 
 /**
  * useCommunityToursQuery
@@ -113,7 +76,7 @@ export const useCommunityToursQuery = (
       const response = await apiClient.get<CommunityToursResponse>(url)
       return response.data
     },
-    staleTime: COMMUNITY_TOURS_STALE_TIME,
+    staleTime: TIME.MINUTE * 2,
     ...options,
   })
 }
@@ -147,7 +110,7 @@ export const useCommunityTourByIdQuery = (
       return response.data
     },
     enabled: tourId.length > 0,
-    staleTime: TOUR_DETAIL_STALE_TIME,
+    staleTime: TIME.TEN_MINUTES,
     ...options,
   })
 }
@@ -181,7 +144,7 @@ export const useRecommendedToursQuery = (
       )
       return response.data
     },
-    staleTime: RECOMMENDED_TOURS_STALE_TIME,
+    staleTime: TIME.FIVE_MINUTES,
     ...options,
   })
 }
@@ -236,7 +199,7 @@ export const useNearbyToursQuery = (
       return response.data
     },
     enabled: isEnabled,
-    staleTime: COMMUNITY_TOURS_STALE_TIME,
+    staleTime: TIME.MINUTE * 2,
     ...options,
   })
 }
@@ -267,7 +230,7 @@ export const useUserTourRatingQuery = (
       }
     },
     enabled: tourId.length > 0,
-    staleTime: TOUR_DETAIL_STALE_TIME,
+    staleTime: TIME.TEN_MINUTES,
     ...options,
   })
 }

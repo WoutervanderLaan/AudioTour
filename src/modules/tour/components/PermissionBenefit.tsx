@@ -44,7 +44,7 @@ export const PermissionBenefit = ({
     <Column
       gap="xs"
       paddingV="md"
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       <Row
         gap="sm"
         stretch

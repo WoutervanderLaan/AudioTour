@@ -7,7 +7,7 @@ import type {
   GenerateNarrativeResponse,
   ProcessArtworkParams,
   ProcessArtworkResponse,
-} from '../types'
+} from './mutations.types'
 
 import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger/logger'

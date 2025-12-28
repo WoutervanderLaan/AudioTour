@@ -158,7 +158,7 @@ export const historyModule: ModuleConfig = {
   queries: {
     refetchOnMount: true,
     refetchOnWindowFocus: true,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: TIME.FIVE_MINUTES,
   },
 }
 ```

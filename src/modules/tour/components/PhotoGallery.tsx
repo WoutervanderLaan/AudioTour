@@ -51,7 +51,7 @@ export const PhotoGallery = ({
   const hasMultiplePhotos = photos.length > 1
 
   return (
-    <Column testID={`${testID}ContainerColumn`}>
+    <Column testID={`${testID}Container`}>
       <Image
         source={{uri: photos[activePhotoIndex]}}
         style={[styles.mainPhoto, {width, height: width}]}

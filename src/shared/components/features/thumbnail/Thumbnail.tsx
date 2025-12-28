@@ -52,7 +52,7 @@ export const Thumbnail = ({
   ...image
 }: ThumbnailProps): React.JSX.Element => {
   return (
-    <Column testID={`${testID}ContainerColumn`}>
+    <Column testID={`${testID}Container`}>
       <Image
         {...image}
         testID={testID}

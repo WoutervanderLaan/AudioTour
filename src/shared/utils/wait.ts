@@ -7,5 +7,5 @@
  * @returns A Promise that resolves after the specified delay with no value
  */
 export const wait = (ms: number): Promise<void> => {
-  return new Promise(resolve => setTimeout(resolve, ms))
+  return new Promise(resolve => setTimeout(resolve, Math.abs(Math.round(ms))))
 }

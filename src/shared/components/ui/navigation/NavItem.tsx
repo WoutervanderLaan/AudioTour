@@ -58,7 +58,7 @@ export const NavItem = ({
       disabled={disabled}
       {...rest}>
       <Row
-        testID={`${testID}ContainerRow`}
+        testID={`${testID}Container`}
         justifyContent="space-between"
         padding="md"
         style={styles.container}

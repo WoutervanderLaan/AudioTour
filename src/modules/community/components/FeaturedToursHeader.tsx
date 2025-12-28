@@ -5,9 +5,9 @@ import type {FeaturedSectionType} from '../types'
 import {NearbySection} from './NearbySection'
 import {RecommendedSection} from './RecommendedSection'
 
+import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
-import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
@@ -44,33 +44,43 @@ export const FeaturedToursHeader = ({
   onTourPress,
   testID,
 }: FeaturedToursHeaderProps): React.JSX.Element => (
-  <Column
-    gap="md"
-    testID={`${testID}Column`}>
-    <Row
-      gap="sm"
-      testID={`${testID}ToggleRow`}>
-      <PressableBase
-        onPress={() => onSectionChange('recommended')}
-        style={() => [
-          styles.toggleButton,
-          activeSection === 'recommended' && styles.toggleButtonActive,
-        ]}
-        testID={`${testID}RecommendedPressable`}>
-        <Text.Label testID={`${testID}RecommendedToggleText`}>
-          Recommended
-        </Text.Label>
-      </PressableBase>
-      <PressableBase
-        onPress={() => onSectionChange('nearby')}
-        style={() => [
-          styles.toggleButton,
-          activeSection === 'nearby' && styles.toggleButtonActive,
-        ]}
-        testID={`${testID}NearbyPressable`}>
-        <Text.Label testID={`${testID}NearbyToggleText`}>Nearby</Text.Label>
-      </PressableBase>
-    </Row>
+  <>
+    <Column
+      paddingH="md"
+      gap="md"
+      paddingBottom="md"
+      testID={`${testID}Column`}>
+      <Row
+        gap="sm"
+        testID={`${testID}ToggleRow`}>
+        <PressableBase
+          onPress={() => onSectionChange('recommended')}
+          style={() => [
+            styles.toggleButton,
+            activeSection === 'recommended' && styles.toggleButtonActive,
+          ]}
+          testID={`${testID}RecommendedPressable`}>
+          <Text.Label
+            color={activeSection === 'recommended' ? 'inverse' : 'default'}
+            testID={`${testID}RecommendedToggleText`}>
+            Recommended
+          </Text.Label>
+        </PressableBase>
+        <PressableBase
+          onPress={() => onSectionChange('nearby')}
+          style={() => [
+            styles.toggleButton,
+            activeSection === 'nearby' && styles.toggleButtonActive,
+          ]}
+          testID={`${testID}NearbyPressable`}>
+          <Text.Label
+            color={activeSection === 'nearby' ? 'inverse' : 'default'}
+            testID={`${testID}NearbyToggleText`}>
+            Nearby
+          </Text.Label>
+        </PressableBase>
+      </Row>
+    </Column>
     {activeSection === 'recommended' ? (
       <RecommendedSection
         onTourPress={onTourPress}
@@ -82,20 +92,16 @@ export const FeaturedToursHeader = ({
         testID={`${testID}NearbySection`}
       />
     )}
-    <Spacer
-      size="md"
-      testID={`${testID}SectionSpacer`}
-    />
-    <Text.Title
-      level="h3"
-      testID={`${testID}AllToursText`}>
-      All Community Tours
-    </Text.Title>
-    <Spacer
-      size="sm"
-      testID={`${testID}HeadingSpacer`}
-    />
-  </Column>
+    <Box
+      testID={`${testID}AllToursBox`}
+      padding="md">
+      <Text.Title
+        level="h3"
+        testID={`${testID}AllToursText`}>
+        All Community Tours
+      </Text.Title>
+    </Box>
+  </>
 )
 
 const styles = StyleSheet.create(theme => ({

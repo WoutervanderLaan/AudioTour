@@ -37,7 +37,7 @@ export const TourPhotoSubmitFormInputs = ({
   return (
     <Column
       gap="md"
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       <ImageInputControlled
         control={control}
         name="photos"
@@ -82,7 +82,7 @@ export const TourPhotoSubmitFormInputs = ({
         testID={`${testID}YearMaterialRow`}>
         <Box
           flex={1}
-          testID={`${testID}YearContainerBox`}>
+          testID={`${testID}YearContainer`}>
           <TextInputControlled
             control={control}
             name="year"
@@ -94,7 +94,7 @@ export const TourPhotoSubmitFormInputs = ({
         </Box>
         <Box
           flex={1}
-          testID={`${testID}MaterialContainerBox`}>
+          testID={`${testID}MaterialContainer`}>
           <TextInputControlled
             control={control}
             name="material"

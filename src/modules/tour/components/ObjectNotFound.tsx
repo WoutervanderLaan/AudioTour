@@ -26,7 +26,7 @@ export const ObjectNotFound = ({
       <Box
         flex={1}
         center
-        testID={`${testID}ContainerBox`}>
+        testID={`${testID}Container`}>
         <Text.Paragraph testID={`${testID}MessageText`}>
           Object not found
         </Text.Paragraph>

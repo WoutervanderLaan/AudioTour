@@ -64,7 +64,7 @@ export const ObjectDetails = ({
   return (
     <Column
       gap="lg"
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       {description !== undefined && (
         <Column
           gap="xs"

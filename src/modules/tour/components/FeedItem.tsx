@@ -52,7 +52,7 @@ export const FeedItem = ({
       <Column
         gap="sm"
         padding="md"
-        testID={`${testID}ContainerColumn`}>
+        testID={`${testID}Container`}>
         {item.photos.length > 0 && (
           <Row
             gap="xs"

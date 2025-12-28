@@ -155,7 +155,7 @@ export const Switch = ({
 
   return (
     <Row
-      testID={`${testID}ContainerRow`}
+      testID={`${testID}Container`}
       alignItems="center"
       gap="sm">
       <RNSwitch

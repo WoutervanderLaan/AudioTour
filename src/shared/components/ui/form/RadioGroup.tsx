@@ -153,7 +153,7 @@ export const RadioGroup = <T extends string = string>({
     <Column
       gap="xs"
       stretch
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       {options.map(option => {
         const isSelected = value === option.value
         const isDisabled = disabled || option.disabled

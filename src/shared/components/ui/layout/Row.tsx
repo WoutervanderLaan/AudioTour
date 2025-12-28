@@ -12,7 +12,8 @@ import type {TestProps} from '@/shared/types/TestProps'
  * @returns Row layout component
  */
 export const Row = (
-  props: Omit<BoxProps, 'row' | 'column' | 'testID'> & TestProps<'Row'>,
+  props: Omit<BoxProps, 'row' | 'column' | 'testID'> &
+    TestProps<'Row' | 'Container'>,
 ): ReactNode => {
   const boxProps = {
     ...props,

@@ -10,13 +10,16 @@ import notifee, {
 
 import {logger} from '@/core/lib/logger/logger'
 
-import {
-  NotificationChannelId,
-  notificationService,
-  type PermissionStatus,
-} from './notificationService'
+import {notificationService} from './notificationService'
+import {NotificationChannelId, PermissionStatus} from '../types'
 
 jest.mock('@/core/lib/logger/logger')
+
+jest.mock('react-native', () => ({
+  Platform: {
+    OS: 'android',
+  },
+}))
 
 /**
  * Test suite for NotificationService

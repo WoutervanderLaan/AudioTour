@@ -45,7 +45,7 @@ export const Toast = ({
 
   return (
     <Box
-      testID={`${testID}ContainerBox`}
+      testID={`${testID}Container`}
       padding="md"
       style={styles.container}>
       <Box

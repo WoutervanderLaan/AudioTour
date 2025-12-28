@@ -76,6 +76,24 @@ export const CommunityDetailScreen = (): React.JSX.Element => {
     [],
   )
 
+  /**
+   * ListHeaderComponent
+   * TODO: describe what it does.
+   *
+   * @returns {*} describe return value
+   */
+  const ListHeaderComponent = useCallback((): React.JSX.Element | null => {
+    if (!tour) return null
+    return (
+      <TourDetailHeader
+        tour={tour}
+        onStartTour={handleStartTour}
+        onRated={handleRatingSubmit}
+        testID="CommunityDetailScreenTourDetailHeader"
+      />
+    )
+  }, [tour, handleStartTour, handleRatingSubmit])
+
   if (isLoading || tour === undefined) {
     return (
       <Screen.Static
@@ -91,20 +109,11 @@ export const CommunityDetailScreen = (): React.JSX.Element => {
     )
   }
 
-  const ListHeaderComponent = (): React.JSX.Element => (
-    <TourDetailHeader
-      tour={tour}
-      onStartTour={handleStartTour}
-      onRated={handleRatingSubmit}
-      testID="CommunityDetailScreenTourDetailHeader"
-    />
-  )
-
   return (
     <Screen.Static
       includeNavigationPadding={false}
       testID="CommunityDetailScreenScreen">
-      <Box testID="CommunityDetailScreenContainerBox">
+      <Box testID="CommunityDetailScreenContainer">
         <FlatList
           data={tour.feedItems}
           keyExtractor={keyExtractor}

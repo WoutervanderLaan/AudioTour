@@ -6,7 +6,10 @@ import {z} from 'zod'
  */
 export const loginSchema = z.object({
   email: z.string().email('Please provide a valid email address'),
-  password: z.string().min(1, 'Password is required'),
+  password: z
+    .string()
+    .min(1, 'Password is required')
+    .max(60, 'Password cannot exceed 60 characters'),
 })
 
 /**
@@ -21,11 +24,15 @@ export type LoginForm = z.infer<typeof loginSchema>
  * uppercase letter, number, and special character.
  */
 export const registerSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
+  name: z
+    .string()
+    .min(2, 'Name must be at least 2 characters')
+    .max(60, 'Name cannot exceed 60 characters'),
   email: z.string().email('Please provide a valid email address'),
   password: z
     .string()
     .min(6, 'Password must be at least 6 characters')
+    .max(60, 'Password cannot exceed 60 characters')
     .refine(val => /[A-Z]/.test(val), {
       message: 'Password must contain at least one uppercase letter',
     })

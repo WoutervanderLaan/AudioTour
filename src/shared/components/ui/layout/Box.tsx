@@ -13,7 +13,7 @@ import type {Theme} from '@/themes/types'
  * Base props for the Box component including layout, alignment, spacing, and padding options.
  */
 export type BoxPropsBase = Omit<ViewProps, 'testID'> &
-  TestProps<'Box'> & {
+  TestProps<'Box' | 'Container'> & {
     /**
      * Child elements to render inside the Box container
      */

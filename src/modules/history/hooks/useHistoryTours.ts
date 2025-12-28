@@ -1,13 +1,9 @@
 import {useCallback, useMemo} from 'react'
 
 import {useHistoryLoading, useTourSummaries} from '../store/selectors'
-import type {TourSummary} from '../types'
-
-/**
- * SortOption
- * Available sorting options for tour history.
- */
-export type SortOption = 'date-desc' | 'date-asc' | 'title'
+import type {HistorySortOption, TourSummary} from '../types'
+import {matchesSearchQuery} from '../utils/matchesSearchQuery'
+import {sortTours} from '../utils/sortTours'
 
 /**
  * UseHistoryToursOptions
@@ -21,7 +17,7 @@ export type UseHistoryToursOptions = {
   /**
    * Sorting option for the tour list
    */
-  sortBy?: SortOption
+  sortBy?: HistorySortOption
 }
 
 /**
@@ -45,52 +41,6 @@ export type UseHistoryToursResult = {
    * Function to trigger a refresh (placeholder for future API integration)
    */
   refetch: () => void
-}
-
-/**
- * matchesSearchQuery
- * Checks if a tour matches the given search query.
- * Performs case-insensitive search on title, description, and museum name.
- *
- * @param tour - Tour summary to check
- * @param query - Search query string
- * @returns Whether the tour matches the query
- */
-const matchesSearchQuery = (tour: TourSummary, query: string): boolean => {
-  const normalizedQuery = query.toLowerCase().trim()
-
-  if (normalizedQuery.length === 0) {
-    return true
-  }
-
-  const searchableFields = [tour.title, tour.description, tour.museumName]
-
-  return searchableFields.some(field =>
-    field.toLowerCase().includes(normalizedQuery),
-  )
-}
-
-/**
- * sortTours
- * Sorts tours based on the specified sort option.
- *
- * @param tours - Array of tour summaries to sort
- * @param sortBy - Sort option
- * @returns Sorted array of tour summaries
- */
-const sortTours = (tours: TourSummary[], sortBy: SortOption): TourSummary[] => {
-  const sorted = [...tours]
-
-  switch (sortBy) {
-    case 'date-desc':
-      return sorted.sort((a, b) => b.createdAt - a.createdAt)
-    case 'date-asc':
-      return sorted.sort((a, b) => a.createdAt - b.createdAt)
-    case 'title':
-      return sorted.sort((a, b) => a.title.localeCompare(b.title))
-    default:
-      return sorted
-  }
 }
 
 /**

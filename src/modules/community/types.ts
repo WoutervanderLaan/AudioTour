@@ -96,10 +96,10 @@ export type TourRating = {
 }
 
 /**
- * SortOption
+ * CommunitySortOption
  * Available sort options for community tours.
  */
-export type SortOption = 'rating' | 'recent' | 'popular' | 'distance'
+export type CommunitySortOption = 'rating' | 'recent' | 'popular' | 'distance'
 
 /**
  * CommunityFilterOptions
@@ -125,7 +125,7 @@ export type CommunityFilterOptions = {
   /**
    * Sort order for results
    */
-  sortBy?: SortOption
+  sortBy?: CommunitySortOption
   /**
    * Filter by specific tags
    */

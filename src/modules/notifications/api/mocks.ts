@@ -1,9 +1,8 @@
 import {http, HttpResponse} from 'msw'
 
 import {createHandler} from '@/core/api/mock-config/createHandler'
+import {TIME} from '@/shared/types/Time'
 import {wait} from '@/shared/utils/wait'
-
-const TIMEOUT = 500
 
 /**
  * MSW POST request handlers for notification-related API endpoints.
@@ -11,7 +10,7 @@ const TIMEOUT = 500
  */
 const notificationPostHandlers = [
   http.post(createHandler('/notifications/register-device'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.MILLISECOND * 500)
 
     return HttpResponse.json({
       success: true,
@@ -20,7 +19,7 @@ const notificationPostHandlers = [
   }),
 
   http.post(createHandler('/notifications/unregister-device'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.MILLISECOND * 500)
 
     return HttpResponse.json({
       success: true,
@@ -29,7 +28,7 @@ const notificationPostHandlers = [
   }),
 
   http.post(createHandler('/notifications/toggle'), async ({request}) => {
-    await wait(TIMEOUT)
+    await wait(TIME.MILLISECOND * 500)
 
     const body = (await request.json()) as {enabled: boolean}
     const enabled = body?.enabled ?? false
@@ -49,7 +48,7 @@ const notificationPostHandlers = [
  */
 const notificationGetHandlers = [
   http.get(createHandler('/notifications/preferences'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.MILLISECOND * 500)
 
     return HttpResponse.json({
       pushEnabled: false,

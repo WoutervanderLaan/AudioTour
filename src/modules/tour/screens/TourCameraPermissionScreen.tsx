@@ -65,7 +65,7 @@ export const TourCameraPermissionScreen = ({
         paddingH="md"
         paddingBottom="xl"
         gap="lg"
-        testID="TourCameraPermissionScreenContainerColumn">
+        testID="TourCameraPermissionScreenContainer">
         <PermissionContent
           content={content}
           testID="TourCameraPermissionScreenPermissionContent"

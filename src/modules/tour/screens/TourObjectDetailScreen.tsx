@@ -49,7 +49,7 @@ export const TourObjectDetailScreen = ({
     <Screen.Scrollable testID="TourObjectDetailScreen">
       <Column
         gap="lg"
-        testID="TourObjectDetailScreenContainerColumn">
+        testID="TourObjectDetailScreenContainer">
         <PhotoGallery
           photos={feedItem.photos}
           activePhotoIndex={activePhotoIndex}

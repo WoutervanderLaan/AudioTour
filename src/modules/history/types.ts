@@ -2,6 +2,12 @@ import type {FeedItem} from '@/modules/tour/types'
 import type {Coordinates} from '@/shared/hooks/useUserLocation'
 
 /**
+ * HistorySortOption
+ * Available sorting options for tour history.
+ */
+export type HistorySortOption = 'date-desc' | 'date-asc' | 'title'
+
+/**
  * SyncStatus
  * Represents the synchronization status of a tour with the backend.
  */
@@ -180,3 +186,12 @@ export type HistoryState = {
    */
   initialize: () => void
 }
+
+/**
+ * TourUpdateParams
+ * Parameters for updating a tour.
+ */
+export type TourUpdateParams = Pick<
+  Partial<PersistedTour>,
+  'title' | 'description' | 'heroImageUri'
+>

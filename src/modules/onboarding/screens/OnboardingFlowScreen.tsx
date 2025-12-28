@@ -115,7 +115,7 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
         padding="md"
         paddingBottom="xl"
         gap="lg"
-        testID="OnboardingFlowScreenContainerColumn">
+        testID="OnboardingFlowScreenContainer">
         <ProgressIndicator
           currentStep={currentStepIndex + 1}
           totalSteps={ONBOARDING_STEPS.length}

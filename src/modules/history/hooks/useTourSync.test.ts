@@ -1,4 +1,4 @@
-import {act, renderHook, waitFor} from '@testing-library/react-native'
+import {act, renderHook} from '@testing-library/react-native'
 
 import {useHistoryStore} from '../store/useHistoryStore'
 import type {CreatePersistedTourParams} from '../types'
@@ -7,25 +7,10 @@ import {useTourSync} from './useTourSync'
 
 import type {FeedItem} from '@/modules/tour/types'
 
-// Mock expo-crypto
-jest.mock('expo-crypto', () => ({
-  randomUUID: jest.fn(() => 'mock-uuid-123'),
-}))
-
 // Mock datetime
 jest.mock('@/core/lib/datetime', () => ({
   datetime: {
     timestamp: jest.fn(() => 1704067200000),
-  },
-}))
-
-// Mock logger
-jest.mock('@/core/lib/logger/logger', () => ({
-  logger: {
-    debug: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
   },
 }))
 
@@ -36,15 +21,6 @@ jest.mock('../api/mutations', () => ({
     mutateAsync: mockSaveToCloud,
     isPending: false,
   }),
-}))
-
-// Mock AppState
-jest.mock('react-native', () => ({
-  AppState: {
-    addEventListener: jest.fn(() => ({
-      remove: jest.fn(),
-    })),
-  },
 }))
 
 describe('useTourSync', () => {
@@ -125,13 +101,13 @@ describe('useTourSync', () => {
 
       let success: boolean = false
       await act(async () => {
-        success = await result.current.syncTour('mock-uuid-123')
+        success = await result.current.syncTour('test-uuid-123')
       })
 
       expect(success).toBe(true)
       expect(mockSaveToCloud).toHaveBeenCalled()
 
-      const tour = useHistoryStore.getState().getTour('mock-uuid-123')
+      const tour = useHistoryStore.getState().getTour('test-uuid-123')
       expect(tour?.syncStatus).toBe('synced')
     })
 
@@ -157,7 +133,7 @@ describe('useTourSync', () => {
 
       let success: boolean = false
       await act(async () => {
-        success = await result.current.syncTour('mock-uuid-123')
+        success = await result.current.syncTour('test-uuid-123')
       })
 
       expect(success).toBe(true)
@@ -175,12 +151,12 @@ describe('useTourSync', () => {
 
       let success: boolean = true
       await act(async () => {
-        success = await result.current.syncTour('mock-uuid-123')
+        success = await result.current.syncTour('test-uuid-123')
       })
 
       expect(success).toBe(false)
 
-      const tour = useHistoryStore.getState().getTour('mock-uuid-123')
+      const tour = useHistoryStore.getState().getTour('test-uuid-123')
       expect(tour?.syncStatus).toBe('error')
     })
 
@@ -191,7 +167,7 @@ describe('useTourSync', () => {
         // Check status during the sync
         syncingStatus = useHistoryStore
           .getState()
-          .getTour('mock-uuid-123')?.syncStatus
+          .getTour('test-uuid-123')?.syncStatus
         return {tour: {}, message: 'Success'}
       })
 
@@ -202,7 +178,7 @@ describe('useTourSync', () => {
       const {result} = renderHook(() => useTourSync())
 
       await act(async () => {
-        await result.current.syncTour('mock-uuid-123')
+        await result.current.syncTour('test-uuid-123')
       })
 
       expect(syncingStatus).toBe('syncing')

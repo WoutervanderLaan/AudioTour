@@ -39,7 +39,7 @@ export const ProgressIndicator = ({
 
   return (
     <Column
-      testID={`${testID}ContainerColumn`}
+      testID={`${testID}Container`}
       gap="xs">
       <Row
         testID={`${testID}StepRow`}

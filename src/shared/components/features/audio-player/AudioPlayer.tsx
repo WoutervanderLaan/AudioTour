@@ -137,7 +137,7 @@ export const AudioPlayer = ({
 
   return (
     <Column
-      testID={`${testID}ContainerColumn`}
+      testID={`${testID}Container`}
       gap="sm">
       <Row
         testID={`${testID}TimeRow`}

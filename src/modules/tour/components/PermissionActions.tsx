@@ -49,7 +49,7 @@ export const PermissionActions = ({
   return (
     <Column
       gap="sm"
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       <Button
         label={primaryButtonLabel}
         onPress={onPrimaryAction}

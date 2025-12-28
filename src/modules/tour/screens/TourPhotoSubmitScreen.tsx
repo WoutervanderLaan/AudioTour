@@ -87,7 +87,7 @@ export const TourPhotoSubmitScreen = ({
         <Box
           paddingH="md"
           paddingBottom="xl"
-          testID="TourPhotoSubmitScreenContainerBox">
+          testID="TourPhotoSubmitScreenContainer">
           <Column
             gap="lg"
             testID="TourPhotoSubmitScreenContentColumn">

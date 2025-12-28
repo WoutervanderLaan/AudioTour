@@ -153,6 +153,7 @@ export const RatingInput = ({
           <MaterialIcons
             name={getStarIcon(position)}
             size={STAR_SIZE}
+            // eslint-disable-next-line react/jsx-no-leaked-render
             color={displayRating >= position ? STAR_COLOR : EMPTY_STAR_COLOR}
             testID={`${testID}Star${position}Icon`}
           />

@@ -87,7 +87,7 @@ export const HistoryDetailScreen = (): React.JSX.Element => {
     <Screen.Static
       includeNavigationPadding={false}
       testID="HistoryDetailScreenScreen">
-      <Box testID="HistoryDetailScreenContainerBox">
+      <Box testID="HistoryDetailScreenContainer">
         <FlatList
           data={tour.feedItems}
           keyExtractor={keyExtractor}

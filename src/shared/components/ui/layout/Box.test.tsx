@@ -1,7 +1,6 @@
 import {type StyleProp, Text, type ViewStyle} from 'react-native'
 
 import {render, screen} from '@testing-library/react-native'
-
 import {Box} from './Box'
 
 /**

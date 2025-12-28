@@ -31,9 +31,9 @@ export const communityKeys = {
    * @returns Tours query key array
    */
   tours: (filters?: CommunityFilterOptions) =>
-    filters !== undefined
-      ? ([...communityKeys.all, 'tours', filters] as const)
-      : ([...communityKeys.all, 'tours'] as const),
+    filters === undefined
+      ? ([...communityKeys.all, 'tours'] as const)
+      : ([...communityKeys.all, 'tours', filters] as const),
 
   /**
    * Query key for a specific tour by ID.

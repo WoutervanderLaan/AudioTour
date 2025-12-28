@@ -23,6 +23,7 @@ type Story = StoryObj<typeof meta>
 
 const styles = StyleSheet.create(theme => ({
   demoBox: {
+    backgroundColor: theme.color.screen.background.default,
     ...theme.styles.border.sharp,
   },
 }))
