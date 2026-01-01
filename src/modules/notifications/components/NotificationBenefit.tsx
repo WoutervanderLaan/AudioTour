@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {MaterialIcons} from '@expo/vector-icons'
 
-import {Column} from '@/shared/components/ui/layout/Column/Column'
-import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
 
 /**

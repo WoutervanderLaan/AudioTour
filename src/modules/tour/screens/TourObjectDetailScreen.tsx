@@ -10,7 +10,7 @@ import {usePhotoGallery} from '../hooks/usePhotoGallery'
 import type {TourRouteName, TourStackParams} from '../routes.types'
 import {useFeedItem} from '../store/selectors'
 
-import {Column} from '@/shared/components/ui/layout/Column/Column'
+import {Column} from '@/shared/components/ui/layout/Column'
 import {Screen} from '@/shared/components/ui/screen/Screen'
 
 /**

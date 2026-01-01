@@ -9,7 +9,7 @@ import {
 import {FormField} from './FormField'
 import {ImageInput, type ImageInputProps} from './ImageInput'
 
-import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
 
 /**

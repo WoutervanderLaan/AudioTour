@@ -2,7 +2,7 @@ import React from 'react'
 
 import {MaterialIcons} from '@expo/vector-icons'
 
-import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 

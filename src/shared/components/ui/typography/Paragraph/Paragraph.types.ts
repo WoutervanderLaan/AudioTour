@@ -1,4 +1,4 @@
-import type {TextPropsBase} from '../TextBase/TextBase.types'
+import type {TextPropsBase} from '../TextBase'
 
 import type {ParagraphVariants} from '@/themes/tokens/text'
 

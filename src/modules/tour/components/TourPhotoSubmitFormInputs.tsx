@@ -6,9 +6,9 @@ import type {PhotoSubmitForm} from '../schema'
 
 import {ImageInputControlled} from '@/shared/components/ui/form/ImageInputControlled'
 import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
-import {Box} from '@/shared/components/ui/layout/Box/Box'
-import {Column} from '@/shared/components/ui/layout/Column/Column'
-import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {Box} from '@/shared/components/ui/layout/Box'
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 

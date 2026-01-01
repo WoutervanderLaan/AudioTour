@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Box} from '../Box/Box'
+import {Box} from '../Box'
 import type {SpacerProps} from './Spacer.types'
 
 /**

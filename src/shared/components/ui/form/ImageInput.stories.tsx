@@ -5,7 +5,7 @@ import type {Meta} from '@storybook/react-native-web-vite'
 import {FormField} from './FormField'
 import {ImageInput} from './ImageInput'
 
-import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
 
 const meta = {

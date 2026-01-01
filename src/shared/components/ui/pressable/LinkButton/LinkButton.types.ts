@@ -1,4 +1,4 @@
-import type {PressableBaseProps} from '../PressableBase/PressableBase.types'
+import type {PressableBaseProps} from '../PressableBase'
 
 import type {ParagraphProps} from '@/shared/components/ui/typography/Paragraph/Paragraph.types'
 import type {Text} from '@/shared/components/ui/typography/Text'

@@ -1,6 +1,6 @@
 import type React from 'react'
 
-import {TextBase} from '../TextBase/TextBase'
+import {TextBase} from '../TextBase'
 import type {TitleProps} from './Title.types'
 
 /**

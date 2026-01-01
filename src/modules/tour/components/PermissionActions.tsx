@@ -1,7 +1,7 @@
 import React from 'react'
 
-import {Column} from '@/shared/components/ui/layout/Column/Column'
-import {Button} from '@/shared/components/ui/pressable/Button/Button'
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**

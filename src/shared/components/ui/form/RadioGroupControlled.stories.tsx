@@ -5,12 +5,12 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import type {Meta} from '@storybook/react-native-web-vite'
 import {z} from 'zod'
 
-import {Column} from '../layout/Column/Column'
+import {Column} from '../layout/Column'
 import type {RadioOption} from './RadioGroup'
 import {RadioGroupControlled} from './RadioGroupControlled'
 
 import {logger} from '@/core/lib/logger/logger'
-import {Button} from '@/shared/components/ui/pressable/Button/Button'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography/Text'
 
 const meta = {

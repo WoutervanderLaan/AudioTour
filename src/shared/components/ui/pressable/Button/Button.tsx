@@ -1,10 +1,10 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {PressableBase} from '../PressableBase/PressableBase'
+import {PressableBase} from '../PressableBase'
 import type {ButtonProps, ButtonVariant} from './Button.types'
 
-import {Box} from '@/shared/components/ui/layout/Box/Box'
+import {Box} from '@/shared/components/ui/layout/Box'
 import {Text} from '@/shared/components/ui/typography/Text'
 
 /**

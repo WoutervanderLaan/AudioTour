@@ -14,9 +14,9 @@ import {ProgressIndicator} from '@/shared/components/features/progress-indicator
 import {RadioGroupControlled} from '@/shared/components/ui/form/RadioGroupControlled'
 import {SwitchControlled} from '@/shared/components/ui/form/SwitchControlled'
 import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
-import {Column} from '@/shared/components/ui/layout/Column/Column'
-import {Spacer} from '@/shared/components/ui/layout/Spacer/Spacer'
-import {Button} from '@/shared/components/ui/pressable/Button/Button'
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Spacer} from '@/shared/components/ui/layout/Spacer'
+import {Button} from '@/shared/components/ui/pressable/Button'
 import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography/Text'
 

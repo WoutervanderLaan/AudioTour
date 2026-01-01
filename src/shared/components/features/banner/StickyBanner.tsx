@@ -4,10 +4,10 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
-import {Column} from '@/shared/components/ui/layout/Column/Column'
-import {Row} from '@/shared/components/ui/layout/Row/Row'
-import {NavItem} from '@/shared/components/ui/navigation/NavItem/NavItem'
-import {IconButton} from '@/shared/components/ui/pressable/IconButton/IconButton'
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Row} from '@/shared/components/ui/layout/Row'
+import {NavItem} from '@/shared/components/ui/navigation/NavItem'
+import {IconButton} from '@/shared/components/ui/pressable/IconButton'
 import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 

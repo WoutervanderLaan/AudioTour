@@ -3,7 +3,7 @@ import {StyleSheet, useUnistyles} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
-import {PressableBase} from '../PressableBase/PressableBase'
+import {PressableBase} from '../PressableBase'
 import type {IconButtonProps, IconButtonSize} from './IconButton.types'
 
 const ICON_SIZES: Record<IconButtonSize, number> = {

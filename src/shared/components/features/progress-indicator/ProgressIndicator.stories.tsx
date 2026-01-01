@@ -2,7 +2,7 @@ import type {Meta} from '@storybook/react-native-web-vite'
 
 import {ProgressIndicator} from './ProgressIndicator'
 
-import {Column} from '@/shared/components/ui/layout/Column/Column'
+import {Column} from '@/shared/components/ui/layout/Column'
 
 const meta = {
   title: 'Features/ProgressIndicator',

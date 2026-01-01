@@ -4,11 +4,11 @@ import type {
   ErrorBoundaryProps,
   ErrorBoundaryState,
 } from './ErrorBoundary.types'
-import {Column} from './ui/layout/Column/Column'
+import {Column} from './ui/layout/Column'
 import {Text} from './ui/typography/Text'
 
 import {logger} from '@/core/lib/logger/logger'
-import {Button} from '@/shared/components/ui/pressable/Button/Button'
+import {Button} from '@/shared/components/ui/pressable/Button'
 
 /**
  * ErrorBoundary

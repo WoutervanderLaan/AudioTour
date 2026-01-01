@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import type {Meta} from '@storybook/react-native-web-vite'
 
-import {Box} from '../Box/Box'
+import {Box} from '../Box'
 import {Column} from './Column'
 
 import {Text} from '@/shared/components/ui/typography/Text'

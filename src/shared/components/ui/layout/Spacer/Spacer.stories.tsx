@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import type {Meta} from '@storybook/react-native-web-vite'
 
-import {Box} from '../Box/Box'
-import {Column} from '../Column/Column'
+import {Box} from '../Box'
+import {Column} from '../Column'
 import {Spacer} from './Spacer'
 
 import {Text} from '@/shared/components/ui/typography/Text'

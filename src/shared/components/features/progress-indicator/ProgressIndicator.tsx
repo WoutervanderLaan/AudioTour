@@ -1,8 +1,8 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Column} from '@/shared/components/ui/layout/Column/Column'
-import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {Column} from '@/shared/components/ui/layout/Column'
+import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 

@@ -1,4 +1,4 @@
-import type {PressableBaseProps} from '../PressableBase/PressableBase.types'
+import type {PressableBaseProps} from '../PressableBase'
 
 import type {IconName} from '@/core/navigation/types'
 import type {TestProps} from '@/shared/types/TestProps'

@@ -1,7 +1,6 @@
 import React, {type ReactNode} from 'react'
 
-import {Box} from '../Box/Box'
-import type {BoxProps} from '../Box/Box.types'
+import {Box, type BoxProps} from '../Box'
 
 import type {TestProps} from '@/shared/types/TestProps'
 

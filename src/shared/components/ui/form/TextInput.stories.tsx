@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 
 import type {Meta} from '@storybook/react-native-web-vite'
 
-import {Column} from '../layout/Column/Column'
+import {Column} from '../layout/Column'
 import {FormField} from './FormField'
 import {TextInput} from './TextInput'
 

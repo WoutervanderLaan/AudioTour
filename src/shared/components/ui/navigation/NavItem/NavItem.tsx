@@ -5,8 +5,8 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import type {NavItemProps} from './NavItem.types'
 
-import {Row} from '@/shared/components/ui/layout/Row/Row'
-import {PressableBase} from '@/shared/components/ui/pressable/PressableBase/PressableBase'
+import {Row} from '@/shared/components/ui/layout/Row'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
 
 /**

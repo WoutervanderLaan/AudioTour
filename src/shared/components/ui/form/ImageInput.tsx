@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker'
 import {logger} from '@/core/lib/logger/logger'
 import {AddPhoto} from '@/shared/components/features/add-photo/AddPhoto'
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
-import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {Row} from '@/shared/components/ui/layout/Row'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**

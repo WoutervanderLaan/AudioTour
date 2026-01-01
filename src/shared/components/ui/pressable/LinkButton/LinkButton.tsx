@@ -1,7 +1,7 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {PressableBase} from '../PressableBase/PressableBase'
+import {PressableBase} from '../PressableBase'
 import type {LinkButtonProps} from './LinkButton.types'
 
 import {Text} from '@/shared/components/ui/typography/Text'

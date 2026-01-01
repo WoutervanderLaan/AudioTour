@@ -1,5 +1,5 @@
 import type {IconName} from '@/core/navigation/types'
-import type {PressableBaseProps} from '@/shared/components/ui/pressable/PressableBase/PressableBase.types'
+import type {PressableBaseProps} from '@/shared/components/ui/pressable/PressableBase'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**
