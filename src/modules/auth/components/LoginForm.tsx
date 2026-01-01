@@ -9,8 +9,8 @@ import {type LoginForm as LoginFormType, loginSchema} from '../schema'
 
 import {logger} from '@/core/lib/logger/logger'
 import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
-import {Column} from '@/shared/components/ui/layout/Column'
-import {Button} from '@/shared/components/ui/pressable/Button'
+import {Column} from '@/shared/components/ui/layout/Column/Column'
+import {Button} from '@/shared/components/ui/pressable/Button/Button'
 import {Text} from '@/shared/components/ui/typography/Text'
 
 /**

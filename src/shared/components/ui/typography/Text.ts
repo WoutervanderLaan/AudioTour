@@ -1,6 +1,6 @@
-import {Label} from './Label'
-import {Paragraph} from './Paragraph'
-import {Title} from './Title'
+import {Label} from './Label/Label'
+import {Paragraph} from './Paragraph/Paragraph'
+import {Title} from './Title/Title'
 
 /**
  * Typography components

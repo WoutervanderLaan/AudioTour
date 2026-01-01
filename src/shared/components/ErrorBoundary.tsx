@@ -1,42 +1,14 @@
 import React, {Component, type ErrorInfo, type ReactNode} from 'react'
 
-import {Column} from './ui/layout/Column'
+import type {
+  ErrorBoundaryProps,
+  ErrorBoundaryState,
+} from './ErrorBoundary.types'
+import {Column} from './ui/layout/Column/Column'
 import {Text} from './ui/typography/Text'
 
 import {logger} from '@/core/lib/logger/logger'
-import {Button} from '@/shared/components/ui/pressable/Button'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * ErrorBoundaryProps
- * Props for the ErrorBoundary component.
- */
-type ErrorBoundaryProps = TestProps<'ErrorBoundary'> & {
-  /**
-   * Child components to be wrapped and protected by the error boundary
-   */
-  children: ReactNode
-  /**
-   * Optional fallback UI to display when an error occurs.
-   * If not provided, uses the default error UI.
-   */
-  fallback?: ReactNode
-}
-
-/**
- * ErrorBoundaryState
- * State for the ErrorBoundary component.
- */
-type ErrorBoundaryState = {
-  /**
-   * Whether an error has been caught
-   */
-  hasError: boolean
-  /**
-   * The error that was caught, if any
-   */
-  error?: Error
-}
+import {Button} from '@/shared/components/ui/pressable/Button/Button'
 
 /**
  * ErrorBoundary

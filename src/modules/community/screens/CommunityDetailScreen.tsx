@@ -10,8 +10,8 @@ import {CommunityRouteName, type CommunityStackParams} from '../routes.types'
 
 import {FeedItem} from '@/modules/tour/components/FeedItem'
 import type {FeedItem as FeedItemType} from '@/modules/tour/types'
-import {Box} from '@/shared/components/ui/layout/Box'
-import {Spacer} from '@/shared/components/ui/layout/Spacer'
+import {Box} from '@/shared/components/ui/layout/Box/Box'
+import {Spacer} from '@/shared/components/ui/layout/Spacer/Spacer'
 import {Screen} from '@/shared/components/ui/screen/Screen'
 import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
 

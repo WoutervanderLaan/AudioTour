@@ -2,8 +2,8 @@ import type React from 'react'
 import {Image, type ImageProps} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Column} from '@/shared/components/ui/layout/Column'
-import {IconButton} from '@/shared/components/ui/pressable/IconButton'
+import {Column} from '@/shared/components/ui/layout/Column/Column'
+import {IconButton} from '@/shared/components/ui/pressable/IconButton/IconButton'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**

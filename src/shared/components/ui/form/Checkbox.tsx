@@ -3,10 +3,10 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
-import {Row} from '../layout/Row'
-import {PressableBase} from '../pressable/PressableBase'
+import {Row} from '../layout/Row/Row'
+import {PressableBase} from '../pressable/PressableBase/PressableBase'
 
-import {Box} from '@/shared/components/ui/layout/Box'
+import {Box} from '@/shared/components/ui/layout/Box/Box'
 import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 

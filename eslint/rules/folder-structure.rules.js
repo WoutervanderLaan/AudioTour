@@ -12,6 +12,7 @@ export const folderStructureRules = () => ({
       },
     },
   ],
+  'local/split-type-declarations': 'warn',
   'local/enforce-feature-structure': [
     'error',
     {

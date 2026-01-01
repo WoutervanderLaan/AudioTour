@@ -5,7 +5,7 @@ import {useUnistyles} from 'react-native-unistyles'
 import {AuthRouteName} from '@/modules/auth/routes.types'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
 import {ProfileRouteName} from '@/modules/profile/routes.types'
-import {IconButton} from '@/shared/components/ui/pressable/IconButton'
+import {IconButton} from '@/shared/components/ui/pressable/IconButton/IconButton'
 import {useNavigation} from '@/shared/hooks/useNavigation'
 
 /**

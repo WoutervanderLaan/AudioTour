@@ -1,10 +1,10 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import {Box} from '../layout/Box'
-import {Column} from '../layout/Column'
-import {Row} from '../layout/Row'
-import {PressableBase} from '../pressable/PressableBase'
+import {Box} from '../layout/Box/Box'
+import {Column} from '../layout/Column/Column'
+import {Row} from '../layout/Row/Row'
+import {PressableBase} from '../pressable/PressableBase/PressableBase'
 import {Text} from '../typography/Text'
 
 import type {TestProps} from '@/shared/types/TestProps'

@@ -2,7 +2,7 @@ import React from 'react'
 
 import {useAddArtwork} from '../hooks/useAddArtwork'
 
-import {Button} from '@/shared/components/ui/pressable/Button'
+import {Button} from '@/shared/components/ui/pressable/Button/Button'
 import type {TestProps} from '@/shared/types/TestProps'
 
 /**

@@ -7,8 +7,8 @@ import {MaterialIcons} from '@expo/vector-icons'
 import {useRateTour} from '../api/mutations'
 import {useUserTourRatingQuery} from '../api/queries'
 
-import {Row} from '@/shared/components/ui/layout/Row'
-import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
+import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 

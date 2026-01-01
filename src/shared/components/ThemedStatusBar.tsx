@@ -4,27 +4,6 @@ import {StatusBar} from 'react-native'
 import {useNavigationTheme} from '@/shared/hooks/useNavigationTheme'
 
 /**
- * ThemedStatusBarProps
- * Props for the ThemedStatusBar component
- */
-export type ThemedStatusBarProps = {
-  /**
-   * Whether to animate status bar style changes
-   * @default true
-   */
-  animated?: boolean
-  /**
-   * Whether to hide the status bar
-   * @default false
-   */
-  hidden?: boolean
-  /**
-   * Override the bar style (defaults to theme-based style)
-   */
-  barStyle?: 'light-content' | 'dark-content' | 'default'
-}
-
-/**
  * ThemedStatusBar
  * A StatusBar component that automatically adapts its style based on the current theme.
  * Uses the useNavigationTheme hook to determine the appropriate bar style for light/dark mode.
@@ -45,7 +24,7 @@ export const ThemedStatusBar = ({
   animated = true,
   hidden = false,
   barStyle,
-}: ThemedStatusBarProps): React.JSX.Element => {
+}: StatusBar['props']): React.JSX.Element => {
   const {statusBar} = useNavigationTheme()
 
   return (

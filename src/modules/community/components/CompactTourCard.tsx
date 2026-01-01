@@ -5,8 +5,8 @@ import type {CommunityTourSummary} from '../types'
 import {RatingDisplay} from './RatingDisplay'
 
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
-import {Column} from '@/shared/components/ui/layout/Column'
-import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
+import {Column} from '@/shared/components/ui/layout/Column/Column'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
 import type {TestProps} from '@/shared/types/TestProps'
 

@@ -15,6 +15,7 @@ import unicorn from 'eslint-plugin-unicorn'
 import unusedImports from 'eslint-plugin-unused-imports'
 
 import enforceFeatureStructure from '../eslint-rules/enforce-feature-structure.js'
+import splitTypeDeclarations from '../eslint-rules/split-type-declarations.js'
 import requireDocComment from '../eslint-rules/require-doc-comment.js'
 import folderDocsRule from '../eslint-rules/require-folder-docs.js'
 import requireTypeDocComment from '../eslint-rules/require-type-doc-comment.js'
@@ -44,6 +45,7 @@ export const createPluginsConfig = () => ({
       'require-doc-comment': requireDocComment,
       'require-type-doc-comment': requireTypeDocComment,
       'enforce-feature-structure': enforceFeatureStructure,
+      'split-type-declarations': splitTypeDeclarations,
       'require-folder-docs': folderDocsRule,
     },
   },

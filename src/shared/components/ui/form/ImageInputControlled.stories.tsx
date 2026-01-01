@@ -5,11 +5,11 @@ import {zodResolver} from '@hookform/resolvers/zod'
 import type {Meta} from '@storybook/react-native-web-vite'
 import {z} from 'zod'
 
-import {Column} from '../layout/Column'
+import {Column} from '../layout/Column/Column'
 import {ImageInputControlled} from './ImageInputControlled'
 
 import {logger} from '@/core/lib/logger/logger'
-import {Button} from '@/shared/components/ui/pressable/Button'
+import {Button} from '@/shared/components/ui/pressable/Button/Button'
 import {Text} from '@/shared/components/ui/typography/Text'
 
 const meta = {

@@ -2,7 +2,7 @@ import React from 'react'
 
 import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
 
-import {Column} from '../layout/Column'
+import {Column} from '../layout/Column/Column'
 import {Switch} from './Switch'
 
 const meta = {

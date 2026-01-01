@@ -3,10 +3,10 @@ import {Image, ScrollView, useWindowDimensions} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
-import {Box} from '@/shared/components/ui/layout/Box'
-import {Column} from '@/shared/components/ui/layout/Column'
-import {Row} from '@/shared/components/ui/layout/Row'
-import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
+import {Box} from '@/shared/components/ui/layout/Box/Box'
+import {Column} from '@/shared/components/ui/layout/Column/Column'
+import {Row} from '@/shared/components/ui/layout/Row/Row'
+import {PressableBase} from '@/shared/components/ui/pressable/PressableBase/PressableBase'
 import type {TestProps} from '@/shared/types/TestProps'
 
 const INDICATOR_SIZE = 8
