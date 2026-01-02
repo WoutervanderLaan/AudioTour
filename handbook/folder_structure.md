@@ -26,6 +26,16 @@
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – auth route type definitions
       - index.ts – module configuration export
+    - **history/** – tour history and persistence module
+      - api/ – history API endpoints
+      - hooks/ – history hooks (useTourPersistence, useTourSync)
+      - screens/ – history list and detail screens
+      - store/ – history state management
+      - utils/ – tour title/description generation utilities
+      - components/ – history-specific components
+      - screenConfig.ts – navigation stack configuration
+      - routes.types.ts – history route type definitions
+      - index.ts – module configuration export
     - **onboarding/** – user onboarding module (multi-step configuration flow)
       - components/ – onboarding-specific components
       - config/ – onboarding step configuration
