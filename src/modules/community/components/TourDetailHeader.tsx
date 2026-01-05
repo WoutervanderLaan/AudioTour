@@ -2,9 +2,14 @@ import React from 'react'
 import {Image} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
-import type {CommunityTour} from '../types'
 import {RatingDisplay} from './RatingDisplay'
 import {RatingInput} from './RatingInput'
+import type {
+  TourActionsProps,
+  TourDetailHeaderProps,
+  TourMetaSectionProps,
+  TourStatsProps,
+} from './TourDetailHeader.types'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
@@ -12,26 +17,6 @@ import {Row} from '@/shared/components/ui/layout/Row'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * TourDetailHeaderProps
- * Props for the TourDetailHeader component.
- */
-type TourDetailHeaderProps = TestProps<'TourDetailHeader'> & {
-  /**
-   * The tour to display
-   */
-  tour: CommunityTour
-  /**
-   * Callback when start tour is pressed
-   */
-  onStartTour: () => void
-  /**
-   * Callback when rating is submitted
-   */
-  onRated: () => void
-}
 
 /**
  * TourDetailHeader
@@ -68,14 +53,6 @@ export const TourDetailHeader = ({
     />
   </Column>
 )
-
-/**
- * TourMetaSectionProps
- * Props for the TourMetaSection component.
- */
-type TourMetaSectionProps = TestProps<'TourDetailHeader'> & {
-  tour: CommunityTour
-}
 
 /**
  * TourMetaSection
@@ -140,14 +117,6 @@ const TourMetaSection = ({
 )
 
 /**
- * TourStatsProps
- * Props for the TourStats component.
- */
-type TourStatsProps = TestProps<'TourDetailHeader'> & {
-  tour: CommunityTour
-}
-
-/**
  * TourStats
  * Displays tour statistics and tags.
  *
@@ -200,16 +169,6 @@ const TourStats = ({tour, testID}: TourStatsProps): React.JSX.Element => (
     )}
   </>
 )
-
-/**
- * TourActionsProps
- * Props for the TourActions component.
- */
-type TourActionsProps = TestProps<'TourDetailHeader'> & {
-  tour: CommunityTour
-  onStartTour: () => void
-  onRated: () => void
-}
 
 /**
  * TourActions

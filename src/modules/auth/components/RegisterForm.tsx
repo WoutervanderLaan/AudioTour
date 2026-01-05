@@ -8,7 +8,7 @@ import {useAuth} from '../hooks/useAuth'
 import {type RegisterForm as RegisterFormType, registerSchema} from '../schema'
 
 import {logger} from '@/core/lib/logger/logger'
-import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
+import {TextInputControlled} from '@/shared/components/ui/form/TextInput/TextInputControlled'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography/Text'

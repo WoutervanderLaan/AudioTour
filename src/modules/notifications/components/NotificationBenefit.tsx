@@ -3,32 +3,11 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {MaterialIcons} from '@expo/vector-icons'
 
+import type {NotificationBenefitProps} from './NotificationBenefit.types'
+
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
-
-/**
- * NotificationBenefitProps
- * Props for the NotificationBenefit component
- */
-type NotificationBenefitProps = {
-  /**
-   * Icon name from MaterialIcons
-   */
-  icon: keyof typeof MaterialIcons.glyphMap
-  /**
-   * Benefit title
-   */
-  title: string
-  /**
-   * Benefit description
-   */
-  description: string
-  /**
-   * Test ID for the benefit component
-   */
-  testID?: string
-}
 
 /**
  * NotificationBenefit

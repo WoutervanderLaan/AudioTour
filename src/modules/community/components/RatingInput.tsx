@@ -6,26 +6,11 @@ import {MaterialIcons} from '@expo/vector-icons'
 
 import {useRateTour} from '../api/mutations'
 import {useUserTourRatingQuery} from '../api/queries'
+import type {RatingInputProps} from './RatingInput.types'
 
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * RatingInputProps
- * Props for the RatingInput component.
- */
-type RatingInputProps = TestProps<'RatingInput'> & {
-  /**
-   * ID of the tour to rate
-   */
-  tourId: string
-  /**
-   * Callback when rating is submitted
-   */
-  onRated?: () => void
-}
 
 /**
  * STAR_SIZE

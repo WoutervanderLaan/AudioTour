@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import type {TourSummary} from '../types'
+import type {HistoryTourCardProps} from './HistoryTourCard.types'
 
 import {datetime} from '@/core/lib/datetime'
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
@@ -9,22 +9,6 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * HistoryTourCardProps
- * Props for the HistoryTourCard component.
- */
-type HistoryTourCardProps = TestProps<'HistoryTourCard'> & {
-  /**
-   * Tour summary data to display
-   */
-  tour: TourSummary
-  /**
-   * Callback when the card is pressed
-   */
-  onPress: () => void
-}
 
 /**
  * HistoryTourCard

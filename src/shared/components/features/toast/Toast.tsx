@@ -2,32 +2,12 @@ import type React from 'react'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {StyleSheet} from 'react-native-unistyles'
 
+import {type ToastProps, ToastType} from './Toast.types'
+
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {ToastProps} from '@/shared/context/toast/ToastContext.types'
-import type {TestProps} from '@/shared/types/TestProps'
 
-export enum ToastType {
-  SUCCESS = 'success',
-  WARNING = 'warning',
-  INFO = 'info',
-}
-/**
- * Props
- * Component props for the Toast notification component including message content and visual type.
- */
-type Props = Readonly<
-  TestProps<'Toast'> & {
-    /**
-     * message
-     */
-    message: string
-    /**
-     * type
-     */
-    type?: ToastType
-  }
->
+export {ToastType} from './Toast.types'
 
 /**
  * Toast
@@ -40,7 +20,7 @@ export const Toast = ({
   message,
   type = ToastType.INFO,
   testID,
-}: Props): React.JSX.Element => {
+}: ToastProps): React.JSX.Element => {
   const {top} = useSafeAreaInsets()
 
   return (

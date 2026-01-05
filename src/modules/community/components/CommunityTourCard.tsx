@@ -1,29 +1,8 @@
 import React from 'react'
 
-import type {CommunityTourSummary} from '../types'
+import type {CommunityTourCardProps} from './CommunityTourCard.types'
 import {CompactTourCard} from './CompactTourCard'
 import {FullTourCard} from './FullTourCard'
-
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * CommunityTourCardProps
- * Props for the CommunityTourCard component.
- */
-type CommunityTourCardProps = TestProps<'CommunityTourCard'> & {
-  /**
-   * Community tour summary data to display
-   */
-  tour: CommunityTourSummary
-  /**
-   * Callback when the card is pressed
-   */
-  onPress: () => void
-  /**
-   * Whether to show a compact version (for horizontal scrolling)
-   */
-  compact?: boolean
-}
 
 /**
  * CommunityTourCard

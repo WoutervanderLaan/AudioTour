@@ -1,29 +1,17 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
+import type {AddPhotoProps} from './AddPhoto.types'
+
 import {Box} from '@/shared/components/ui/layout/Box'
-import type {PressableBaseProps} from '@/shared/components/ui/pressable/PressableBase'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
 
 enum AddPhotoSize {
   small = 60,
   medium = 100,
   large = 140,
 }
-/**
- * AddPhotoProps
- * Props for the AddPhoto component.
- * Extends PressableBaseProps with size options, excluding style prop.
- */
-type AddPhotoProps = {
-  /**
-   * Size variant for the add photo button (default: 'md')
-   */
-  size?: 'sm' | 'md' | 'lg'
-} & Omit<PressableBaseProps, 'style' | 'testID'> &
-  TestProps<'AddPhoto'>
 
 /**
  * AddPhoto

@@ -4,43 +4,13 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
+import type {StickyBannerProps} from './StickyBanner.types'
+
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {NavItem} from '@/shared/components/ui/navigation/NavItem'
 import {IconButton} from '@/shared/components/ui/pressable/IconButton'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * StickyBannerProps
- * Props for the StickyBanner component
- */
-export type StickyBannerProps = TestProps<'StickyBanner'> & {
-  /**
-   * title - Main title text for the banner
-   */
-  title: string
-  /**
-   * message - Optional message or description text
-   */
-  message?: string
-  /**
-   * ctaLabel - Call-to-action button label
-   */
-  ctaLabel?: string
-  /**
-   * onCtaPress - Callback when CTA is pressed
-   */
-  onCtaPress?: () => void
-  /**
-   * onDismiss - Optional callback when banner is dismissed
-   */
-  onDismiss?: () => void
-  /**
-   * variant - Visual variant of the banner
-   */
-  variant?: 'info' | 'warning' | 'success'
-}
 
 /**
  * StickyBanner

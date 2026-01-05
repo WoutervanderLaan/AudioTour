@@ -5,23 +5,12 @@ import {StyleSheet} from 'react-native-unistyles'
 import {useRecommendedTours} from '../hooks/useRecommendedTours'
 import type {CommunityTourSummary} from '../types'
 import {CommunityTourCard} from './CommunityTourCard'
+import type {RecommendedSectionProps} from './RecommendedSection.types'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * RecommendedSectionProps
- * Props for the RecommendedSection component.
- */
-type RecommendedSectionProps = TestProps<'RecommendedSection'> & {
-  /**
-   * Callback when a tour is pressed
-   */
-  onTourPress: (tourId: string) => void
-}
 
 /**
  * RecommendedSection

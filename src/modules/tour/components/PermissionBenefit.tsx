@@ -3,29 +3,11 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
+import type {PermissionBenefitProps} from './PermissionBenefit.types'
+
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * PermissionBenefitProps
- * Props for the PermissionBenefit component
- */
-export type PermissionBenefitProps = {
-  /**
-   * Icon name from MaterialIcons
-   */
-  icon: keyof typeof MaterialIcons.glyphMap
-  /**
-   * Benefit title
-   */
-  title: string
-  /**
-   * Benefit description
-   */
-  description: string
-} & TestProps<'PermissionBenefit'>
 
 /**
  * PermissionBenefit

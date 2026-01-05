@@ -1,21 +1,12 @@
 import type React from 'react'
 import {useEffect} from 'react'
 
+import type {OnboardingBannerProps} from './OnboardingBanner.types'
+
 import {OnboardingRouteName} from '@/modules/onboarding/routes.types'
 import {useOnboardingStore} from '@/modules/onboarding/store/useOnboardingStore'
 import {useBanner} from '@/shared/hooks/useBanner'
 import {useNavigation} from '@/shared/hooks/useNavigation'
-
-/**
- * OnboardingBannerProps
- * Props for the OnboardingBanner component
- */
-type OnboardingBannerProps = {
-  /**
-   * Test ID for the banner
-   */
-  testID?: string
-}
 
 /**
  * OnboardingBanner

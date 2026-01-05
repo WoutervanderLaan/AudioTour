@@ -3,12 +3,11 @@ import {FormProvider, useForm} from 'react-hook-form'
 import {ActivityIndicator} from 'react-native'
 
 import {zodResolver} from '@hookform/resolvers/zod'
-import type {RouteProp} from '@react-navigation/native'
 
 import {TourPhotoSubmitFormInputs} from '../components/TourPhotoSubmitFormInputs'
 import {usePhotoSubmit} from '../hooks/usePhotoSubmit'
-import type {TourModalName, TourModalParams} from '../routes.types'
 import {type PhotoSubmitForm, photoSubmitSchema} from '../schema'
+import type {TourPhotoSubmitScreenProps} from './TourPhotoSubmitScreen.types'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
@@ -17,17 +16,6 @@ import {Button} from '@/shared/components/ui/pressable/Button'
 import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography/Text'
 import {useNavigation} from '@/shared/hooks/useNavigation'
-
-/**
- * TourPhotoSubmitScreenProps
- * Props for the TourPhotoSubmitScreen
- */
-type TourPhotoSubmitScreenProps = {
-  /**
-   * Navigation route prop
-   */
-  route: RouteProp<TourModalParams, TourModalName.photoSubmit>
-}
 
 /**
  * TourPhotoSubmitScreen

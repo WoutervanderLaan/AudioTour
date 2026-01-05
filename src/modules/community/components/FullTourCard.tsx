@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import type {CommunityTourSummary} from '../types'
+import type {FullTourCardProps, TourMetadataProps} from './FullTourCard.types'
 import {RatingDisplay} from './RatingDisplay'
 
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
@@ -10,22 +10,6 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * FullTourCardProps
- * Props for the FullTourCard component.
- */
-type FullTourCardProps = TestProps<'CommunityTourCard'> & {
-  /**
-   * Community tour summary data to display
-   */
-  tour: CommunityTourSummary
-  /**
-   * Callback when the card is pressed
-   */
-  onPress: () => void
-}
 
 /**
  * formatDistance
@@ -118,14 +102,6 @@ export const FullTourCard = ({
     </Row>
   </PressableBase>
 )
-
-/**
- * TourMetadataProps
- * Props for the TourMetadata component.
- */
-type TourMetadataProps = TestProps<'CommunityTourCard'> & {
-  tour: CommunityTourSummary
-}
 
 /**
  * TourMetadata

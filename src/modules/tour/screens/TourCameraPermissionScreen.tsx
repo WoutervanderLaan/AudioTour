@@ -1,27 +1,14 @@
 import React from 'react'
 
-import type {RouteProp} from '@react-navigation/native'
-
 import {PermissionActions} from '../components/PermissionActions'
 import {PermissionContent} from '../components/PermissionContent'
 import {usePermissionCleanup} from '../hooks/usePermissionCleanup'
 import {usePermissionRequest} from '../hooks/usePermissionRequest'
-import type {TourModalName, TourModalParams} from '../routes.types'
 import {getPermissionContent} from '../utils/permissionContent'
+import type {TourCameraPermissionScreenProps} from './TourCameraPermissionScreen.types'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Screen} from '@/shared/components/ui/screen/Screen'
-
-/**
- * TourCameraPermissionScreenProps
- * Props for the TourCameraPermissionScreen
- */
-type TourCameraPermissionScreenProps = {
-  /**
-   * Navigation route prop
-   */
-  route: RouteProp<TourModalParams, TourModalName.cameraPermission>
-}
 
 /**
  * TourCameraPermissionScreen

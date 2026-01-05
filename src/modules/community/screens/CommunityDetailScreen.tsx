@@ -1,12 +1,11 @@
 import React, {useCallback} from 'react'
 import {ActivityIndicator, FlatList, type ListRenderItem} from 'react-native'
 
-import type {RouteProp} from '@react-navigation/native'
 import {useRoute} from '@react-navigation/native'
 
 import {TourDetailHeader} from '../components/TourDetailHeader'
 import {useCommunityTourById} from '../hooks/useCommunityTours'
-import {CommunityRouteName, type CommunityStackParams} from '../routes.types'
+import type {CommunityDetailRouteProp} from './CommunityDetailScreen.types'
 
 import {FeedItem} from '@/modules/tour/components/FeedItem'
 import type {FeedItem as FeedItemType} from '@/modules/tour/types'
@@ -14,15 +13,6 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Screen} from '@/shared/components/ui/screen/Screen'
 import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
-
-/**
- * CommunityDetailRouteProp
- * Route prop type for the community detail screen with tourId parameter.
- */
-type CommunityDetailRouteProp = RouteProp<
-  CommunityStackParams,
-  typeof CommunityRouteName.detail
->
 
 /**
  * noop

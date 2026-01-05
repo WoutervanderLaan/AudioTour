@@ -3,8 +3,8 @@ import {ActivityIndicator} from 'react-native'
 
 import {MAX_PHOTOS} from '../constants'
 import {getFeedItemStatusText} from '../utils/getFeedItemStatusText'
+import type {FeedItemProps} from './FeedItem.types'
 
-import type {FeedItem as FeedItemType} from '@/modules/tour/types'
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
 import {Box} from '@/shared/components/ui/layout/Box'
@@ -12,22 +12,6 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * FeedItemProps
- * Props for the FeedItem component
- */
-type FeedItemProps = {
-  /**
-   * The feed item data to display
-   */
-  item: FeedItemType
-  /**
-   * Callback when item is pressed to view details
-   */
-  onPress: () => void
-} & TestProps<'FeedItem'>
 
 /**
  * FeedItem

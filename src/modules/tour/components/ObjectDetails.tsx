@@ -1,48 +1,12 @@
 import React from 'react'
 
-import type {FeedItem} from '../types'
+import type {ObjectDetailsProps} from './ObjectDetails.types'
 
 import {AudioPlayer} from '@/shared/components/features/audio-player/AudioPlayer'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
 import {capitalizeFirstLetter} from '@/shared/utils/capitalizeFirstLetter'
-
-/**
- * ObjectDetailsProps
- * Props for the ObjectDetails component
- */
-export type ObjectDetailsProps = {
-  /**
-   * Object description
-   */
-  description?: string
-  /**
-   * Recognition confidence (0-100)
-   */
-  recognitionConfidence?: number
-  /**
-   * Object ID from recognition
-   */
-  objectId?: string
-  /**
-   * Narrative text
-   */
-  narrativeText?: string
-  /**
-   * Audio URL
-   */
-  audioUrl?: string
-  /**
-   * Processing status
-   */
-  status: FeedItem['status']
-  /**
-   * Error message if any
-   */
-  error?: string
-} & TestProps<'ObjectDetails'>
 
 /**
  * ObjectDetails

@@ -4,24 +4,14 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {useAudioPlayer, useAudioPlayerStatus} from 'expo-audio'
 
+import type {AudioPlayerProps} from './AudioPlayer.types'
+
 import {logger} from '@/core/lib/logger/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * AudioPlayerProps
- * Props for the AudioPlayer component
- */
-type AudioPlayerProps = TestProps<'AudioPlayer'> & {
-  /**
-   * Audio source URL
-   */
-  src: string
-}
 
 /**
  * formatTime

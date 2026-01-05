@@ -1,29 +1,13 @@
 import React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import type {CommunityTourSummary} from '../types'
+import type {CompactTourCardProps} from './CompactTourCard.types'
 import {RatingDisplay} from './RatingDisplay'
 
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * CompactTourCardProps
- * Props for the CompactTourCard component.
- */
-type CompactTourCardProps = TestProps<'CommunityTourCard'> & {
-  /**
-   * Community tour summary data to display
-   */
-  tour: CommunityTourSummary
-  /**
-   * Callback when the card is pressed
-   */
-  onPress: () => void
-}
 
 /**
  * CompactTourCard

@@ -1,6 +1,8 @@
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 
-import {ObjectDetails, type ObjectDetailsProps} from './ObjectDetails'
+import {ObjectDetails} from './ObjectDetails'
+import type {Story} from './ObjectDetails.stories.types'
+import type {ObjectDetailsProps} from './ObjectDetails.types'
 
 const meta = {
   title: 'Module/Tour/ObjectDetails',
@@ -9,12 +11,6 @@ const meta = {
 } satisfies Meta<typeof ObjectDetails>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for FeedItem component
- */
-type Story = StoryObj<typeof meta>
 
 const mockAudioUrl =
   'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'

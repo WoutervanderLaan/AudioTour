@@ -3,6 +3,8 @@ import {useUnistyles} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
+import type {HistoryEmptyStateProps} from './HistoryEmptyState.types'
+
 import {TourTabName} from '@/modules/tour/routes.types'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
@@ -10,13 +12,6 @@ import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Text} from '@/shared/components/ui/typography/Text'
 import {useNavigation} from '@/shared/hooks/useNavigation'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * HistoryEmptyStateProps
- * Props for the HistoryEmptyState component.
- */
-type HistoryEmptyStateProps = TestProps<'HistoryEmptyState'>
 
 /**
  * HistoryEmptyState

@@ -2,38 +2,10 @@ import React from 'react'
 
 import {MaterialIcons} from '@expo/vector-icons'
 
+import type {RatingDisplayProps, RatingDisplaySize} from './RatingDisplay.types'
+
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * RatingDisplaySize
- * Available size variants for the rating display.
- */
-type RatingDisplaySize = 'sm' | 'md' | 'lg'
-
-/**
- * RatingDisplayProps
- * Props for the RatingDisplay component.
- */
-type RatingDisplayProps = TestProps<'RatingDisplay'> & {
-  /**
-   * Rating value from 0-5
-   */
-  rating: number
-  /**
-   * Optional number of ratings to display
-   */
-  count?: number
-  /**
-   * Size variant for the stars
-   */
-  size?: RatingDisplaySize
-  /**
-   * Whether to show the numeric rating value
-   */
-  showValue?: boolean
-}
 
 /**
  * Size mappings for star icons.

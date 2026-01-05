@@ -3,20 +3,14 @@ import {useFormContext} from 'react-hook-form'
 
 import {MAX_PHOTOS} from '../constants'
 import type {PhotoSubmitForm} from '../schema'
+import type {TourPhotoSubmitFormInputsProps} from './TourPhotoSubmitFormInputs.types'
 
-import {ImageInputControlled} from '@/shared/components/ui/form/ImageInputControlled'
-import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
+import {ImageInputControlled} from '@/shared/components/ui/form/ImageInput/ImageInputControlled'
+import {TextInputControlled} from '@/shared/components/ui/form/TextInput/TextInputControlled'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * TourPhotoSubmitFormInputsProps
- * Props for the TourPhotoSubmitFormInputs component
- */
-type TourPhotoSubmitFormInputsProps = TestProps<'TourPhotoSubmitFormInputs'>
 
 /**
  * TourPhotoSubmitFormInputs

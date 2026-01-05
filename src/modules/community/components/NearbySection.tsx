@@ -5,23 +5,12 @@ import {StyleSheet} from 'react-native-unistyles'
 import {useNearbyTours} from '../hooks/useNearbyTours'
 import type {CommunityTourSummary} from '../types'
 import {CommunityTourCard} from './CommunityTourCard'
+import type {NearbySectionProps} from './NearbySection.types'
 
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * NearbySectionProps
- * Props for the NearbySection component.
- */
-type NearbySectionProps = TestProps<'NearbySection'> & {
-  /**
-   * Callback when a tour is pressed
-   */
-  onTourPress: (tourId: string) => void
-}
 
 /**
  * NearbySection

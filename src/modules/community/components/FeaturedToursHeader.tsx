@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
-import type {FeaturedSectionType} from '../types'
+import type {FeaturedToursHeaderProps} from './FeaturedToursHeader.types'
 import {NearbySection} from './NearbySection'
 import {RecommendedSection} from './RecommendedSection'
 
@@ -10,26 +10,6 @@ import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * FeaturedToursHeaderProps
- * Props for the FeaturedToursHeader component.
- */
-type FeaturedToursHeaderProps = TestProps<'FeaturedToursHeader'> & {
-  /**
-   * Currently active section
-   */
-  activeSection: FeaturedSectionType
-  /**
-   * Callback when section is changed
-   */
-  onSectionChange: (section: FeaturedSectionType) => void
-  /**
-   * Callback when a tour is pressed
-   */
-  onTourPress: (tourId: string) => void
-}
 
 /**
  * FeaturedToursHeader

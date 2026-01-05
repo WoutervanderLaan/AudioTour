@@ -1,6 +1,7 @@
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 
 import {Text} from '../Text'
+import type {Story} from './Label.stories.types'
 
 const meta = {
   title: 'Typography/Label',
@@ -9,12 +10,6 @@ const meta = {
 } satisfies Meta<typeof Text.Label>
 
 export default meta
-
-/**
- * Story
- * Type definition for Text.Label component Storybook stories.
- */
-type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {

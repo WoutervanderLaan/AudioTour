@@ -3,24 +3,12 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
-import type {PermissionContent as PermissionContentType} from '../utils/permissionContent'
 import {PermissionBenefit} from './PermissionBenefit'
+import type {PermissionContentProps} from './PermissionContent.types'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * PermissionContentProps
- * Props for the PermissionContent component
- */
-export type PermissionContentProps = {
-  /**
-   * Permission content configuration
-   */
-  content: PermissionContentType
-} & TestProps<'PermissionContent'>
 
 /**
  * PermissionContent

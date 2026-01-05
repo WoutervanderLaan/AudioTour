@@ -3,16 +3,11 @@ import {StyleSheet} from 'react-native-unistyles'
 
 import {MaterialIcons} from '@expo/vector-icons'
 
+import type {CommunityEmptyStateProps} from './CommunityEmptyState.types'
+
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * CommunityEmptyStateProps
- * Props for the CommunityEmptyState component.
- */
-type CommunityEmptyStateProps = TestProps<'CommunityEmptyState'>
 
 /**
  * CommunityEmptyState
