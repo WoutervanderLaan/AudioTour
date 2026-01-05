@@ -2,9 +2,8 @@ import {http, HttpResponse} from 'msw'
 
 import {createHandler} from '@/core/api/mock-config/createHandler'
 import {datetime} from '@/core/lib/datetime'
+import {TIME} from '@/shared/types/Time'
 import {wait} from '@/shared/utils/wait'
-
-const TIMEOUT = 2000
 
 // Mock user data constants
 const MOCK_USER_ID = 'user-123'
@@ -25,7 +24,7 @@ const MOCK_REFRESH_TOKEN = 'refresh-token-xyz'
  */
 const authGetHandlers = [
   http.get(createHandler('/auth/profile'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND * 2)
 
     return HttpResponse.json({
       id: MOCK_USER_ID,
@@ -34,7 +33,7 @@ const authGetHandlers = [
     })
   }),
   http.get(createHandler('/auth/session'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND * 2)
 
     return HttpResponse.json({
       user: {id: MOCK_USER_ID, email: MOCK_USER_EMAIL, name: MOCK_USER_NAME},
@@ -57,7 +56,7 @@ const authGetHandlers = [
  */
 const authPostHandlers = [
   http.post(createHandler('/auth/login'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND * 2)
 
     return HttpResponse.json({
       user: {id: MOCK_USER_ID, email: MOCK_USER_EMAIL, name: MOCK_USER_NAME},
@@ -68,7 +67,7 @@ const authPostHandlers = [
     })
   }),
   http.post(createHandler('/auth/logout'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND * 2)
 
     return HttpResponse.json(
       {message: 'Successfully logged out'},
@@ -76,7 +75,7 @@ const authPostHandlers = [
     )
   }),
   http.post(createHandler('/auth/register'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND * 2)
 
     return HttpResponse.json({
       user: {id: MOCK_USER_ID, email: MOCK_USER_EMAIL, name: MOCK_USER_NAME},
@@ -87,7 +86,7 @@ const authPostHandlers = [
     })
   }),
   http.post(createHandler('/auth/refresh'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND * 2)
 
     return HttpResponse.json({
       accessToken: 'access-token-abc',

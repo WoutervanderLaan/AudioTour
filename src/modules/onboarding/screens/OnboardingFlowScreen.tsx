@@ -11,9 +11,9 @@ import {OnboardingStepType} from '../types'
 import type {StepFormData} from '../utils/createStepSchema'
 
 import {ProgressIndicator} from '@/shared/components/features/progress-indicator/ProgressIndicator'
-import {RadioGroupControlled} from '@/shared/components/ui/form/RadioGroupControlled'
-import {SwitchControlled} from '@/shared/components/ui/form/SwitchControlled'
-import {TextInputControlled} from '@/shared/components/ui/form/TextInputControlled'
+import {RadioGroupControlled} from '@/shared/components/ui/form/RadioGroup/RadioGroupControlled'
+import {SwitchControlled} from '@/shared/components/ui/form/Switch/SwitchControlled'
+import {TextInputControlled} from '@/shared/components/ui/form/TextInput/TextInputControlled'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable/Button'
@@ -115,7 +115,7 @@ export const OnboardingFlowScreen = (): React.JSX.Element => {
         padding="md"
         paddingBottom="xl"
         gap="lg"
-        testID="OnboardingFlowScreenContainerColumn">
+        testID="OnboardingFlowScreenContainer">
         <ProgressIndicator
           currentStep={currentStepIndex + 1}
           totalSteps={ONBOARDING_STEPS.length}

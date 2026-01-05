@@ -1,26 +1,11 @@
 import type React from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
+import type {ProgressIndicatorProps} from './ProgressIndicator.types'
+
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * ProgressIndicatorProps
- * Props for the ProgressIndicator component.
- * Defines the total number of steps and which step is currently active.
- */
-type ProgressIndicatorProps = TestProps<'ProgressIndicator'> & {
-  /**
-   * Total number of steps in the process
-   */
-  totalSteps: number
-  /**
-   * The current active step (1-based index)
-   */
-  currentStep: number
-}
 /**
  * ProgressIndicator
  * Displays a progress bar showing completion status through multiple steps.
@@ -39,7 +24,7 @@ export const ProgressIndicator = ({
 
   return (
     <Column
-      testID={`${testID}ContainerColumn`}
+      testID={`${testID}Container`}
       gap="xs">
       <Row
         testID={`${testID}StepRow`}

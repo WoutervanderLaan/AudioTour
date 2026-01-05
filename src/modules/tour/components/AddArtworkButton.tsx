@@ -1,24 +1,9 @@
 import React from 'react'
 
 import {useAddArtwork} from '../hooks/useAddArtwork'
+import type {AddArtworkButtonProps} from './AddArtworkButton.types'
 
 import {Button} from '@/shared/components/ui/pressable/Button'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * AddArtworkButtonProps
- * Props for the AddArtworkButton component
- */
-type AddArtworkButtonProps = TestProps<'AddArtworkButton'> & {
-  /**
-   * Optional disabled state
-   */
-  disabled?: boolean
-  /**
-   * Optional label override
-   */
-  label?: string
-}
 
 /**
  * AddArtworkButton

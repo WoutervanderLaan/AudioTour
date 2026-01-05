@@ -25,7 +25,7 @@ export const TourHomeScreen = (): React.JSX.Element => {
         flex={1}
         center
         paddingH="lg"
-        testID="TourHomeScreenContainerBox">
+        testID="TourHomeScreenContainer">
         <Column
           gap="xl"
           center

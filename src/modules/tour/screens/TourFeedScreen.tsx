@@ -84,7 +84,7 @@ export const TourFeedScreen = (): React.JSX.Element => {
       testID="TourFeedScreen">
       <Box
         flex={1}
-        testID="TourFeedScreenContainerBox">
+        testID="TourFeedScreenContainer">
         <FlatList
           ListEmptyComponent={
             <Box
@@ -125,7 +125,7 @@ export const TourFeedScreen = (): React.JSX.Element => {
         <Column
           padding="md"
           paddingBottom="xl"
-          testID="TourFeedScreenAddArtworkContainerColumn">
+          testID="TourFeedScreenAddArtworkContainer">
           <AddArtworkButton
             disabled={feedLoading}
             testID="TourFeedScreenAddArtworkButton"

@@ -16,11 +16,6 @@ import type {FeedItem} from '@/modules/tour/types'
 
 import type {CreatePersistedTourParams} from '../types'
 
-// Mock expo-crypto
-jest.mock('expo-crypto', () => ({
-  randomUUID: jest.fn(() => 'mock-uuid-123'),
-}))
-
 // Mock datetime
 jest.mock('@/core/lib/datetime', () => ({
   datetime: {
@@ -101,7 +96,7 @@ describe('history selectors', () => {
         useHistoryStore.getState().saveTour(mockTourParams)
       })
 
-      const {result} = renderHook(() => useTourById('mock-uuid-123'))
+      const {result} = renderHook(() => useTourById('test-uuid-123'))
 
       expect(result.current).toBeDefined()
       expect(result.current?.title).toBe('My Museum Tour')
@@ -165,7 +160,7 @@ describe('history selectors', () => {
 
       expect(result.current).toHaveLength(1)
       expect(result.current[0]).toEqual({
-        id: 'mock-uuid-123',
+        id: 'test-uuid-123',
         title: 'My Museum Tour',
         description: 'A wonderful tour of art',
         heroImageUri: 'hero.jpg',
@@ -295,7 +290,7 @@ describe('history selectors', () => {
       })
 
       act(() => {
-        result.current.updateTour('mock-uuid-123', {title: 'Updated Title'})
+        result.current.updateTour('test-uuid-123', {title: 'Updated Title'})
       })
 
       const state = useHistoryStore.getState()
@@ -310,7 +305,7 @@ describe('history selectors', () => {
       })
 
       act(() => {
-        result.current.deleteTour('mock-uuid-123')
+        result.current.deleteTour('test-uuid-123')
       })
 
       const state = useHistoryStore.getState()

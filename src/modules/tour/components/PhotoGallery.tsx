@@ -2,32 +2,15 @@ import React from 'react'
 import {Image, ScrollView, useWindowDimensions} from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
 
+import type {PhotoGalleryProps} from './PhotoGallery.types'
+
 import {Thumbnail} from '@/shared/components/features/thumbnail/Thumbnail'
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {PressableBase} from '@/shared/components/ui/pressable/PressableBase'
-import type {TestProps} from '@/shared/types/TestProps'
 
 const INDICATOR_SIZE = 8
-/**
- * PhotoGalleryProps
- * Props for the PhotoGallery component
- */
-export type PhotoGalleryProps = {
-  /**
-   * Array of photo URIs to display
-   */
-  photos: string[]
-  /**
-   * Currently active photo index
-   */
-  activePhotoIndex: number
-  /**
-   * Callback when a photo is selected
-   */
-  onPhotoSelect: (index: number) => void
-} & TestProps<'PhotoGallery'>
 
 /**
  * PhotoGallery
@@ -51,7 +34,7 @@ export const PhotoGallery = ({
   const hasMultiplePhotos = photos.length > 1
 
   return (
-    <Column testID={`${testID}ContainerColumn`}>
+    <Column testID={`${testID}Container`}>
       <Image
         source={{uri: photos[activePhotoIndex]}}
         style={[styles.mainPhoto, {width, height: width}]}

@@ -1,6 +1,7 @@
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 
 import {FeedItem} from './FeedItem'
+import type {Story} from './FeedItem.stories.types'
 
 import {datetime} from '@/core/lib/datetime'
 import {logger} from '@/core/lib/logger/logger'
@@ -13,12 +14,6 @@ const meta = {
 } satisfies Meta<typeof FeedItem>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for FeedItem component
- */
-type Story = StoryObj<typeof meta>
 
 const mockPhoto1 = 'https://picsum.photos/seed/art1/400/400'
 const mockPhoto2 = 'https://picsum.photos/seed/art2/400/400'

@@ -12,6 +12,7 @@ import {PROJECT_ROOT} from '../paths.config.js'
  */
 export const testsOverride = () => ({
   files: ['**/*.test.{ts,js,tsx,jsx}'],
+  ignores: ['eslint-rules/**'],
   plugins: {
     '@typescript-eslint': tseslint,
     react,

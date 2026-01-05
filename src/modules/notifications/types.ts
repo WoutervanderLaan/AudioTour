@@ -1,14 +1,8 @@
 /**
- * Platform
- * Supported platforms for push notifications
- */
-export type Platform = 'ios' | 'android'
-
-/**
  * NotificationActionType
  * Types of actions that can trigger a notification
  */
-export type NotificationActionType =
+type NotificationActionType =
   | 'tour_complete'
   | 'new_narrative'
   | 'recommendation'
@@ -121,72 +115,19 @@ export type NotificationState = {
 }
 
 /**
- * RegisterDeviceRequest
- * Request payload for registering a device for push notifications
+ * NotificationChannelId
+ * Android notification channel identifiers
  */
-export type RegisterDeviceRequest = {
-  /**
-   * Device push token from FCM/APNs
-   */
-  deviceToken: string
-  /**
-   * Platform (ios or android)
-   */
-  platform: Platform
+export enum NotificationChannelId {
+  default = 'default',
+  tours = 'tours',
+  narratives = 'narratives',
+  recommendations = 'recommendations',
+  social = 'social',
 }
 
 /**
- * RegisterDeviceResponse
- * Response from device registration endpoint
+ * PermissionStatus
+ * Possible permission states for notifications
  */
-export type RegisterDeviceResponse = {
-  /**
-   * Success status
-   */
-  success: boolean
-  /**
-   * Message describing the result
-   */
-  message: string
-}
-
-/**
- * ToggleNotificationsRequest
- * Request payload for toggling push notifications on/off
- */
-export type ToggleNotificationsRequest = {
-  /**
-   * Whether to enable or disable notifications
-   */
-  enabled: boolean
-}
-
-/**
- * ToggleNotificationsResponse
- * Response from toggle notifications endpoint
- */
-export type ToggleNotificationsResponse = {
-  /**
-   * Success status
-   */
-  success: boolean
-  /**
-   * Updated preferences
-   */
-  preferences: NotificationPreferences
-}
-
-/**
- * UnregisterDeviceResponse
- * Response from device unregistration endpoint
- */
-export type UnregisterDeviceResponse = {
-  /**
-   * Success status
-   */
-  success: boolean
-  /**
-   * Message describing the result
-   */
-  message: string
-}
+export type PermissionStatus = 'granted' | 'denied' | 'not_determined'

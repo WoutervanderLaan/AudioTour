@@ -14,6 +14,7 @@ export const createMainConfig = () => ({
     'android/**',
     'ios/**',
     'eslint/**',
+    'eslint-rules/**',
     '.jest/**',
     '.rnstorybook/**',
     '.storybook/**',

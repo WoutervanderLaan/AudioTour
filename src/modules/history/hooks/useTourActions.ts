@@ -3,18 +3,9 @@ import {Alert} from 'react-native'
 
 import {HistoryTabName} from '../routes.types'
 import {useHistoryActions} from '../store/selectors'
-import type {PersistedTour} from '../types'
+import type {TourUpdateParams} from '../types'
 
 import {useNavigation} from '@/shared/hooks/useNavigation'
-
-/**
- * TourUpdateParams
- * Parameters for updating a tour.
- */
-export type TourUpdateParams = Pick<
-  Partial<PersistedTour>,
-  'title' | 'description' | 'heroImageUri'
->
 
 /**
  * UseTourActionsResult
@@ -29,10 +20,6 @@ export type UseTourActionsResult = {
    * Deletes a tour with confirmation dialog
    */
   deleteTour: (id: string) => void
-  /**
-   * Deletes a tour without confirmation
-   */
-  deleteTourDirect: (id: string) => void
 }
 
 /**
@@ -118,6 +105,5 @@ export function useTourActions(): UseTourActionsResult {
   return {
     updateTour,
     deleteTour,
-    deleteTourDirect,
   }
 }

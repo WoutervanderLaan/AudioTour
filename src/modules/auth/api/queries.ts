@@ -9,6 +9,7 @@ import {authKeys} from './keys'
 
 import {apiClient} from '@/core/api/client'
 import {type SessionResponse, User} from '@/modules/auth/types'
+import {TIME} from '@/shared/types/Time'
 
 /**
  * React Query hook to fetch the current user session.
@@ -39,7 +40,7 @@ export const useSessionQuery = (
       return response.data
     },
     enabled: isAuthenticated,
-    staleTime: 1000 * 60 * 5,
+    staleTime: TIME.FIVE_MINUTES,
     retry: false,
     ...options,
   })
@@ -74,7 +75,7 @@ export const useProfileQuery = (
       return response.data
     },
     enabled: isAuthenticated,
-    staleTime: 1000 * 60 * 10, // 10 minutes
+    staleTime: TIME.TEN_MINUTES,
     ...options,
   })
 }

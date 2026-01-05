@@ -1,13 +1,8 @@
 import type {FeedItem} from '@/modules/tour/types'
 
-import type {CreatePersistedTourParams, PersistedTour} from '../types'
+import type {CreatePersistedTourParams} from '../types'
 
 import {useHistoryStore} from './useHistoryStore'
-
-// Mock expo-crypto
-jest.mock('expo-crypto', () => ({
-  randomUUID: jest.fn(() => 'mock-uuid-123'),
-}))
 
 // Mock datetime
 jest.mock('@/core/lib/datetime', () => ({
@@ -67,7 +62,7 @@ describe('useHistoryStore', () => {
 
       const id = saveTour(mockTourParams)
 
-      expect(id).toBe('mock-uuid-123')
+      expect(id).toBe('test-uuid-123')
     })
 
     it('should add tour with correct properties', () => {
@@ -78,7 +73,7 @@ describe('useHistoryStore', () => {
       const savedTour = useHistoryStore.getState().tours[0]
       expect(savedTour).toMatchObject({
         ...mockTourParams,
-        id: 'mock-uuid-123',
+        id: 'test-uuid-123',
         createdAt: 1704067200000,
         updatedAt: 1704067200000,
         isShared: false,
@@ -105,7 +100,7 @@ describe('useHistoryStore', () => {
       const {tours} = useHistoryStore.getState()
       expect(tours).toHaveLength(2)
       expect(tours[0].id).toBe('mock-uuid-456')
-      expect(tours[1].id).toBe('mock-uuid-123')
+      expect(tours[1].id).toBe('test-uuid-123')
     })
 
     it('should handle tour without coordinates', () => {

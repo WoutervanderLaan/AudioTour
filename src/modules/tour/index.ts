@@ -3,6 +3,7 @@ import type {ModuleConfig} from '../types'
 import {tourModals, tourStacks, tourTabs} from './screenConfig'
 
 import {logger} from '@/core/lib/logger/logger'
+import {TIME} from '@/shared/types/Time'
 
 /**
  * Tour module configuration.
@@ -39,6 +40,6 @@ export const tourModule: ModuleConfig = {
   queries: {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    staleTime: 1000 * 60 * 5,
+    staleTime: TIME.FIVE_MINUTES,
   },
 }

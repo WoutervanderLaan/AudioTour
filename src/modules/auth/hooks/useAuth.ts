@@ -1,3 +1,5 @@
+import type {UseAuthReturn} from './useAuth.types'
+
 import {logger} from '@/core/lib/logger/logger'
 import {
   useLoginMutation,
@@ -7,12 +9,9 @@ import {
 import {useSessionQuery} from '@/modules/auth/api/queries'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
 import type {
-  AuthTokens,
   LoginCredentials,
   LoginResponse,
   RegisterData,
-  SessionResponse,
-  User,
 } from '@/modules/auth/types'
 
 /**
@@ -60,23 +59,7 @@ import type {
  * if (isAuthenticated) return <Text>Welcome, {user?.name}</Text>
  * ```
  */
-export const useAuth = (): {
-  user: User | null
-  tokens: AuthTokens | null
-  isAuthenticated: boolean
-  isInitialized: boolean
-  session: SessionResponse | undefined
-  isLoading: boolean
-  isLoggingIn: boolean
-  isLoggingOut: boolean
-  isRegistering: boolean
-  login: (credentials: LoginCredentials) => Promise<LoginResponse>
-  logout: () => Promise<void>
-  register: (data: RegisterData) => Promise<LoginResponse>
-  loginError: Error | null
-  logoutError: Error | null
-  registerError: Error | null
-} => {
+export const useAuth = (): UseAuthReturn => {
   const {user, tokens, isAuthenticated, isInitialized} = useAuthStore()
 
   const {data: session, isLoading: isLoadingSession} = useSessionQuery({

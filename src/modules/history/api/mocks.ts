@@ -3,10 +3,8 @@ import {http, HttpResponse} from 'msw'
 import {createHandler} from '@/core/api/mock-config/createHandler'
 import {datetime} from '@/core/lib/datetime'
 import type {PersistedTour, TourSummary} from '@/modules/history/types'
+import {TIME} from '@/shared/types/Time'
 import {wait} from '@/shared/utils/wait'
-
-const TIMEOUT = 1000
-const SUCCESS_MESSAGE = 'Tour saved successfully'
 
 /**
  * createMockTourSummary
@@ -83,7 +81,6 @@ const createMockPersistedTour = (id: string): PersistedTour => ({
   syncStatus: 'synced',
 })
 
-// Generate mock data
 const mockMyTours: TourSummary[] = Array.from({length: 5}, (_, i) =>
   createMockTourSummary(`tour-${i + 1}`, i),
 )
@@ -102,7 +99,7 @@ const mockCommunityTours: TourSummary[] = Array.from({length: 10}, (_, i) =>
  */
 const historyGetHandlers = [
   http.get(createHandler('/tours'), async ({request}) => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND)
 
     const url = new URL(request.url)
     const museumId = url.searchParams.get('museumId')
@@ -124,7 +121,7 @@ const historyGetHandlers = [
   }),
 
   http.get(createHandler('/tours/community'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND)
 
     return HttpResponse.json({
       tours: mockCommunityTours,
@@ -133,7 +130,7 @@ const historyGetHandlers = [
   }),
 
   http.get(createHandler('/tours/:id'), async ({params}) => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND)
 
     const {id} = params as {id: string}
 
@@ -150,9 +147,9 @@ const historyGetHandlers = [
  * - PATCH /tours/:id/share - Shares/unshares a tour
  * - DELETE /tours/:id - Deletes a tour
  */
-const historyMutationHandlers = [
+const historyPostHandlers = [
   http.post(createHandler('/tours'), async ({request}) => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND)
 
     const body = (await request.json()) as Partial<PersistedTour>
 
@@ -164,12 +161,14 @@ const historyMutationHandlers = [
 
     return HttpResponse.json({
       tour,
-      message: SUCCESS_MESSAGE,
+      message: 'Tour saved successfully',
     })
   }),
+]
 
+const historyPatchHandlers = [
   http.patch(createHandler('/tours/:id'), async ({params, request}) => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND)
 
     const {id} = params as {id: string}
     const updates = (await request.json()) as Partial<PersistedTour>
@@ -187,7 +186,7 @@ const historyMutationHandlers = [
   }),
 
   http.patch(createHandler('/tours/:id/share'), async ({params, request}) => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND)
 
     const {id} = params as {id: string}
     const {isShared} = (await request.json()) as {isShared: boolean}
@@ -203,9 +202,11 @@ const historyMutationHandlers = [
       message: isShared ? 'Tour shared successfully' : 'Tour unshared',
     })
   }),
+]
 
+const historyDeleteHandlers = [
   http.delete(createHandler('/tours/:id'), async () => {
-    await wait(TIMEOUT)
+    await wait(TIME.SECOND)
 
     return HttpResponse.json({
       message: 'Tour deleted successfully',
@@ -221,5 +222,7 @@ const historyMutationHandlers = [
  */
 export const historyHandlers = [
   ...historyGetHandlers,
-  ...historyMutationHandlers,
+  ...historyPostHandlers,
+  ...historyPatchHandlers,
+  ...historyDeleteHandlers,
 ]

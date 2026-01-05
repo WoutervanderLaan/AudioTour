@@ -1,11 +1,10 @@
 import React, {useCallback} from 'react'
 import {ActivityIndicator, FlatList, type ListRenderItem} from 'react-native'
 
-import type {RouteProp} from '@react-navigation/native'
 import {useRoute} from '@react-navigation/native'
 
 import {HistoryDetailHeader} from '../components/HistoryDetailHeader'
-import {HistoryRouteName, type HistoryStackParams} from '../routes.types'
+import type {HistoryDetailRouteProp} from './HistoryDetailScreen.types'
 
 import {useTourById} from '@/modules/history/store/selectors'
 import {FeedItem} from '@/modules/tour/components/FeedItem'
@@ -14,15 +13,6 @@ import {Box} from '@/shared/components/ui/layout/Box'
 import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Screen} from '@/shared/components/ui/screen/Screen'
 import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
-
-/**
- * HistoryDetailRouteProp
- * Route prop type for the history detail screen with tourId parameter.
- */
-type HistoryDetailRouteProp = RouteProp<
-  HistoryStackParams,
-  typeof HistoryRouteName.detail
->
 
 /**
  * noop
@@ -87,7 +77,7 @@ export const HistoryDetailScreen = (): React.JSX.Element => {
     <Screen.Static
       includeNavigationPadding={false}
       testID="HistoryDetailScreenScreen">
-      <Box testID="HistoryDetailScreenContainerBox">
+      <Box testID="HistoryDetailScreenContainer">
         <FlatList
           data={tour.feedItems}
           keyExtractor={keyExtractor}

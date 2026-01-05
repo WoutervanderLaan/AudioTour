@@ -5,39 +5,11 @@ import {
 } from '@tanstack/react-query'
 
 import {historyKeys} from './keys'
+import type {CommunityToursResponse, MyToursResponse} from './queries.types'
 
 import {apiClient} from '@/core/api/client'
-import type {PersistedTour, TourSummary} from '@/modules/history/types'
-
-/**
- * MyToursResponse
- * API response type for fetching user's tours.
- */
-type MyToursResponse = {
-  /**
-   * Array of tour summaries belonging to the user
-   */
-  tours: TourSummary[]
-  /**
-   * Total count of tours
-   */
-  total: number
-}
-
-/**
- * CommunityToursResponse
- * API response type for fetching community/shared tours.
- */
-type CommunityToursResponse = {
-  /**
-   * Array of shared tour summaries
-   */
-  tours: TourSummary[]
-  /**
-   * Total count of shared tours
-   */
-  total: number
-}
+import type {PersistedTour} from '@/modules/history/types'
+import {TIME} from '@/shared/types/Time'
 
 /**
  * useMyToursQuery
@@ -63,7 +35,7 @@ export const useMyToursQuery = (
       const response = await apiClient.get<MyToursResponse>('/tours')
       return response.data
     },
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: TIME.FIVE_MINUTES,
     ...options,
   })
 }
@@ -95,7 +67,7 @@ export const useTourByIdQuery = (
       return response.data
     },
     enabled: !!tourId,
-    staleTime: 1000 * 60 * 10, // 10 minutes
+    staleTime: TIME.TEN_MINUTES,
     ...options,
   })
 }
@@ -128,7 +100,7 @@ export const useCommunityToursQuery = (
         await apiClient.get<CommunityToursResponse>('/tours/community')
       return response.data
     },
-    staleTime: 1000 * 60 * 2, // 2 minutes (community content updates more frequently)
+    staleTime: TIME.MINUTE * 2,
     ...options,
   })
 }
@@ -154,7 +126,7 @@ export const useToursByMuseumQuery = (
       return response.data
     },
     enabled: !!museumId,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: TIME.FIVE_MINUTES,
     ...options,
   })
 }

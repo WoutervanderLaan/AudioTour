@@ -1,28 +1,15 @@
 import React from 'react'
 
-import type {RouteProp} from '@react-navigation/native'
-
 import {ObjectDetails} from '../components/ObjectDetails'
 import {ObjectMetadata} from '../components/ObjectMetadata'
 import {ObjectNotFound} from '../components/ObjectNotFound'
 import {PhotoGallery} from '../components/PhotoGallery'
 import {usePhotoGallery} from '../hooks/usePhotoGallery'
-import type {TourRouteName, TourStackParams} from '../routes.types'
 import {useFeedItem} from '../store/selectors'
+import type {TourObjectDetailScreenProps} from './TourObjectDetailScreen.types'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Screen} from '@/shared/components/ui/screen/Screen'
-
-/**
- * TourObjectDetailScreenProps
- * Props for the TourObjectDetailScreen
- */
-type TourObjectDetailScreenProps = {
-  /**
-   * Navigation route prop
-   */
-  route: RouteProp<TourStackParams, TourRouteName.objectDetail>
-}
 
 /**
  * TourObjectDetailScreen
@@ -49,7 +36,7 @@ export const TourObjectDetailScreen = ({
     <Screen.Scrollable testID="TourObjectDetailScreen">
       <Column
         gap="lg"
-        testID="TourObjectDetailScreenContainerColumn">
+        testID="TourObjectDetailScreenContainer">
         <PhotoGallery
           photos={feedItem.photos}
           activePhotoIndex={activePhotoIndex}

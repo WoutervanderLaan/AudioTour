@@ -1,88 +1,19 @@
-import React, {ReactNode, useMemo} from 'react'
+import React, {useMemo} from 'react'
 import {
   Animated,
   ScrollView,
-  ScrollViewProps,
   // eslint-disable-next-line no-restricted-imports
   View,
-  ViewStyle,
 } from 'react-native'
 import {StyleSheet} from 'react-native-unistyles'
+
+import type {ScrollableScreenProps, StaticScreenProps} from './Screen.types'
 
 import {StickyBanner} from '@/shared/components/features/banner/StickyBanner'
 import {useBanner} from '@/shared/hooks/useBanner'
 import {useKeyboard} from '@/shared/hooks/useKeyboard'
 import {useNavigation} from '@/shared/hooks/useNavigation'
-import {
-  type NavigationInset,
-  useNavigationInsets,
-} from '@/shared/hooks/useNavigationInsets'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * Base props shared by all Screen variants.
- */
-type BaseScreenProps = TestProps<'Screen'> & {
-  /**
-   * Child elements to render within the screen.
-   */
-  children: ReactNode
-  /**
-   * Optional setting to include or exclude navigation paddings in screen.
-   */
-  includeNavigationPadding?: false | NavigationInset
-  /**
-   * Optional style to apply to the screen container.
-   */
-  style?: ViewStyle
-}
-
-/**
- * Configuration options for keyboard avoiding behavior.
- */
-type KeyboardAvoidingConfig = {
-  /**
-   * Whether to add padding when the keyboard is visible.
-   * @default false
-   */
-  keyboardAvoiding?: boolean
-  /**
-   * Additional padding to add beyond the keyboard height (useful for buttons or bottom-fixed elements).
-   * @default 0
-   */
-  extraPadding?: number
-  /**
-   * Whether to animate the padding changes when the keyboard appears/disappears.
-   * When true, uses smooth animations. When false, padding changes instantly.
-   * @default true
-   */
-  animated?: boolean
-}
-
-/**
- * Props for the Static screen variant.
- */
-type StaticScreenProps = BaseScreenProps & KeyboardAvoidingConfig
-
-/**
- * Props for the Scrollable screen variant.
- */
-type ScrollableScreenProps = {
-  /**
-   * Style to apply to the ScrollView's content container.
-   */
-  contentContainerStyle?: ViewStyle
-  /**
-   * Whether to show the vertical scroll indicator.
-   * @default false
-   */
-  showsVerticalScrollIndicator?: boolean
-  /**
-   * Additional ScrollView props (excludes style and contentContainerStyle which are handled separately).
-   */
-  scrollViewProps?: Omit<ScrollViewProps, 'style' | 'contentContainerStyle'>
-} & BaseScreenProps &
-  KeyboardAvoidingConfig
+import {useNavigationInsets} from '@/shared/hooks/useNavigationInsets'
 
 /**
  * Static screen variant that doesn't scroll.

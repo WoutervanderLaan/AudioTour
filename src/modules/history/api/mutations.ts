@@ -5,87 +5,17 @@ import {
 } from '@tanstack/react-query'
 
 import {historyKeys} from './keys'
+import type {
+  DeleteTourResponse,
+  SaveTourParams,
+  SaveTourResponse,
+  ShareTourParams,
+  UpdateTourParams,
+  UpdateTourResponse,
+} from './mutations.types'
 
 import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger/logger'
-import type {PersistedTour} from '@/modules/history/types'
-
-/**
- * SaveTourParams
- * Parameters for saving a tour to the cloud.
- */
-type SaveTourParams = Omit<PersistedTour, 'syncStatus'>
-
-/**
- * SaveTourResponse
- * API response when saving a tour.
- */
-type SaveTourResponse = {
-  /**
-   * The saved tour with cloud ID
-   */
-  tour: PersistedTour
-  /**
-   * Success message
-   */
-  message: string
-}
-
-/**
- * UpdateTourParams
- * Parameters for updating a tour in the cloud.
- */
-type UpdateTourParams = {
-  /**
-   * Tour ID to update
-   */
-  id: string
-  /**
-   * Partial tour data to update
-   */
-  updates: Partial<PersistedTour>
-}
-
-/**
- * UpdateTourResponse
- * API response when updating a tour.
- */
-type UpdateTourResponse = {
-  /**
-   * The updated tour
-   */
-  tour: PersistedTour
-  /**
-   * Success message
-   */
-  message: string
-}
-
-/**
- * DeleteTourResponse
- * API response when deleting a tour.
- */
-type DeleteTourResponse = {
-  /**
-   * Success message
-   */
-  message: string
-}
-
-/**
- * ShareTourParams
- * Parameters for sharing/unsharing a tour.
- */
-type ShareTourParams = {
-  /**
-   * Tour ID to share
-   */
-  id: string
-  /**
-   * Whether to share or unshare
-   */
-  isShared: boolean
-}
 
 /**
  * useSaveTourToCloud

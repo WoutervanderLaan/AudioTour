@@ -1,10 +1,12 @@
 import React from 'react'
 
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 
 import {Box} from '../layout/Box'
 import {Text} from '../typography/Text'
 import {GradientBackground} from './GradientBackground'
+
+import type {Story} from '@/shared/types/Story'
 
 const meta = {
   title: 'Gradient/GradientBackground',
@@ -14,13 +16,7 @@ const meta = {
 
 export default meta
 
-/**
- * Story
- * Type definition for Spacer component Storybook stories.
- */
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const Default: Story<typeof meta> = {
   args: {
     colors: ['#ff0000', '#5eff00'],
     children: (

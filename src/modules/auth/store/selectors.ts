@@ -1,5 +1,3 @@
-// src/modules/auth/store/selectors.ts
-
 import {useShallow} from 'zustand/shallow'
 
 import {useAuthStore} from './useAuthStore'

@@ -1,22 +1,10 @@
 import React from 'react'
 
-import type {FeedItem} from '../types'
+import type {ObjectMetadataProps} from './ObjectMetadata.types'
 
 import {Column} from '@/shared/components/ui/layout/Column'
 import {Row} from '@/shared/components/ui/layout/Row'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * ObjectMetadataProps
- * Props for the ObjectMetadata component
- */
-export type ObjectMetadataProps = {
-  /**
-   * Object metadata
-   */
-  metadata?: FeedItem['metadata']
-} & TestProps<'ObjectMetadata'>
 
 /**
  * ObjectMetadata
@@ -39,7 +27,7 @@ export const ObjectMetadata = ({
   return (
     <Column
       gap="lg"
-      testID={`${testID}ContainerColumn`}>
+      testID={`${testID}Container`}>
       {metadata.title !== undefined && (
         <Text.Title testID={`${testID}TitleText`}>{metadata.title}</Text.Title>
       )}

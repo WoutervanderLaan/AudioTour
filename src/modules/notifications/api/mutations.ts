@@ -6,17 +6,17 @@ import {
 } from '@tanstack/react-query'
 
 import {notificationKeys} from './keys'
-
-import {apiClient} from '@/core/api/client'
-import {logger} from '@/core/lib/logger/logger'
-import {useNotificationStore} from '@/modules/notifications/store/useNotificationStore'
 import type {
   RegisterDeviceRequest,
   RegisterDeviceResponse,
   ToggleNotificationsRequest,
   ToggleNotificationsResponse,
   UnregisterDeviceResponse,
-} from '@/modules/notifications/types'
+} from './mutations.types'
+
+import {apiClient} from '@/core/api/client'
+import {logger} from '@/core/lib/logger/logger'
+import {useNotificationStore} from '@/modules/notifications/store/useNotificationStore'
 
 /**
  * React Query mutation hook for registering a device for push notifications.

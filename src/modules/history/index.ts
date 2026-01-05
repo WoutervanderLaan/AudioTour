@@ -3,6 +3,7 @@ import type {ModuleConfig} from '../types'
 import {historyStacks, historyTabs} from './screenConfig'
 
 import {logger} from '@/core/lib/logger/logger'
+import {TIME} from '@/shared/types/Time'
 
 /**
  * History module configuration.
@@ -38,6 +39,6 @@ export const historyModule: ModuleConfig = {
   queries: {
     refetchOnMount: true,
     refetchOnWindowFocus: true,
-    staleTime: 1000 * 60 * 5,
+    staleTime: TIME.FIVE_MINUTES,
   },
 }

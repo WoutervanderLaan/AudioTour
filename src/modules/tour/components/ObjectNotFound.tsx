@@ -1,15 +1,10 @@
 import React from 'react'
 
+import type {ObjectNotFoundProps} from './ObjectNotFound.types'
+
 import {Box} from '@/shared/components/ui/layout/Box'
 import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography/Text'
-import type {TestProps} from '@/shared/types/TestProps'
-
-/**
- * ObjectNotFoundProps
- * Props for the ObjectNotFound component
- */
-type ObjectNotFoundProps = TestProps<'ObjectNotFound'>
 
 /**
  * ObjectNotFound
@@ -26,7 +21,7 @@ export const ObjectNotFound = ({
       <Box
         flex={1}
         center
-        testID={`${testID}ContainerBox`}>
+        testID={`${testID}Container`}>
         <Text.Paragraph testID={`${testID}MessageText`}>
           Object not found
         </Text.Paragraph>

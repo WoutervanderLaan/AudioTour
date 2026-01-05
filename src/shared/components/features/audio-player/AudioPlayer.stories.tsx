@@ -1,6 +1,7 @@
-import type {Meta, StoryObj} from '@storybook/react-native-web-vite'
+import type {Meta} from '@storybook/react-native-web-vite'
 
 import {AudioPlayer} from './AudioPlayer'
+import type {Story} from './AudioPlayer.stories.types'
 
 const meta = {
   title: 'Features/AudioPlayer',
@@ -9,12 +10,6 @@ const meta = {
 } satisfies Meta<typeof AudioPlayer>
 
 export default meta
-
-/**
- * Story
- * Storybook story type for AudioPlayer component
- */
-type Story = StoryObj<typeof meta>
 
 const mockAudioUrl =
   'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'

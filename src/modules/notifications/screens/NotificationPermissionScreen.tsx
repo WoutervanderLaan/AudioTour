@@ -1,10 +1,10 @@
-/* eslint-disable max-lines-per-function */
 import React, {useState} from 'react'
 import {StyleSheet} from 'react-native-unistyles'
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import {useToggleNotificationsMutation} from '../api/mutations'
+import {NotificationBenefit} from '../components/NotificationBenefit'
 import {notificationService} from '../services/notificationService'
 import {useNotificationStore} from '../store/useNotificationStore'
 
@@ -64,6 +64,7 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
     } catch (error) {
       logger.error('[Notifications] Permission request failed:', error)
       setIsRequesting(false)
+      await notificationService.openSettings()
     }
   }
 
@@ -78,17 +79,6 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
     navigation.goBack()
   }
 
-  /**
-   * handleOpenSettings
-   * Opens the device notification settings for this app.
-   * Useful if the user previously denied permission.
-   */
-  const handleOpenSettings = async (): Promise<void> => {
-    await notificationService.openSettings()
-  }
-
-  const isPending = isRequesting || toggleMutation.isPending
-
   return (
     <Screen.Static testID="NotificationPermissionScreen">
       <Column
@@ -96,7 +86,7 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
         padding="lg"
         paddingTop="xl"
         gap="lg"
-        testID="NotificationPermissionScreenContainerColumn">
+        testID="NotificationPermissionScreenContainer">
         <Column
           flex={1}
           gap="md"
@@ -163,22 +153,15 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
           <Button
             label="Enable Notifications"
             onPress={handleEnableNotifications}
-            disabled={isPending}
+            disabled={isRequesting || toggleMutation.isPending}
             testID="NotificationPermissionScreenEnableButton"
           />
           <Button
             label="Not Now"
             variant="secondary"
             onPress={handleSkip}
-            disabled={isPending}
+            disabled={isRequesting || toggleMutation.isPending}
             testID="NotificationPermissionScreenNotNowButton"
-          />
-          <Button
-            label="Open Settings"
-            variant="secondary"
-            onPress={handleOpenSettings}
-            disabled={isPending}
-            testID="NotificationPermissionScreenOpenSettingsButton"
           />
         </Column>
       </Column>
@@ -186,85 +169,8 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
   )
 }
 
-/**
- * NotificationBenefitProps
- * Props for the NotificationBenefit component
- */
-type NotificationBenefitProps = {
-  /**
-   * Icon name from MaterialIcons
-   */
-  icon: keyof typeof MaterialIcons.glyphMap
-  /**
-   * Benefit title
-   */
-  title: string
-  /**
-   * Benefit description
-   */
-  description: string
-  /**
-   * Test ID for the benefit component
-   */
-  testID?: string
-}
-
-/**
- * NotificationBenefit
- * Displays a single notification benefit with icon and description.
- *
- * @param {NotificationBenefitProps} props - Component props
- * @returns {React.JSX.Element} Rendered benefit item
- */
-const NotificationBenefit = ({
-  icon,
-  title,
-  description,
-  testID,
-}: NotificationBenefitProps): React.JSX.Element => {
-  return (
-    <Column
-      gap="xs"
-      style={styles.benefitContainer}
-      testID={`${testID}Column`}>
-      <Column
-        gap="sm"
-        style={styles.benefitRow}
-        testID={`${testID}ContentColumn`}>
-        <MaterialIcons
-          name={icon}
-          size={24}
-          color={styles.benefitIcon.color}
-        />
-        <Column
-          flex={1}
-          gap="xs"
-          testID={`${testID}TextContainerColumn`}>
-          <Text.Label testID={`${testID}TitleText`}>{title}</Text.Label>
-          <Text.Paragraph
-            variant="small"
-            color="secondary"
-            testID={`${testID}DescriptionText`}>
-            {description}
-          </Text.Paragraph>
-        </Column>
-      </Column>
-    </Column>
-  )
-}
-
 const styles = StyleSheet.create(theme => ({
   icon: {
     color: theme.color.pressable.primary.default.background,
-  },
-  benefitContainer: {
-    paddingVertical: theme.size.sm,
-  },
-  benefitRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-  },
-  benefitIcon: {
-    color: theme.color.text.secondary,
   },
 }))
