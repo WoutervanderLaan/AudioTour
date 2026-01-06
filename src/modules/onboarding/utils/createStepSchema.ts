@@ -24,17 +24,18 @@ export const createStepSchema = (
   switch (step.type) {
     case OnboardingStepType.RADIO: {
       const validValues = step.options?.map(o => o.value) ?? []
+
       if (validValues.length > 0) {
         if (step.required) {
           fieldSchema = z.enum(validValues as [string, ...string[]], {
-            required_error: 'Please select an option',
+            message: 'Please select an option',
           })
         } else {
           fieldSchema = z.enum(validValues as [string, ...string[]]).optional()
         }
       } else {
         fieldSchema = step.required
-          ? z.string({required_error: 'Please select an option'})
+          ? z.string({message: 'Please select an option'})
           : z.string().optional()
       }
       break

@@ -206,10 +206,11 @@ describe('PressableBase', () => {
     it('should apply pressed state styling', () => {
       /**
        * styleFunction
-       * TODO: describe what it does.
+       * Returns different opacity values based on the pressed state.
+       * Used to test pressed state styling in PressableBase.
        *
-       * @param {*} options
-       * @returns {*} describe return value
+       * @param options - Object containing the pressed state
+       * @returns Style object with opacity value
        */
       const styleFunction = ({
         pressed,

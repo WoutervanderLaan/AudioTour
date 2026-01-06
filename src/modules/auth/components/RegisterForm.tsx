@@ -15,9 +15,10 @@ import {Text} from '@/shared/components/ui/typography/Text'
 
 /**
  * RegisterForm
- * TODO: describe what it does.
+ * A controlled form component that handles user registration with name, email, and password inputs.
+ * Uses react-hook-form with Zod validation and displays error messages on registration failure.
  *
- * @returns {*} describe return value
+ * @returns Registration form component
  */
 export const RegisterForm = (): React.JSX.Element => {
   const {register: registerUser, isRegistering, registerError} = useAuth()

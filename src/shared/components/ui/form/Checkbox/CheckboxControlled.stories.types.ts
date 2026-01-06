@@ -72,24 +72,30 @@ export const conditionalSchema = z
 
 /**
  * SimpleFormData
- * TODO: describe what this type represents.
+ * Form data type for simple checkbox form with terms acceptance.
+ * Inferred from simpleSchema validation schema.
  */
 export type SimpleFormData = z.infer<typeof simpleSchema>
 
 /**
  * ComplexFormData
- * TODO: describe what this type represents.
+ * Form data type for complex checkbox form with multiple required and optional checkboxes.
+ * Includes cross-field validation (e.g., SMS requires notifications to be enabled).
+ * Inferred from complexSchema validation schema.
  */
 export type ComplexFormData = z.infer<typeof complexSchema>
 
 /**
  * DefaultValuesFormData
- * TODO: describe what this type represents.
+ * Form data type for checkbox form with pre-populated default boolean values.
+ * Inferred from defaultValuesSchema validation schema.
  */
 export type DefaultValuesFormData = z.infer<typeof defaultValuesSchema>
 
 /**
  * ConditionalFormData
- * TODO: describe what this type represents.
+ * Form data type for checkbox form with conditional validation rules.
+ * Requires accepting promo code terms only when hasPromoCode is true.
+ * Inferred from conditionalSchema validation schema.
  */
 export type ConditionalFormData = z.infer<typeof conditionalSchema>

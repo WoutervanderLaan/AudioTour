@@ -12,9 +12,10 @@ import {Text} from '@/shared/components/ui/typography/Text'
 
 /**
  * HistoryDetailHeader
- * TODO: describe what it does.
+ * Displays the header section for a tour detail view, including the hero image,
+ * tour title, museum name, creation date, description, and artwork count.
  *
- * @returns {*} describe return value
+ * @returns Tour detail header component
  */
 export const HistoryDetailHeader = ({
   tour,

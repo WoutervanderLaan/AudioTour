@@ -14,9 +14,10 @@ export default meta
 
 /**
  * AllSteps
- * TODO: describe what it does.
+ * Renders all five steps of a progress indicator to demonstrate different progress states
+ * from step 1 through step 5 of a 5-step process.
  *
- * @returns {*} describe return value
+ * @returns Demo component showing all progress states
  */
 const AllSteps = () => (
   <Column

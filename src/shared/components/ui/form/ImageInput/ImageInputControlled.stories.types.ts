@@ -55,30 +55,35 @@ export const smallThumbnailsSchema = z.object({
 
 /**
  * SmallThumbnailsFormData
- * TODO: describe what this type represents.
+ * Form data type for image input with small thumbnail display.
+ * Inferred from smallThumbnailsSchema validation schema.
  */
 export type SmallThumbnailsFormData = z.infer<typeof smallThumbnailsSchema>
 
 /**
  * SimpleFormData
- * TODO: describe what this type represents.
+ * Form data type for simple image input with photo array validation (1-5 photos).
+ * Inferred from simpleSchema validation schema.
  */
 export type SimpleFormData = z.infer<typeof simpleSchema>
 
 /**
  * SingleImageFormData
- * TODO: describe what this type represents.
+ * Form data type for single image input (e.g., profile photo).
+ * Inferred from singleImageSchema validation schema.
  */
 export type SingleImageFormData = z.infer<typeof singleImageSchema>
 
 /**
  * ComplexFormData
- * TODO: describe what this type represents.
+ * Form data type for complex image input with title, description, gallery photos, and cover photo.
+ * Inferred from complexSchema validation schema.
  */
 export type ComplexFormData = z.infer<typeof complexSchema>
 
 /**
  * DefaultValuesFormData
- * TODO: describe what this type represents.
+ * Form data type for image input with pre-populated default photo values.
+ * Inferred from defaultValuesSchema validation schema.
  */
 export type DefaultValuesFormData = z.infer<typeof defaultValuesSchema>

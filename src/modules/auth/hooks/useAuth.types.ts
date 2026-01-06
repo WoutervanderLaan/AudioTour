@@ -9,7 +9,8 @@ import type {
 
 /**
  * UseAuthReturn
- * TODO: describe what this type represents.
+ * Return type for the useAuth hook containing authentication state, user data,
+ * auth methods (login, logout, register), and their loading/error states.
  */
 export type UseAuthReturn = {
   /**

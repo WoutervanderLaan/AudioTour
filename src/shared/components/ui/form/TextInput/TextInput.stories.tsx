@@ -142,10 +142,10 @@ const InteractiveExample = (): React.JSX.Element => {
 
   /**
    * handleChange
-   * TODO: describe what it does.
+   * Handles text input changes with simple email validation.
+   * Sets an error if the input doesn't contain '@'.
    *
-   * @param {*} text
-   * @returns {*} describe return value
+   * @param text - The new text value from the input field
    */
   const handleChange = (text: string): void => {
     setValue(text)

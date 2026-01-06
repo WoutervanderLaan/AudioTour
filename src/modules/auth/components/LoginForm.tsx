@@ -15,9 +15,10 @@ import {Text} from '@/shared/components/ui/typography/Text'
 
 /**
  * LoginForm
- * TODO: describe what it does.
+ * A controlled form component that handles user authentication with email and password inputs.
+ * Uses react-hook-form with Zod validation and displays error messages on login failure.
  *
- * @returns {*} describe return value
+ * @returns Login form component
  */
 export const LoginForm = (): React.JSX.Element => {
   const {login, isLoggingIn, loginError} = useAuth()

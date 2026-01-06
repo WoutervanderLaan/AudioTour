@@ -34,7 +34,7 @@ export const ProfileHeaderButton = (): React.JSX.Element => {
 
   const color = useMemo(
     () =>
-      isAuthenticated ? theme.color.text.confirm : theme.color.text.default,
+      isAuthenticated ? theme.color.text.link : theme.color.text.secondary,
     [isAuthenticated, theme],
   )
 

@@ -48,10 +48,9 @@ const SimpleFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated simple form data.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing photos array
    */
   const onSubmit = (data: SimpleFormData): void => {
     logger.debug('Form submitted:', data)
@@ -115,10 +114,9 @@ const SingleImageFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated single image form data.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing a single profile photo
    */
   const onSubmit = (data: SingleImageFormData): void => {
     logger.debug('Form submitted:', data)
@@ -175,10 +173,9 @@ const ComplexFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated complex form data.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing title, description, photos, and cover photo
    */
   const onSubmit = (data: ComplexFormData): void => {
     logger.debug('Form submitted:', data)
@@ -265,10 +262,9 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated form data with default values.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing photos array with default images
    */
   const onSubmit = (data: DefaultValuesFormData): void => {
     logger.debug('Form submitted:', data)
@@ -317,10 +313,9 @@ const SmallThumbnailsFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated form data with small thumbnails.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing photos array displayed as small thumbnails
    */
   const onSubmit = (data: SmallThumbnailsFormData): void => {
     logger.debug('Form submitted:', data)

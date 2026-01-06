@@ -4,13 +4,11 @@ import {StyleSheet} from 'react-native-unistyles'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 
 import {useToggleNotificationsMutation} from '../api/mutations'
-import {NotificationBenefit} from '../components/NotificationBenefit'
 import {notificationService} from '../services/notificationService'
 import {useNotificationStore} from '../store/useNotificationStore'
 
 import {logger} from '@/core/lib/logger/logger'
 import {Column} from '@/shared/components/ui/layout/Column'
-import {Spacer} from '@/shared/components/ui/layout/Spacer'
 import {Button} from '@/shared/components/ui/pressable/Button'
 import {Screen} from '@/shared/components/ui/screen/Screen'
 import {Text} from '@/shared/components/ui/typography/Text'
@@ -26,9 +24,12 @@ import {useNavigation} from '@/shared/hooks/useNavigation'
  */
 export const NotificationPermissionScreen = (): React.JSX.Element => {
   const navigation = useNavigation()
+
   const {setHasRequestedPermission, setPermissionGranted} =
     useNotificationStore()
+
   const toggleMutation = useToggleNotificationsMutation()
+
   const [isRequesting, setIsRequesting] = useState(false)
 
   /**
@@ -83,12 +84,12 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
     <Screen.Static testID="NotificationPermissionScreen">
       <Column
         flex={1}
+        justifyContent="space-between"
         padding="lg"
-        paddingTop="xl"
+        paddingV="xl"
         gap="lg"
         testID="NotificationPermissionScreenContainer">
         <Column
-          flex={1}
           gap="md"
           centerX
           testID="NotificationPermissionScreenContentColumn">
@@ -96,11 +97,6 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
             name="notifications-active"
             size={80}
             color={styles.icon.color}
-          />
-
-          <Spacer
-            size="md"
-            testID="NotificationPermissionScreenTopSpacer"
           />
 
           <Text.Title
@@ -117,34 +113,6 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
             new narratives for your collected objects, and personalized
             recommendations.
           </Text.Paragraph>
-
-          <Spacer
-            size="lg"
-            testID="NotificationPermissionScreenMiddleSpacer"
-          />
-
-          <Column
-            gap="sm"
-            testID="NotificationPermissionScreenBenefitsColumn">
-            <NotificationBenefit
-              icon="tour"
-              title="Tour Updates"
-              description="Get notified when you complete tours and earn achievements"
-              testID="NotificationPermissionScreenTourUpdatesBenefit"
-            />
-            <NotificationBenefit
-              icon="auto-stories"
-              title="New Narratives"
-              description="Discover new stories about museum objects you've captured"
-              testID="NotificationPermissionScreenNewNarrativesBenefit"
-            />
-            <NotificationBenefit
-              icon="recommend"
-              title="Recommendations"
-              description="Receive personalized suggestions based on your interests"
-              testID="NotificationPermissionScreenRecommendationsBenefit"
-            />
-          </Column>
         </Column>
 
         <Column

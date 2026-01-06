@@ -68,9 +68,10 @@ export const CommunityDetailScreen = (): React.JSX.Element => {
 
   /**
    * ListHeaderComponent
-   * TODO: describe what it does.
+   * Renders the tour detail header at the top of the feed list, including
+   * tour metadata, rating input, and the start tour button.
    *
-   * @returns {*} describe return value
+   * @returns Tour detail header component or null if tour data is not available
    */
   const ListHeaderComponent = useCallback((): React.JSX.Element | null => {
     if (!tour) return null

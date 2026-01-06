@@ -47,10 +47,9 @@ const SimpleFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated simple form data.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing acceptTerms boolean value
    */
   const onSubmit = (data: SimpleFormData): void => {
     logger.debug('Form submitted:', data)
@@ -107,10 +106,9 @@ const ComplexFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated complex form data.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing multiple checkbox values for terms, privacy, age verification, and preferences
    */
   const onSubmit = (data: ComplexFormData): void => {
     logger.debug('Form submitted:', data)
@@ -229,10 +227,9 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated form data with default values.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing newsletter and notification preference values
    */
   const onSubmit = (data: DefaultValuesFormData): void => {
     logger.debug('Form submitted:', data)
@@ -292,10 +289,9 @@ const ConditionalValidationExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated conditional form data.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing promo code acceptance values with conditional validation
    */
   const onSubmit = (data: ConditionalFormData): void => {
     logger.debug('Form submitted:', data)

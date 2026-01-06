@@ -7,7 +7,8 @@ import type {zIndexTokens} from './tokens/zIndex'
 
 /**
  * StringLeaf
- * TODO: describe what this type represents.
+ * Recursively transforms all leaf values in a nested object type to strings.
+ * Used to convert color token objects into their string representations.
  */
 type StringLeaf<T> = {
   [K in keyof T]: T[K] extends object ? StringLeaf<T[K]> : string
@@ -84,7 +85,8 @@ export type AppThemes = typeof themes
 
 /**
  * BorderStyle
- * TODO: describe what this type represents.
+ * Defines the styling properties for a border including color, radius, and width.
+ * Used as the base type for border style variants (default, sharp, rounded, thick).
  */
 type BorderStyle = {
   /**
@@ -126,7 +128,8 @@ export type BorderStyles = {
 
 /**
  * ShadowStyle
- * TODO: describe what this type represents.
+ * Defines the styling properties for shadows and elevation effects on both iOS and Android.
+ * Includes elevation (Android) and shadow properties (iOS) for cross-platform compatibility.
  */
 type ShadowStyle = {
   /**

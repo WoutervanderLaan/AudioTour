@@ -34,9 +34,10 @@ export const Default: Story = {
 
 /**
  * InteractivePhotoGallery
- * TODO: describe what it does.
+ * An interactive story component demonstrating the PhotoGallery with stateful photo selection.
+ * Allows users to select different photos and updates the active index.
  *
- * @returns {*} describe return value
+ * @returns Interactive photo gallery demo component
  */
 const InteractivePhotoGallery = (): React.JSX.Element => {
   const [activeIndex, setActiveIndex] = useState(0)

@@ -46,10 +46,9 @@ const SimpleFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated form data.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated simple form data containing email
    */
   const onSubmit = (data: SimpleFormData): void => {
     logger.debug('Form submitted:', data)
@@ -133,10 +132,9 @@ const ComplexFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated complex form data.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated complex form data containing username, email, password, confirmPassword, and bio
    */
   const onSubmit = (data: ComplexFormData): void => {
     logger.debug('Form submitted:', data)
@@ -260,10 +258,9 @@ const DefaultValuesFormExample = (): React.JSX.Element => {
 
   /**
    * onSubmit
-   * TODO: describe what it does.
+   * Handles form submission by logging the validated form data with default values.
    *
-   * @param {*} data
-   * @returns {*} describe return value
+   * @param data - The validated form data containing name and email
    */
   const onSubmit = (data: DefaultValuesFormData): void => {
     logger.debug('Form submitted:', data)
