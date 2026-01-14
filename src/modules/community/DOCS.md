@@ -29,4 +29,4 @@ Provides discovery and playback functionality for pre-made (official) and commun
 
 - `@/modules/history/types` - PersistedTour, TourSummary base types
 - `@/shared/hooks/useUserLocation` - Location-based features
-- `@/store/slices/tourHistoryStore` - User history for recommendations
+- `@/modules/history/store/useHistoryStore` - User history for recommendations

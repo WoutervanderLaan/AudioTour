@@ -20,15 +20,26 @@
   - **modules/** – self-contained feature modules with their own navigation, screens, and business logic
     - **auth/** – authentication module (login, register, auth state)
       - api/ – auth API endpoints
+      - components/ – auth-specific components (LoginForm, RegisterForm)
       - hooks/ – auth hooks (useAuth)
       - screens/ – login and register screens
       - store/ – auth state management
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – auth route type definitions
       - index.ts – module configuration export
+    - **community/** – community tours browsing and discovery module
+      - api/ – community API endpoints (queries and mutations for tours, ratings, recommendations)
+      - components/ – community-specific components (tour cards, rating display/input, sections)
+      - hooks/ – community hooks (useCommunityTours, useRecommendedTours, useNearbyTours)
+      - screens/ – community browse and detail screens
+      - constants.ts – module constants (filter options, sort options)
+      - types.ts – community types
+      - routes.types.ts – community route type definitions
+      - screenConfig.ts – navigation stack configuration
+      - index.ts – module configuration export
     - **history/** – tour history and persistence module
       - api/ – history API endpoints
-      - hooks/ – history hooks (useTourPersistence, useTourSync)
+      - hooks/ – history hooks (useHistoryTours, useTourActions, useTourSync)
       - screens/ – history list and detail screens
       - store/ – history state management
       - utils/ – tour title/description generation utilities
