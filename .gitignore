@@ -13,6 +13,10 @@ expo-env.d.ts
 storybook-static/
 
 # Native
+# Native projects are generated via Continuous Native Generation
+# (`npx expo prebuild`, `expo run:*`, or EAS Build). Do not commit them.
+/ios/
+/android/
 *.orig.*
 *.jks
 *.p8
