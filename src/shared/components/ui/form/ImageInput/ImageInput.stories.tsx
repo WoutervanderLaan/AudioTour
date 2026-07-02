@@ -164,8 +164,8 @@ export const WithHint = {
     return (
       <FormField
         testID="StoryFormField"
-        label="Museum Object Photos"
-        hint="Upload up to 5 photos of the museum object"
+        label="Photos"
+        hint="Upload up to 5 photos"
         renderLabel={renderImageLabel(images.length, maxImages)}>
         <ImageInput
           testID="StoryImageInput"

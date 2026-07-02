@@ -51,27 +51,27 @@ describe('NotificationService', () => {
           importance: AndroidImportance.DEFAULT,
         },
         {
-          id: NotificationChannelId.tours,
-          name: 'Tour Updates',
-          description: 'Notifications about tour completions and achievements',
+          id: NotificationChannelId.reminders,
+          name: 'Reminders',
+          description: 'Scheduled reminders and time-sensitive alerts',
           importance: AndroidImportance.HIGH,
         },
         {
-          id: NotificationChannelId.narratives,
-          name: 'New Narratives',
-          description: 'Notifications about new stories for captured objects',
+          id: NotificationChannelId.updates,
+          name: 'Updates',
+          description: 'Notifications about new content and updates',
           importance: AndroidImportance.DEFAULT,
         },
         {
-          id: NotificationChannelId.recommendations,
-          name: 'Recommendations',
-          description: 'Personalized recommendations based on your interests',
+          id: NotificationChannelId.promotions,
+          name: 'Promotions',
+          description: 'Personalized offers and recommendations',
           importance: AndroidImportance.DEFAULT,
         },
         {
           id: NotificationChannelId.social,
-          name: 'Social Updates',
-          description: 'Updates about friends and community activity',
+          name: 'Social',
+          description: 'Updates about community activity',
           importance: AndroidImportance.LOW,
         },
       ])
@@ -282,18 +282,18 @@ describe('NotificationService', () => {
       mockNotifee.displayNotification.mockResolvedValue('notif-456')
 
       const notificationId = await notificationService.displayNotification({
-        title: 'Tour Complete',
-        body: 'You completed a tour!',
-        channelId: NotificationChannelId.tours,
+        title: 'Reminder',
+        body: 'You have a new reminder!',
+        channelId: NotificationChannelId.reminders,
       })
 
       expect(notificationId).toBe('notif-456')
       expect(mockNotifee.displayNotification).toHaveBeenCalledWith({
-        title: 'Tour Complete',
-        body: 'You completed a tour!',
+        title: 'Reminder',
+        body: 'You have a new reminder!',
         data: undefined,
         android: {
-          channelId: NotificationChannelId.tours,
+          channelId: NotificationChannelId.reminders,
           pressAction: {id: 'default'},
         },
         ios: {sound: 'default'},
@@ -304,16 +304,16 @@ describe('NotificationService', () => {
       mockNotifee.displayNotification.mockResolvedValue('notif-789')
 
       const notificationId = await notificationService.displayNotification({
-        title: 'New Narrative',
-        body: 'Check out this new story',
-        data: {tourId: 'tour-123', objectId: 'obj-456'},
+        title: 'New Update',
+        body: 'Check out this new update',
+        data: {itemId: 'item-123', category: 'general'},
       })
 
       expect(notificationId).toBe('notif-789')
       expect(mockNotifee.displayNotification).toHaveBeenCalledWith({
-        title: 'New Narrative',
-        body: 'Check out this new story',
-        data: {tourId: 'tour-123', objectId: 'obj-456'},
+        title: 'New Update',
+        body: 'Check out this new update',
+        data: {itemId: 'item-123', category: 'general'},
         android: {
           channelId: NotificationChannelId.default,
           pressAction: {id: 'default'},
@@ -325,7 +325,7 @@ describe('NotificationService', () => {
     it('should display notifications with all channel types', async () => {
       const channels = [
         NotificationChannelId.default,
-        NotificationChannelId.tours,
+        NotificationChannelId.reminders,
       ]
 
       for (const channelId of channels) {

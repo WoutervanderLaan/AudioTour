@@ -19,7 +19,8 @@ type ExclusivePair<Base, A extends keyof Base, B extends keyof Base> = Omit<
   A | B
 > &
   // Case 1: Has A, Disallows B
-  (| (Partial<Pick<Base, A>> & DisallowKeys<B>)
+  (
+    | (Partial<Pick<Base, A>> & DisallowKeys<B>)
     // Case 2: Has B, Disallows A
     | (Partial<Pick<Base, B>> & DisallowKeys<A>)
     // Case 3: Has neither (Both are disallowed)

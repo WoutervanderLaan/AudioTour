@@ -33,9 +33,9 @@ const status = await notificationService.requestPermission()
 
 // Display a notification
 await notificationService.displayNotification({
-  title: 'Tour Complete!',
-  body: 'You finished the Renaissance Gallery tour',
-  channelId: NotificationChannelId.tours,
+  title: 'Reminder',
+  body: 'You have a new reminder',
+  channelId: NotificationChannelId.reminders,
 })
 
 // Open device settings
@@ -46,10 +46,10 @@ await notificationService.openSettings()
 
 The service creates the following Android notification channels:
 
-| Channel ID      | Name            | Importance |
-| --------------- | --------------- | ---------- |
-| default         | Default         | DEFAULT    |
-| tours           | Tour Updates    | HIGH       |
-| narratives      | New Narratives  | DEFAULT    |
-| recommendations | Recommendations | DEFAULT    |
-| social          | Social Updates  | LOW        |
+| Channel ID | Name       | Importance |
+| ---------- | ---------- | ---------- |
+| default    | Default    | DEFAULT    |
+| reminders  | Reminders  | HIGH       |
+| updates    | Updates    | DEFAULT    |
+| promotions | Promotions | DEFAULT    |
+| social     | Social     | LOW        |

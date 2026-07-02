@@ -9,25 +9,24 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     id: 'experience_level',
     type: OnboardingStepType.RADIO,
-    title: 'What is your experience with museums?',
-    description:
-      'Help us tailor your audio tour experience to your level of interest',
+    title: 'How familiar are you with apps like this?',
+    description: 'Help us tailor your experience to your level of interest',
     required: true,
     options: [
       {
         value: 'beginner',
-        label: 'First-time visitor',
-        description: 'I rarely visit museums',
+        label: 'First-time user',
+        description: 'I am new to apps like this',
       },
       {
         value: 'intermediate',
-        label: 'Casual visitor',
-        description: 'I visit museums occasionally',
+        label: 'Casual user',
+        description: 'I use similar apps occasionally',
       },
       {
         value: 'advanced',
-        label: 'Museum enthusiast',
-        description: 'I visit museums frequently',
+        label: 'Power user',
+        description: 'I use apps like this frequently',
       },
     ],
   },
@@ -35,13 +34,13 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
     id: 'preferred_style',
     type: OnboardingStepType.RADIO,
     title: 'How do you prefer to learn?',
-    description: 'We will adjust the narrative style based on your preference',
+    description: 'We will adjust the content style based on your preference',
     required: true,
     options: [
       {
         value: 'storytelling',
         label: 'Storytelling',
-        description: 'Engaging narratives and anecdotes',
+        description: 'Engaging stories and anecdotes',
       },
       {
         value: 'factual',
@@ -82,24 +81,24 @@ export const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     id: 'tour_length',
     type: OnboardingStepType.RADIO,
-    title: 'Preferred tour length',
-    description: 'How much time do you typically have for a museum visit?',
+    title: 'Preferred session length',
+    description: 'How much time do you typically have?',
     required: true,
     options: [
       {
         value: 'short',
-        label: 'Quick visit (30-45 min)',
-        description: 'Brief highlights and key pieces',
+        label: 'Quick (a few minutes)',
+        description: 'Just the essentials',
       },
       {
         value: 'medium',
-        label: 'Standard visit (1-2 hours)',
-        description: 'Balanced tour with main attractions',
+        label: 'Standard (15-30 min)',
+        description: 'A balanced amount of content',
       },
       {
         value: 'long',
-        label: 'Extended visit (2+ hours)',
-        description: 'Comprehensive tour with details',
+        label: 'Extended (30+ min)',
+        description: 'In-depth and comprehensive',
       },
     ],
   },

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The notifications module handles push notification functionality for the AudioTour app. It provides:
+The notifications module handles push notification functionality for the app. It provides:
 
 - Permission request flow with user-friendly modal
 - Device token registration with backend
@@ -167,9 +167,9 @@ CREATE TABLE device_push_tokens (
 CREATE TABLE notification_preferences (
     user_id UUID PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
     push_enabled BOOLEAN DEFAULT false,
-    tour_notifications BOOLEAN DEFAULT true,
-    narrative_notifications BOOLEAN DEFAULT true,
-    recommendation_notifications BOOLEAN DEFAULT true,
+    reminder_notifications BOOLEAN DEFAULT true,
+    update_notifications BOOLEAN DEFAULT true,
+    promotion_notifications BOOLEAN DEFAULT true,
     social_notifications BOOLEAN DEFAULT true,
     updated_at TIMESTAMP DEFAULT NOW()
 );

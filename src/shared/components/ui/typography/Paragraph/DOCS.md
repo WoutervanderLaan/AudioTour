@@ -25,7 +25,5 @@ Provides a text component designed for body content and paragraphs. Built on Tex
 ```tsx
 import {Text} from '@/shared/components/ui/typography/Text'
 
-<Text.Paragraph variant="body">
-  This is body text content.
-</Text.Paragraph>
+;<Text.Paragraph variant="body">This is body text content.</Text.Paragraph>
 ```

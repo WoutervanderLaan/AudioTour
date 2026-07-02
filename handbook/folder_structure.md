@@ -10,7 +10,7 @@
   - **shared/** – reusable, generic components and utilities
     - **components/**
       - **ui/** – generic UI components (Pressable, Typography, Form, Layout, Screen)
-      - **features/** – complex reusable features (AudioPlayer, ProgressIndicator)
+      - **features/** – complex reusable features (Banner, Toast, ProgressIndicator, ImageInput helpers)
     - **context/** – React Context providers (Banner, Keyboard, Toast)
     - **hooks/** – shared custom hooks
     - **constants/** – shared constants and configuration values
@@ -27,25 +27,10 @@
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – auth route type definitions
       - index.ts – module configuration export
-    - **community/** – community tours browsing and discovery module
-      - api/ – community API endpoints (queries and mutations for tours, ratings, recommendations)
-      - components/ – community-specific components (tour cards, rating display/input, sections)
-      - hooks/ – community hooks (useCommunityTours, useRecommendedTours, useNearbyTours)
-      - screens/ – community browse and detail screens
-      - constants.ts – module constants (filter options, sort options)
-      - types.ts – community types
-      - routes.types.ts – community route type definitions
-      - screenConfig.ts – navigation stack configuration
-      - index.ts – module configuration export
-    - **history/** – tour history and persistence module
-      - api/ – history API endpoints
-      - hooks/ – history hooks (useHistoryTours, useTourActions, useTourSync)
-      - screens/ – history list and detail screens
-      - store/ – history state management
-      - utils/ – tour title/description generation utilities
-      - components/ – history-specific components
-      - screenConfig.ts – navigation stack configuration
-      - routes.types.ts – history route type definitions
+    - **home/** – default landing tab / starting point for new features
+      - screens/ – placeholder home screen
+      - screenConfig.ts – tab navigation configuration
+      - routes.types.ts – home route type definitions
       - index.ts – module configuration export
     - **onboarding/** – user onboarding module (multi-step configuration flow)
       - components/ – onboarding-specific components
@@ -63,21 +48,6 @@
       - store/ – notification state management
       - screenConfig.ts – navigation stack configuration
       - routes.types.ts – notification route type definitions
-      - index.ts – module configuration export
-    - **profile/** – user profile module
-      - screens/ – profile screen
-      - screenConfig.ts – navigation stack configuration
-      - routes.types.ts – profile route type definitions
-      - index.ts – module configuration export
-    - **tour/** – audio tour module (photo capture, object recognition, narrative generation)
-      - api/ – tour API endpoints (process artwork, generate narrative, generate audio)
-      - hooks/ – tour hooks (useTourInitialization, usePhotoSubmit)
-      - screens/ – tour screens (home, feed, camera, photo submit, object detail)
-      - store/ – tour state management (useTourStore)
-      - components/ – tour-specific UI components (FeedItem, AddArtworkButton)
-      - utils/ – tour utility functions (getFeedItemStatusText)
-      - screenConfig.ts – navigation stack configuration
-      - routes.types.ts – tour route type definitions
       - index.ts – module configuration export
   - **store/** – global Zustand state management
     - slices/ – store slices

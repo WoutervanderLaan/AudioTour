@@ -1,26 +1,24 @@
 {
   "expo": {
-    "name": "AudioTour",
-    "slug": "AudioTour",
+    "name": "ExpoTemplate",
+    "slug": "expo-template",
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "scheme": "audiotour",
+    "scheme": "expotemplate",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.woutervanderlaan.audiotour",
-      "appleTeamId": "WNTLECWTLQ"
+      "bundleIdentifier": "com.example.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.woutervanderlaan.audiotour",
+      "package": "com.example.app",
       "permissions": [
-        "android.permission.RECORD_AUDIO",
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION"
       ]
@@ -30,7 +28,6 @@
     },
     "plugins": [
       "expo-asset",
-      "expo-audio",
       [
         "expo-splash-screen",
         {
@@ -46,8 +43,8 @@
         "expo-location",
         {
           "isIosBackgroundLocationEnabled": false,
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location to detect nearby museums.",
-          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location to detect nearby museums."
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location.",
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to access your location."
         }
       ],
       [
@@ -58,12 +55,6 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone for video audio."
         }
       ]
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "805b6cbc-bd2c-4ce7-88a9-390ed3c063c1"
-      }
-    },
-    "owner": "woutervanderlaan"
+    ]
   }
 }

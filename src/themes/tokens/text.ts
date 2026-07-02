@@ -3,11 +3,7 @@
  * Union type defining the available paragraph text styles including body, intro, quote, and small text variants.
  */
 export type ParagraphVariants =
-  | 'body'
-  | 'intro'
-  | 'quote'
-  | 'small'
-  | 'extraSmall'
+  'body' | 'intro' | 'quote' | 'small' | 'extraSmall'
 
 /**
  * ParagraphTokens

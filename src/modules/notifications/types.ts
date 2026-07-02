@@ -3,11 +3,7 @@
  * Types of actions that can trigger a notification
  */
 type NotificationActionType =
-  | 'tour_complete'
-  | 'new_narrative'
-  | 'recommendation'
-  | 'social'
-  | 'system'
+  'reminder' | 'update' | 'promotion' | 'social' | 'system'
 
 /**
  * NotificationPayload
@@ -120,9 +116,9 @@ export type NotificationState = {
  */
 export enum NotificationChannelId {
   default = 'default',
-  tours = 'tours',
-  narratives = 'narratives',
-  recommendations = 'recommendations',
+  reminders = 'reminders',
+  updates = 'updates',
+  promotions = 'promotions',
   social = 'social',
 }
 

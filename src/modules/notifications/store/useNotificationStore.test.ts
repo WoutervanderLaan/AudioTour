@@ -7,8 +7,8 @@ describe('useNotificationStore', () => {
     id: 'notif-123',
     title: 'Test Notification',
     body: 'This is a test notification',
-    data: {route: 'tour'},
-    actionType: 'tour_complete',
+    data: {route: 'details'},
+    actionType: 'reminder',
     createdAt: '2024-01-01T00:00:00Z',
   }
 
@@ -225,8 +225,8 @@ describe('useNotificationStore', () => {
       const notificationWithData: NotificationPayload = {
         ...mockNotification,
         data: {
-          route: 'tour',
-          objectId: 'obj-123',
+          route: 'details',
+          itemId: 'item-123',
           customField: 'value',
         },
       }
@@ -235,8 +235,8 @@ describe('useNotificationStore', () => {
 
       const {lastNotification} = useNotificationStore.getState()
       expect(lastNotification?.data).toEqual({
-        route: 'tour',
-        objectId: 'obj-123',
+        route: 'details',
+        itemId: 'item-123',
         customField: 'value',
       })
     })
@@ -244,9 +244,9 @@ describe('useNotificationStore', () => {
     it('should handle all action types', () => {
       const {setLastNotification} = useNotificationStore.getState()
       const actionTypes = [
-        'tour_complete',
-        'new_narrative',
-        'recommendation',
+        'reminder',
+        'update',
+        'promotion',
         'social',
         'system',
       ]

@@ -6,10 +6,10 @@ import type {
   AuthTabParams,
 } from './auth/routes.types'
 import type {
-  CommunityStackParams,
-  CommunityTabParams,
-} from './community/routes.types'
-import type {HistoryStackParams, HistoryTabParams} from './history/routes.types'
+  HomeModalParams,
+  HomeStackParams,
+  HomeTabParams,
+} from './home/routes.types'
 import type {
   NotificationModalParams,
   NotificationStackParams,
@@ -18,17 +18,7 @@ import type {
   OnboardingModalParams,
   OnboardingStackParams,
 } from './onboarding/routes.types'
-import type {
-  ProfileModalParams,
-  ProfileStackParams,
-  ProfileTabParams,
-} from './profile/routes.types'
 import type {ModuleSlug} from './slugs'
-import type {
-  TourModalParams,
-  TourStackParams,
-  TourTabParams,
-} from './tour/routes.types'
 
 import type {
   RootStackParams,
@@ -59,7 +49,7 @@ export type ModuleConfig = {
   /**
    * Stack screens that appear above tabs in the root navigator.
    * These screens hide the bottom tabs and show a back button.
-   * Use for detail screens like ObjectDetail, Narrative, Login, Register, etc.
+   * Use for detail screens like ItemDetail, Login, Register, etc.
    */
   stacks?: StackNavigationRoutes<RootStackParams>
   /**
@@ -119,28 +109,20 @@ export type ModuleConfig = {
  * StackParams - Combined type of all module stack screen parameters
  */
 export type StackParams = AuthStackParams &
-  CommunityStackParams &
-  HistoryStackParams &
+  HomeStackParams &
   NotificationStackParams &
-  OnboardingStackParams &
-  TourStackParams &
-  ProfileStackParams
+  OnboardingStackParams
 
 /**
  * ModalParams - Combined type of all module modal screen parameters
  */
 export type ModalParams =
   | AuthModalParams
+  | HomeModalParams
   | NotificationModalParams
   | OnboardingModalParams
-  | TourModalParams
-  | ProfileModalParams
 
 /**
  * TabParams - Combined type of all module tab screen parameters
  */
-export type TabParams = CommunityTabParams &
-  HistoryTabParams &
-  AuthTabParams &
-  ProfileTabParams &
-  TourTabParams
+export type TabParams = AuthTabParams & HomeTabParams

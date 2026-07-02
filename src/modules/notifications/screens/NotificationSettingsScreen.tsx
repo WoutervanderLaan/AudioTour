@@ -61,8 +61,8 @@ export const NotificationSettingsScreen = (): React.JSX.Element => {
           <Text.Paragraph
             color="secondary"
             testID="NotificationSettingsScreenDescriptionText">
-            Manage your notification preferences to stay updated on tours, new
-            narratives, and recommendations.
+            Manage your notification preferences to stay updated with reminders,
+            new content, and recommendations.
           </Text.Paragraph>
         </Column>
 

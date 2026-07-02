@@ -5,10 +5,9 @@ Self-contained feature modules with their own screens, navigation, and business 
 ## Structure
 
 - **auth/** - Authentication module (login, register, auth state)
+- **home/** - Default landing tab / starting point for new features
 - **notifications/** - Push notification module
 - **onboarding/** - User onboarding module
-- **profile/** - User profile module
-- **tour/** - Tour and artwork management module
 
 ## Purpose
 

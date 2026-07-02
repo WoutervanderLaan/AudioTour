@@ -8,11 +8,7 @@
  */
 export enum ModuleSlug {
   auth = 'auth',
-  community = 'community',
-  history = 'history',
-  old = 'old',
-  profile = 'profile',
+  home = 'home',
   onboarding = 'onboarding',
-  tour = 'tour',
   notifications = 'notifications',
 }

@@ -1,10 +1,7 @@
 import {authModule} from './auth'
-import {communityModule} from './community'
-import {historyModule} from './history'
+import {homeModule} from './home'
 import {notificationsModule} from './notifications'
 import {onboardingModule} from './onboarding'
-import {profileModule} from './profile'
-import {tourModule} from './tour'
 
 import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 
@@ -20,12 +17,9 @@ import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 export const registerModules = (): void => {
   // Phase 1: Collect all modules (order doesn't matter)
   moduleRegistry.register(authModule)
-  moduleRegistry.register(communityModule)
-  moduleRegistry.register(historyModule)
+  moduleRegistry.register(homeModule)
   moduleRegistry.register(notificationsModule)
-  moduleRegistry.register(profileModule)
   moduleRegistry.register(onboardingModule)
-  moduleRegistry.register(tourModule)
 
   // Phase 2: Resolve dependencies and finalize registration
   moduleRegistry.resolveDependencies()

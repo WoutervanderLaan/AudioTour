@@ -2,7 +2,7 @@
 
 ## Overview
 
-The onboarding module provides a multi-step configuration flow that helps personalize the user's experience with the AudioTour app. It collects user preferences regarding museum experience level, learning style, interests, tour length, and accessibility needs.
+The onboarding module provides a multi-step configuration flow that helps personalize the user's experience. It ships with an example set of preference questions (experience level, learning style, interests, session length, and accessibility needs) that you can replace with your own in `config/steps.ts`.
 
 ## Features
 
@@ -26,7 +26,6 @@ The onboarding module provides a multi-step configuration flow that helps person
   - Displays on screens when onboarding is incomplete
   - Can be dismissed temporarily
   - Includes a call-to-action to start onboarding
-- **Profile Integration**: NavItem in profile settings for easy access to preferences
 
 ## Architecture
 
@@ -134,12 +133,10 @@ navigation.navigate('OnboardingFlow')
 
 ## Integration Points
 
-### Profile Screen
+### Host Screens
 
-The profile screen displays:
-
-- OnboardingBanner at the top when incomplete
-- NavItem in settings to access preferences
+Any screen can display the OnboardingBanner at the top when onboarding is
+incomplete, and link to the onboarding flow from its settings/preferences UI.
 
 ### Module Registration
 
@@ -159,16 +156,16 @@ Routes are registered through the module's `screenConfig.ts`:
 
 ### Onboarding Questions
 
-The current onboarding flow collects:
+The example onboarding flow collects:
 
-1. **Experience Level**: User's familiarity with museums
+1. **Experience Level**: User's familiarity with the app
    - Options: beginner, intermediate, advanced
 2. **Preferred Style**: Learning preference
    - Options: storytelling, factual, conversational
 3. **Interests**: Primary area of interest
    - Options: art, history, science
-4. **Tour Length**: Preferred visit duration
-   - Options: short (30-45 min), medium (1-2 hours), long (2+ hours)
+4. **Session Length**: Preferred session duration
+   - Options: short, medium, long
 5. **Accessibility**: Accessibility feature preferences
    - Type: Toggle switch
 
@@ -227,8 +224,8 @@ To add new features:
 To test onboarding flow:
 
 1. Reset store: `useOnboardingStore.getState().reset()`
-2. Navigate to Profile screen to see the banner
-3. Click "Get Started" or the NavItem to begin
+2. Render a screen that includes the OnboardingBanner to see it
+3. Click "Get Started" to begin the flow
 4. Test step navigation, validation, and completion
 
 ## Future Enhancements

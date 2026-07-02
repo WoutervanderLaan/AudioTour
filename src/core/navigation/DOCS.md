@@ -9,7 +9,6 @@ Navigation infrastructure and module registry system.
 - **types.ts** - Navigation type definitions
 - **Tabs.tsx** - Bottom tab navigation component
 - **BlurBackground.tsx** - Blur overlay component for navigation stacks
-- **ProfileHeaderButton.tsx** - Profile header button component
 - **constants.ts** - Navigation constants
 
 ## Purpose
@@ -44,10 +43,9 @@ After all modules are collected, `moduleRegistry.resolveDependencies()` is calle
 export const registerModules = (): void => {
   // Phase 1: Collect all modules (order doesn't matter)
   moduleRegistry.register(authModule)
+  moduleRegistry.register(homeModule)
   moduleRegistry.register(notificationsModule)
-  moduleRegistry.register(profileModule)
   moduleRegistry.register(onboardingModule)
-  moduleRegistry.register(tourModule)
 
   // Phase 2: Resolve dependencies and finalize registration
   moduleRegistry.resolveDependencies()

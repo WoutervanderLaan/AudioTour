@@ -272,7 +272,7 @@ describe('IconButton', () => {
         />,
       )
       expect(
-        screen.queryByTestId('TestIconButtonPressable').props.accessibilityRole,
+        screen.getByTestId('TestIconButtonPressable').props.accessibilityRole,
       ).toBe('button')
     })
 

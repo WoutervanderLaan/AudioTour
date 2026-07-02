@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-An AI-powered React Native app that generates dynamic audio tours based on museum objects photographed by users. The app combines object recognition, contextual narrative generation, and personalized story sequences to offer engaging and interactive museum experiences.
+An opinionated Expo + React Native template that provides the architecture, tooling, and a small set of reusable core modules (auth, home, onboarding, notifications) for starting new mobile apps on a clean, well-structured foundation.
 
 ### Core Principles
 
@@ -84,12 +84,9 @@ src/
 │   └── utils/       # Utility functions
 ├── modules/          # Self-contained feature modules
 │   ├── auth/        # Authentication module
-│   ├── community/   # Community tours browsing and discovery module
-│   ├── history/     # Tour history and persistence module
+│   ├── home/        # Default landing tab / starting point for new features
 │   ├── onboarding/  # User onboarding module
-│   ├── notifications/  # Push notification module
-│   ├── profile/     # User profile module
-│   └── tour/        # Tour and artwork management module
+│   └── notifications/  # Push notification module
 ├── store/            # Global Zustand state management
 │   └── slices/      # Store slices
 └── themes/          # Theme configuration and tokens
@@ -114,10 +111,7 @@ The app uses a custom `ApiClient` class (src/core/api/client.ts) with TanStack Q
 
 - **ApiClient**: Generic HTTP client with interceptors, auth token management, and FormData support
 - **TanStack Query**: Used throughout for queries and mutations (caching, refetching, state management)
-- **Endpoints**:
-  - Photo upload for object recognition (`/process-artwork`)
-  - Narrative generation (`/generate-narrative`)
-  - Audio generation (`/generate-audio`)
+- **Endpoints**: Define per-module endpoints under each module's `api/` folder (queries, mutations, keys, and MSW mocks). See `src/modules/auth/api` and `src/modules/notifications/api` for the pattern.
 
 API base URL is configured via `EXPO_PUBLIC_API_BASE_URL` environment variable (defaults to `http://localhost:8000` in dev).
 
@@ -125,9 +119,9 @@ API base URL is configured via `EXPO_PUBLIC_API_BASE_URL` environment variable (
 
 The app supports three build variants controlled by `APP_VARIANT` environment variable:
 
-- `development` - Bundle ID: com.woutervanderlaan.audiotour.dev
-- `preview` - Bundle ID: com.woutervanderlaan.audiotour.preview
-- `production` - Bundle ID: com.woutervanderlaan.audiotour
+- `development` - Bundle ID: com.example.app.dev
+- `preview` - Bundle ID: com.example.app.preview
+- `production` - Bundle ID: com.example.app
 
 Configuration is in app.config.js.
 
@@ -285,11 +279,11 @@ Use **conventional commits** format:
 Examples:
 
 ```
-feat: add audio playback controls to tour screen
-fix: resolve crash when loading artwork without metadata
+feat: add password reset flow to auth module
+fix: resolve crash when loading screen without params
 refactor: simplify navigation module registry
 docs: update testing requirements in CLAUDE.md
-test: add unit tests for artwork utilities
+test: add unit tests for onboarding schema utilities
 ```
 
 ### Pull Requests
@@ -337,18 +331,6 @@ The following practices are **strictly prohibited**:
 
 See the handbook/ directory for detailed documentation:
 
-- project_overview.md - Vision and problem statement
-- product_spec.md - Core features and technical requirements
 - folder_structure.md - Detailed folder organization
-- research_notes.md - Research and decision logs
 
-### Automated Documentation Updates
-
-The project includes a GitHub workflow (`.github/workflows/auto-update-docs.yml`) that automatically reviews and updates documentation when PRs are merged. This workflow:
-
-- Triggers on PR merge to main/master branch
-- Uses Claude Code AI to analyze changed files
-- Updates JSDoc comments and markdown documentation
-- Creates a documentation PR for human review
-
-See `.github/workflows/README.md` for setup instructions and workflow details. The automation ensures documentation stays synchronized with code changes while maintaining quality through PR review.
+Additional CI/automation workflows are documented in `.github/workflows/README.md`.

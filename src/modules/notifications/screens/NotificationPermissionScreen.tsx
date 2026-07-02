@@ -113,9 +113,8 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
             color="secondary"
             align="center"
             testID="NotificationPermissionScreenDescriptionText">
-            Enable push notifications to receive updates about your audio tours,
-            new narratives for your collected objects, and personalized
-            recommendations.
+            Enable push notifications to receive reminders, updates about new
+            content, and personalized recommendations.
           </Text.Paragraph>
 
           <Spacer
@@ -127,16 +126,16 @@ export const NotificationPermissionScreen = (): React.JSX.Element => {
             gap="sm"
             testID="NotificationPermissionScreenBenefitsColumn">
             <NotificationBenefit
-              icon="tour"
-              title="Tour Updates"
-              description="Get notified when you complete tours and earn achievements"
-              testID="NotificationPermissionScreenTourUpdatesBenefit"
+              icon="notifications-active"
+              title="Reminders"
+              description="Get timely reminders and alerts so you never miss out"
+              testID="NotificationPermissionScreenRemindersBenefit"
             />
             <NotificationBenefit
-              icon="auto-stories"
-              title="New Narratives"
-              description="Discover new stories about museum objects you've captured"
-              testID="NotificationPermissionScreenNewNarrativesBenefit"
+              icon="auto-awesome"
+              title="Updates"
+              description="Be the first to know about new content and updates"
+              testID="NotificationPermissionScreenUpdatesBenefit"
             />
             <NotificationBenefit
               icon="recommend"
