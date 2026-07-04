@@ -84,6 +84,7 @@ src/
 │   └── utils/       # Utility functions
 ├── modules/          # Self-contained feature modules
 │   ├── auth/        # Authentication module
+│   ├── community/   # Community tours browsing and discovery module
 │   ├── history/     # Tour history and persistence module
 │   ├── onboarding/  # User onboarding module
 │   ├── notifications/  # Push notification module
@@ -256,6 +257,7 @@ When adding new Modules:
 
 1. Create a new folder under src/modules/ with the structure:
    - **api/** - Module-specific API endpoints (queries and mutations)
+   - **components/** - Module-specific components (optional)
    - **hooks/** - Module-specific React hooks
    - **screens/** - Module screen components
    - **store/** - Module state management (if needed)

@@ -6,10 +6,9 @@ Layout and container components.
 
 Provides layout primitives for organizing UI elements:
 
-- Containers and boxes
-- Stacks (vertical/horizontal)
-- Grids and flex layouts
-- Spacing components
-- Dividers and separators
+- **Box** - Container with padding and styling options
+- **Column** - Vertical stack layout for arranging children vertically
+- **Row** - Horizontal stack layout for arranging children horizontally
+- **Spacer** - Flexible spacing component for adding space between elements
 
 These components handle spacing, alignment, and structural layout concerns.
