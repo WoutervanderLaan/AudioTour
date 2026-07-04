@@ -23,6 +23,5 @@ Provides a small, semi-bold text component designed for form field labels and UI
 
 ```tsx
 import {Text} from '@/shared/components/ui/typography/Text'
-
-<Text.Label>Email Address</Text.Label>
+;<Text.Label>Email Address</Text.Label>
 ```

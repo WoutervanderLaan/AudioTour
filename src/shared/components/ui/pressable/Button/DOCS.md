@@ -25,6 +25,9 @@ Provides a styled button component built on top of PressableBase with theme-base
 
 ```tsx
 import {Button} from '@/shared/components/ui/pressable/Button'
-
-<Button label="Submit" variant="primary" onPress={handleSubmit} />
+;<Button
+  label="Submit"
+  variant="primary"
+  onPress={handleSubmit}
+/>
 ```
