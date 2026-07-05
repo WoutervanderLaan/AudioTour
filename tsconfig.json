@@ -3,10 +3,10 @@
   "compilerOptions": {
     "moduleResolution": "bundler",
     "strict": true,
-    "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
+    "types": ["jest", "node", "react-native"],
     "jsx": "react-native",
     "incremental": true
   },

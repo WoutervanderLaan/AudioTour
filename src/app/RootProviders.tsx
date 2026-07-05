@@ -41,7 +41,7 @@ export const RootProviders = ({
 const SystemProviders = ({children}: PropsWithChildren): React.JSX.Element => (
   <QueryClientProvider client={queryClient}>
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <KeyboardProvider>{children}</KeyboardProvider>
+      {children}
     </SafeAreaProvider>
   </QueryClientProvider>
 )

@@ -1,3 +1,5 @@
+import {TIME} from '../types/Time'
+
 /**
  * Timing constants used throughout the application.
  * Centralizes timeout values, intervals, and duration settings.
@@ -12,19 +14,19 @@ export const TIMING = {
   /**
    * Interval for checking authentication token validity (1 minute)
    */
-  TOKEN_CHECK_INTERVAL: 60_000,
+  TOKEN_CHECK_INTERVAL: TIME.MINUTE,
   /**
    * Default stale time for TanStack Query cache (5 minutes)
    */
-  QUERY_STALE_TIME: 5 * 60 * 1000,
+  QUERY_STALE_TIME: 5 * TIME.MINUTE,
   /**
    * Default API request timeout (30 seconds)
    */
-  API_TIMEOUT: 30_000,
+  API_TIMEOUT: 30 * TIME.SECOND,
   /**
    * Default duration for toast notifications
    */
-  TOAST_DURATION: 3_000,
+  TOAST_DURATION: 3 * TIME.SECOND,
 } as const
 
 /**

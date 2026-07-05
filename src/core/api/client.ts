@@ -10,7 +10,32 @@ import {
   RequestConfig,
   RequestInterceptor,
   ResponseInterceptor,
+  TokensChangedCallback,
 } from './types'
+
+/**
+ * RefreshTokenResponseBody
+ * Expected shape of the `/auth/refresh` endpoint response used by the client's
+ * internal silent token refresh.
+ */
+type RefreshTokenResponseBody = {
+  /**
+   * New JWT access token
+   */
+  accessToken: string
+  /**
+   * Optional new refresh token (absent when refresh token rotation is disabled)
+   */
+  refreshToken?: string
+  /**
+   * ISO 8601 timestamp when the new access token expires
+   */
+  accessTokenExpiresAt?: string
+  /**
+   * ISO 8601 timestamp when the new refresh token expires
+   */
+  refreshTokenExpiresAt?: string
+}
 
 /**
  * Generic HTTP client for making API requests with advanced features.
@@ -48,6 +73,7 @@ export class ApiClient implements IApiClient {
   private defaultHeaders: Record<string, string>
   private accessToken: string | null = null
   private refreshToken: string | null = null
+  private onTokensChanged: TokensChangedCallback | null = null
   private requestInterceptors: RequestInterceptor[] = []
   private responseInterceptors: ResponseInterceptor[] = []
   // Token refresh state
@@ -79,6 +105,21 @@ export class ApiClient implements IApiClient {
   clearTokens(): void {
     this.accessToken = null
     this.refreshToken = null
+  }
+
+  /**
+   * Register a callback invoked whenever the client changes tokens on its own.
+   *
+   * This is how the client reports token changes that did not originate from the
+   * caller — specifically a successful silent refresh (receives the new tokens) or a
+   * failed refresh (receives `null`). It lets an external source of truth (e.g. the
+   * auth store) stay in sync with the client without the client depending on it.
+   *
+   * @param callback - Function called with the new token set, or null when tokens are cleared
+   * @returns void
+   */
+  setOnTokensChanged(callback: TokensChangedCallback): void {
+    this.onTokensChanged = callback
   }
 
   /**
@@ -160,7 +201,6 @@ export class ApiClient implements IApiClient {
 
     try {
       const response = await fetch(`${this.baseURL}/auth/refresh`, {
-        //TODO: add mock
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -174,7 +214,7 @@ export class ApiClient implements IApiClient {
         throw new Error('Token refresh failed')
       }
 
-      const data = await response.json() // TODO: type
+      const data: RefreshTokenResponseBody = await response.json()
 
       if (!data.accessToken) {
         throw new Error('Invalid refresh response')
@@ -186,9 +226,20 @@ export class ApiClient implements IApiClient {
         this.refreshToken = data.refreshToken
       }
 
+      // Report the client-originated token change so an external source of truth
+      // (e.g. the auth store) can persist the refreshed tokens.
+      this.onTokensChanged?.({
+        accessToken: this.accessToken,
+        refreshToken: this.refreshToken,
+        accessTokenExpiresAt: data.accessTokenExpiresAt,
+        refreshTokenExpiresAt: data.refreshTokenExpiresAt,
+      })
+
       return data.accessToken
     } catch (error) {
       this.clearTokens()
+      // Report that the session has ended so external state can log out in sync.
+      this.onTokensChanged?.(null)
       throw error
     }
   }

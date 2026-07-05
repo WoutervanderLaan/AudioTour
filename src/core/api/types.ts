@@ -68,6 +68,39 @@ export type RequestConfig = {
 }
 
 /**
+ * AuthTokenSet
+ * Structural representation of the authentication tokens the client works with.
+ * Kept local to the API layer (no dependency on feature modules) but structurally
+ * compatible with the auth module's token type.
+ */
+export type AuthTokenSet = {
+  /**
+   * JWT access token used to authenticate API requests
+   */
+  accessToken: string
+  /**
+   * JWT refresh token used to obtain new access tokens
+   */
+  refreshToken: string
+  /**
+   * ISO 8601 timestamp when the access token expires
+   */
+  accessTokenExpiresAt?: string
+  /**
+   * ISO 8601 timestamp when the refresh token expires
+   */
+  refreshTokenExpiresAt?: string
+}
+
+/**
+ * TokensChangedCallback
+ * Callback invoked by the client whenever it changes tokens on its own (e.g. after a
+ * silent 401 refresh, or when a refresh fails). Receives the new token set, or `null`
+ * when the client has cleared its tokens and the session should be treated as ended.
+ */
+export type TokensChangedCallback = (tokens: AuthTokenSet | null) => void
+
+/**
  * IApiClient
  * Interface defining the contract for an API client with HTTP methods, authentication, and interceptor support.
  */
@@ -98,6 +131,7 @@ export type IApiClient = {
   clearTokens(): void
   getAccessToken(): string | null
   getRefreshToken(): string | null
+  setOnTokensChanged(callback: TokensChangedCallback): void
 
   // Interceptors
   addRequestInterceptor(interceptor: RequestInterceptor): void

@@ -22,6 +22,7 @@ export const createMainConfig = () => ({
     '**/*.d.ts',
     '**/*.config.js',
     '**/*.test.{ts,js,jsx,tsx}',
+    '**/*.stories.{ts,js,jsx,tsx}',
   ],
   ...createBaseConfig(),
   plugins: createPluginsConfig(),

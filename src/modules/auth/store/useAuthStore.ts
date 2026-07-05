@@ -39,6 +39,19 @@ export const useAuthStore = createModuleStore<AuthState>(
       apiClient.setTokens(tokens.accessToken, tokens.refreshToken)
     },
 
+    syncFromClient: (tokens): void => {
+      if (tokens) {
+        set({tokens})
+      } else {
+        set({
+          user: null,
+          tokens: null,
+          isAuthenticated: false,
+          isInitialized: true,
+        })
+      }
+    },
+
     logout: (): void => {
       set({
         user: null,

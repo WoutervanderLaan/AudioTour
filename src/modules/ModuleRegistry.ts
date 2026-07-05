@@ -3,7 +3,7 @@ import type {
   RootStackParams,
   StackNavigationRoutes,
   TabNavigationRoutes,
-} from './types'
+} from '../core/navigation/types'
 
 import {clearModuleQueries} from '@/core/api/queryclient'
 import {logger} from '@/core/lib/logger/logger'

@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import {use} from 'react'
 
 import {KeyboardContext} from '@/shared/context/keyboard/KeyboardContext'
 import type {KeyboardContextValue} from '@/shared/context/keyboard/KeyboardContext.types'
@@ -22,7 +22,7 @@ import type {KeyboardContextValue} from '@/shared/context/keyboard/KeyboardConte
  * ```
  */
 export const useKeyboard = (): KeyboardContextValue => {
-  const context = useContext(KeyboardContext)
+  const context = use(KeyboardContext)
 
   if (context === undefined) {
     throw new Error('useKeyboard must be used within a KeyboardProvider')

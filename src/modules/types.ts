@@ -14,10 +14,6 @@ import type {
   NotificationModalParams,
   NotificationStackParams,
 } from './notifications/routes.types'
-import type {
-  OnboardingModalParams,
-  OnboardingStackParams,
-} from './onboarding/routes.types'
 import type {ModuleSlug} from './slugs'
 
 import type {
@@ -110,17 +106,14 @@ export type ModuleConfig = {
  */
 export type StackParams = AuthStackParams &
   HomeStackParams &
-  NotificationStackParams &
-  OnboardingStackParams
+  NotificationStackParams
 
 /**
  * ModalParams - Combined type of all module modal screen parameters
  */
-export type ModalParams =
-  | AuthModalParams
-  | HomeModalParams
-  | NotificationModalParams
-  | OnboardingModalParams
+export type ModalParams = AuthModalParams &
+  HomeModalParams &
+  NotificationModalParams
 
 /**
  * TabParams - Combined type of all module tab screen parameters

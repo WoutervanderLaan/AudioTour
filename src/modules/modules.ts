@@ -1,9 +1,8 @@
 import {authModule} from './auth'
 import {homeModule} from './home'
 import {notificationsModule} from './notifications'
-import {onboardingModule} from './onboarding'
 
-import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
+import {moduleRegistry} from '@/modules/ModuleRegistry'
 
 /**
  * Registers all application modules with the module registry.
@@ -19,7 +18,6 @@ export const registerModules = (): void => {
   moduleRegistry.register(authModule)
   moduleRegistry.register(homeModule)
   moduleRegistry.register(notificationsModule)
-  moduleRegistry.register(onboardingModule)
 
   // Phase 2: Resolve dependencies and finalize registration
   moduleRegistry.resolveDependencies()

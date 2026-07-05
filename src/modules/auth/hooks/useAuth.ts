@@ -96,7 +96,10 @@ export const useAuth = (): UseAuthReturn => {
 
   /**
    * Logs out the current user by invalidating tokens on the server and clearing local auth state.
-   * Handles logout failures gracefully by logging errors.
+   *
+   * The local auth state is always cleared even if the server call fails: the logout
+   * mutation's `onSettled` handler runs on both success and error. The surrounding
+   * try/catch only prevents the server-side rejection from surfacing to the caller.
    *
    * @returns Promise that resolves when logout is complete
    */
@@ -105,7 +108,6 @@ export const useAuth = (): UseAuthReturn => {
       await logoutMutation.mutateAsync()
     } catch (error) {
       logger.error('[Auth] Logout failed:', error)
-      // TODO: Force logout locally even if server call fails
     }
   }
 

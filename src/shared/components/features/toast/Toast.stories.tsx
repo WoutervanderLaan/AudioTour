@@ -1,7 +1,16 @@
 import type {Meta} from '@storybook/react-native'
-
 import {Toast, ToastType} from './Toast'
-import type {Story} from './Toast.stories.types'
+import type {StoryObj} from '@storybook/react-native'
+
+/**
+ * Story
+ * Storybook story type for Toast component
+ */
+export type Story = StoryObj<{
+  title: string
+  component: typeof Toast
+  tags: string[]
+}>
 
 const meta = {
   title: 'Features/Toast',

@@ -4,7 +4,8 @@ import {UnistylesRuntime, useUnistyles} from 'react-native-unistyles'
 import type {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs'
 import type {NativeStackNavigationOptions} from '@react-navigation/native-stack'
 
-import {BlurBackground} from '@/core/navigation/BlurBackground'
+import {HeaderBlurBackground} from '@/core/navigation/HeaderBlurBackground'
+import {TabBarBlurBackground} from '@/core/navigation/TabBarBlurBackground'
 import {FontFamily} from '@/themes/tokens/text'
 
 /**
@@ -103,7 +104,7 @@ export const getStackNavigatorOptions = (
     color: navTheme.header.titleColor,
     fontFamily: FontFamily.headingSemiBold,
   },
-  headerBackground: BlurBackground,
+  headerBackground: HeaderBlurBackground,
   headerBackButtonDisplayMode: 'minimal',
 })
 
@@ -143,7 +144,7 @@ export const getTabNavigatorOptions = (
   },
   tabBarActiveTintColor: navTheme.tabBar.activeTintColor,
   tabBarInactiveTintColor: navTheme.tabBar.inactiveTintColor,
-  headerBackground: BlurBackground,
-  tabBarBackground: BlurBackground,
+  headerBackground: HeaderBlurBackground,
+  tabBarBackground: TabBarBlurBackground,
   headerBackButtonDisplayMode: 'minimal',
 })

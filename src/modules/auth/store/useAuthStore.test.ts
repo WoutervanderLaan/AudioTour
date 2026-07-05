@@ -203,6 +203,61 @@ describe('useAuthStore', () => {
     })
   })
 
+  describe('syncFromClient', () => {
+    it('should persist refreshed tokens', () => {
+      const {setAuth, syncFromClient} = useAuthStore.getState()
+
+      setAuth(mockUser, mockTokens)
+
+      const refreshedTokens: AuthTokens = {
+        accessToken: 'refreshed-access-token',
+        refreshToken: 'refreshed-refresh-token',
+      }
+      syncFromClient(refreshedTokens)
+
+      const {tokens, user, isAuthenticated} = useAuthStore.getState()
+      expect(tokens).toEqual(refreshedTokens)
+      expect(user).toEqual(mockUser)
+      expect(isAuthenticated).toBe(true)
+    })
+
+    it('should not push tokens back to the client (client is the source)', () => {
+      const {syncFromClient} = useAuthStore.getState()
+
+      jest.clearAllMocks()
+      syncFromClient({
+        accessToken: 'refreshed-access-token',
+        refreshToken: 'refreshed-refresh-token',
+      })
+
+      expect(apiClient.setTokens).not.toHaveBeenCalled()
+    })
+
+    it('should clear the session when passed null', () => {
+      const {setAuth, syncFromClient} = useAuthStore.getState()
+
+      setAuth(mockUser, mockTokens)
+      syncFromClient(null)
+
+      const {user, tokens, isAuthenticated, isInitialized} =
+        useAuthStore.getState()
+      expect(user).toBeNull()
+      expect(tokens).toBeNull()
+      expect(isAuthenticated).toBe(false)
+      expect(isInitialized).toBe(true)
+    })
+
+    it('should not call apiClient.clearTokens when clearing (avoids echo loop)', () => {
+      const {setAuth, syncFromClient} = useAuthStore.getState()
+
+      setAuth(mockUser, mockTokens)
+      jest.clearAllMocks()
+      syncFromClient(null)
+
+      expect(apiClient.clearTokens).not.toHaveBeenCalled()
+    })
+  })
+
   describe('logout', () => {
     it('should clear auth state', () => {
       const {setAuth, logout} = useAuthStore.getState()

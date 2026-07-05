@@ -6,10 +6,10 @@ import {
 } from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
-import {moduleRegistry} from './ModuleRegistry'
 import {Tabs} from './Tabs'
 import {type RootStackParams} from './types'
 
+import {moduleRegistry} from '@/modules/ModuleRegistry'
 import {
   getStackNavigatorOptions,
   useNavigationTheme,

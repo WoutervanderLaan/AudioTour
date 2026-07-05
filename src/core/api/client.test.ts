@@ -1,26 +1,3 @@
-// Mock datetime module before importing ApiClient
-jest.mock('@/core/lib/datetime', () => ({
-  datetime: {
-    timestamp: jest.fn(() => Date.now()),
-  },
-}))
-
-// Mock logger module before importing ApiClient
-jest.mock('@/core/lib/logger/logger', () => ({
-  logger: {
-    debug: jest.fn(),
-    info: jest.fn(),
-    success: jest.fn(),
-    warn: jest.fn(),
-    error: jest.fn(),
-    group: jest.fn(),
-    groupCollapsed: jest.fn(),
-    groupEnd: jest.fn(),
-    table: jest.fn(),
-    json: jest.fn(),
-  },
-}))
-
 import {ApiClient, apiClient} from './client'
 import type {ApiError, ApiResponse} from './types'
 
@@ -725,6 +702,95 @@ describe('ApiClient', () => {
 
       // Should only make one request
       expect(fetchMock).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('onTokensChanged callback', () => {
+    it('should notify with new tokens after a successful silent refresh', async () => {
+      const onTokensChanged = jest.fn()
+      client.setOnTokensChanged(onTokensChanged)
+
+      fetchMock
+        .mockResolvedValueOnce(
+          createMockResponse({message: 'Unauthorized'}, 401),
+        )
+        .mockResolvedValueOnce(
+          createMockResponse({
+            accessToken: 'new-access-token',
+            refreshToken: 'new-refresh-token',
+            accessTokenExpiresAt: '2030-01-01T00:00:00Z',
+          }),
+        )
+        .mockResolvedValueOnce(createMockResponse({data: 'success'}))
+
+      client.setTokens('old-access-token', 'old-refresh-token')
+
+      await client.get('/test')
+
+      expect(onTokensChanged).toHaveBeenCalledTimes(1)
+      expect(onTokensChanged).toHaveBeenCalledWith({
+        accessToken: 'new-access-token',
+        refreshToken: 'new-refresh-token',
+        accessTokenExpiresAt: '2030-01-01T00:00:00Z',
+        refreshTokenExpiresAt: undefined,
+      })
+    })
+
+    it('should keep the existing refresh token when refresh omits a new one', async () => {
+      const onTokensChanged = jest.fn()
+      client.setOnTokensChanged(onTokensChanged)
+
+      fetchMock
+        .mockResolvedValueOnce(
+          createMockResponse({message: 'Unauthorized'}, 401),
+        )
+        .mockResolvedValueOnce(createMockResponse({accessToken: 'new-token'}))
+        .mockResolvedValueOnce(createMockResponse({data: 'success'}))
+
+      client.setTokens('old-token', 'refresh-token')
+
+      await client.get('/test')
+
+      expect(onTokensChanged).toHaveBeenCalledWith(
+        expect.objectContaining({
+          accessToken: 'new-token',
+          refreshToken: 'refresh-token',
+        }),
+      )
+    })
+
+    it('should notify with null when the refresh fails', async () => {
+      const onTokensChanged = jest.fn()
+      client.setOnTokensChanged(onTokensChanged)
+
+      fetchMock
+        .mockResolvedValueOnce(
+          createMockResponse({message: 'Unauthorized'}, 401),
+        )
+        .mockResolvedValueOnce(
+          createMockResponse({message: 'Refresh failed'}, 401),
+        )
+
+      client.setTokens('access-token', 'refresh-token')
+
+      await expect(client.get('/test')).rejects.toMatchObject({
+        status: 401,
+      } as ApiError)
+
+      expect(onTokensChanged).toHaveBeenCalledTimes(1)
+      expect(onTokensChanged).toHaveBeenCalledWith(null)
+    })
+
+    it('should not notify on a normal request without token changes', async () => {
+      const onTokensChanged = jest.fn()
+      client.setOnTokensChanged(onTokensChanged)
+
+      fetchMock.mockResolvedValue(createMockResponse({data: 'success'}))
+      client.setTokens('access-token', 'refresh-token')
+
+      await client.get('/test')
+
+      expect(onTokensChanged).not.toHaveBeenCalled()
     })
   })
 

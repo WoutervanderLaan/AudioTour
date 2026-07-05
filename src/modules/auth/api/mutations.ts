@@ -10,11 +10,7 @@ import {authKeys} from './keys'
 import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger/logger'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
-import type {
-  LoginCredentials,
-  LoginResponse,
-  RefreshTokenResponse,
-} from '@/modules/auth/types'
+import type {LoginCredentials, LoginResponse} from '@/modules/auth/types'
 
 /**
  * React Query mutation hook for user login.
@@ -90,27 +86,21 @@ export const useLogoutMutation = (
 
   return useMutation({
     mutationFn: async () => {
-      try {
-        // Optional: Call logout endpoint to invalidate refresh token on server
-        await apiClient.post('/auth/logout', undefined, {
-          skipAuthRefresh: true,
-        })
-      } catch (error) {
-        // Continue with logout even if server call fails
-        logger.error('[Auth] Logout API call failed:', error)
-      }
+      // Call logout endpoint to invalidate the refresh token on the server.
+      // Errors are surfaced as the mutation's error; local logout is still
+      // guaranteed by onSettled below (runs on both success and failure).
+      await apiClient.post('/auth/logout', undefined, {
+        skipAuthRefresh: true,
+      })
     },
-    onSuccess: () => {
-      // Clear Zustand store
-      logout()
-
-      // Clear all auth queries
-      queryClient.clear()
-      logger.success('User logged out successfully')
+    onError: error => {
+      logger.error('[Auth] Logout API call failed:', error)
     },
     onSettled: () => {
+      // Always clear local auth state, even if the server call failed.
       logout()
       queryClient.clear()
+      logger.success('User logged out')
     },
     ...options,
   })
@@ -170,67 +160,6 @@ export const useRegisterMutation = (
     },
     onError: error => {
       logger.error('[Auth] Registration failed:', error)
-    },
-    ...options,
-  })
-}
-
-/**
- * React Query mutation hook for manually refreshing authentication tokens.
- *
- * This mutation allows you to manually trigger a token refresh using the stored
- * refresh token. Note that token refresh is typically handled automatically by
- * the API client's interceptors, so this hook is mainly for advanced use cases
- * or manual token management.
- *
- * @param options - Optional TanStack Query mutation options (onSuccess, onError, etc.)
- * @returns Mutation result with mutate function and status
- *
- * @example
- * ```tsx
- * const refreshMutation = useRefreshTokenMutation()
- *
- * const handleManualRefresh = () => {
- *   refreshMutation.mutate()
- * }
- *
- * if (refreshMutation.isError) {
- *   console.error('Token refresh failed')
- * }
- * ```
- */
-export const useRefreshTokenMutation = (
-  options?: Omit<
-    UseMutationOptions<RefreshTokenResponse, Error, void>,
-    'mutationFn'
-  >,
-): UseMutationResult<RefreshTokenResponse, Error, void, unknown> => {
-  const {tokens, updateTokens} = useAuthStore()
-
-  return useMutation({
-    mutationFn: async () => {
-      if (!tokens?.refreshToken) {
-        throw new Error('No refresh token available')
-      }
-
-      const response = await apiClient.post<RefreshTokenResponse>(
-        '/auth/refresh',
-        {refreshToken: tokens.refreshToken},
-        {skipAuthRefresh: true},
-      )
-
-      return response.data
-    },
-    onSuccess: data => {
-      updateTokens({
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken || tokens!.refreshToken,
-        accessTokenExpiresAt: data.accessTokenExpiresAt,
-      })
-      logger.success('[Auth] Token refreshed successfully')
-    },
-    onError: error => {
-      logger.error('[Auth] Token refresh failed:', error)
     },
     ...options,
   })

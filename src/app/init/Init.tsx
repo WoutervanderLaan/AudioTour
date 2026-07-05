@@ -7,8 +7,8 @@ import React, {
 import {LogBox} from 'react-native'
 
 import {logger} from '@/core/lib/logger/logger'
-import {moduleRegistry} from '@/core/navigation/ModuleRegistry'
 import {useAuthStateListener} from '@/modules/auth/hooks/useAuthStateListener'
+import {moduleRegistry} from '@/modules/ModuleRegistry'
 import {useFonts} from '@/shared/hooks/useFonts'
 
 /**
@@ -40,7 +40,9 @@ export const Init = ({children}: PropsWithChildren): React.JSX.Element => {
       // Disable red box error screen to let ErrorBoundary handle errors
       // Comment this out to re-enable the dev error overlay
       LogBox.ignoreAllLogs(true)
-      enableMocking()
+      enableMocking().catch(error => {
+        logger.error('Failed to enable MSW mocking:', error)
+      })
     }
   }, [])
 

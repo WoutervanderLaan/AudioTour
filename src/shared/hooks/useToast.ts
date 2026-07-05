@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import {use} from 'react'
 
 import {ToastContext} from '@/shared/context/toast/ToastContext'
 import type {ToastContextType} from '@/shared/context/toast/ToastContext.types'
@@ -10,7 +10,7 @@ import type {ToastContextType} from '@/shared/context/toast/ToastContext.types'
  * @returns Toast context with methods to show and hide toast notifications
  */
 export function useToast(): ToastContextType {
-  const ctx = useContext(ToastContext)
+  const ctx = use(ToastContext)
   if (!ctx) throw new Error('useToast must be used within ToastProvider')
   return ctx
 }

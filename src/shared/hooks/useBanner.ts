@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import {use} from 'react'
 
 import {BannerContext} from '@/shared/context/banner/BannerContext'
 import type {BannerContextType} from '@/shared/context/banner/BannerContext.types'
@@ -10,7 +10,9 @@ import type {BannerContextType} from '@/shared/context/banner/BannerContext.type
  * @returns Banner context with methods to show and hide banner notifications
  */
 export function useBanner(): BannerContextType {
-  const ctx = useContext(BannerContext)
+  const ctx = use(BannerContext)
+
   if (!ctx) throw new Error('useBanner must be used within BannerProvider')
+
   return ctx
 }

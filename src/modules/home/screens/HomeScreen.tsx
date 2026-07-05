@@ -15,13 +15,16 @@ import {Text} from '@/shared/components/ui/typography/Text'
 export const HomeScreen = (): React.JSX.Element => (
   <Screen.Static testID="HomeScreen">
     <Column
+      style={{backgroundColor: 'red'}}
       gap="md"
       center
       flex={1}
       padding="md"
       testID="HomeScreenContainer">
       <Text.Title testID="HomeScreenTitleText">Welcome</Text.Title>
-      <Text.Paragraph testID="HomeScreenSubtitleText">
+      <Text.Paragraph
+        testID="HomeScreenSubtitleText"
+        align="center">
         This is a starter home screen. Replace it with your app.
       </Text.Paragraph>
     </Column>

@@ -2,6 +2,7 @@ import {ModuleSlug} from '../slugs'
 import type {ModuleConfig} from '../types'
 import {authModals, authStacks} from './screenConfig'
 
+import {apiClient} from '@/core/api/client'
 import {logger} from '@/core/lib/logger/logger'
 import {useAuthStore} from '@/modules/auth/store/useAuthStore'
 import {TIMING} from '@/shared/constants/timing'
@@ -33,6 +34,11 @@ export const authModule: ModuleConfig = {
 
   onAppStart: () => {
     logger.debug('[Auth Module] Initializing...')
+
+    // Keep the auth store in sync with tokens the API client refreshes on its own.
+    apiClient.setOnTokensChanged(tokens => {
+      useAuthStore.getState().syncFromClient(tokens)
+    })
 
     // Initialize auth state and restore tokens to API client
     useAuthStore.getState().initialize()

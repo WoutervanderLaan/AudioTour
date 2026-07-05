@@ -1,9 +1,17 @@
 import type {Meta} from '@storybook/react-native-web-vite'
-
 import {StickyBanner} from './StickyBanner'
-import type {Story} from './StickyBanner.stories.types'
-
 import {logger} from '@/core/lib/logger/logger'
+import type {StoryObj} from '@storybook/react-native-web-vite'
+
+/**
+ * Story
+ * Storybook story type for StickyBanner component
+ */
+export type Story = StoryObj<{
+  title: string
+  component: typeof StickyBanner
+  tags: string[]
+}>
 
 const meta = {
   title: 'Features/StickyBanner',

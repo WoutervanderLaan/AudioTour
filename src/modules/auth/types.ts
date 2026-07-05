@@ -70,9 +70,16 @@ export type AuthState = {
    */
   setAuth: (user: User, tokens: AuthTokens) => void
   /**
-   * Updates only the authentication tokens (e.g., after token refresh)
+   * Updates only the authentication tokens (e.g., after token refresh) and pushes
+   * them to the API client. Use for token changes that originate in the app.
    */
   updateTokens: (tokens: AuthTokens) => void
+  /**
+   * Applies a token change that originated inside the API client (e.g. a silent 401
+   * refresh). Persists the new tokens, or clears the session when passed null. Does
+   * NOT push back to the client, since the client is already the source of the change.
+   */
+  syncFromClient: (tokens: AuthTokens | null) => void
   /**
    * Clears user data and tokens, logging the user out
    */
@@ -149,23 +156,4 @@ export type LoginResponse = {
    * JWT authentication tokens for the session
    */
   tokens: AuthTokens
-}
-
-/**
- * RefreshTokenResponse
- * API response containing new access and refresh tokens after successfully refreshing an expired access token.
- */
-export type RefreshTokenResponse = {
-  /**
-   * New JWT access token
-   */
-  accessToken: string
-  /**
-   * Optional new refresh token (may not be provided if refresh token rotation is disabled)
-   */
-  refreshToken?: string
-  /**
-   * ISO 8601 timestamp when the new access token expires
-   */
-  accessTokenExpiresAt?: string
 }

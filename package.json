@@ -33,8 +33,10 @@
     "@expo-google-fonts/playfair-display": "^0.4.2",
     "@expo/metro-runtime": "~57.0.2",
     "@expo/vector-icons": "^15.1.1",
+    "@gorhom/bottom-sheet": "^5.2.14",
     "@hookform/resolvers": "^5.4.0",
     "@notifee/react-native": "^9.1.8",
+    "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-navigation/bottom-tabs": "^7.18.5",
     "@react-navigation/elements": "^2.9.27",
     "@react-navigation/native": "^7.3.5",
@@ -65,11 +67,14 @@
     "react-native-edge-to-edge": "^1.8.1",
     "react-native-gesture-handler": "~2.32.0",
     "react-native-nitro-modules": "^0.36.1",
+    "react-native-reanimated": "4.5.0",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.25.2",
+    "react-native-svg": "15.15.4",
     "react-native-unistyles": "^3.2.5",
     "react-native-url-polyfill": "^3.0.0",
     "react-native-web": "~0.21.0",
+    "react-native-worklets": "0.10.0",
     "zod": "^3.25.76",
     "zustand": "^5.0.14"
   },
@@ -79,7 +84,6 @@
     "@babel/preset-react": "^7.29.7",
     "@babel/preset-typescript": "^7.29.7",
     "@eslint/js": "^9.39.4",
-    "@gorhom/bottom-sheet": "^5.2.14",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-community/datetimepicker": "9.1.0",
     "@react-native-community/slider": "5.2.0",
@@ -121,9 +125,6 @@
     "msw": "^2.14.6",
     "prettier": "^3.9.4",
     "react-native-clean-project": "^4.0.3",
-    "react-native-reanimated": "4.5.0",
-    "react-native-svg": "15.15.4",
-    "react-native-worklets": "0.10.0",
     "react-test-renderer": "19.2.3",
     "storybook": "^10.4.6",
     "typescript": "~5.9.3",
@@ -136,11 +137,14 @@
       "<rootDir>/.jest/jest-init.js"
     ],
     "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+      "^.+\\.(js|jsx|ts|tsx|mjs)$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!react-native|@react-native|expo|msw|until-async|zustand|immer)"
+      "node_modules/(?!react-native|@react-native|expo|msw|@mswjs|until-async|rettime|@bundled-es-modules|strict-event-emitter|@open-draft|outvariant|headers-polyfill|is-node-process|zustand|immer)"
     ],
+    "moduleNameMapper": {
+      "^msw/node$": "<rootDir>/node_modules/msw/lib/node/index.js"
+    },
     "setupFiles": [
       "react-native-unistyles/mocks",
       "./src/themes/unistyles.ts"

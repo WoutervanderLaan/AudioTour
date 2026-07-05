@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import {use} from 'react'
 
 import {BottomTabBarHeightContext} from '@react-navigation/bottom-tabs'
 
@@ -8,12 +8,5 @@ import {BottomTabBarHeightContext} from '@react-navigation/bottom-tabs'
  *
  * @returns The height of the bottom tab bar in pixels, or 0 if unavailable
  */
-export const useBottomTabBarHeight = (): number => {
-  const height = useContext(BottomTabBarHeightContext)
-
-  if (height === undefined) {
-    return 0
-  }
-
-  return height
-}
+export const useBottomTabBarHeight = (): number =>
+  use(BottomTabBarHeightContext) ?? 0

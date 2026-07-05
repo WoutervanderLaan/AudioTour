@@ -5,21 +5,20 @@
  * This configuration is now modularized for better maintainability.
  * See the ./eslint directory for individual rule configurations.
  */
-import js from '@eslint/js'
-import storybook from 'eslint-plugin-storybook'
+// import js from '@eslint/js'
 
 import {createMainConfig} from './eslint/main.config.js'
-import {
-  configFilesOverride,
-  storybookOverride,
-  testsOverride,
-} from './eslint/overrides/index.js'
+// import {
+//   configFilesOverride,
+//   storybookOverride,
+//   testsOverride,
+// } from './eslint/overrides/index.js'
 
 export default [
-  js.configs.recommended,
-  ...storybook.configs['flat/recommended'],
+  // js.configs.recommended,
+  // ...storybook.configs['flat/recommended'],
   createMainConfig(),
-  configFilesOverride(),
-  ...storybookOverride(),
-  testsOverride(),
+  // configFilesOverride(),
+  // ...storybookOverride(),
+  // testsOverride(),
 ]

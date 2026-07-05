@@ -8,7 +8,7 @@ export type ToastProps = {
   /**
    * id
    */
-  id?: string
+  id: string
   /**
    * message
    */

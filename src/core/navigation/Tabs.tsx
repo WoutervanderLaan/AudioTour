@@ -4,10 +4,10 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 
 import {TAB_BAR_ICON_SIZE} from './constants'
-import {moduleRegistry} from './ModuleRegistry'
 import {type RootStackParams} from './types'
 
 import {HomeTabName} from '@/modules/home/routes.types'
+import {moduleRegistry} from '@/modules/ModuleRegistry'
 import {
   getTabNavigatorOptions,
   useNavigationTheme,
